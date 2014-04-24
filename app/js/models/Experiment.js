@@ -9,6 +9,10 @@ define([],function() {
 				region: [],
 				profile: []
 			}
+		},
+		initialize: function() {
+			this.hatt = 3;
+			this.set({sex:"Female"});
 		}
 	});
 	return Experiment;
