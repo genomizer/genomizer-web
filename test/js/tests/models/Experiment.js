@@ -13,5 +13,10 @@ define(['models/Experiment'],function(Experiment) {
 				var experiment = new Experiment();
 				expect(experiment.get("sex")).to.equal("Female");
 			});
+			it("should have species: cat '", function () {
+				var experiment = new Experiment();
+				expect(experiment.get("species")).to.equal("Cat");
+			});
+
 	});
 });
