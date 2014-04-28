@@ -2,7 +2,7 @@ require([
 		'collections/SearchResults',
 		'models/Experiment',
 		'collections/Experiments',
-		'views/Search'
+		'views/Search',
 		'router'
 ],function(SearchResults,Experiment,Experiments,Search,Router) {
 	var router = new Router();
