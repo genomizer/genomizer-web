@@ -1,0 +1,22 @@
+define(['views/SearchResults'],function(SearchResult) {
+	
+	var search_ = Backbone.View.extend({
+
+		TEMPLATE: _.template('<input id="search_input" placeholder="Enter query"></input><button id="search_button">Search</button>'),
+		initialize: function() {
+			this.render();
+		},
+		el: $("#search"),
+		render: function() {
+			this.$el.html(this.TEMPLATE());		
+		},
+		events: {
+			"click #search_button": "doSearch"
+		},
+		doSearch: function() {
+			alert("Searching for "+$('#search_input').val() +".");
+		}
+	});
+	return search_;
+
+});
