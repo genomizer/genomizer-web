@@ -17,7 +17,7 @@ require([
 	console.log("aooo");
 	Backbone.history.start();
 
-
+/*
 	console.log("Search for data");
 	var searchResults = new SearchResults();
 	searchResults.fetch();
@@ -41,4 +41,5 @@ require([
 	console.log("Delete experiment");
 
 	experiment.destroy();
+*/
 });

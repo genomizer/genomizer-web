@@ -1,8 +1,13 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
-		url: '/api/search?q=((arpupulus puparprisisla[species]) AND Yuri[author]) AND female[sex]',
+		url: function() {
+			return '/api/search?q=' + this.query;
+		},
 		model: Experiment,
-		initialize:function () {
+		initialize:function (models,options) {
+			this.query = options.query;
+
+			console.log("hej",options.query);
 		}
 
 	});
