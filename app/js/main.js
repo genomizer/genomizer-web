@@ -1,3 +1,10 @@
+require.config({
+	paths: {
+		text:'lib/require.text'
+	}
+});
+
+
 require([
 		'collections/SearchResults',
 		'models/Experiment',

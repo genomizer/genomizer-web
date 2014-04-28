@@ -8,14 +8,18 @@ define([],function() {
 
 		search: function(query) {
 			require([
-					'collections/SearchResults'
-			],function(SearchResults) {
-				console.log("search");
+				'views/search/Search'
+			],function(Search) {
+				new Search({el:$("#mainView"),query:query});
 			});
 		},
 
 		upload: function() {
-			console.log("ul");
+			require([
+				'views/upload/Upload'
+			],function(Upload) {
+				new Upload({el:$("#mainView")});
+			});
 		}
 
 	});
