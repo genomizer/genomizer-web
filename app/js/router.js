@@ -3,6 +3,7 @@ define([],function() {
 
 		routes: {
 			"search/:query": "search",
+			"search": "search",
 			"upload":"upload",
 		},
 
