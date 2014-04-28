@@ -1,17 +1,19 @@
 define([
-	'views/SearchResults',
+	'collections/SearchResults'
 	'text!views/search/searchInputGroup.html'
-],function(SearchResult, inputGroupTemplate) {
-	
-	var search_ = Backbone.View.extend({
+
+],function(SearchResults, inputGroupTemplate) {
+
+	var Search = Backbone.View.extend({
 
 		TEMPLATE: _.template(inputGroupTemplate),
-		initialize: function() {
+		initialize: function(query) {
+			this.model = new SearchResults({query:query});
 			this.render();
 		},
 		el: $("#search"),
 		render: function() {
-			this.$el.html(this.TEMPLATE());		
+			this.$el.html(this.TEMPLATE());	
 		},
 		events: {
 			"click #search_button": "doSearch",
@@ -29,7 +31,7 @@ define([
 		doSearch: function() {
 			alert("Searching for "+$('#search_input').val() +'.');
 		}
+		
 	});
-	return search_;
-
+	return Search;
 });

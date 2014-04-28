@@ -1,6 +1,6 @@
 define([
 	'views/SearchResults',
-	'text!views/search/searchInputGroup.html'
+	'views/search/searchInputGroup.html'
 ],function(SearchResult, inputGroupTemplate) {
 	
 	var search_ = Backbone.View.extend({
