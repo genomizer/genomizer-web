@@ -6,8 +6,8 @@ define([
 	var Search = Backbone.View.extend({
 
 		TEMPLATE: _.template(inputGroupTemplate),
-		initialize: function(query) {
-			this.model = new SearchResults({query:query});
+		initialize: function(options) {
+			this.model = new SearchResults([],{query:options.query});
 			this.render();
 		},
 		el: $("#search"),

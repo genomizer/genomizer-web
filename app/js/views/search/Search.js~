@@ -1,14 +1,18 @@
 define([
-	'collections/SearchResults'
+	'collections/SearchResults',
 	'text!views/search/searchInputGroup.html'
-
 ],function(SearchResults, inputGroupTemplate) {
 
 	var Search = Backbone.View.extend({
+<<<<<<< HEAD
 
 		TEMPLATE: _.template(inputGroupTemplate),
 		initialize: function(query) {
 			this.model = new SearchResults({query:query});
+=======
+		initialize: function(options) {
+			this.model = new SearchResults([],{query:options.query});
+>>>>>>> f9d4b84f0ad49f1a016c8afe792d236671ef91ba
 			this.render();
 		},
 		el: $("#search"),
