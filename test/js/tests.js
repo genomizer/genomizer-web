@@ -1,5 +1,6 @@
 // Add new test files here
 var testModulePaths = [
 	'tests/ExampleTest',
-	'tests/models/Experiment'
+	'tests/models/Experiment',
+	'tests/collections/SearchResults'
 ];

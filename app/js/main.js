@@ -14,7 +14,6 @@ require([
 ],function(SearchResults,Experiment,Experiments,Search,Router) {
 	var router = new Router();
 
-	console.log("aooo");
 	Backbone.history.start();
 
 /*

@@ -6,8 +6,6 @@ define(['models/Experiment'],function(Experiment) {
 		model: Experiment,
 		initialize:function (models,options) {
 			this.query = options.query;
-
-			console.log("hej",options.query);
 		}
 
 	});
