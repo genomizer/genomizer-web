@@ -1,8 +1,14 @@
 require([
 		'collections/SearchResults',
 		'models/Experiment',
-		'collections/Experiments'
-],function(SearchResults,Experiment,Experiments) {
+		'collections/Experiments',
+		'router'
+],function(SearchResults,Experiment,Experiments,Router) {
+	var router = new Router();
+
+	console.log("aooo");
+	Backbone.history.start();
+
 	console.log("Search for data");
 	var searchResults = new SearchResults();
 	searchResults.fetch();
