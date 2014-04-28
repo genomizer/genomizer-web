@@ -1,7 +1,7 @@
 define(['collections/SearchResults'],function(SearchResults) {
 	var Search = Backbone.View.extend({
-		initialize: function(query) {
-			this.model = new SearchResults({query:query});
+		initialize: function(options) {
+			this.model = new SearchResults([],{query:options.query});
 			this.render();
 		},
 		render: function() {
