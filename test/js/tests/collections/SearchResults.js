@@ -14,12 +14,10 @@ define(['collections/SearchResults'],function(SearchResults) {
 			describe("should fetch with correct URL when query is supplied as option",function() {
 				it("regular string", function () {
 					var searchResults = new SearchResults([],{query:"male[sex]"});
-					searchResults.fetch();
 					expect(requests[0].url).to.equal('/api/search?q=male[sex]');
 				});
 				it("string with spaces", function () {
 					var searchResults = new SearchResults([],{query:"male[sex] AND specie[cat]"});
-					searchResults.fetch();
 					expect(requests[0].url).to.equal('/api/search?q=male[sex] AND specie[cat]');
 				});
 			});
