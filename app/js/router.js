@@ -26,10 +26,10 @@ define([],function() {
 
 		process: function() {
 			require([
-				'views/ModalAC'
-			],function(ModalAC) {
-				var modalAC = new ModalAC();
-				modalAC.show();
+				'views/processModal/Process'
+			],function(Process) {
+				var modal = new Process();
+				modal.show();
 			});
 		}
 
