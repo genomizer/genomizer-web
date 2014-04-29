@@ -1,9 +1,9 @@
 define([
 	'text!templates/processModal/Process.html',
 	'views/ModalAC'
-],function(template,ModalAC) {
+],function(processTemplate,ModalAC) {
 	var Modal = ModalAC.extend({
-		TEMPLATE: _.template(template),
+		TEMPLATE: _.template(processTemplate),
 		TEMPLATE_VARS: {
 			modalTitle: "Process raw file"
 		},
