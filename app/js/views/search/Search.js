@@ -25,7 +25,6 @@ define([
 		showButton: function() {
 			if($('#search_input').val().length != 0) {
 				$('#search_button').prop('disabled', false);
-				console.log("showbutton");
 			} else {
 				$('#search_button').prop('disabled', true);
 			}
