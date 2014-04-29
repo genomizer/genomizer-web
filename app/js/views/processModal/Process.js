@@ -1,14 +1,21 @@
 define([
-	'text!templates/ModalAC.html',
+	'text!templates/processModal/Process.html',
 	'views/ModalAC'
 ],function(template,ModalAC) {
 	var Modal = ModalAC.extend({
-		TEMPLATE: _.template('<div class="modal-body"> ...  </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button> </div>'),
+		TEMPLATE: _.template(template),
 		TEMPLATE_VARS: {
-			modalTitle: "Process"
+			modalTitle: "Process raw file"
+		},
+		events: {
+			'submit form':'submitProcess'
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());	
+		},
+		submitProcess: function(e) {
+			e.preventDefault();
+			alert("Not yet implemented!");
 		}
 	});
 	return Modal;
