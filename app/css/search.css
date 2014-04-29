@@ -1,0 +1,30 @@
+#results_container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.experiment-group:not(.expanded) .expand-row {
+	display: none;
+}
+
+.expand-button {
+	background: none;
+	border: none;
+}
+
+.expand-button:focus {
+	outline: none;
+}
+
+.expand-button:before {
+	content: "\2b";
+}
+
+.expanded .expand-experiment-button:before {
+	content: "\2212";
+}
+
+.expanded .expand-experiment-button {
+	position: relative;
+	left: -2px;
+}
