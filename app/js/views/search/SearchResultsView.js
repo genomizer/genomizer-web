@@ -6,13 +6,17 @@ define([
 	var SearchResultsView = Backbone.View.extend({
 
 		tagName: 'table',
+		className: 'table',
 		headerTemplate: _.template(headerTemplateHtml),
 
-		initialize: function() {
+		initialize: function(options) {
 			this.experimentViews = [];
+
+			this.annotations = options.annotations;
 
 			this.collection.each(function(experiment) {
 				this.experimentViews.push(new ExperimentView({
+					annotations: this.annotations,
 					model : experiment,
 				}));
 			}, this);
@@ -20,10 +24,20 @@ define([
 			this.render();
 		},
 		render: function() {
-			this.$el.html(this.headerTemplate());
+
+			// render header template
+			this.$el.html(this.headerTemplate({annotations: this.annotations}));
+
 			_.each(this.experimentViews, function(experimentView) {
-				xperimentView.render();
-			});
+				
+				// render experiment rows
+				experimentView.render();
+
+				// append experiment rows to table
+				this.$el.append(experimentView.$el);
+			}, this);
+
+			
 		},
 		events: {
 			//"click #search_button": "doSearch"
