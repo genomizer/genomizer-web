@@ -1,0 +1,83 @@
+<tr class="experiment-row"> <!-- MAIN EXPERIMENT ROW -->
+	<td>
+		<input class="checked-input" type="checkbox">
+	</td>
+	<td>
+		<input class="expanded-input" type="checkbox">
+	</td>
+	<% _.each(annotations, function(annotation) { %>  
+		<td>
+			<span><%- experiment[annotation.id] %></span>
+		</td>
+	<% }); %>
+</tr>
+
+<tr class="raw-expand-row">	<!-- RAW EXPANSION ROW -->
+	<td>
+		<input class="checked-input" type="checkbox">
+	</td>
+	<td>
+		<input class="expanded-input" type="checkbox">
+	</td>
+	<td>
+		<span>Raw Files</span>
+	</td>
+	<td colspan="<%- annotations.length - 1 %>">
+</tr>
+<tr class="raw-header-row raw-row">	<!-- RAW HEADER ROW ROW -->
+	<td colspan="2">
+		
+	</td>
+	<% _.each(annotations, function(annotation) { %>  
+		<td>
+			<span><%- experiment[annotation.id] %></span>
+		</td>
+	<% }); %>
+</tr>
+<% _.each(experiment.files.raw, function(file) { %>  <!-- RAW FILE ROWS -->
+	<tr class="raw-file-row raw-row">
+		<td colspan="2">
+			<input class="checked-input" type="checkbox">
+		</td>
+		<% _.each(annotations, function(annotation) { %>  
+			<td>
+				<span><<%- file.annotations[annotation.id] %></span>
+			</td>
+		<% }); %>
+	</tr>
+<% }); %>
+
+<tr class="profile-expand-row">	<!-- PROFILE EXPAND ROW -->
+	<td>
+		<input class="checked-input" type="checkbox">
+	</td>
+	<td>
+		<input class="expanded-input" type="checkbox">
+	</td>
+	<td>
+		<span>Profile Files</span>
+	</td>
+	<td colspan="<%- annotations.length - 1 %>">
+</tr>
+<tr class="profile-header-row profile-row">	<!-- PROFILE HEADER ROW -->
+	<td colspan="2">
+		
+	</td>
+	<% _.each(annotations, function(annotation) { %>  
+		<td>
+			<span><%- experiment[annotation.id] %></span>
+		</td>
+	<% }); %>
+</tr>
+<% _.each(experiment.files.profile, function(file) { %>  <!-- RAW FILE ROWS -->
+	<tr class="profile-file-row profile-row">
+		<td colspan="2">
+			<input class="checked-input" type="checkbox">
+		</td>
+		<% _.each(annotations, function(annotation) { %>  
+			<td>
+				<span><%- file.annotations[annotation.id] %></span>
+			</td>
+		<% }); %>
+	</tr>
+<% }); %>

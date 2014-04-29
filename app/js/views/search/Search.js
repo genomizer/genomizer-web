@@ -1,18 +1,29 @@
 define([
 	'collections/SearchResults',
+	'views/search/SearchResultsView',
 	'text!views/search/searchInputGroup.html'
-],function(SearchResults, inputGroupTemplate) {
+],function(SearchResults, SearchResultsView, inputGroupTemplate) {
 
 	var Search = Backbone.View.extend({
 
 		TEMPLATE: _.template(inputGroupTemplate),
 		initialize: function(options) {
-			this.model = new SearchResults([],{query:options.query});
+			this.collection = new SearchResults([
+					{id: 1, filename: 5},
+					{id: 2, filename: 5},
+					{id: 3, filename: 5},
+					{id: 4, filename: 5},
+				],{query:options.query});
+
+			this.resultsView = new SearchResultsView({collection: this.collection});
+
 			this.render();
 		},
 		el: $("#search"),
 		render: function() {
-			this.$el.html(this.TEMPLATE());	
+			this.$el.html(this.TEMPLATE());
+
+			this.$el.append(this.resultsView.$el);
 		},
 		events: {
 			"click #search_button": "doSearch",

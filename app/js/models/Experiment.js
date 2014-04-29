@@ -1,9 +1,13 @@
 define([],function() {
 	var Experiment = Backbone.Model.extend({
 		defaults : {
-			name: "Experiment1",
-			species: "Cat",
-			sex: "Male",
+			fileName: "unnamed",
+			fileId: -1
+			size: "0gb"
+			type: "raw"
+			uploadedBy: "user"
+			date: "2014-04-25"
+			URL: "URLtofile"
 			files: {
 				raw: [],
 				region: [],
