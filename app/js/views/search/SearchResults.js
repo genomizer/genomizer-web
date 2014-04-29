@@ -4,17 +4,16 @@ define([
 
 	var SearchResultsView = Backbone.View.extend({
 
-		//TEMPLATE: _.template(inputGroupTemplate),
+		TEMPLATE: _.template('<div style="background-color:yellow" id="search_results_coll"><p>hej</p></div>'),
 		initialize: function(options) {
 			this.model = new SearchResultsCollection([],{query:options.query});
-			this.render();
 		},
-		//el: $("#search"),
+		//el: $("#search_results_coll"),
 		render: function() {
-			//this.$el.html(this.TEMPLATE());	
-		},
-		events: {
-		}	
+			this.$el.html(this.TEMPLATE());	
+		}
+
 	});
 	return SearchResultsView;
 });
+
