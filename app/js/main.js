@@ -10,10 +10,12 @@ require([
 		'models/Experiment',
 		'collections/Experiments',
 		'views/search/Search',
+		'views/MainMenu',
 		'router'
-],function(SearchResults,Experiment,Experiments,Search,Router) {
+],function(SearchResults,Experiment,Experiments,Search,MainMenu,Router) {
 	var router = new Router();
 
+	var mainMenu = new MainMenu({router:router});
 	Backbone.history.start();
 
 /*
