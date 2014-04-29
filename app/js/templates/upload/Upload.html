@@ -1,18 +1,29 @@
 <form class="form-inline" role="form" style="width:80%; margin: 40px auto">
-	<div>
-	<button type="button" class="btn btn-primary">Create Experiment</button>
-	<button type="button" class="btn btn-primary">Add files to existing experiment</button>
+	<div id="ExperimentButtons">
+	<button type="button" class="btn btn-primary" id="CreateExperiment">Create Experiment</button>
+	<button type="button" class="btn btn-primary" id="AddToExistingExperiment">Add files to existing experiment</button>
 	</div>	
 	<!--<div class="form-group">
 		<input type="file" multiple id="inputFile" value="Browse"/>
 	</div> -->
-	<div id="input-container" style="margin: 40px auto" >
-		<!--<div class="table-responsive">
+	<div id="input-container" style= "margin: 40px auto; display: none;" >
+		<div class="table-responsive">
   			<table class="table">
-			<button type="button" class="btn btn-primary">Hej</button>
-			<button type="button" class="btn btn-primary">På</button>
-			<button type="button" class="btn btn-primary">Dig!</button>
+				<tr>
+					<td>
+						<button type="button" class="btn btn-primary">Hej</button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary">På</button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary">Dig!</button>
+					</td>
+				</tr>
+			
+			
+			
 			</table> 
-		</div>	-->
+		</div>
 	</div>
 </form>

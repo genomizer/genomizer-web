@@ -19,7 +19,8 @@ function(FileView,UploadTemplate,File) {
 			this.FileView.render();
 		},
 		events: {
-			"change #inputFile": "display"
+			"change #inputFile": "display",
+			"click #CreateExperiment": "createExperiment"
 		},
 		display: function() {
 			var files = $("#inputFile")[0].files;
@@ -36,6 +37,10 @@ function(FileView,UploadTemplate,File) {
 				console.log(FileArray[i].filename);
 				console.log(FileArray[i].size);
 			}
+		},
+		createExperiment: function() {
+			$('#ExperimentButtons').hide();
+			$('#input-container').show();
 		}
 		
 	});
