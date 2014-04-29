@@ -5,6 +5,7 @@ define([],function() {
 			"search/:query": "search",
 			"search": "search",
 			"upload":"upload",
+			"process":"process",
 		},
 
 		search: function(query) {
@@ -20,6 +21,15 @@ define([],function() {
 				'views/upload/Upload'
 			],function(Upload) {
 				new Upload({el:$("#mainView")});
+			});
+		},
+
+		process: function() {
+			require([
+				'views/processModal/Process'
+			],function(Process) {
+				var modal = new Process();
+				modal.show();
 			});
 		}
 

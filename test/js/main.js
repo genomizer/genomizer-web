@@ -5,7 +5,8 @@ mocha.setup("bdd");
 requirejs.config({
     baseUrl: '../app/js',
 	paths: {
-        tests: '../../test/js/tests/'
+        tests: '../../test/js/tests/',
+		text:'lib/require.text'
     }
 });
 
