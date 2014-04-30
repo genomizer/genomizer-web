@@ -21,7 +21,6 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 			this.fileUploadList = new FileUploadList({experiment:this.experiment});
 			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
-			window.hatt = this;
 
 
 			this.addExperiment = new AddExperiment({model:this.experiment});
