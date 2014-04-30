@@ -1,0 +1,34 @@
+#experiment_form {
+	width:800px;
+	margin: 40px auto;
+}
+
+#experiment_form .annotation-list {
+	padding-top: 5px;
+}
+
+#experiment_form .annotation-list li {
+	display: inline-block;
+	list-style: none;
+	margin: 5px;
+	padding: 0;
+	padding-top: 10px;
+	position: relative;
+}
+
+#experiment_form .annotation-list input {
+	width: 150px;
+}
+
+#experiment_form .annotation-list select {
+	width: 150px;
+}
+
+#experiment_form .annotation-list label {
+	position: absolute;
+	font-size: 0.9em;
+	top: -5px;
+	left: 10px;
+	
+	font-weight: normal;
+}

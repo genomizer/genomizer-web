@@ -1,26 +1,28 @@
 define([
 	'views/upload/FileView',
 	'text!templates/upload/Upload.html',
-	'models/File'
+	'models/File',
+	'views/upload/AddExperiment'
 ],
 
-function(FileView,UploadTemplate,File) {
+function(FileView,UploadTemplate,File,AddExperiment) {
 	var Upload = Backbone.View.extend({
-		TEMPLATE: _.template(UploadTemplate + '<section id="file_view"></section>'),
+		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.FileView = new FileView();
-			this.render();
 			this.File = new File();
+			this.render();
 		},
-		el: $("#upload"),
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 			this.FileView.$el = this.$el.find("#file_view");
 			this.FileView.render();
+			this.addExperiment = new AddExperiment();
+			this.addExperiment.$el = this.$el.find("#newAnnotation");
+			this.addExperiment.render();
 		},
 		events: {
-			"change #inputFile": "display",
-			"click #CreateExperiment": "createExperiment"
+			"change #inputFile": "display"
 		},
 		display: function() {
 			var files = $("#inputFile")[0].files;
@@ -37,10 +39,6 @@ function(FileView,UploadTemplate,File) {
 				console.log(FileArray[i].filename);
 				console.log(FileArray[i].size);
 			}
-		},
-		createExperiment: function() {
-			$('#ExperimentButtons').hide();
-			$('#input-container').show();
 		}
 		
 	});
