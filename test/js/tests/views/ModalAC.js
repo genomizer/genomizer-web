@@ -1,6 +1,5 @@
 define(['views/ModalAC'],function(ModalAC) {
-
-	describe("Abstract modal", function () {
+	describe("views/ModalAC", function () {
 			it("should render the child when show is called'", function () {
 				var renderSpy = sinon.spy();
 				var Modal = ModalAC.extend({
@@ -16,7 +15,7 @@ define(['views/ModalAC'],function(ModalAC) {
 				modal.hide();
 			});
 			/*
-			it("should remove the modal from dom when hiding'", function () {
+			it("should remove the modal from DOM when hiding'", function () {
 				var renderSpy = sinon.spy();
 				var Modal = ModalAC.extend({
 					render: renderSpy
@@ -29,7 +28,6 @@ define(['views/ModalAC'],function(ModalAC) {
 
 				expect(modalRemoveSpy.called).to.be.true
 			});
-			   */
-
+		   */
 	});
 });
