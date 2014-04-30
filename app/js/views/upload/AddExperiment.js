@@ -7,11 +7,11 @@ function(UploadTemplate) {
 	var AddExperiment = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
-			this.AnnotationTypes = app.annotationTypes;
 
 		},
 		render: function() {
-			this.$el.html(this.TEMPLATE());
+			console.log(app.annotationTypes.toJSON())
+			this.$el.html(this.TEMPLATE({annotations: app.annotationTypes.toJSON()}));
 		},
 		events: {
 			"change #inputFile": "display",
