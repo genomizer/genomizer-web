@@ -22,7 +22,6 @@ define([
 				}));
 			}, this);
 
-			this.listenTo(this.collection, "all", this.render);
 			this.render();
 		},
 		render: function() {

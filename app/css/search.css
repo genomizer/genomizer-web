@@ -39,7 +39,13 @@
 	background: #f5f5f5;
 }
 
-.experiment-group:not(.expanded) .expand-row {
+.experiment-group:not(.expanded) .expand-row,
+.experiment-group:not(.raw-expanded) .raw-header-row,
+.experiment-group:not(.raw-expanded) .raw-file-row,
+.experiment-group:not(.profile-expanded) .profile-header-row,
+.experiment-group:not(.profile-expanded) .profile-file-row,
+.experiment-group:not(.region-expanded) .region-header-row,
+.experiment-group:not(.region-expanded) .region-file-row {
 	display: none;
 }
 
@@ -56,7 +62,10 @@
 	content: "\2b";
 }
 
-.expanded .expand-experiment-button:before {
+.expanded .expand-experiment-button:before,
+.raw-expanded .raw-expand-row .expand-button:before,
+.profile-expanded .profile-expand-row .expand-button:before,
+.region-expanded .region-expand-row .expand-button:before {
 	content: "\2212";
 }
 
