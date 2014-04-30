@@ -2,10 +2,11 @@ define([
 	'views/upload/FileView',
 	'text!templates/upload/Upload.html',
 	'models/File',
-	'views/upload/AddExperiment'
+	'views/upload/AddExperiment',
+	'views/upload/FileUploadList'
 ],
 
-function(FileView,UploadTemplate,File,AddExperiment) {
+function(FileView,UploadTemplate,File,AddExperiment,FileUploadList) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
@@ -17,8 +18,17 @@ function(FileView,UploadTemplate,File,AddExperiment) {
 			this.$el.html(this.TEMPLATE());
 			this.FileView.$el = this.$el.find("#file_view");
 			this.FileView.render();
+
+
+
 			this.addExperiment = new AddExperiment();
-			
+			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
+			this.addExperiment.render();
+
+
+			this.fileUploadList = new FileUploadList();
+			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
+			this.fileUploadList.render();
 		},
 		events: {
 			"change #inputFile": "display",
