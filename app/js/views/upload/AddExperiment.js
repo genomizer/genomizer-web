@@ -1,6 +1,6 @@
 
 define([
-	'text!templates/upload/Upload.html',
+	'text!templates/upload/Experiment.html',
 ],
 
 function(UploadTemplate) {
