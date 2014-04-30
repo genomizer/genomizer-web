@@ -22,12 +22,12 @@ function(FileView,UploadTemplate,File,AddExperiment,FileUploadList) {
 
 
 			this.addExperiment = new AddExperiment();
-			this.addExperiment.$el = this.$el.find("#newAnnotation");
+			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
 			this.addExperiment.render();
 
 
 			this.fileUploadList = new FileUploadList();
-			this.fileUploadList.$el = this.$el.find("#fileUploadList");
+			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
 		},
 		events: {

@@ -14,9 +14,6 @@ function(UploadTemplate,File,Files,FileUploadView) {
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 			var that = this;
-			this.$el.find(".fileInput").on('change',function() {
-				that.addSelectedFiles();
-			});
 			var $ul = this.$el.find("ul");
 			this.collection.each(function(file) {
 				var fuv = new FileUploadView({model:file});
@@ -26,7 +23,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 			
 		},
 		events: {
-//			"change .fileInput": "display" FUNKAR EJ :/
+			"change .fileInput": "addSelectedFiles"
 		},
 		addSelectedFiles: function() {
 			var that = this;
@@ -37,6 +34,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 					fileName:formFile.name
 				});
 				file.fileObj = formFile;
+			//	file.save();
 
 				that.collection.add(file);
 			});
