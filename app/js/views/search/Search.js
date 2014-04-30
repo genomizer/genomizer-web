@@ -244,12 +244,37 @@ define([
 		},
 		doSearch: function() {
 			alert("Searching for "+$('#search_input').val() +'.');
+			//searchResults skickar AJAX REQUEST och uppdaterar innehållet i dess container.
+			searchResults.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
+			//Create hidden downloader
+			var downloadURL = function downloadURL(url) {
+			    var hiddenIFrameID = 'hiddenDownloader',
+				iframe = document.getElementById(hiddenIFrameID);
+			    if (iframe === null) {
+				iframe = document.createElement('iframe');
+				iframe.id = hiddenIFrameID;
+				iframe.style.display = 'none';
+				document.body.appendChild(iframe);
+			    }
+			    iframe.src = url;
+			};
 			alert("download");
+
+			//alert("downloading "+$(searchResults.getSelectedFileID()));
+			//TODO AJAX download REQUEST (GET /file/<file-id>), authorization: token
+
+			
+
+			//downloadURL(xmlhttp.open("GET", "/file/"$(searchResults.getSelectedFileID()),true));
 		},
 		processSelected: function() {
-			alert("process");
+			app.router.navigate("process", {trigger:true});
+			//alert("process");
+
+			//alert("processing "+$(searchResults.getSelectedFileID()));
+			//TODO skicka fileID till process (BARSK)
 		}
 		
 	});

@@ -11,11 +11,11 @@ require([
 		'collections/AnnotationTypes',
 		'router'
 ],function(MainMenu,AnnotationTypes,Router) {
-	var router = new Router();
+	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
 
 
-	var mainMenu = new MainMenu({router:router,el: $("#main-menu")});
+	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
 
 
