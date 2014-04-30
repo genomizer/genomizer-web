@@ -15,7 +15,8 @@ require([
 ],function(SearchResults,Experiment,Experiments,Search,MainMenu,Router) {
 	var router = new Router();
 
-	var mainMenu = new MainMenu({router:router});
+	var mainMenu = new MainMenu({router:router,el: $("#main-menu")});
+	mainMenu.render();
 	Backbone.history.start();
 
 /*
