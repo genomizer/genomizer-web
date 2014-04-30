@@ -2,17 +2,15 @@ define([
 	'views/upload/FileView',
 	'text!templates/upload/Upload.html',
 	'models/File',
-	'collections/AnnotationTypes',
 	'views/upload/AddExperiment'
 ],
 
-function(FileView,UploadTemplate,File,AnnotationTypes,AddExperiment) {
+function(FileView,UploadTemplate,File,AddExperiment) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.FileView = new FileView();
 			this.File = new File();
-			this.AnnotationTypes = app.annotationTypes;
 			this.render();
 		},
 		render: function() {
@@ -24,8 +22,7 @@ function(FileView,UploadTemplate,File,AnnotationTypes,AddExperiment) {
 			this.addExperiment.render();
 		},
 		events: {
-			"change #inputFile": "display",
-			"click #CreateExperiment": "createExperiment"
+			"change #inputFile": "display"
 		},
 		display: function() {
 			var files = $("#inputFile")[0].files;
@@ -42,23 +39,6 @@ function(FileView,UploadTemplate,File,AnnotationTypes,AddExperiment) {
 				console.log(FileArray[i].filename);
 				console.log(FileArray[i].size);
 			}
-		},
-		createExperiment: function() {
-			$('#ExperimentButtons').hide();
-			$('#input-container').show();
-			//console.log("AnnotationTypes: ", AnnotationTypes);
-			//_.each(this.Annotation,);
-			this.AnnotationTypes.each(function(value,key) {
-				value = _.pick(value,'attributes');
-				var annot = _.values(value)[0];
-				console.log("annot: ", annot);
-				if (_.isArray(annot.value)) {
-					console.log(annot.name + " is array");
-					$("#input-container").append("<b>ARRAYYYYYY! :)</b><br/>");
-				}
-
-				console.log("Key: ", key);
-			});
 		}
 		
 	});
