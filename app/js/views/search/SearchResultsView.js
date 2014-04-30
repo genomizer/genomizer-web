@@ -14,6 +14,7 @@ define([
 
 			this.annotations = options.annotations;
 
+			// create subviews for each experiment in the given collection
 			this.collection.each(function(experiment) {
 				this.experimentViews.push(new ExperimentView({
 					annotations: this.annotations,
@@ -21,6 +22,7 @@ define([
 				}));
 			}, this);
 
+			this.listenTo(this.collection, "all", this.render);
 			this.render();
 		},
 		render: function() {
