@@ -7,7 +7,7 @@ define(['models/Experiment'],function(Experiment) {
 		initialize:function (models,options) {
 			this.query = options.query;
 			if(this.query !== undefined) {
-			     this.fetch();
+			    this.fetch();
 			}
 		}
 
