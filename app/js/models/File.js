@@ -1,5 +1,6 @@
 define([],function() {
 	var File = Backbone.Model.extend({
+		/*
 		defaults : {
 			experimentID: "id",
 			fileName: "name",
@@ -10,9 +11,9 @@ define([],function() {
 			date: "2014-04-25",
 			URL: "URLtofile?"
 		},
+	   */
 		initialize: function() {
-			this.hatt = 3;
-			this.set({sex:"Female"});
+
 		}
 	});
 	return File;
