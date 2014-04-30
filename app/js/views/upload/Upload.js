@@ -1,16 +1,21 @@
 define([
 	'views/upload/FileView',
 	'text!templates/upload/Upload.html',
-	'models/File'
+	'models/File',
+	'collections/AnnotationTypes',
+
+	'models/Annotation'
 ],
 
-function(FileView,UploadTemplate,File) {
+function(FileView,UploadTemplate,File,AnnotationTypes,Annotation) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate + '<section id="file_view"></section>'),
 		initialize: function() {
 			this.FileView = new FileView();
 			this.render();
 			this.File = new File();
+			this.AnnotationTypes = new AnnotationTypes();
+			this.Annotation = new Annotation();
 		},
 		el: $("#upload"),
 		render: function() {
@@ -41,6 +46,10 @@ function(FileView,UploadTemplate,File) {
 		createExperiment: function() {
 			$('#ExperimentButtons').hide();
 			$('#input-container').show();
+			//_.each(this.Annotation,);
+			_.each(this.Annotation,function(value,key) {
+				console.log("Value: ", value, key);
+			});
 		}
 		
 	});
