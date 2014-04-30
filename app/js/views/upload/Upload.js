@@ -1,63 +1,42 @@
 define([
-	'views/upload/FileView',
 	'text!templates/upload/Upload.html',
-	'models/File',
 	'views/upload/AddExperiment',
-	'views/upload/FileUploadList'
+	'views/upload/FileUploadList',
+	'collections/Experiments',
+	'models/Experiment'
 ],
 
-function(FileView,UploadTemplate,File,AddExperiment,FileUploadList) {
+function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
-			this.FileView = new FileView();
-			this.File = new File();
+			this.experiments = new Experiments();
+			this.experiment = new Experiment();
+			this.experiments.add(this.experiment);
 			this.render();
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-			this.FileView.$el = this.$el.find("#file_view");
-			this.FileView.render();
 
-
-
-			this.addExperiment = new AddExperiment();
-			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
-			this.addExperiment.render();
-
-
-			this.fileUploadList = new FileUploadList();
+			this.fileUploadList = new FileUploadList({experiment:this.experiment});
 			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
-		},
-		events: {
-			"change #inputFile": "display",
-			"click #CreateExperiment": "CreateExperiment"
+			window.hatt = this;
 
-		},
-		display: function() {
-			var files = $("#inputFile")[0].files;
-			var FileArray = [];
-			for (var i = 0; i < files.length; i++) {
-				
-				//console.log(files[i].name);
-				this.File.filename = files[i].name;
-				this.File.size = (files[i].size);	
-				//console.log(this.File.filename);
-				FileArray.push(this.File);
-			}
-			for (var i = 0; i < files.length; i++) {
-				console.log(FileArray[i].filename);
-				console.log(FileArray[i].size);
-			}
-		},
 
-		CreateExperiment: function() {
-
-			this.addExperiment.$el = this.$el.find("#newAnnotation");
+			this.addExperiment = new AddExperiment({model:this.experiment});
+			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
 			this.addExperiment.render();
 		}
 		
+		/*,
+		events: {
+			"click #CreateExperiment": "createExperiment"
+		},
+		createExperiment: function() {
+		}
+		
+	   */
 	});
 	return Upload;
 });
