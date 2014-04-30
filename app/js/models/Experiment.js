@@ -1,4 +1,6 @@
-define([],function() {
+define([
+	'collections/Files'
+	],function(Files) {
 	var Experiment = Backbone.Model.extend({
 		defaults : {
 			"name": "experimentName1",
@@ -7,18 +9,30 @@ define([],function() {
 				{
 					"id": "file-id1", 
 					"type": "raw",
-					"name": "file1.wig"
+					"name": "file1.wig",
+					"uploadedBy": "user",
+					"date": "2014-04-22",
+					"size": "1.3gb",
+					"URL": "URLtofile"
 				},
 				{
 					"id": "file-id2", 
 					"type": "profile",
 					"name": "file2.as"
+					"uploadedBy": "user",
+					"date": "2014-04-22",
+					"size": "1.3gb",
+					"URL": "URLtofile"
 				}, 
 				{
 					"id": "file-id3", 
 					"type": "region",
 					"name": "file3.df"
-				}, 
+					"uploadedBy": "user",
+					"date": "2014-04-22",
+					"size": "1.3gb",
+					"URL": "URLtofile"
+				},
 			],
 			"annotations": [
 				{
@@ -64,6 +78,7 @@ define([],function() {
 			]
 		},
 		initialize: function() {
+			this.files = new Files(this.get("files"));
 			
 		},
 		getAnnotation: function(id) {
