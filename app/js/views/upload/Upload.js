@@ -18,11 +18,12 @@ function(FileView,UploadTemplate,File,AddExperiment) {
 			this.FileView.$el = this.$el.find("#file_view");
 			this.FileView.render();
 			this.addExperiment = new AddExperiment();
-			this.addExperiment.$el = this.$el.find("#newAnnotation");
-			this.addExperiment.render();
+			
 		},
 		events: {
-			"change #inputFile": "display"
+			"change #inputFile": "display",
+			"click #CreateExperiment": "CreateExperiment"
+
 		},
 		display: function() {
 			var files = $("#inputFile")[0].files;
@@ -39,6 +40,12 @@ function(FileView,UploadTemplate,File,AddExperiment) {
 				console.log(FileArray[i].filename);
 				console.log(FileArray[i].size);
 			}
+		},
+
+		CreateExperiment: function() {
+
+			this.addExperiment.$el = this.$el.find("#newAnnotation");
+			this.addExperiment.render();
 		}
 		
 	});
