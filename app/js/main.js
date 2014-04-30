@@ -5,20 +5,23 @@ require.config({
 	}
 });
 
-
+var app = {};
 require([
-		'collections/SearchResults',
-		'models/Experiment',
-		'collections/Experiments',
-		'views/search/Search',
 		'views/MainMenu',
+		'collections/AnnotationTypes',
 		'router'
-],function(SearchResults,Experiment,Experiments,Search,MainMenu,Router) {
+],function(MainMenu,AnnotationTypes,Router) {
 	var router = new Router();
+	app.annotationTypes = new AnnotationTypes();
+
 
 	var mainMenu = new MainMenu({router:router,el: $("#main-menu")});
 	mainMenu.render();
-	Backbone.history.start();
+
+
+	app.annotationTypes.fetch().success(function() {
+		Backbone.history.start();
+	});
 
 /*
 	console.log("Search for data");
