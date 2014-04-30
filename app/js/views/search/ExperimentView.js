@@ -24,7 +24,7 @@ define([
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
 			"click .expand-button": "toggleFileRows",
-			"change .checked-input": "fileSelect",
+			"click .checked-input": "fileSelect",
 		},
 		toggleTypeRows: function(event) {
 			$(event.delegateTarget).toggleClass("expanded");
@@ -33,9 +33,9 @@ define([
 			$(event.delegateTarget).toggleClass($(event.currentTarget).data("filetype") + "-expanded");
 		},
 		fileSelect: function(event) {
-			console.log("checketycheck", $(event.currentTarget).prop("checked"));
 			var fileID = $(event.currentTarget).closest("tr").data("id");
-			this.model.trigger("fileSelect", fileID,  $(event.currentTarget).prop("checked"));
+			this.model.trigger("fileSelect", this.model, fileID,  $(event.currentTarget).prop("checked"));
+			//event.preventDefault();
 		}
 		
 	});

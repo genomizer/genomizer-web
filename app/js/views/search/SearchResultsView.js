@@ -22,6 +22,8 @@ define([
 				}));
 			}, this);
 
+			this.collection.on("highlightChange", this.checkFiles, this);
+
 			this.render();
 		},
 		render: function() {
@@ -40,10 +42,21 @@ define([
 
 			
 		},
-		events: {
-			//"click #search_button": "doSearch"
+		checkFiles: function(files) {
+			var rows = this.$el.find(".file-row");
 			
-		},
+			rows.each(function() {
+				var isChecked = false;
+				var row = $(this);
+				for (var i = files.length - 1; i >= 0; i--) {
+					if(row.data("id") == files[i].get("id")) {
+						isChecked = true;
+					}
+				}
+
+				row.find(".checked-input").prop("checked", isChecked);
+			});
+		}
 		
 	});
 	return SearchResultsView;

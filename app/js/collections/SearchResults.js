@@ -10,16 +10,28 @@ define(['models/Experiment'],function(Experiment) {
 			    this.fetch();
 			}
 			this.selectedFiles = [];
+
+			this.on("fileSelect", this.fileSelectHandler, this);
+		},
+		fileSelectHandler: function(experiment, fileID, checked) {
+			var file = experiment.files.get(fileID);
+			if(checked) {
+				this.selectFile(file);
+			} else {
+				this.deselectFile(file);
+			}
 		},
 		selectFile: function(file) {
+			console.log("SearchResults > selectFile > file: ", file);
 			//Only one file may be selected at a time.
 			this.selectedFiles = [file];
-			this.trigger('highlightChange', [this.selectedFiles]);
+			this.trigger('highlightChange', this.selectedFiles);
 		},
-		deselectFile: function() {
+		deselectFile: function(file) {
+			console.log("SearchResults > deselectFile > file: ", file);
 			//Must take argument of which ID to remove when multiple files can be selected.
 			this.selectedFiles = [];
-			this.trigger('highlightChange', [this.selectedFiles]);
+			this.trigger('highlightChange', this.selectedFiles);
 		},
 		getSelectedFiles: function() {
 			return this.selectedFiles;

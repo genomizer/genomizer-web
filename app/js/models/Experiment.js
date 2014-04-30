@@ -18,7 +18,7 @@ define([
 				{
 					"id": "file-id2", 
 					"type": "profile",
-					"name": "file2.as"
+					"name": "file2.as",
 					"uploadedBy": "user",
 					"date": "2014-04-22",
 					"size": "1.3gb",
@@ -27,7 +27,7 @@ define([
 				{
 					"id": "file-id3", 
 					"type": "region",
-					"name": "file3.df"
+					"name": "file3.df",
 					"uploadedBy": "user",
 					"date": "2014-04-22",
 					"size": "1.3gb",
