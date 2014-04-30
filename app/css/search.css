@@ -1,0 +1,68 @@
+
+/* === BEGIN SEARCH FORM === */
+
+#search_form {
+	text-align: center;
+	margin: 40px auto;
+}
+
+.search-toolbar {
+	position: relative;
+	display: table;
+	margin: 0 auto;
+}
+
+.search-toolbar > div {
+	display: table-cell;
+	padding-right: 8px;
+	vertical-align: top;
+}
+
+#search_input {
+	width: 400px;
+}
+
+/* === END SEARCH FORM === */
+
+
+/* === BEGIN SEARCH RESULTS === */
+
+#results_container {
+	
+}
+
+#results_container .panel-heading {
+	border-bottom: 0;
+}
+
+#results_container thead {
+	background: #f5f5f5;
+}
+
+.experiment-group:not(.expanded) .expand-row {
+	display: none;
+}
+
+.expand-button {
+	background: none;
+	border: none;
+}
+
+.expand-button:focus {
+	outline: none;
+}
+
+.expand-button:before {
+	content: "\2b";
+}
+
+.expanded .expand-experiment-button:before {
+	content: "\2212";
+}
+
+.expanded .expand-experiment-button {
+	position: relative;
+	left: -2px;
+}
+
+/* === END SEARCH RESULTS === */

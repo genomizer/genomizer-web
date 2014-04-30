@@ -1,0 +1,28 @@
+<tr class="title-row"> <!-- MAIN EXPERIMENT ROW -->
+	<td>
+		<button class="expand-button expand-experiment-button glyphicon"></button>
+	</td>
+	<td>
+		<input class="checked-input" type="checkbox">
+	</td>
+	<td>
+		<span><%- experiment.attributes.name %></span>
+	</td>
+	<% annotations.each(function(annotation) { %>  
+		<td>
+			<span><%- experiment.getAnnotation(annotation.attributes.id).value %></span>
+		</td>
+	<% }); %>
+</tr>
+
+<tr class="raw-expand-row expand-row">	<!-- RAW EXPANSION ROW -->
+	<td>
+		<button class="expand-button expand-raw-button glyphicon"></button>
+	</td>
+	<td>
+		<input class="checked-input" type="checkbox">
+	</td>
+	<td colspan="<%- annotations.length + 1 %>">
+		<span>Raw Files</span>
+	</td>
+</tr>
