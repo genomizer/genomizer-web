@@ -37,3 +37,16 @@
 	text-align: center;
 	margin: 40px auto;
 }
+
+#button_container ul{
+	display: inline-block;
+	list-style: none;
+	padding-top: 10px;
+	position: relative;
+}
+
+#button_container .input-group {
+	width: 500px;
+	padding: 0;
+	padding-top: 10px;
+}
