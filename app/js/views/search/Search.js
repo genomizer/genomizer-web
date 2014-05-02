@@ -10,58 +10,7 @@ define([
 		TEMPLATE: _.template(inputGroupTemplate + '<section id="search_results_view"></section>'),
 		initialize: function(options) {
 
-			var annotationTypes = new AnnotationTypes([
- {
-  "id": "1", 
-  "name": "pubmedId",
-  "value": "freetext",
-  "forced": "false"
- }, 
- {
-  "id": "2",
-  "name": "type",
-  "value": "freetext",
-  "forced": "false"
- },
- {
-  "id": "3",
-  "name": "specie",
-  "value": ["fly", "human", "rat"],
-  "forced": "true"
- },
- {
-  "id": "4",
-  "name": "genome release",
-  "value": "freetext",
-  "forced": "false"
- },
- {
-  "id": "5",
-  "name": "cell line",
-  "value": ["yes", "no"],
-  "forced": "true"
- },
- {
-  "id": "6",
-  "name": "development stage",
-  "value": ["larva", "larvae"],
-  "forced": "true"
- },
- {
-  "id": "7",
-  "name": "sex",
-  "value": ["male", "female", "unknown"],
-  "forced": "true"
- },
- {
-  "id": "8",
-  "name": "tissue",
-  "value": ["eye", "leg"],
-  "forced": "true"
- }
-]);
-
-			this.collection = new SearchResults([
+			this.collection = new SearchResults([/*
    {
     "name": "experimentName",
     "created by": "user",
@@ -168,7 +117,7 @@ define([
                "date": "2014-04-22",
                "size": "1.3gb",
                "URL": "URLtofile"
-              }, 
+              } 
              ],
     "annotations": 
                  [
@@ -214,11 +163,11 @@ define([
                  }
                  ]
     }
-],{query:options.query});
+*/], {query:options.query});
 
 			this.resultsView = new SearchResultsView({
 				collection: this.collection,
-				annotations: annotationTypes
+				annotations: app.annotationTypes
 			});
       this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
@@ -236,7 +185,6 @@ define([
 			"click #process_button": "processSelected"
 		},
     showDownloadAndProcessButtons: function(fileArray) {
-      
       if(fileArray.length != 0) {
         $('#download_button').prop('disabled', false);
       } else {
@@ -247,7 +195,6 @@ define([
       } else {
         $('#process_button').prop('disabled', true);
       }
-
     },
 		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
@@ -258,9 +205,10 @@ define([
 
 		},
 		doSearch: function() {
-			alert("Searching for "+$('#search_input').val() +'.');
+			console.log("In doSearch: Searching for "+$('#search_input').val() +'.');
 			//searchResults skickar AJAX REQUEST och uppdaterar innehållet i dess container.
-			searchResults.setSearchQuery($('#search_input').val());
+      app.router.navigate('search/' + $('#search_input').val(), {trigger:true});
+			this.collection.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
 			//Create hidden downloader
@@ -274,6 +222,7 @@ define([
 				document.body.appendChild(iframe);
 			    }
 			    iframe.src = url;
+
 			};
 
       var URLsToDownload = this.collection.getSelectedFileURLs();

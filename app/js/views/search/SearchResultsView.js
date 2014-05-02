@@ -10,9 +10,14 @@ define([
 		headerTemplate: _.template(headerTemplateHtml),
 
 		initialize: function(options) {
-			this.experimentViews = [];
-
 			this.annotations = options.annotations;
+
+			this.collection.on("highlightChange", this.checkFiles, this);
+			this.collection.on("change", this.render, this);
+			//this.render();
+		},
+		render: function() {
+			this.experimentViews = [];
 
 			// create subviews for each experiment in the given collection
 			this.collection.each(function(experiment) {
@@ -21,12 +26,6 @@ define([
 					model : experiment,
 				}));
 			}, this);
-
-			this.collection.on("highlightChange", this.checkFiles, this);
-
-			this.render();
-		},
-		render: function() {
 
 			// render header template
 			this.$el.html(this.headerTemplate({annotations: this.annotations}));
@@ -39,8 +38,6 @@ define([
 				// append experiment rows to table
 				this.$el.append(experimentView.$el);
 			}, this);
-
-			
 		},
 		checkFiles: function(files) {
 			var rows = this.$el.find(".file-row");
