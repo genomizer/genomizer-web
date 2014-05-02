@@ -220,6 +220,7 @@ define([
 				collection: this.collection,
 				annotations: annotationTypes
 			});
+      this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
 		},
 		el: $("#search"),
@@ -232,10 +233,22 @@ define([
 			"click #search_button": "doSearch",
 			"keyup #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
-			"click #process_button": "processSelected",
-      //on check SearchResultsView .checked-input : "showDownload"
-
+			"click #process_button": "processSelected"
 		},
+    showDownloadAndProcessButtons: function(fileArray) {
+      
+      if(fileArray.length != 0) {
+        $('#download_button').prop('disabled', false);
+      } else {
+        $('#download_button').prop('disabled', true);
+      }
+      if(fileArray.length == 1 && fileArray[0].get("type") == "raw") {
+        $('#process_button').prop('disabled', false);
+      } else {
+        $('#process_button').prop('disabled', true);
+      }
+
+    },
 		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
 				$('#search_button').prop('disabled', false);
@@ -250,7 +263,6 @@ define([
 			searchResults.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
-      alert("download");
 			//Create hidden downloader
 			var downloadURL = function downloadURL(url) {
 			    var hiddenIFrameID = 'hiddenDownloader',
@@ -270,12 +282,6 @@ define([
         downloadURL(URLsToDownload[i]);
       };
 
-			//alert("downloading "+$(searchResults.getSelectedFileID()));
-			//TODO AJAX download REQUEST (GET /file/<file-id>), authorization: token
-
-			
-
-			//downloadURL(xmlhttp.open("GET", "/file/"$(searchResults.getSelectedFileID()),true));
 		},
 		processSelected: function() {
 			app.router.navigate("process", {trigger:true});
