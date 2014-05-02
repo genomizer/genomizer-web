@@ -37,6 +37,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 			//	file.save();
 
 				that.collection.add(file);
+				file.uploadFile();
 			});
 			this.render();
 		}
