@@ -5,30 +5,36 @@ define(['models/Experiment'],function(Experiment) {
 			return 'http://genomizer.apiary.io/search/annotations=?%3CpubmedStyleQuery%3E';
 		},
 
-*/		url: function() {
+*/		/*url: function() {
 			$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 	      		options.url = 'http://genomizer.apiary.io/search/annotations=?' + options.url;
 	    	});
 			return '%3CpubmedStyleQuery%3E';
+		},*/
+		url: function() {
+			return 'http://genomizer.apiary.io/search/annotations=?' + this.query;
 		},
 		model: Experiment,
 		initialize:function (models,options) {
 			this.query = options.query;
+			var that = this;
 
 			if(this.query !== undefined) {
-/*			    this.fetch().success(function(res) {
+			    this.fetch().success(function(res) {
+			    	_.defer(function() {that.trigger("change");});
 			    	console.log("SearchResults > fetch > success: ", res);
 			    }).error(function(xhr, status, error) {
 			    	console.log("SearchResults > fetch > error: ");
 			    	var err = eval("(" + xhr.responseText + ")");
   					console.log(arguments[1] + " " + arguments[2]);
 			    });
-*/			}
+			}
 			this.selectedFiles = [];
 
 			this.on("fileSelect", this.fileSelectHandler, this);
 		},
 		fileSelectHandler: function(experiment, fileID, checked) {
+			console.log("fileSelect handler triggered");
 			var file = experiment.files.get(fileID);
 			if(checked) {
 				this.selectFile(file);

@@ -10,58 +10,7 @@ define([
 		TEMPLATE: _.template(inputGroupTemplate + '<section id="search_results_view"></section>'),
 		initialize: function(options) {
 
-			var annotationTypes = new AnnotationTypes([
- {
-  "id": "1", 
-  "name": "pubmedId",
-  "value": "freetext",
-  "forced": "false"
- }, 
- {
-  "id": "2",
-  "name": "type",
-  "value": "freetext",
-  "forced": "false"
- },
- {
-  "id": "3",
-  "name": "specie",
-  "value": ["fly", "human", "rat"],
-  "forced": "true"
- },
- {
-  "id": "4",
-  "name": "genome release",
-  "value": "freetext",
-  "forced": "false"
- },
- {
-  "id": "5",
-  "name": "cell line",
-  "value": ["yes", "no"],
-  "forced": "true"
- },
- {
-  "id": "6",
-  "name": "development stage",
-  "value": ["larva", "larvae"],
-  "forced": "true"
- },
- {
-  "id": "7",
-  "name": "sex",
-  "value": ["male", "female", "unknown"],
-  "forced": "true"
- },
- {
-  "id": "8",
-  "name": "tissue",
-  "value": ["eye", "leg"],
-  "forced": "true"
- }
-]);
-
-			this.collection = new SearchResults(/*[
+			this.collection = new SearchResults([/*
    {
     "name": "experimentName",
     "created by": "user",
@@ -214,11 +163,11 @@ define([
                  }
                  ]
     }
-],*/ [], {query:options.query});
+*/], {query:options.query});
 
 			this.resultsView = new SearchResultsView({
 				collection: this.collection,
-				annotations: annotationTypes
+				annotations: app.annotationTypes
 			});
       this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
@@ -256,7 +205,7 @@ define([
 
 		},
 		doSearch: function() {
-			alert("Searching for "+$('#search_input').val() +'.');
+			console.log("In doSearch: Searching for "+$('#search_input').val() +'.');
 			//searchResults skickar AJAX REQUEST och uppdaterar innehållet i dess container.
       app.router.navigate('search/' + $('#search_input').val(), {trigger:true});
 			this.collection.setSearchQuery($('#search_input').val());
