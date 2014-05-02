@@ -34,7 +34,6 @@ define(['models/Experiment'],function(Experiment) {
 			this.on("fileSelect", this.fileSelectHandler, this);
 		},
 		fileSelectHandler: function(experiment, fileID, checked) {
-			console.log("fileSelect handler triggered");
 			var file = experiment.files.get(fileID);
 			if(checked) {
 				this.selectFile(file);
