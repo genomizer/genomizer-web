@@ -230,11 +230,13 @@ define([
 		},
 		events: {
 			"click #search_button": "doSearch",
-			"keyup #search_input": "showButton",
+			"keyup #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
-			"click #process_button": "processSelected"
+			"click #process_button": "processSelected",
+      //on check SearchResultsView .checked-input : "showDownload"
+
 		},
-		showButton: function() {
+		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
 				$('#search_button').prop('disabled', false);
 			} else {
@@ -248,6 +250,7 @@ define([
 			searchResults.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
+      alert("download");
 			//Create hidden downloader
 			var downloadURL = function downloadURL(url) {
 			    var hiddenIFrameID = 'hiddenDownloader',
@@ -260,7 +263,12 @@ define([
 			    }
 			    iframe.src = url;
 			};
-			alert("download");
+
+      var URLsToDownload = this.collection.getSelectedFileURLs();
+      for (var i = 0; i < URLsToDownload.length; i++) {
+        alert('Starting to download from url: '+URLsToDownload[i]);
+        downloadURL(URLsToDownload[i]);
+      };
 
 			//alert("downloading "+$(searchResults.getSelectedFileID()));
 			//TODO AJAX download REQUEST (GET /file/<file-id>), authorization: token
