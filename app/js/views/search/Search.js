@@ -230,11 +230,13 @@ define([
 		},
 		events: {
 			"click #search_button": "doSearch",
-			"keyup #search_input": "showButton",
+			"keyup #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
-			"click #process_button": "processSelected"
+			"click #process_button": "processSelected",
+      //on check SearchResultsView .checked-input : "showDownload"
+
 		},
-		showButton: function() {
+		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
 				$('#search_button').prop('disabled', false);
 			} else {
