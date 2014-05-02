@@ -8,6 +8,28 @@ define([],function() {
 			"process":"process",
 		},
 
+		initialize: function(options) {
+			this.history = [];
+			this.on("all", this.storeRoute);
+			console.log("hola", this);
+
+		},
+
+		storeRoute: function() {
+			this.history.push(Backbone.history.fragment);
+		},
+
+		previous: function(options) {
+			if (this.history.length > 1) {
+				if(options) {
+					this.navigate(this.history.pop(), options);
+				} else {
+					this.navigate(this.history.pop());
+				}
+				
+			}
+		},
+
 		search: function(query) {
 			var that = this;
 			require([
