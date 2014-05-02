@@ -23,11 +23,11 @@ define([
 			}, this);
 
 			this.collection.on("highlightChange", this.checkFiles, this);
-
-			this.render();
+			this.collection.on("change", this.render, this);
+			//this.render();
 		},
 		render: function() {
-
+			console.log("rendering");
 			// render header template
 			this.$el.html(this.headerTemplate({annotations: this.annotations}));
 
@@ -61,3 +61,8 @@ define([
 	});
 	return SearchResultsView;
 });
+
+
+/*
+change event lyssna på searchresults
+*/

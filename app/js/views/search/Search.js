@@ -61,7 +61,7 @@ define([
  }
 ]);
 
-			this.collection = new SearchResults([
+			this.collection = new SearchResults(/*[
    {
     "name": "experimentName",
     "created by": "user",
@@ -168,7 +168,7 @@ define([
                "date": "2014-04-22",
                "size": "1.3gb",
                "URL": "URLtofile"
-              }, 
+              } 
              ],
     "annotations": 
                  [
@@ -214,7 +214,7 @@ define([
                  }
                  ]
     }
-],{query:options.query});
+],*/ [], {query:options.query});
 
 			this.resultsView = new SearchResultsView({
 				collection: this.collection,
@@ -236,7 +236,6 @@ define([
 			"click #process_button": "processSelected"
 		},
     showDownloadAndProcessButtons: function(fileArray) {
-      
       if(fileArray.length != 0) {
         $('#download_button').prop('disabled', false);
       } else {
@@ -247,7 +246,6 @@ define([
       } else {
         $('#process_button').prop('disabled', true);
       }
-
     },
 		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
@@ -260,7 +258,8 @@ define([
 		doSearch: function() {
 			alert("Searching for "+$('#search_input').val() +'.');
 			//searchResults skickar AJAX REQUEST och uppdaterar innehållet i dess container.
-			searchResults.setSearchQuery($('#search_input').val());
+      app.router.navigate('search/' + $('#search_input').val(), {trigger:true});
+			this.collection.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
 			//Create hidden downloader
@@ -274,6 +273,7 @@ define([
 				document.body.appendChild(iframe);
 			    }
 			    iframe.src = url;
+
 			};
 
       var URLsToDownload = this.collection.getSelectedFileURLs();
