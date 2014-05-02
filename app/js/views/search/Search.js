@@ -220,6 +220,7 @@ define([
 				collection: this.collection,
 				annotations: annotationTypes
 			});
+      this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
 		},
 		el: $("#search"),
@@ -230,11 +231,25 @@ define([
 		},
 		events: {
 			"click #search_button": "doSearch",
-			"keyup #search_input": "showButton",
+			"keyup #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected"
 		},
-		showButton: function() {
+    showDownloadAndProcessButtons: function(fileArray) {
+      
+      if(fileArray.length != 0) {
+        $('#download_button').prop('disabled', false);
+      } else {
+        $('#download_button').prop('disabled', true);
+      }
+      if(fileArray.length == 1 && fileArray[0].get("type") == "raw") {
+        $('#process_button').prop('disabled', false);
+      } else {
+        $('#process_button').prop('disabled', true);
+      }
+
+    },
+		showSearchButton: function() {
 			if($('#search_input').val().length != 0) {
 				$('#search_button').prop('disabled', false);
 			} else {
@@ -260,14 +275,13 @@ define([
 			    }
 			    iframe.src = url;
 			};
-			alert("download");
 
-			//alert("downloading "+$(searchResults.getSelectedFileID()));
-			//TODO AJAX download REQUEST (GET /file/<file-id>), authorization: token
+      var URLsToDownload = this.collection.getSelectedFileURLs();
+      for (var i = 0; i < URLsToDownload.length; i++) {
+        alert('Starting to download from url: '+URLsToDownload[i]);
+        downloadURL(URLsToDownload[i]);
+      };
 
-			
-
-			//downloadURL(xmlhttp.open("GET", "/file/"$(searchResults.getSelectedFileID()),true));
 		},
 		processSelected: function() {
 			app.router.navigate("process", {trigger:true});
