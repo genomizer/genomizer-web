@@ -1,5 +1,5 @@
 #experiment_form {
-	max-width: 800px;
+	max-width: 900px;
 	margin: 40px auto;
 }
 
@@ -33,18 +33,12 @@
 	font-weight: normal;
 }
 
-#ExperimentButtons {
-	text-align: center;
-	margin: 40px auto;
-}
-
 #upload_form {
 	text-align: center;
 	margin: 40px auto;
 }
 
 #upload_form #existing_experiment_field{
-	text-align: center;
 	width: 400px;
 }
 
