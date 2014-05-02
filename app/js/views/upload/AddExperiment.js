@@ -25,16 +25,15 @@ function(UploadTemplate) {
 
 			var annot = [];
 			app.annotationTypes.each(function(at) {
-				if(input[at.get("name")] !== undefined && input[at.get("name")] !== "Experiment name") {
+				//if(input[at.get("name")] !== undefined && input[at.get("name")] !== "Experiment name") {
 					annot.push({
 						id:at.id,
 						name:at.get("name"),
 						value:input[at.get("name")] 
 					})
-				}
+				//}
 			});
-			this.model.set("annotation",annot);
-			console.log(annot);
+			this.model.set({"annotations":annot,"name":input["Experiment name"]});
 		}
 		
 	});
