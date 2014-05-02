@@ -17,25 +17,22 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-
+		},
+		
+		events: {
+			"click #CreateExperiment": "createExperiment"
+		},
+		createExperiment: function() {
 			this.fileUploadList = new FileUploadList({experiment:this.experiment});
 			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
-
-
+			
 			this.addExperiment = new AddExperiment({model:this.experiment});
 			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
 			this.addExperiment.render();
 		}
 		
-		/*,
-		events: {
-			"click #CreateExperiment": "createExperiment"
-		},
-		createExperiment: function() {
-		}
-		
-	   */
+	   
 	});
 	return Upload;
 });
