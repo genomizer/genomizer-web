@@ -250,6 +250,7 @@ define([
 			searchResults.setSearchQuery($('#search_input').val());
 		},
 		downloadSelected: function() {
+      alert("download");
 			//Create hidden downloader
 			var downloadURL = function downloadURL(url) {
 			    var hiddenIFrameID = 'hiddenDownloader',
@@ -262,7 +263,12 @@ define([
 			    }
 			    iframe.src = url;
 			};
-			alert("download");
+
+      var URLsToDownload = this.collection.getSelectedFileURLs();
+      for (var i = 0; i < URLsToDownload.length; i++) {
+        alert('Starting to download from url: '+URLsToDownload[i]);
+        downloadURL(URLsToDownload[i]);
+      };
 
 			//alert("downloading "+$(searchResults.getSelectedFileID()));
 			//TODO AJAX download REQUEST (GET /file/<file-id>), authorization: token
