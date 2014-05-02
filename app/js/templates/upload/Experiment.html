@@ -5,6 +5,14 @@
 			New Experiment
 			</div>
   			<ul class="annotation-list">
+  				<li>
+  					<label>Experiment name</label>
+  					<input name="Experiment name" class="form-control" type="text"></input>
+  				</li>
+  				<!--<li>
+  					<label>Created by</label>
+  					<input name="Created by" class="form-control" type="text"></input>
+  				</li>-->
 				<% _.each(annotations, function(annotation) { %>
 					<li>
 						<label for="<%- annotation.name %>"><%- annotation.name %></label>
