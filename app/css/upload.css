@@ -1,5 +1,5 @@
 #experiment_form {
-	width:800px;
+	max-width: 800px;
 	margin: 40px auto;
 }
 
@@ -38,15 +38,19 @@
 	margin: 40px auto;
 }
 
-#button_container ul{
-	display: inline-block;
-	list-style: none;
-	padding-top: 10px;
-	position: relative;
+#upload_form {
+	text-align: center;
 }
 
-#button_container .input-group {
+#upload_form .input-group{
+	text-align: center;
 	width: 500px;
-	padding: 0;
-	padding-top: 10px;
+}
+
+#file_upload {
+	text-align: center;
+}
+
+#file_upload ul{
+	margin-top: 40px;
 }
