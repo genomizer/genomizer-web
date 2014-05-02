@@ -40,11 +40,12 @@
 
 #upload_form {
 	text-align: center;
+	margin: 40px auto;
 }
 
-#upload_form .input-group{
+#upload_form #existing_experiment_field{
 	text-align: center;
-	width: 500px;
+	width: 400px;
 }
 
 #file_upload {
