@@ -25,7 +25,7 @@ function(UploadTemplate) {
 
 			var annot = [];
 			app.annotationTypes.each(function(at) {
-				if(input[at.get("name")] !== undefined) {
+				if(input[at.get("name")] !== undefined && input[at.get("name")] !== "Experiment name") {
 					annot.push({
 						id:at.id,
 						name:at.get("name"),
@@ -34,6 +34,7 @@ function(UploadTemplate) {
 				}
 			});
 			this.model.set("annotation",annot);
+			console.log(annot);
 		}
 		
 	});
