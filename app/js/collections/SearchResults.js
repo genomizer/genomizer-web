@@ -6,8 +6,13 @@ define(['models/Experiment'],function(Experiment) {
 		model: Experiment,
 		initialize:function (models,options) {
 			this.query = options.query;
+
 			if(this.query !== undefined) {
-			    this.fetch();
+			    this.fetch().success(function(res) {
+			    	console.log("SearchResults > fetch > success: ", res);
+			    }).error(function(res) {
+			    	console.log("SearchResults > fetch > error: ", res);
+			    });
 			}
 			this.selectedFiles = [];
 
