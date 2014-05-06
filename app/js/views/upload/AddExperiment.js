@@ -10,7 +10,11 @@ function(UploadTemplate) {
 
 		},
 		render: function() {
-			this.$el.html(this.TEMPLATE({annotations: app.annotationTypes.toJSON()}));
+			this.$el.html(this.TEMPLATE({
+				annotations: app.annotationTypes.toJSON(),
+				experiment:this.model.toJSON(),
+				existingExperiment:this.model.existingExperiment
+			}));
 		},
 		events: {
 			"change input":"updateModel",
@@ -25,13 +29,11 @@ function(UploadTemplate) {
 
 			var annot = [];
 			app.annotationTypes.each(function(at) {
-				//if(input[at.get("name")] !== undefined && input[at.get("name")] !== "Experiment name") {
-					annot.push({
-						id:at.id,
-						name:at.get("name"),
-						value:input[at.get("name")] 
-					})
-				//}
+				annot.push({
+					id:at.id,
+					name:at.get("name"),
+					value:input[at.get("name")] 
+				})
 			});
 			this.model.set({"annotations":annot,"name":input["Experiment name"]});
 		}
