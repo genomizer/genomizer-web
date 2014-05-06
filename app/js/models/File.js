@@ -1,19 +1,6 @@
 define([],function() {
 	var File = Backbone.Model.extend({
-		/*
-		defaults : {
-			experimentID: "id",
-			fileName: "name",
-			fileId: "id",
-			size: "1.3gb",
-			type: "raw",
-			uploadedBy: "user",
-			date: "2014-04-25",
-			URL: "URLtofile?"
-		},
-	   */
 		initialize: function() {
-			this.trigger
 			this.progress = 0;
 		},
 		uploadFile: function() {
@@ -22,7 +9,7 @@ define([],function() {
 			formData.append('uploadfile',this.fileObj);
 			formData.append('path','/var/www/html/data/humanarm.fastq');
 			$.ajax({
-				url: "http://scratchy.cs.umu.se:8090/html/upload.php",
+				url: "http://scratchy.cs.umu.se:8090/upload.php",
 				type: "POST",
 				data: formData,
 				username: "pvt",
@@ -53,6 +40,14 @@ define([],function() {
 			this.uploadDone = true;
 			this.progress = 1;
 			this.trigger("uploadProgress");
+		},
+		fetchAndUpload: function() {
+			var that = this;
+			debugger;
+			this.fetch().success(function() {
+				// Url should now be available
+				this.uploadFile();
+			});
 		}
 	});
 	return File;

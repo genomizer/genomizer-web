@@ -12,7 +12,7 @@ function(File) {
 		tagName:'li',
 		className:'list-group-item',
 		render: function() {
-			this.$el.html(this.TEMPLATE(_.extend({},this.model.toJSON())));
+			this.$el.html(this.TEMPLATE(this.model.toJSON()));
 			this.renderProgress();
 		},
 		renderProgress: function() {
