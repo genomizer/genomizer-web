@@ -4,6 +4,7 @@ define([],function() {
 			this.progress = 0;
 		},
 		uploadFile: function() {
+			// TODO: Take url from model instead..
 			var formData = new FormData();
 			var that = this;
 			formData.append('uploadfile',this.fileObj);
