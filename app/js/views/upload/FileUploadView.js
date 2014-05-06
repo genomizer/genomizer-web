@@ -13,7 +13,8 @@ function(File) {
 		tagName:'li',
 		className:'list-group-item',
 		events: {
-			'change select': 'changeSelect'
+			'change select': 'changeSelect',
+			'click #removeFile': 'removeFileFunction' 
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE(this.model.toJSON()));
@@ -27,6 +28,9 @@ function(File) {
 		},
 		changeSelect: function() {
 			this.model.set("type",this.$("select").val());
+		},
+		removeFileFunction: function() {
+			this.el.remove();
 		}
 	});
 	return FileUploadView;
