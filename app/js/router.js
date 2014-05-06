@@ -11,8 +11,6 @@ define([],function() {
 		initialize: function(options) {
 			this.history = [];
 			this.on("all", this.storeRoute);
-			console.log("hola", this);
-
 		},
 
 		storeRoute: function() {

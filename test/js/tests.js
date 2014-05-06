@@ -4,5 +4,6 @@ var testModulePaths = [
 	'tests/models/Experiment',
 	'tests/collections/SearchResults',
 	'tests/views/ModalAC',
-	'tests/views/MainMenu'
+	'tests/views/MainMenu',
+	'tests/collections/Files'
 ];

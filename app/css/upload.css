@@ -1,6 +1,4 @@
 #experiment_form {
-	max-width: 900px;
-	margin: 40px auto;
 }
 
 #experiment_form .annotation-list {
@@ -48,4 +46,20 @@
 
 #file_upload ul{
 	margin-top: 40px;
+}
+
+#selector {
+	display: inline-block;
+	list-style: none;
+	width:150px;
+	margin-bottom: 10px;
+	margin-top: 12px;
+	margin-left: 30px;
+	float: right;
+}
+
+#removeFile {
+	margin-top: 12px;
+	float: right;
+
 }

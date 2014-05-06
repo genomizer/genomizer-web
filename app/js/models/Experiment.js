@@ -2,7 +2,7 @@ define([
 	'collections/Files'
 	],function(Files) {
 	var Experiment = Backbone.Model.extend({
-		defaults : {
+	/*	defaults : {
 			"name": "experimentName1",
 			"created by": "user",
 			"files": [
@@ -32,7 +32,7 @@ define([
 					"date": "2014-04-22",
 					"size": "1.3gb",
 					"URL": "URLtofile"
-				},
+				}
 			],
 			"annotations": [
 				{
@@ -76,7 +76,7 @@ define([
 					"value": "eye"
 				}
 			]
-		},
+		}, */
 		initialize: function() {
 			this.files = new Files(this.get("files"));
 			
