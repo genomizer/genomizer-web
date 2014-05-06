@@ -22,6 +22,7 @@ define([
 		el: $("#search"),
 		render: function() {
 			this.$el.html(this.TEMPLATE());
+			this.$el.find('#search_input').val(this.collection.query);
 
 			this.$el.find('#results_container').append(this.resultsView.$el);
 		},
