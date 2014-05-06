@@ -26,7 +26,7 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
-			"click #saveExperiment": "saveExperiment"
+			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
 			this.$(".experiment-container").show();
@@ -56,7 +56,8 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 				$('#add_button').prop('disabled', true);
 			}
 		},
-		saveExperiment: function() {
+		saveExperiment: function(e) {
+			e.preventDefault();
 			var that = this;
 			this.experiment.save().success(function() {
 				files.updateExperimentIds();
