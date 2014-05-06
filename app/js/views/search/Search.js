@@ -7,7 +7,7 @@ define([
 
 	var Search = Backbone.View.extend({
 
-		TEMPLATE: _.template(inputGroupTemplate + '<section id="search_results_view"></section>'),
+		TEMPLATE: _.template(inputGroupTemplate),
 		initialize: function(options) {
 
 			this.collection = new SearchResults([], {query:options.query});
@@ -22,6 +22,7 @@ define([
 		el: $("#search"),
 		render: function() {
 			this.$el.html(this.TEMPLATE());
+			this.$el.find('#search_input').val(this.collection.query);
 
 			this.$el.find('#results_container').append(this.resultsView.$el);
 		},

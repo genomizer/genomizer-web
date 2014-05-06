@@ -23,7 +23,7 @@ define([
 		},
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
-			"click .expand-button": "toggleFileRows",
+			"click .expand-file-button": "toggleFileRows",
 			"click .checked-input": "fileSelect",
 		},
 		toggleTypeRows: function(event) {
