@@ -3,6 +3,9 @@ define([],function() {
 		initialize: function() {
 			this.progress = 0;
 		},
+		defaults: {
+			"type":"raw"
+		},
 		uploadFile: function() {
 			// TODO: Take url from model instead..
 			var formData = new FormData();
@@ -44,7 +47,6 @@ define([],function() {
 		},
 		fetchAndUpload: function() {
 			var that = this;
-			debugger;
 			this.fetch().success(function() {
 				// Url should now be available
 				this.uploadFile();

@@ -4,6 +4,7 @@ define([
 function(File) {
 	var FileUploadView = Backbone.View.extend({
 		TEMPLATE: _.template('<%- fileName %> \
+							 <select><option value=raw >Raw</option><option value=profile >Profile</option><option value=region >Region</option></select> \
 							 <div class="progress"></div>'),
 		PROGRESS_TEMPLATE:_.template('<div class="progress-bar <%- done ? "progress-bar-success" : "" %>" role="progressbar" aria-valuenow="<%- progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- progress %>%;"></div>'),
 		initialize: function() {
@@ -11,6 +12,9 @@ function(File) {
 		},
 		tagName:'li',
 		className:'list-group-item',
+		events: {
+			'change select': 'changeSelect'
+		},
 		render: function() {
 			this.$el.html(this.TEMPLATE(this.model.toJSON()));
 			this.renderProgress();
@@ -20,6 +24,9 @@ function(File) {
 				progress: Math.round(this.model.progress*100),
 				done:this.model.uploadDone
 			}));
+		},
+		changeSelect: function() {
+			this.model.set("type",this.$("select").val());
 		}
 	});
 	return FileUploadView;
