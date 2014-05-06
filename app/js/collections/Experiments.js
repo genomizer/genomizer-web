@@ -4,7 +4,6 @@ define(['models/Experiment'],function(Experiment) {
 		model: Experiment,
 		initialize:function () {
 		}
-
 	});
 	return Experiments;
 });

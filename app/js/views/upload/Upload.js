@@ -3,16 +3,18 @@ define([
 	'views/upload/AddExperiment',
 	'views/upload/FileUploadList',
 	'collections/Experiments',
-	'models/Experiment'
+	'models/Experiment',
+	'collections/Files'
 ],
 
-function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
+function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,Files) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
 			this.experiment = new Experiment({id:"<experiment-id>"});
 			this.experiments.add(this.experiment);
+			this.files = new Files([],{experiment: this.experiment});
 			this.render();
 		},
 		render: function() {
@@ -23,10 +25,11 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "showAddButton",
-			"click #add_button": "addToExistingExperiment"
+			"click #add_button": "addToExistingExperiment",
+			"click #saveExperiment": "saveExperiment"
 		},
 		createExperiment: function() {
-			this.fileUploadList = new FileUploadList({experiment:this.experiment});
+			this.fileUploadList = new FileUploadList({collection:this.files});
 			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
 
@@ -38,17 +41,17 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 			
 			var experimentName = $('#existing_experiment_field').val();
 			console.log(experimentName);
-
+			var that = this;
 			this.experiment.fetch().success(function() {
 
-				this.addExperiment = new AddExperiment({model:this.experiment});
-				this.addExperiment.setElement(this.$el.find("#newAnnotation"));
+				this.addExperiment = new AddExperiment({model:that.experiment});
+				this.addExperiment.setElement(that.$el.find("#newAnnotation"));
 				this.addExperiment.render();
 
 			});
 			this.experiment.existingExperiment = true;
 
-			this.fileUploadList = new FileUploadList({experiment:this.experiment});
+			this.fileUploadList = new FileUploadList({collection:this.files});
 			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
 			this.fileUploadList.render();
 
@@ -64,6 +67,13 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment) {
 			} else {
 				$('#add_button').prop('disabled', true);
 			}
+		},
+		saveExperiment: function() {
+			var that = this;
+			this.experiment.save().success(function() {
+				files.updateExperimentIds();
+				files.fetchAndSaveFiles();
+			});
 		}
 		
 		
