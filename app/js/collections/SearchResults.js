@@ -1,16 +1,5 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
-/*		url: function() {
-			//return 'http://genomizer.apiary.io/search/annotations=?' + this.query;
-			return 'http://genomizer.apiary.io/search/annotations=?%3CpubmedStyleQuery%3E';
-		},
-
-*/		/*url: function() {
-			$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
-	      		options.url = 'http://genomizer.apiary.io/search/annotations=?' + options.url;
-	    	});
-			return '%3CpubmedStyleQuery%3E';
-		},*/
 		url: function() {
 			return 'http://genomizer.apiary.io/search/annotations=?' + this.query;
 		},
@@ -21,7 +10,6 @@ define(['models/Experiment'],function(Experiment) {
 
 			if(this.query !== undefined) {
 			    this.fetch().success(function(res) {
-			    	_.defer(function() {that.trigger("change");});
 			    	console.log("SearchResults > fetch > success: ", res);
 			    }).error(function(xhr, status, error) {
 			    	console.log("SearchResults > fetch > error: ");
@@ -60,15 +48,12 @@ define(['models/Experiment'],function(Experiment) {
 			this.query = query;
 			var that = this;
 			this.fetch().success(function(res) {
-					_.defer(function() {that.trigger("change");});
 			    	console.log("SearchResults > fetch > success: ", res);
 			    }).error(function(xhr, status, error) {
 			    	console.log("SearchResults > fetch > error: ");
 			    	var err = eval("(" + xhr.responseText + ")");
   					console.log(arguments[1] + " " + arguments[2]);
-			    });/*.complete(function() {
-			    	that.trigger('reRenderSearchResultsView', []);
-			    });*/
+			    });
 		},
 		getSelectedFileURLs: function() {
 			var res = [];
