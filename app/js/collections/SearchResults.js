@@ -8,7 +8,7 @@ define(['models/Experiment'],function(Experiment) {
 		model: Experiment,
 		initialize:function (models,options) {
 			//this.query = options.query;
-
+			//this.fetching=true;
 			if(options.query != undefined) {
 				console.log("It's defined!: " + this.query);
 				this.fetchModels(options.query, this);
@@ -41,18 +41,26 @@ define(['models/Experiment'],function(Experiment) {
 			return this.selectedFiles;
 		},
 		fetchModels: function(query, that) {
-		    this.fetch().success(function(res) {
-		    	console.log("SearchResults > fetch > success: ", res);
-		    	if(that.models.length == 0) {
-		    		console.log("Empty array");
-		    	} else {
-		    		console.log("non empty array");
-		    	}
-		    }).error(function(xhr, status, error) {
-		    	console.log("SearchResults > fetch > error: ");
-		    	var err = eval("(" + xhr.responseText + ")");
-					console.log(arguments[1] + " " + arguments[2]);
-		    });
+			console.log('fetching models');
+			that.fetching = true;
+			that.trigger('change');
+
+			this.fetch().success(function(res) {
+				console.log("SearchResults > fetch > success: ", res);
+				if(that.models.length == 0) {
+					console.log("Empty array");
+				} else {
+					console.log("non empty array");
+				}
+				that.fetching = false;
+				that.trigger('change');
+			}).error(function(xhr, status, error) {
+				console.log("SearchResults > fetch > error: ");
+				var err = eval("(" + xhr.responseText + ")");
+				console.log(arguments[1] + " " + arguments[2]);
+				that.fetching = false;
+				that.trigger('change');
+			});
 		},
 		setSearchQuery: function(query) {
 			//this.query = query;
