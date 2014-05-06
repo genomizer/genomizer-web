@@ -3,7 +3,7 @@ define([
 ],
 function(File) {
 	var FileUploadView = Backbone.View.extend({
-		TEMPLATE: _.template('<%- fileName %> \
+		TEMPLATE: _.template('<%- fileName %> \ <button type="button" id="removeFile" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button> \
 							 <select id="selector" class="form-control"><option value=raw >Raw</option><option value=profile >Profile</option><option value=region >Region</option></select> \
 							 <div class="progress"></div>'),
 		PROGRESS_TEMPLATE:_.template('<div class="progress-bar <%- done ? "progress-bar-success" : "" %>" role="progressbar" aria-valuenow="<%- progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- progress %>%;"></div>'),
