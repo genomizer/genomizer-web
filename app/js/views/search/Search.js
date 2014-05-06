@@ -21,10 +21,15 @@ define([
 		},
 		el: $("#search"),
 		render: function() {
+      console.log('current query: ', this.collection.query)
 			this.$el.html(this.TEMPLATE());
 			this.$el.find('#search_input').val(this.collection.query);
 
 			this.$el.find('#results_container').append(this.resultsView.$el);
+
+      if(this.collection.query != undefined) {
+        this.showSearchButton();
+      }
 		},
 		events: {
 			"submit #search_form": "doSearch",
