@@ -18,14 +18,14 @@ define([
 			this.render();
 		},
 		render: function(event) {
-
-//KOLLA OM FETCHING ÄR TRUE ISF VISA SNURRAN.
 			
+			//show the 'Search results' header
 			$('#results_container').show();
 
+			//if we are currently fetching, show loading spinner
 			if(this.collection.fetching == true) {
 				this.$el.html('<div class="loading panel-body"><h2>Loading Search results</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>');
-				console.log('adding spinner');
+			//if we are done fetching, render the search results
 			} else {
 				
 				this.experimentViews = [];
@@ -38,9 +38,11 @@ define([
 					}));
 				}, this);
 
+				//if we did not get any results from our search, tell the user that we didn't
 				if(this.collection.length == 0) {
 					this.$el.html('<div class="panel-body">No search results found.</div>');
 
+				//if we did get results, render them
 				} else {
 					// render header template
 					this.$el.html(this.headerTemplate({annotations: this.annotations}));
@@ -55,19 +57,12 @@ define([
 					}, this);
 				}
 			}
-			// render header template
-		/*	this.$el.html(this.headerTemplate({annotations: this.annotations}));
-
-			_.each(this.experimentViews, function(experimentView) {
-				
-				// render experiment rows
-				experimentView.render();
-
-				// append experiment rows to table
-				this.$el.append(experimentView.$el);
-			}, this);
-	*/	},
+		},
+		// The checkFiles function goes through the file models
+		// and examines whether the file is checked or not. If
+		// the file is checked, it updates the view to display that.
 		checkFiles: function(files) {
+
 			var rows = this.$el.find(".file-row");
 			
 			rows.each(function() {
