@@ -8,7 +8,8 @@ define(['models/Experiment'],function(Experiment) {
 			this.query = options.query;
 			var that = this;
 
-			if(this.query !== undefined) {
+			if(this.query != undefined) {
+				console.log("It's defined!: " + this.query);
 			    this.fetch().success(function(res) {
 			    	console.log("SearchResults > fetch > success: ", res);
 			    }).error(function(xhr, status, error) {
