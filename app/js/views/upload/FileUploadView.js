@@ -31,6 +31,7 @@ function(File) {
 		},
 		removeFileFunction: function() {
 			this.el.remove();
+			this.model.collection.remove(this.model);
 		}
 	});
 	return FileUploadView;
