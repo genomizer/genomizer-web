@@ -26,7 +26,7 @@ define([
 			this.$el.find('#results_container').append(this.resultsView.$el);
 		},
 		events: {
-			"click #search_button": "doSearch",
+			"submit #search_form": "doSearch",
 			"input #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected"
