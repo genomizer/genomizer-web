@@ -1,22 +1,17 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
-			return 'http://genomizer.apiary.io/search/annotations=?' + this.query;
+			//return 'http://test1600.apiary.io/search/annotations=?' + this.query;
+			return 'http://genomizer.apiary-mock.com/search/annotations=?' + this.query;
+			
 		},
 		model: Experiment,
 		initialize:function (models,options) {
-			this.query = options.query;
-			var that = this;
+			//this.query = options.query;
 
-			if(this.query != undefined) {
+			if(options.query != undefined) {
 				console.log("It's defined!: " + this.query);
-			    this.fetch().success(function(res) {
-			    	console.log("SearchResults > fetch > success: ", res);
-			    }).error(function(xhr, status, error) {
-			    	console.log("SearchResults > fetch > error: ");
-			    	var err = eval("(" + xhr.responseText + ")");
-  					console.log(arguments[1] + " " + arguments[2]);
-			    });
+				this.fetchModels(options.query, this);
 			}
 			this.selectedFiles = [];
 
@@ -45,16 +40,23 @@ define(['models/Experiment'],function(Experiment) {
 		getSelectedFiles: function() {
 			return this.selectedFiles;
 		},
+		fetchModels: function(query, that) {
+		    this.fetch().success(function(res) {
+		    	console.log("SearchResults > fetch > success: ", res);
+		    	if(that.models.length == 0) {
+		    		console.log("Empty array");
+		    	} else {
+		    		console.log("non empty array");
+		    	}
+		    }).error(function(xhr, status, error) {
+		    	console.log("SearchResults > fetch > error: ");
+		    	var err = eval("(" + xhr.responseText + ")");
+					console.log(arguments[1] + " " + arguments[2]);
+		    });
+		},
 		setSearchQuery: function(query) {
-			this.query = query;
-			var that = this;
-			this.fetch().success(function(res) {
-			    	console.log("SearchResults > fetch > success: ", res);
-			    }).error(function(xhr, status, error) {
-			    	console.log("SearchResults > fetch > error: ");
-			    	var err = eval("(" + xhr.responseText + ")");
-  					console.log(arguments[1] + " " + arguments[2]);
-			    });
+			//this.query = query;
+			this.fetchModels(query, this);
 		},
 		getSelectedFileURLs: function() {
 			var res = [];
