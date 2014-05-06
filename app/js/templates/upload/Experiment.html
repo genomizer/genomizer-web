@@ -1,37 +1,52 @@
 <div class="form-inline" id="experiment_form" role="form" >
-	
 	<div id="input-container" class="panel panel-default">
-			<div class="panel-heading" >
-			New Experiment
-			</div>
-  			<ul class="annotation-list">
-  				<li>
-  					<label>experiment name</label>
-  					<input name="Experiment name" class="form-control" type="text"></input>
-  				</li>
-  				<li>
-  					<label>created by</label>
-  					<input name="Created by" class="form-control" type="text"></input>
-  				</li>
-				<% _.each(annotations, function(annotation) { %>
-					<li>
-						<label for="<%- annotation.name %>"><%- annotation.name %></label>
-						<% if(annotation.value == "freetext") { %> 
-
-							<input name="<%- annotation.name %>" class="form-control" type="text"></input>
-
-						<% } else { %>
-								
-							<select name="<%- annotation.name %>" class="form-control">
-								<% _.each(annotation.value, function(value) { %> 
-									<option><%- value %></option>
-								<% }); %>
-							</select>
-
-						<% } %>
-					</li>
-				<% }); %>
-			</ul> 
+		<div class="panel-heading" >
+			Experiment
 		</div>
+			<ul class="annotation-list" id="annotation_fields">
+				<li>
+					<label>experiment name</label>
+					<input name="Experiment name" id="experiment name" class="form-control" type="text" 
+						<% if(existingExperiment) { %> value="<%-experiment.name %>" <% } %>>
+					</input>
+				</li>
+				<li>
+					<label>created by</label>
+					<input name="Created by" id="created by" class="form-control" type="text" 
+						<% if(existingExperiment) { %> value="<%-experiment["created by"] %>" <% } %>>
+					</input>
+				</li>
+			<% _.each(annotations, function(annotation) { %>
+				<li>
+					<label for="<%- annotation.name %>"><%- annotation.name %></label>
+					<% if(annotation.value == "freetext") { %> 
+						<input name="<%- annotation.name %>" id="<%- annotation.name %>" class="form-control		" type="text" 
+								<% if(existingExperiment) { 
+									_.each(experiment.annotations,function(expAnnot){
+										if(annotation.name == expAnnot.name){ %>
+											value="<%-expAnnot.value %>" 
+										<% }
+									});
+								}%>>
+						</input>
+
+					<% } else { %>
+							
+						<select name="<%- annotation.name %>" id="<%- annotation.name %>" class="form-control">
+							<% _.each(annotation.value, function(value) { %> 
+								<option <% if(existingExperiment) { 
+									_.each(experiment.annotations,function(expAnnot){
+										if(annotation.name == expAnnot.name){ %> 
+											selected 
+										<% }});} %>>
+									<%- value %>
+								</option>
+							<% }); %>
+						</select>
+					<% } %>
+				</li>
+			<% }); %>
+		</ul> 
+	</div>
 </div>
 
