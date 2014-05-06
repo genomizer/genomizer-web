@@ -6,13 +6,13 @@
 			<ul class="annotation-list" id="annotation_fields">
 				<li>
 					<label>experiment name</label>
-					<input name="Experiment name" id="experiment name" class="form-control" type="text" 
+					<input name="Experiment name" id="experiment name" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
 						<% if(existingExperiment) { %> value="<%-experiment.name %>" <% } %>>
 					</input>
 				</li>
 				<li>
 					<label>created by</label>
-					<input name="Created by" id="created by" class="form-control" type="text" 
+					<input name="Created by" id="created by" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
 						<% if(existingExperiment) { %> value="<%-experiment["created by"] %>" <% } %>>
 					</input>
 				</li>
@@ -20,7 +20,7 @@
 				<li>
 					<label for="<%- annotation.name %>"><%- annotation.name %></label>
 					<% if(annotation.value == "freetext") { %> 
-						<input name="<%- annotation.name %>" id="<%- annotation.name %>" class="form-control		" type="text" 
+					<input name="<%- annotation.name %>" id="<%- annotation.name %>" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
 								<% if(existingExperiment) { 
 									_.each(experiment.annotations,function(expAnnot){
 										if(annotation.name == expAnnot.name){ %>
@@ -32,7 +32,7 @@
 
 					<% } else { %>
 							
-						<select name="<%- annotation.name %>" id="<%- annotation.name %>" class="form-control">
+						<select name="<%- annotation.name %>" id="<%- annotation.name %>" <%- existingExperiment ? "disabled" : "" %> class="form-control">
 							<% _.each(annotation.value, function(value) { %> 
 								<option <% if(existingExperiment) { 
 									_.each(experiment.annotations,function(expAnnot){
