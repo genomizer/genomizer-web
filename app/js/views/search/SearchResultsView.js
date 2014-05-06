@@ -14,6 +14,7 @@ define([
 
 			this.collection.on("highlightChange", this.checkFiles, this);
 			this.collection.on("change", this.render, this);
+			this.collection.on("add", this.render, this);
 			//this.render();
 		},
 		render: function() {

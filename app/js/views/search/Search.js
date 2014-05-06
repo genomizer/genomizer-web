@@ -180,7 +180,7 @@ define([
 		},
 		events: {
 			"click #search_button": "doSearch",
-			"keyup #search_input": "showSearchButton",
+			"input #search_input": "showSearchButton",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected"
 		},
