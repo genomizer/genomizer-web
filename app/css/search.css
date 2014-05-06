@@ -108,7 +108,7 @@
 	left: 10px;
 }
 
-h2 {
+.search-table h2 {
     color: #646464;
     border-radius: 6px;
     margin: 0;
@@ -116,6 +116,11 @@ h2 {
     text-transform: uppercase;
     letter-spacing: .1em;
 }
+
+.loading {
+	text-align: center;
+}
+
 .loading span {
     display: inline-block;
     vertical-align: middle;

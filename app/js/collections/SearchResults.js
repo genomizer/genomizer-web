@@ -7,7 +7,7 @@ define(['models/Experiment'],function(Experiment) {
 		},
 		model: Experiment,
 		initialize:function (models,options) {
-			//this.query = options.query;
+			this.query = options.query;
 			//this.fetching=true;
 			if(options.query != undefined) {
 				console.log("It's defined!: " + this.query);
@@ -63,7 +63,7 @@ define(['models/Experiment'],function(Experiment) {
 			});
 		},
 		setSearchQuery: function(query) {
-			//this.query = query;
+			this.query = query;
 			this.fetchModels(query, this);
 		},
 		getSelectedFileURLs: function() {

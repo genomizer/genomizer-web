@@ -15,7 +15,7 @@ define([
 			this.collection.on("highlightChange", this.checkFiles, this);
 			this.collection.on("change", this.render, this);
 			this.collection.on("sync", this.render, this);
-			//this.render();
+			this.render();
 		},
 		render: function(event) {
 
@@ -24,9 +24,8 @@ define([
 			$('#results_container').show();
 
 			if(this.collection.fetching == true) {
-				this.$el.html('<div class="loading"><h2>Loading Search results</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>');
+				this.$el.html('<div class="loading panel-body"><h2>Loading Search results</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>');
 				console.log('adding spinner');
-				debugger;
 			} else {
 				
 				this.experimentViews = [];
