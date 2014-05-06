@@ -12,7 +12,7 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
-			this.experiment = new Experiment({id:"<experiment-id>"});
+			this.experiment = new Experiment();
 			this.experiments.add(this.experiment);
 			this.files = new Files([],{experiment: this.experiment});
 			this.render();
@@ -24,7 +24,7 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 		
 		events: {
 			"click #CreateExperiment": "createExperiment",
-			"keyup #existing_experiment_field": "showAddButton",
+			"keyup #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
 			"click #saveExperiment": "saveExperiment"
 		},
@@ -38,30 +38,16 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			this.addExperiment.render();
 		},
 		addToExistingExperiment: function() {
-			
-			var experimentName = $('#existing_experiment_field').val();
-			console.log(experimentName);
+			var experimentId = $('#existing_experiment_field').val();
 			var that = this;
-			this.experiment.fetch().success(function() {
-
-				this.addExperiment = new AddExperiment({model:that.experiment});
-				this.addExperiment.setElement(that.$el.find("#newAnnotation"));
-				this.addExperiment.render();
-
-			});
+			this.experiment.set("id",experimentId);
 			this.experiment.existingExperiment = true;
-
-			this.fileUploadList = new FileUploadList({collection:this.files});
-			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
-			this.fileUploadList.render();
-
-			this.addExperiment = new AddExperiment({model:this.experiment});
-			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
-			this.addExperiment.render();
-
+			this.experiment.fetch().success(function() {
+				that.createExperiment();
+			});
 
 		},
-		showAddButton: function() {
+		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {
 				$('#add_button').prop('disabled', false);
 			} else {
