@@ -6,7 +6,7 @@ define([
 	var SearchResultsView = Backbone.View.extend({
 
 		tagName: 'table',
-		className: 'table',
+		className: 'table search-table',
 		headerTemplate: _.template(headerTemplateHtml),
 
 		initialize: function(options) {

@@ -1,8 +1,8 @@
 <tr class="title-row"> <!-- MAIN EXPERIMENT ROW -->
-	<td>
+	<td class="expand-cell">
 		<button class="expand-button expand-experiment-button glyphicon"></button>
 	</td>
-	<td>
+	<td class="check-cell">
 		<!--<input class="checked-input" type="checkbox">-->
 	</td>
 	<td>
@@ -16,125 +16,182 @@
 </tr>
 
 <tr class="raw-expand-row expand-row">	<!-- RAW EXPANSION ROW -->
-	<td>
+	<td class="expand-cell">
 		<button class="expand-button expand-file-button glyphicon" data-filetype="raw"></button>
 	</td>
-	<td>
+	<td class="check-cell">
 		<!--<input class="checked-input" type="checkbox">-->
 	</td>
 	<td colspan="<%- annotations.length + 1 %>">
 		<span>Raw Files</span>
 	</td>
 </tr>
-<tr class="raw-header-row header-row">	<!-- RAW HEADER ROW -->
-	<td colspan="2">
-		
-	</td>
-	<td>
-		<span>Filename</span>
-	</td>
-	<td>
-		<span>Size</span>
-	</td>
-	<td>
-		<span>Uploaded date</span>
-	</td>
-	<td colspan="<%- annotations.length - 2 %>">
-		<span>Uploaded by</span>
+<tr class="raw-table-row table-row">
+	<td colspan="<%- annotations.length + 3 %>">
+		<table class="table">
+			<thead>
+				<tr class="raw-header-row header-row">	<!-- RAW HEADER ROW -->
+					<th colspan="2">
+						
+					</th>
+					<th>
+						<span>Filename</span>
+					</th>
+					<th>
+						<span>Size</span>
+					</th>
+					<th>
+						<span>Uploaded date</span>
+					</th>
+					<th colspan="<%- annotations.length - 2 %>">
+						<span>Uploaded by</span>
+					</th>
+				</tr>
+			</thead>
+			<% _.each(experiment.get("files"), function(file) { %>
+				<% if(file.type == "raw") { %>
+					<tr class="raw-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+						<td class="expand-cell">
+							
+						</td>
+						<td class="check-cell">
+							<input class="checked-input" type="checkbox">
+						</td>
+						<td>
+							<span><%- file.name %></span>
+						</td>
+						<td>
+							<span><%- file.size %></span>
+						</td>
+						<td>
+							<span><%- file.date %></span>
+						</td>
+						<td colspan="<%- annotations.length - 2 %>">
+							<span><%- file.uploadedBy %></span>
+						</td>
+					</tr>
+				<% } %>
+			<% }); %>
+		</table>
 	</td>
 </tr>
-
-<% _.each(experiment.get("files"), function(file) { %>
-	<% if(file.type == "raw") { %>
-		<tr class="raw-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
-			<td>
-				
-			</td>
-			<td>
-				<input class="checked-input" type="checkbox">
-			</td>
-			<td>
-				<span><%- file.name %></span>
-			</td>
-			<td>
-				<span><%- file.size %></span>
-			</td>
-			<td>
-				<span><%- file.date %></span>
-			</td>
-			<td colspan="<%- annotations.length - 2 %>">
-				<span><%- file.uploadedBy %></span>
-			</td>
-		</tr>
-	<% } %>
-<% }); %>
 <tr class="profile-expand-row expand-row">	<!-- PROFILE EXPANSION ROW -->
-	<td>
+	<td class="expand-cell">
 		<button class="expand-button expand-file-button glyphicon" data-filetype="profile"></button>
 	</td>
-	<td>
+	<td class="check-cell">
 		<!--<input class="checked-input" type="checkbox">-->
 	</td>
 	<td colspan="<%- annotations.length + 1 %>">
 		<span>Profile Files</span>
 	</td>
 </tr>
-<% _.each(experiment.get("files"), function(file) { %>
-	<% if(file.type == "profile") { %>
-		<tr class="profile-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
-			<td>
-				
-			</td>
-			<td>
-				<input class="checked-input" type="checkbox">
-			</td>
-			<td>
-				<span><%- file.name %></span>
-			</td>
-			<td>
-				<span><%- file.size %></span>
-			</td>
-			<td>
-				<span><%- file.date %></span>
-			</td>
-			<td colspan="<%- annotations.length - 2 %>">
-				<span><%- file.uploadedBy %></span>
-			</td>
-		</tr>
-	<% } %>
-<% }); %>
+<tr class="profile-table-row table-row">
+	<td colspan="<%- annotations.length + 3 %>">
+		<table class="table">
+			<thead>
+				<tr class="profile-header-row header-row">	<!-- RAW HEADER ROW -->
+					<th colspan="2">
+						
+					</th>
+					<th>
+						<span>Filename</span>
+					</th>
+					<th>
+						<span>Size</span>
+					</th>
+					<th>
+						<span>Uploaded date</span>
+					</th>
+					<th colspan="<%- annotations.length - 2 %>">
+						<span>Uploaded by</span>
+					</th>
+				</tr>
+			</thead>
+			<% _.each(experiment.get("files"), function(file) { %>
+				<% if(file.type == "profile") { %>
+					<tr class="profile-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+						<td class="expand-cell">
+							
+						</td>
+						<td class="check-cell">
+							<input class="checked-input" type="checkbox">
+						</td>
+						<td>
+							<span><%- file.name %></span>
+						</td>
+						<td>
+							<span><%- file.size %></span>
+						</td>
+						<td>
+							<span><%- file.date %></span>
+						</td>
+						<td colspan="<%- annotations.length - 2 %>">
+							<span><%- file.uploadedBy %></span>
+						</td>
+					</tr>
+				<% } %>
+			<% }); %>
+		</table>
+	</td>
+</tr>
 <tr class="region-expand-row expand-row">	<!-- REGION EXPANSION ROW -->
-	<td>
+	<td class="expand-cell">
 		<button class="expand-button expand-file-button glyphicon" data-filetype="region"></button>
 	</td>
-	<td>
+	<td class="check-cell">
 		<!--<input class="checked-input" type="checkbox">-->
 	</td>
 	<td colspan="<%- annotations.length + 1 %>">
 		<span>Region Files</span>
 	</td>
 </tr>
-<% _.each(experiment.get("files"), function(file) { %>
-	<% if(file.type == "region") { %>
-		<tr class="region-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
-			<td>
-				
-			</td>
-			<td>
-				<input class="checked-input" type="checkbox">
-			</td>
-			<td>
-				<span><%- file.name %></span>
-			</td>
-			<td>
-				<span><%- file.size %></span>
-			</td>
-			<td>
-				<span><%- file.date %></span>
-			</td>
-			<td colspan="<%- annotations.length - 2 %>">
-				<span><%- file.uploadedBy %></span>
-			</td>
-		</tr>
-	<% } %>
-<% }); %>
+<tr class="region-table-row table-row">
+	<td colspan="<%- annotations.length + 3 %>">
+		<table class="table">
+			<thead>
+				<tr class="region-header-row header-row">	<!-- RAW HEADER ROW -->
+					<th colspan="2">
+						
+					</th>
+					<th>
+						<span>Filename</span>
+					</th>
+					<th>
+						<span>Size</span>
+					</th>
+					<th>
+						<span>Uploaded date</span>
+					</th>
+					<th colspan="<%- annotations.length - 2 %>">
+						<span>Uploaded by</span>
+					</th>
+				</tr>
+			</thead>
+			<% _.each(experiment.get("files"), function(file) { %>
+				<% if(file.type == "region") { %>
+					<tr class="region-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+						<td class="expand-cell">
+							
+						</td>
+						<td class="check-cell">
+							<input class="checked-input" type="checkbox">
+						</td>
+						<td>
+							<span><%- file.name %></span>
+						</td>
+						<td>
+							<span><%- file.size %></span>
+						</td>
+						<td>
+							<span><%- file.date %></span>
+						</td>
+						<td colspan="<%- annotations.length - 2 %>">
+							<span><%- file.uploadedBy %></span>
+						</td>
+					</tr>
+				<% } %>
+			<% }); %>
+		</table>
+	</td>
+</tr>
