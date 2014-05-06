@@ -29,13 +29,15 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			"click #saveExperiment": "saveExperiment"
 		},
 		createExperiment: function() {
-			this.fileUploadList = new FileUploadList({collection:this.files});
-			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
-			this.fileUploadList.render();
-
+			this.$(".experiment-container").show();
+			this.$("#upload_form").hide();
 			this.addExperiment = new AddExperiment({model:this.experiment});
 			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
 			this.addExperiment.render();
+
+			this.fileUploadList = new FileUploadList({collection:this.files});
+			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
+			this.fileUploadList.render();
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
