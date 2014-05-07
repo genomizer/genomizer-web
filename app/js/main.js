@@ -14,10 +14,30 @@ require([
 	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
 
+	// TODO: uncomment ;) for global ajax errors
+	// $(document).ajaxError(function( event, jqxhr, settings, exception ) {
+
+	// 	if (settings.url == "ajax/missing.html") {
+	// 		$( "div.log" ).text( "Triggered ajaxError handler." );
+	// 	}
+	// });
 
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
 
+$.ajax({
+  url: "http://scratchy.cs.umu.se:7000/login",
+  //url: "http://genomizer.apiary.io/login",
+  type: "POST",
+  dataType: "json",
+  contentType: "application/json; charset=utf-8",
+  data: JSON.stringify({
+	  username: "Genome researcher 1",
+	  password: "superhemligt"
+  })
+}).done(function() {
+	console.log("Logged in!");
+});
 
 	app.annotationTypes.fetch().success(function() {
 		Backbone.history.start();
