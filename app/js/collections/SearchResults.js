@@ -41,14 +41,14 @@ define(['models/Experiment'],function(Experiment) {
 			return this.selectedFiles;
 		},
 		fetchModels: function(query) {
-			//console.log('fetching models');
+			console.log('fetching models');
 			this.fetching = true;
 			this.trigger('change');
 
 			var that = this;
 
 			this.fetch().success(function(res) {
-				//console.log("SearchResults > fetch > success: ", res);
+				console.log("SearchResults > fetch > success: ", res);
 				/*if(that.models.length == 0) {
 					console.log("Empty array");
 				} else {
