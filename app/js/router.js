@@ -7,6 +7,7 @@ define([],function() {
 			"upload":"upload",
 			"process":"process",
 			"admin":"admin", 
+			"admin/createannotation": "createAnnotation"
 		},
 
 		initialize: function(options) {
@@ -69,7 +70,18 @@ define([],function() {
 				new SysadminMainView({el:that.getNewMainView()});
 				new AnnotationsView({el:that.getNewMainView()});
 			});
+		},
+		
+		createAnnotation : function() {
+			var that = this;
+			require([
+				'views/sysadmin/NewAnnotationView'
+			],function(NewAnnotationView) {
+				new NewAnnotationView({el:that.getNewMainView()});
+			});
 		}
+		
+		
 		
 		
 

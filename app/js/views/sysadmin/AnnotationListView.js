@@ -1,9 +1,6 @@
 define(['collections/sysadmin/Annotations', 'text!templates/sysadmin/AnnotationListTemplate.html', 'models/sysadmin/Annotation'], function(Annotations, annotationListTemplate, Annotation) {
 	var AnnotationListView = Backbone.View.extend({
-		// el : $(".page"),
-
 		render : function(annotations, fetch) {
-
 			if (!fetch) {
 				var template = _.template(annotationListTemplate, {
 					annotations : annotations.models

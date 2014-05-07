@@ -1,16 +1,16 @@
 define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/AnnotationsViewTemplate.html', 'collections/sysadmin/Annotations'], function(AnnotationListView, annotationsViewTemplate, Annotations) {
 	var AnnotationsView = Backbone.View.extend({
-		// el : $(".page"),
 
 		render : function() {
 			var template = _.template(annotationsViewTemplate);
-			// $('page').html(template);
+
 			this.$el.html(template);
 			var test = new Annotations();
 			this.annotationsListView.render(new Annotations(), true);
 		},
 
-		initialize : function(annotations) {
+		initialize : function() {
+			var annotations = new Annotations();
 			this.annotationsListView = new AnnotationListView(annotations);
 			this.render();
 		},

@@ -1,14 +1,15 @@
 define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(newAnnotationTemplate, Annotation, Gateway) {
 	var NewAnnotationView = Backbone.View.extend({
-		el : '.page',
+		//el : '.page',
 
 		render : function() {
 			var template = _.template(newAnnotationTemplate);
-			$('.list').empty();
+			//$('.list').empty();
 			this.$el.html(template);
 		},
 
 		initialize : function() {
+			this.render();
 		},
 
 		events : {
