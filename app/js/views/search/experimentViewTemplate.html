@@ -48,9 +48,9 @@
 					</th>
 				</tr>
 			</thead>
-			<% _.each(experiment.get("files"), function(file) { %>
-				<% if(file.type == "raw") { %>
-					<tr class="raw-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+			<% experiment.getFiles().each(function(file) { %>
+				<% if(file.get("type") == "raw") { %>
+					<tr class="raw-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
 						<td class="expand-cell">
 							
 						</td>
@@ -58,16 +58,16 @@
 							<input class="checked-input" type="checkbox">
 						</td>
 						<td>
-							<span><%- file.name %></span>
+							<span><%- file.get("name") %></span>
 						</td>
 						<td>
-							<span><%- file.size %></span>
+							<span><%- file.get("size") %></span>
 						</td>
 						<td>
-							<span><%- file.date %></span>
+							<span><%- file.get("date") %></span>
 						</td>
-						<td colspan="<%- annotations.length - 2 %>">
-							<span><%- file.uploadedBy %></span>
+						<td>
+							<span><%- file.get("uploadedBy") %></span>
 						</td>
 					</tr>
 				<% } %>
@@ -108,9 +108,9 @@
 					</th>
 				</tr>
 			</thead>
-			<% _.each(experiment.get("files"), function(file) { %>
-				<% if(file.type == "profile") { %>
-					<tr class="profile-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+			<% experiment.getFiles().each(function(file) { %>
+				<% if(file.get("type") == "profile") { %>
+					<tr class="profile-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
 						<td class="expand-cell">
 							
 						</td>
@@ -118,16 +118,16 @@
 							<input class="checked-input" type="checkbox">
 						</td>
 						<td>
-							<span><%- file.name %></span>
+							<span><%- file.get("name") %></span>
 						</td>
 						<td>
-							<span><%- file.size %></span>
+							<span><%- file.get("size") %></span>
 						</td>
 						<td>
-							<span><%- file.date %></span>
+							<span><%- file.get("date") %></span>
 						</td>
-						<td colspan="<%- annotations.length - 2 %>">
-							<span><%- file.uploadedBy %></span>
+						<td>
+							<span><%- file.get("uploadedBy") %></span>
 						</td>
 					</tr>
 				<% } %>
@@ -168,9 +168,9 @@
 					</th>
 				</tr>
 			</thead>
-			<% _.each(experiment.get("files"), function(file) { %>
-				<% if(file.type == "region") { %>
-					<tr class="region-file-row file-row" data-id="<%- file.id %>" data-url="<%- file.URL %>">
+			<% experiment.getFiles().each(function(file) { %>
+				<% if(file.get("type") == "region") { %>
+					<tr class="region-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
 						<td class="expand-cell">
 							
 						</td>
@@ -178,16 +178,16 @@
 							<input class="checked-input" type="checkbox">
 						</td>
 						<td>
-							<span><%- file.name %></span>
+							<span><%- file.get("name") %></span>
 						</td>
 						<td>
-							<span><%- file.size %></span>
+							<span><%- file.get("size") %></span>
 						</td>
 						<td>
-							<span><%- file.date %></span>
+							<span><%- file.get("date") %></span>
 						</td>
-						<td colspan="<%- annotations.length - 2 %>">
-							<span><%- file.uploadedBy %></span>
+						<td>
+							<span><%- file.get("uploadedBy") %></span>
 						</td>
 					</tr>
 				<% } %>
