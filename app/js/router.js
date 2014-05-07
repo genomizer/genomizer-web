@@ -6,6 +6,7 @@ define([],function() {
 			"search": "search",
 			"upload":"upload",
 			"process":"process",
+			"admin":"admin", 
 		},
 
 		initialize: function(options) {
@@ -57,7 +58,20 @@ define([],function() {
 		getNewMainView: function() {
 			$("#mainView").replaceWith('<section id=mainView></section>');
 			return $("#mainView");
+		},
+		
+		admin: function() {
+			var that = this;
+			require([
+				'views/sysadmin/SysadminMainView',
+				'views/sysadmin/AnnotationsView'
+			],function(SysadminMainView, AnnotationsView) {
+				new SysadminMainView({el:that.getNewMainView()});
+				new AnnotationsView({el:that.getNewMainView()});
+			});
 		}
+		
+		
 
 	});
 	return Router;
