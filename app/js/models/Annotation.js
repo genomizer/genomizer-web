@@ -1,6 +1,6 @@
 define([],function() {
 	var Annotations = Backbone.Model.extend({
-		defaults : {
+	/*	defaults : {
 			sex: [
 				"male",
 				"female",
@@ -25,7 +25,7 @@ define([],function() {
 			genoRelease: "freetext",
 			cellLine: "freetext",
 			devStage: "freetext"
-		},
+		}, */
 		initialize: function() {
 
 		}
