@@ -11,20 +11,21 @@ define([],function() {
 
 		initialize: function(options) {
 			this.history = [];
-			this.on("route", this.storeRoute);
+			this.on("all", this.storeRoute);
 		},
 
-		storeRoute: function(event, p2) {
-			console.log("Router > storeRoute > event: ", event, p2);
+		storeRoute: function() {
 			this.history.push(Backbone.history.fragment);
 		},
 
 		previous: function(options) {
-			console.log("router > previous > history: ", this.history);
 			if (this.history.length > 1) {
-				var previous = this.history.pop();
-				console.log("router > previous > previouspath: ", previous);
-				this.navigate(previous, options);
+				if(options) {
+					this.navigate(this.history.pop(), options);
+				} else {
+					this.navigate(this.history.pop());
+				}
+				
 			}
 		},
 

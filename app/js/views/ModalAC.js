@@ -30,7 +30,7 @@ define([
 		},
 		removeModal: function() {
 
-			app.router.previous({trigger:false});
+			app.router.navigate('search', {trigger:false});
 			this.$modal.remove();
 
 		}
