@@ -53,9 +53,7 @@ define(['models/Experiment'],function(Experiment) {
 				that.fetching = false;
 				that.trigger('change');
 			}).error(function(xhr, status, error) {
-				console.log("SearchResults > fetch > error: ");
-				var err = eval("(" + xhr.responseText + ")");
-				console.log(arguments[1] + " " + arguments[2]);
+				that.reset([]);
 				that.fetching = false;
 				that.trigger('change');
 			});
