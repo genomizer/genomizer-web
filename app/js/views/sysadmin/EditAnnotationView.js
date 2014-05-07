@@ -1,7 +1,6 @@
 define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation', 'collections/sysadmin/Annotations', 'models/sysadmin/Gateway'], function(editTemplate, annotation, annotations, Gateway) {
 
 	var EditView = Backbone.View.extend({
-		el : '.page',
 		events : {
 			"click #updateAnnotation" : "updateAnnotation",
 			"click #deleteAnnotation" : "deleteAnnotation"
@@ -63,7 +62,6 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 				annotations : annotations
 			});
 
-			$('.list').empty();
 			this.$el.html(template);
 			
 			if (annotation.get('value') == 'freetext') {
@@ -73,6 +71,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 			}
 		},
 		initialize : function() {
+			this.render();
 		}
 	});
 	return EditView;

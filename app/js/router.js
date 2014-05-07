@@ -7,7 +7,8 @@ define([],function() {
 			"upload":"upload",
 			"process":"process",
 			"admin":"admin", 
-			"admin/createannotation": "createAnnotation"
+			"admin/createannotation": "createAnnotation",
+			"admin/editannotation": "editAnnotation"
 		},
 
 		initialize: function(options) {
@@ -72,18 +73,23 @@ define([],function() {
 			});
 		},
 		
-		createAnnotation : function() {
+		createAnnotation: function() {
 			var that = this;
 			require([
 				'views/sysadmin/NewAnnotationView'
 			],function(NewAnnotationView) {
 				new NewAnnotationView({el:that.getNewMainView()});
 			});
-		}
+		},
 		
-		
-		
-		
+		editAnnotation:	function() {
+			var that = this;
+			require([
+				'views/sysadmin/EditAnnotationView'
+			],function(EditAnnotationView) {
+				new EditAnnotationView({el:that.getNewMainView()});
+			});
+		}	
 
 	});
 	return Router;
