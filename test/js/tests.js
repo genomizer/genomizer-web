@@ -1,9 +1,13 @@
 // Add new test files here
 var testModulePaths = [
-	'tests/ExampleTest',
-	'tests/models/Experiment',
+	// Collections
 	'tests/collections/SearchResults',
+	'tests/collections/Files',
+
+	// Models
+	'tests/models/Experiment',
+
+	// Views
 	'tests/views/ModalAC',
 	'tests/views/MainMenu',
-	'tests/collections/Files'
 ];
