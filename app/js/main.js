@@ -23,6 +23,8 @@ require([
 		Backbone.history.start();
 	});
 
+//test kommentar
+
 /*
 	console.log("Search for data");
 	var searchResults = new SearchResults();
