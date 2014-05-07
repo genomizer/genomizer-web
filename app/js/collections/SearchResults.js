@@ -1,17 +1,17 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
-			//return 'http://test1600.apiary.io/search/annotations=?' + this.query;
-			return 'http://genomizer.apiary-mock.com/search/annotations=?' + this.query;
+			return 'http://test1600.apiary.io/search/annotations=?' + this.query;
+			//return 'http://genomizer.apiary-mock.com/search/annotations=?' + this.query;
 			
 		},
 		model: Experiment,
 		initialize:function (models,options) {
 			this.query = options.query;
-			//this.fetching=true;
+
 			if(options.query != undefined) {
-				console.log("It's defined!: " + this.query);
-				this.fetchModels(options.query, this);
+				this.fetchModels(options.query);
+
 			}
 			this.selectedFiles = [];
 
@@ -26,13 +26,13 @@ define(['models/Experiment'],function(Experiment) {
 			}
 		},
 		selectFile: function(file) {
-			console.log("SearchResults > selectFile > file: ", file);
+			//console.log("SearchResults > selectFile > file: ", file);
 			//Only one file may be selected at a time.
 			this.selectedFiles = [file];
 			this.trigger('highlightChange', this.selectedFiles);
 		},
 		deselectFile: function(file) {
-			console.log("SearchResults > deselectFile > file: ", file);
+			//console.log("SearchResults > deselectFile > file: ", file);
 			//Must take argument of which ID to remove when multiple files can be selected.
 			this.selectedFiles = [];
 			this.trigger('highlightChange', this.selectedFiles);
@@ -40,31 +40,37 @@ define(['models/Experiment'],function(Experiment) {
 		getSelectedFiles: function() {
 			return this.selectedFiles;
 		},
-		fetchModels: function(query, that) {
-			console.log('fetching models');
-			that.fetching = true;
-			that.trigger('change');
+		fetchModels: function(query) {
+			//console.log('fetching models');
+			this.fetching = true;
+			this.trigger('change');
+
+			var that = this;
 
 			this.fetch().success(function(res) {
-				console.log("SearchResults > fetch > success: ", res);
-				if(that.models.length == 0) {
+				//console.log("SearchResults > fetch > success: ", res);
+				/*if(that.models.length == 0) {
 					console.log("Empty array");
 				} else {
 					console.log("non empty array");
-				}
+				}*/
 				that.fetching = false;
 				that.trigger('change');
 			}).error(function(xhr, status, error) {
-				console.log("SearchResults > fetch > error: ");
+
+				alert('Could not retrieve search results, query does not have correct syntax.')
+
+				/*console.log("SearchResults > fetch > error: ");
 				var err = eval("(" + xhr.responseText + ")");
 				console.log(arguments[1] + " " + arguments[2]);
+				*/
 				that.fetching = false;
 				that.trigger('change');
 			});
 		},
 		setSearchQuery: function(query) {
 			this.query = query;
-			this.fetchModels(query, this);
+			this.fetchModels(query);
 		},
 		getSelectedFileURLs: function() {
 			var res = [];

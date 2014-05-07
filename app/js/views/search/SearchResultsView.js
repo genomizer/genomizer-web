@@ -19,18 +19,18 @@ define([
 		},
 		render: function(event) {
 			
-			//show the 'Search results' header
 			$('#results_container').show();
 
-			//if we are currently fetching, show loading spinner
 			if(this.collection.fetching == true) {
 				this.$el.html('<div class="loading panel-body"><h2>Loading Search results</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>');
-			//if we are done fetching, render the search results
+
+			} else if(this.collection.length == 0){
+				this.$el.html('<div class="panel-body">No search results found.</div>');
+
 			} else {
-				
+
 				this.experimentViews = [];
 
-				// create subviews for each experiment in the given collection
 				this.collection.each(function(experiment) {
 					this.experimentViews.push(new ExperimentView({
 						annotations: this.annotations,
@@ -38,31 +38,19 @@ define([
 					}));
 				}, this);
 
-				//if we did not get any results from our search, tell the user that we didn't
-				if(this.collection.length == 0) {
-					this.$el.html('<div class="panel-body">No search results found.</div>');
+				this.$el.html(this.headerTemplate({annotations: this.annotations}));
 
-				//if we did get results, render them
-				} else {
-					// render header template
-					this.$el.html(this.headerTemplate({annotations: this.annotations}));
+				_.each(this.experimentViews, function(experimentView) {
+					
+					experimentView.render();
+					this.$el.append(experimentView.$el);
 
-					_.each(this.experimentViews, function(experimentView) {
-						
-						// render experiment rows
-						experimentView.render();
-
-						// append experiment rows to table
-						this.$el.append(experimentView.$el);
-					}, this);
-				}
+				}, this);
 			}
+				
 		},
-		// The checkFiles function goes through the file models
-		// and examines whether the file is checked or not. If
-		// the file is checked, it updates the view to display that.
 		checkFiles: function(files) {
-
+			//REFACTOR
 			var rows = this.$el.find(".file-row");
 			
 			rows.each(function() {
