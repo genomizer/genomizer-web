@@ -6,6 +6,7 @@ var testModulePaths = [
 
 	// Models
 	'tests/models/Experiment',
+	'tests/models/File',
 
 	// Views
 	'tests/views/ModalAC',
