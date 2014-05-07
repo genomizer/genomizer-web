@@ -1,9 +1,7 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
-			//return 'http://test1600.apiary.io/search/annotations=?' + this.query;
-			return 'http://genomizer.apiary-mock.com/search/annotations=?' + this.query;
-			
+			return 'http://genomizer.apiary.io/search/?annotations=' + this.query;
 		},
 		model: Experiment,
 		initialize:function (models,options) {

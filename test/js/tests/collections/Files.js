@@ -35,5 +35,23 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					expect(files.at(1).get("experimentID")).to.equal(3);
 				});
 			});
+
+			describe("fetchAndSaveFile",function() {
+				it("should call fetchAndUpload for each file", function() {
+					// SETUP
+					var f1 = new File();
+					var f2 = new File();
+					var s1 = sinon.spy()
+					var s2 = sinon.spy()
+					f1.fetchAndUpload = s1;
+					f2.fetchAndUpload = s2;
+					// TEST
+					var files = new Files([f1,f2]);
+					files.fetchAndSaveFiles();
+					// ASSERT
+					expect(s1.calledOnce).to.be.true;
+					expect(s2.calledOnce).to.be.true;
+				});
+			});
 	});
 });
