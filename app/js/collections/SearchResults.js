@@ -37,7 +37,6 @@ define(['models/Experiment'],function(Experiment) {
 			return this.selectedFiles;
 		},
 		fetchModels: function(query) {
-			console.log('fetching models');
 			this.fetching = true;
 			this.trigger('change');
 
