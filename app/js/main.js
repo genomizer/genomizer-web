@@ -10,19 +10,19 @@ require([
 		'views/MainMenu',
 		'collections/AnnotationTypes',
 		'models/Auth',
-		'router'
-],function(MainMenu,AnnotationTypes,Auth,Router) {
+		'router',
+		'views/Messenger'
+],function(MainMenu,AnnotationTypes,Auth,Router,Messenger) {
 	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
 	app.auth = new Auth();
+	app.messenger = new Messenger();
+	app.messenger.setElement($("body"));
+		app.messenger.warning("Hej");
 
-	// TODO: uncomment ;) for global ajax errors
-	// $(document).ajaxError(function( event, jqxhr, settings, exception ) {
-
-	// 	if (settings.url == "ajax/missing.html") {
-	// 		$( "div.log" ).text( "Triggered ajaxError handler." );
-	// 	}
-	// });
+	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
+		app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
+	});
 
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
