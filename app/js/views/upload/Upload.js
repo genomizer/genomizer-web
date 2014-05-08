@@ -47,7 +47,6 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			this.experiment.fetch().success(function() {
 				that.createExperiment();
 			});
-
 		},
 		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {
@@ -66,13 +65,10 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 		},
 		enableOnUnloadWarning: function() {
 			var that = this;
-			console.log("körs");
 			$(window).bind('beforeunload',function() {
 				if(that.files.hasUnfinishedUploads()) {
 					return "You have file(s) that is not finished uploading!";
-			  	alert('Hej');
 				}
-				
 			});
 		}
 	});
