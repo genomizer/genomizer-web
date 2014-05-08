@@ -18,7 +18,6 @@ require([
 	app.auth = new Auth();
 	app.messenger = new Messenger();
 	app.messenger.setElement($("body"));
-		app.messenger.warning("Hej");
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
 		app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
