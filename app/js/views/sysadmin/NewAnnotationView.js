@@ -2,7 +2,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 	var NewAnnotationView = Backbone.View.extend({
 		render : function() {
 			var template = _.template(newAnnotationTemplate);
-			this.$el.html(template);
+			$('.activePage').html(template);
 		},
 
 		initialize : function() {

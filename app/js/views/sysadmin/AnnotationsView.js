@@ -4,7 +4,7 @@ define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/Annotation
 		render : function() {
 			var template = _.template(annotationsViewTemplate);
 
-			this.$el.html(template);
+			$('.activePage').html(template);
 			var test = new Annotations();
 			this.annotationsListView.render(new Annotations(), true);
 		},

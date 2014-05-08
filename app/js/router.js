@@ -71,6 +71,12 @@ define([],function() {
             return $("#mainView");
         },
         
+        getNewAdminView: function() {
+        	$(".activePage").remove();
+        	$("#mainView").append('<div class=activePage></div>');
+        	return $("#mainView");
+        },
+        
         admin: function() {
             var that = this;
             require([
@@ -78,7 +84,7 @@ define([],function() {
                 'views/sysadmin/AnnotationsView'
             ],function(SysadminMainView, AnnotationsView) {
                 new SysadminMainView({el:that.getNewMainView()});
-                new AnnotationsView({el:that.getNewMainView()});
+                new AnnotationsView({el:that.getNewAdminView()});
             });
         },
         
@@ -87,7 +93,7 @@ define([],function() {
             require([
                 'views/sysadmin/NewAnnotationView'
             ],function(NewAnnotationView) {
-                new NewAnnotationView({el:that.getNewMainView()});
+                new NewAnnotationView({el:that.getNewAdminView()});
             });
         },
         
@@ -96,7 +102,7 @@ define([],function() {
             require([
                 'views/sysadmin/EditAnnotationView'
             ],function(EditAnnotationView) {
-                new EditAnnotationView({el:that.getNewMainView(), id:id});                
+                new EditAnnotationView({el:that.getNewAdminView(), id:id});                
             });
         }    
 

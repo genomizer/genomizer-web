@@ -75,8 +75,8 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 annotations : annotations
             });
 
-            this.$el.html(template);
-            if (annotation.get('value') == 'freetext') {
+            $('.activePage').html(template);
+            if (annotation.get('values') == 'freetext') {
                 $('#edit_annotation_value').attr('disabled', '');
             } else {
                 $('#edit_annotation_value').removeAttr('disabled');

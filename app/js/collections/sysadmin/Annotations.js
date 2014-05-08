@@ -18,7 +18,6 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 			for (var i = 0; i < this.length; i++) {
 				if (this.at(i).get('id') == id) {
 					annotation = this.at(i);
-					console.log(annotation);
 					return annotation;
 				}
 			}
