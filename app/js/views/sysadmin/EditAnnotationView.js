@@ -1,4 +1,4 @@
-define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation', 'collections/sysadmin/Annotations', 'models/sysadmin/Gateway'], function(editTemplate, annotation, annotations, Gateway) {
+define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation', 'collections/sysadmin/Annotations', 'models/sysadmin/Gateway'], function(EditTemplate, Annotation, Annotations, Gateway) {
 
     var EditView = Backbone.View.extend({
         events : {
@@ -40,8 +40,18 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 var y = window.confirm("Annotation will be completely removed!");
                 if (y) {
                     var payload = new Backbone.Model();
+                    tempAnnotation = new Annotation();
+                    
+                    tempAnnotation.set({"id":this.annotation.get('id'),"values":[]});
+                    
+                    var innerPayload = tempAnnotation.toJSON();
+                    
+                    delete innerPayload.name;
+                    delete innerPayload.type;
+                    delete innerPayload.forced;
+                    
                     payload.set({
-                        'delete' : [this.annotation.get('name')]
+                        'deleteId' : [innerPayload]
                     });
 
                     var result = Gateway.deleteAnnotation(payload);
@@ -58,7 +68,9 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 
         render : function(annotation, annotations) {
 
-            var template = _.template(editTemplate, {
+			this.setLocalAnnotation(annotation, annotations);
+			
+            var template = _.template(EditTemplate, {
                 annotation : annotation,
                 annotations : annotations
             });
@@ -72,19 +84,15 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
         },
         initialize : function() {
             
+            var annotation;
             var that = this;
-            annotations = new annotations();    
+            annotations = new Annotations();
             annotations.fetch({
                 success : function(annotations) {
                     annotation = annotations.getAnnotationByID(that.id);
-                    that.annotation = annotation;
-                    that.annotations = annotations;
-                    console.log(that.id);
-                    // that.setLocalAnnotation(annotation, annotations);
+                    that.render(annotation, annotations);
                 }
             });
-            console.log(that.annotation);
-            this.render(this.annotation, this.annotations);
         }
     });
     return EditView;

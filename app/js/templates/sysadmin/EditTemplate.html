@@ -8,7 +8,7 @@
 	<hr />
 
 	<label>Annotation Values (add on the form "female,male,unknown,...")</label>
-	<input class="form-control" id="edit_annotation_value" disabled="" type="text" value="<%= annotation ? annotation.get('value') : '' %>">
+	<input class="form-control" id="edit_annotation_value" disabled="" type="text" value="<%= annotation ? annotation.get('values') : '' %>">
 	<hr />
 
 	<label>Forced Annotation</label>
@@ -18,11 +18,11 @@
 	</select>
 	<hr />
 
-	<button id="updateAnnotation" class="btn btn-default">
+	<button id="updateAnnotation" class="btn btn-default" disabled="">
 		<%= annotation ? 'Update Annotation' : 'Edit' %>
 	</button>
 
-	<a href="#/" class="btn btn-default">Back</a>
+	<a href="#admin" class="btn btn-default">Back</a>
 
 	<hr />
 	<button id="deleteAnnotation" type="button" class="btn btn-danger">

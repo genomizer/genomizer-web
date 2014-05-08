@@ -3,14 +3,14 @@
         <table class="table striped">
             <thead>
                 <tr>
-                    <th>Name</th><th>Value</th><th>Forced</th>
+                    <th>Name</th><th>Values</th><th>Forced</th>
                 </tr>
             </thead>
             <tbody>
                 <% _.each(annotations, function(annotation) { %>
                 <tr>
                     <td><%= annotation.get('name') %></td>
-                    <td><%= annotation.get('value') %></td>
+                    <td><%= annotation.get('values') %></td>
                     <td><%= annotation.get('forced') %></td>
                     <td><a href="#/admin/editannotation/<%= annotation.get('id') %>" class="btn btn-default" id="<%= annotation.id %>">Edit</a></td>
 

@@ -3,7 +3,7 @@ define([], function() {
 		defaults : {
 			"id" : "0",
 			"name" : "Not specified",
-			"value" : "Not specified",
+			"values" : "Not specified",
 			"forced" : "false"
 
 		},
