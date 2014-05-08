@@ -91,7 +91,7 @@ define([],function() {
             });
         },
         
-        editAnnotation:    function(id) {
+        editAnnotation: function(id) {
             var that = this;
             require([
                 'views/sysadmin/EditAnnotationView'
