@@ -15,13 +15,13 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			this.experiment = new Experiment();
 			this.experiments.add(this.experiment);
 			this.files = new Files([],{experiment: this.experiment});
+			this.enableOnUnloadWarning();
 			this.render();
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-
 		},
-		
+	
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
@@ -63,7 +63,15 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 				files.updateExperimentIds();
 				files.fetchAndSaveFiles();
 			});
+		},
+		enableOnUnloadWarning: function() {
+			console.log("körs");
+			$(window).bind('beforeunload',function() {
+				return "hej";
+			  alert('The Javascript unload event has been triggered.');
+			});
 		}
+		
 		
 		
 	   
