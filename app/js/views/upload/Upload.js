@@ -2,17 +2,18 @@ define([
 	'text!templates/upload/Upload.html',
 	'views/upload/AddExperiment',
 	'views/upload/FileUploadList',
+	'views/upload/ExperimentView',
 	'collections/Experiments',
 	'models/Experiment',
 	'collections/Files'
 ],
 
-function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,Files) {
+function(UploadTemplate,AddExperiment,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
-			this.experiment = new Experiment();
+			this.experiment = new Experiment(); // should this new be here?
 			this.experiments.add(this.experiment);
 			this.files = new Files([],{experiment: this.experiment});
 			this.enableOnUnloadWarning();
@@ -25,18 +26,23 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
+			"change #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
 			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
-			this.$(".experiment-container").show();
-			this.$("#upload_form").hide();
+			//this.$(".experiment-container").show();
+			//this.$("#upload_form").hide();
+			
+			
+			var experimentView = new ExperimentView();
+			
 			this.addExperiment = new AddExperiment({model:this.experiment});
-			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
+			this.addExperiment.setElement(this.$el.find(".newAnnotation"));
 			this.addExperiment.render();
 
 			this.fileUploadList = new FileUploadList({collection:this.files});
-			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
+			this.fileUploadList.setElement(this.$el.find(".fileUploadList"));
 			this.fileUploadList.render();
 		},
 		addToExistingExperiment: function() {
