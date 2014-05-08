@@ -5,7 +5,7 @@ define([],function() {
 			password: "superhemligt"
 		},
 		url: function() {
-			return 'http://scratchy.cs.umu.se:7000/login';
+			return 'http://scratchy.cs.umu.se:8000/api/login';
 		},
 		initialize: function() {
 

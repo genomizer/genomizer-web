@@ -26,8 +26,7 @@ require([
 
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
-	/*
-	 * Working code, but disabled as CORS causes problems
+
 	app.auth.save().success(function() {
 		$.ajaxSetup({
 			beforeSend: function (xhr)
@@ -39,10 +38,6 @@ require([
 			Backbone.history.start();
 		});
 	});
-   */
 
-	app.annotationTypes.fetch().success(function() {
-		Backbone.history.start();
-	});
 
 });
