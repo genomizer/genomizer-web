@@ -68,9 +68,9 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			var that = this;
 			console.log("körs");
 			$(window).bind('beforeunload',function() {
-				if(that.files.hasUnFinishedUploads() == true) {
-					return "s";
-			  	alert('The Javascript unload event has been triggered.');
+				if(that.files.hasUnfinishedUploads()) {
+					return "You have file(s) that is not finished uploading!";
+			  	alert('Hej');
 				}
 				
 			});
