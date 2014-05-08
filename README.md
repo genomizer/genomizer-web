@@ -3,7 +3,7 @@ web
 
 Because of Cross-origin-policy when testing the app locally, Chrome must be started with the `--disable-web-security` flag:
 
-**\*nix:**
+**\*nix with chromium:**
 
     chromium-browser --disable-web-security
 
