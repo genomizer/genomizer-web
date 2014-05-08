@@ -20,12 +20,17 @@ define(['models/File'],function(File) {
 			});
 		},
 		hasUnfinishedUploads: function() {
+			var nrOfFinnishedFiles = 0;
 			this.each(function(file) {
-				if(file.uploadDone == false) {
-					return true;
+				if(file.uploadDone == true) {
+					nrOfFinnishedFiles++;
 				}
 			});
-			return false;
+			if(nrOfFinnishedFiles == this.length) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	});
 	return Files;

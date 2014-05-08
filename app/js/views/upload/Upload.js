@@ -65,16 +65,16 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			});
 		},
 		enableOnUnloadWarning: function() {
+			var that = this;
 			console.log("körs");
 			$(window).bind('beforeunload',function() {
-				return "hej";
-			  alert('The Javascript unload event has been triggered.');
+				if(that.files.hasUnfinishedUploads()) {
+					return "You have file(s) that is not finished uploading!";
+			  	alert('Hej');
+				}
+				
 			});
 		}
-		
-		
-		
-	   
 	});
 	return Upload;
 });
