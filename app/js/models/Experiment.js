@@ -21,13 +21,13 @@ define([
 		getFiles: function() {
 			return this.files;
 		},
-		getAnnotation: function(id) {
+		getAnnotation: function(name) {
 			for (var i = 0; i < this.attributes.annotations.length; i++) {
-				if(this.attributes.annotations[i].id == id) {
+				if(this.attributes.annotations[i].name == name) {
 					return this.attributes.annotations[i];
 				}
 			}
-			return undefined;
+			return {};
 		}
 	});
 	return Experiment;
