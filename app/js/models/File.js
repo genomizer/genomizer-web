@@ -2,6 +2,7 @@ define([],function() {
 	var File = Backbone.Model.extend({
 		initialize: function() {
 			this.progress = 0;
+			this.uploadDone = false;
 		},
 		defaults: {
 			"type":"raw"

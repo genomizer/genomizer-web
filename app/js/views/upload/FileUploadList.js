@@ -9,6 +9,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 	var FileUploadList = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
+			var test = false;
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -35,6 +36,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 				file.fileObj = formFile;
 
 				that.collection.add(file);
+				test = true;
 			});
 			this.render();
 		}

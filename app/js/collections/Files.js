@@ -18,6 +18,14 @@ define(['models/File'],function(File) {
 			this.each(function(file) {
 				file.fetchAndUpload();
 			});
+		},
+		hasUnfinishedUploads: function() {
+			this.each(function(file) {
+				if(file.uploadDone == false) {
+					return true;
+				}
+			});
+			return false;
 		}
 	});
 	return Files;
