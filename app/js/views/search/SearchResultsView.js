@@ -29,22 +29,19 @@ define([
 
 			} else {
 
-				this.experimentViews = [];
-
-				this.collection.each(function(experiment) {
-					this.experimentViews.push(new ExperimentView({
-						annotations: this.annotations,
-						model : experiment,
-					}));
-				}, this);
-
+				// render table header
 				this.$el.html(this.headerTemplate({annotations: this.annotations}));
 
-				_.each(this.experimentViews, function(experimentView) {
-					
+
+				// create and render experiment views
+				this.collection.each(function(experiment) {
+					var experimentView = new ExperimentView({
+						annotations: this.annotations,
+						model : experiment,
+					});
+
 					experimentView.render();
 					this.$el.append(experimentView.$el);
-
 				}, this);
 			}
 				

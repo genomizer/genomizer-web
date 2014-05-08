@@ -82,7 +82,6 @@ define([
 			//Downloads all the selected files.
 			var URLsToDownload = this.collection.getSelectedFileURLs();
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				alert('Starting to download from url: '+URLsToDownload[i]);
 				downloadURL(URLsToDownload[i]);
 			};
 

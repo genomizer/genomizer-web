@@ -10,7 +10,7 @@
 	</td>
 	<% annotations.each(function(annotation) { %>  
 		<td>
-			<span><%- experiment.getAnnotation(annotation.attributes.id).value %></span>
+			<span><%- experiment.getAnnotation(annotation.attributes.name).value %></span>
 		</td>
 	<% }); %>
 </tr>
@@ -29,49 +29,8 @@
 <tr class="raw-table-row table-row">
 	<td colspan="<%- annotations.length + 3 %>">
 		<table class="table">
-			<thead>
-				<tr class="raw-header-row header-row">	<!-- RAW HEADER ROW -->
-					<th colspan="2">
-						
-					</th>
-					<th>
-						<span>Filename</span>
-					</th>
-					<th>
-						<span>Size</span>
-					</th>
-					<th>
-						<span>Uploaded date</span>
-					</th>
-					<th colspan="<%- annotations.length - 2 %>">
-						<span>Uploaded by</span>
-					</th>
-				</tr>
-			</thead>
-			<% experiment.getFiles().each(function(file) { %>
-				<% if(file.get("type") == "raw") { %>
-					<tr class="raw-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
-						<td class="expand-cell">
-							
-						</td>
-						<td class="check-cell">
-							<input class="checked-input" type="checkbox">
-						</td>
-						<td>
-							<span><%- file.get("name") %></span>
-						</td>
-						<td>
-							<span><%- file.get("size") %></span>
-						</td>
-						<td>
-							<span><%- file.get("date") %></span>
-						</td>
-						<td>
-							<span><%- file.get("uploadedBy") %></span>
-						</td>
-					</tr>
-				<% } %>
-			<% }); %>
+			<thead></thead>
+			<tbody class="js-Raw-container"></tbody>
 		</table>
 	</td>
 </tr>
@@ -89,49 +48,8 @@
 <tr class="profile-table-row table-row">
 	<td colspan="<%- annotations.length + 3 %>">
 		<table class="table">
-			<thead>
-				<tr class="profile-header-row header-row">	<!-- RAW HEADER ROW -->
-					<th colspan="2">
-						
-					</th>
-					<th>
-						<span>Filename</span>
-					</th>
-					<th>
-						<span>Size</span>
-					</th>
-					<th>
-						<span>Uploaded date</span>
-					</th>
-					<th colspan="<%- annotations.length - 2 %>">
-						<span>Uploaded by</span>
-					</th>
-				</tr>
-			</thead>
-			<% experiment.getFiles().each(function(file) { %>
-				<% if(file.get("type") == "profile") { %>
-					<tr class="profile-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
-						<td class="expand-cell">
-							
-						</td>
-						<td class="check-cell">
-							<input class="checked-input" type="checkbox">
-						</td>
-						<td>
-							<span><%- file.get("name") %></span>
-						</td>
-						<td>
-							<span><%- file.get("size") %></span>
-						</td>
-						<td>
-							<span><%- file.get("date") %></span>
-						</td>
-						<td>
-							<span><%- file.get("uploadedBy") %></span>
-						</td>
-					</tr>
-				<% } %>
-			<% }); %>
+			<thead></thead>
+			<tbody class="js-Profile-container"></tbody>
 		</table>
 	</td>
 </tr>
@@ -149,49 +67,8 @@
 <tr class="region-table-row table-row">
 	<td colspan="<%- annotations.length + 3 %>">
 		<table class="table">
-			<thead>
-				<tr class="region-header-row header-row">	<!-- RAW HEADER ROW -->
-					<th colspan="2">
-						
-					</th>
-					<th>
-						<span>Filename</span>
-					</th>
-					<th>
-						<span>Size</span>
-					</th>
-					<th>
-						<span>Uploaded date</span>
-					</th>
-					<th colspan="<%- annotations.length - 2 %>">
-						<span>Uploaded by</span>
-					</th>
-				</tr>
-			</thead>
-			<% experiment.getFiles().each(function(file) { %>
-				<% if(file.get("type") == "region") { %>
-					<tr class="region-file-row file-row" data-id="<%- file.get("id") %>" data-url="<%- file.get("URL") %>">
-						<td class="expand-cell">
-							
-						</td>
-						<td class="check-cell">
-							<input class="checked-input" type="checkbox">
-						</td>
-						<td>
-							<span><%- file.get("name") %></span>
-						</td>
-						<td>
-							<span><%- file.get("size") %></span>
-						</td>
-						<td>
-							<span><%- file.get("date") %></span>
-						</td>
-						<td>
-							<span><%- file.get("uploadedBy") %></span>
-						</td>
-					</tr>
-				<% } %>
-			<% }); %>
+			<thead></thead>
+			<tbody class="js-Region-container"></tbody>
 		</table>
 	</td>
 </tr>
