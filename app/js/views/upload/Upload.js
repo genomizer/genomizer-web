@@ -65,16 +65,16 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			});
 		},
 		enableOnUnloadWarning: function() {
+			var that = this;
 			console.log("körs");
 			$(window).bind('beforeunload',function() {
-				return "hej";
-			  alert('The Javascript unload event has been triggered.');
+				if(that.files.hasUnFinishedUploads() == true) {
+					return "s";
+			  	alert('The Javascript unload event has been triggered.');
+				}
+				
 			});
 		}
-		
-		
-		
-	   
 	});
 	return Upload;
 });

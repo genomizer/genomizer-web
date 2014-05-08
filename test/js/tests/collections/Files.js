@@ -53,19 +53,29 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					expect(s2.calledOnce).to.be.true;
 				});
 			});
-			describe("should return false if not all files has been uploaded", function() {
+			describe("should return true or false depending on if all files have been uploaded or not", function() {
 			
-				it("should return false when done", function() {
+				it("should return false when all files have been uploaded", function() {
 					var f1 = new File();
 					var f2 = new File();
 					f1.uploadDone = true;
 					f2.uploadDone = true;
 
 					var files = new Files([f1,f2]);
-					debugger;
 					console.log(f1.uploadDone);
 					expect(files.hasUnfinishedUploads()).to.be.false;
 				});
+
+				it("should return true if not all files have been uploaded", function() {
+					var f1 = new File();
+					var f2 = new File();
+					f1.uploadDone = true;
+					f2.uploadDone = false;
+
+					var files = new Files([f1,f2]);
+					console.log(f1.uploadDone);
+					expect(files.hasUnfinishedUploads()).to.be.true;
+				})
 			});
 	});
 });

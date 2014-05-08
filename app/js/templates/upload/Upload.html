@@ -1,7 +1,7 @@
 <script language="JavaScript">
 		function beforeunload(ev) {
 	    var event = ev || window.event;
-		    if( fileUploadList > 0) {
+		    if( ) {
 		    	 event.returnValue = "Are you sure you want to close this window? "
 		                      + "All of your work will be lost if you close";
 		    }
