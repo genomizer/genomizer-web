@@ -58,7 +58,7 @@ define(['models/Experiment'],function(Experiment) {
 		getSelectedFileURLs: function() {
 			var res = [];
 			for(var i=0; i<this.selectedFiles.length; i++) {
-				res.push(this.selectedFiles[i].get("URL"));
+				res.push(this.selectedFiles[i].get("url"));
 			}
 			return res;
 		}
