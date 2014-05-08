@@ -13,11 +13,13 @@ function(UploadTemplate,AddExperiment,FileUploadList,ExperimentView,Experiments,
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
-			this.experiment = new Experiment(); // should this new be here?
+			this.experiment; // should this new be here?
 			this.experiments.add(this.experiment);
-			this.files = new Files([],{experiment: this.experiment});
+			//this.files = new Files([],{experiment: this.experiment});
+			this.experimentViews = [];
 			this.enableOnUnloadWarning();
 			this.render();
+			this.enableAddButton(); // not needed when automatic test value is removed
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -31,23 +33,15 @@ function(UploadTemplate,AddExperiment,FileUploadList,ExperimentView,Experiments,
 			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
-			//this.$(".experiment-container").show();
-			//this.$("#upload_form").hide();
-			
-			
-			var experimentView = new ExperimentView();
-			
-			this.addExperiment = new AddExperiment({model:this.experiment});
-			this.addExperiment.setElement(this.$el.find(".newAnnotation"));
-			this.addExperiment.render();
-
-			this.fileUploadList = new FileUploadList({collection:this.files});
-			this.fileUploadList.setElement(this.$el.find(".fileUploadList"));
-			this.fileUploadList.render();
+			var experimentView = new ExperimentView({model: this.experiment});
+			this.experimentViews.push(experimentView);
+			this.experiments.add(experimentView.getModel());
+			experimentView.render();
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
 			var that = this;
+			this.experiment = new Experiment();
 			this.experiment.set("id",experimentId);
 			this.experiment.existingExperiment = true;
 			this.experiment.fetch().success(function() {
