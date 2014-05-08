@@ -11,22 +11,30 @@ define([],function() {
 
 		initialize: function(options) {
 			this.history = [];
-			this.on("all", this.storeRoute);
+			this.on("route", this.storeRoute);
 		},
 
-		storeRoute: function() {
+		storeRoute: function(event, p2) {
+			console.log("Router > storeRoute > event: ", event, p2);
 			this.history.push(Backbone.history.fragment);
 		},
 
 		previous: function(options) {
-			if (this.history.length > 1) {
-				if(options) {
-					this.navigate(this.history.pop(), options);
-				} else {
-					this.navigate(this.history.pop());
-				}
-				
+			console.log("router > previous > history: ", this.history);
+			if (this.history.length > 2) {
+
+				// remove the current page from history
+				this.history.pop();
+
+				// get the previous page
+				var previous = this.history.pop();
+
+				console.log("router > previous > previouspath: ", previous);
+				this.navigate(previous, options);
 			}
+		},
+		hasPrevious: function() {
+			return this.history.length > 2;
 		},
 
 		search: function(query) {

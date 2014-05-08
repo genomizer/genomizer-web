@@ -9,12 +9,13 @@ define([],function() {
 		},
 		uploadFile: function() {
 			// TODO: Take url from model instead..
+			// Use real url when api is ready...
 			var formData = new FormData();
 			var that = this;
 			formData.append('uploadfile',this.fileObj);
-			formData.append('path','/var/www/html/data/humanarm.fastq');
+			//formData.append('path','/var/www/html/data/humanarm.fastq');
 			$.ajax({
-				url: "http://scratchy.cs.umu.se:8090/upload.php",
+				url: "http://scratchy.cs.umu.se:8000/upload.php?path=/var/www/data/humanarm.fastq",
 				type: "POST",
 				data: formData,
 				username: "pvt",
