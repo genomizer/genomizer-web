@@ -11,7 +11,7 @@ function(ExperimentTemplate,AddExperiment,FileUploadList,Experiment) {
 		initialize: function() {
 			
 			if (this.model == undefined) {
-				console.log("hej");
+				console.log("created new empty experiment");
 				this.model = new Experiment();
 			}
 			
@@ -20,6 +20,7 @@ function(ExperimentTemplate,AddExperiment,FileUploadList,Experiment) {
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
+			console.log("the experimentView's $el: ", this.$el);
 			
 			this.addExperiment = new AddExperiment({model:this.model});
 			this.addExperiment.setElement(this.$el.find(".newAnnotation"));
@@ -29,7 +30,9 @@ function(ExperimentTemplate,AddExperiment,FileUploadList,Experiment) {
 			this.fileUploadList.setElement(this.$el.find(".fileUploadList"));
 			
 			this.addExperiment.render();
+			console.log("rendered addExperiment: ", this.addExperiment);
 			this.fileUploadList.render();
+			console.log("rendered fileUploadList: ", this.fileUploadList);
 		},
 		getModel: function() {
 			return this.model;
