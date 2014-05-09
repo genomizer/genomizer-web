@@ -30,7 +30,7 @@ define([],function() {
                 this.history.pop();
 
                 // get the previous page
-                var previous = this.history.pop();
+                var previous = this.history[this.history.length-1];
 
                 console.log("router > previous > previouspath: ", previous);
                 this.navigate(previous, options);
