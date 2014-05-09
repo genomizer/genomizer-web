@@ -4,6 +4,10 @@ define(['models/sysadmin/Gateway'],function(Gateway) {
 				var gateway = new Gateway();
 				gateway.should.exist;
 			});
+			// it("Should return false sending a incorrect packet", function () {
+				// var gateway = new Gateway();
+				// gateway.createPacket("POST", "/annotation", )
+			// });
 	});
 });
 
