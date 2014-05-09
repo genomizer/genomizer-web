@@ -43,6 +43,9 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 					annotation.set({
 						"type" : ["yes", "no"]
 					});
+					annotation.set({
+						"default" : "yes"	
+					});
 					break;
 				case "two":
 					var temp = $('#itemlist_input').val();
@@ -61,7 +64,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 					break;
 			}
 			this.postNewAnnotation(annotation);
-			alert("Submitted(?)");
+			alert("Submitted annotation");
 		},
 		
 		checkAnnotationType : function(e) {
@@ -79,7 +82,8 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 		
 		postNewAnnotation : function(annotation) {
 			var payload = annotation.toJSON();
-			delete payload.ident;
+			delete payload.id;
+			delete payload.values;
 
 			var result = Gateway.postAnnotation(payload);
 
