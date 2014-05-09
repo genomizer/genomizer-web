@@ -46,7 +46,7 @@ define([
 			}
 
 			//handles whether or not the process button should be clickable.
-			if(fileArray.length == 1 && fileArray[0].get("type") == "raw") {
+			if(fileArray.length == 1 && fileArray[0].get("type").toLowerCase() == "raw") {
 				$('#process_button').prop('disabled', false);
 			} else {
 				$('#process_button').prop('disabled', true);
