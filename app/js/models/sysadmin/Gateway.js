@@ -1,8 +1,9 @@
 define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
-		url : "http://genomizer.apiary-mock.com",
-
+		url : "http://scratchy.cs.umu.se:7000",
+//http://genomizer.apiary-mock.com
+//http://scratchy.cs.umu.se:7000
 		getURL : function() {
 			return this.url;
 		},
@@ -11,7 +12,6 @@ define([], function() {
 			var result = false;
 			$.ajax({
 				type : type,
-				Authorization : "12411",
 				ContentType : "application/json",
 				url : this.url + urlExtension,
 				dataType : 'json',
