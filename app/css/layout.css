@@ -1,13 +1,9 @@
-body>.alert-wrap {
-	position: absolute;
-	top:-500px;
-	text-align:center;
-	width:100%;
+body {
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 100%;
 }
-.alert-wrap .alert {
-	z-index:10;
-	display:inline-block;
-	text-align:center;
-	position:relative;
-	top: 520px;
+
+document {
+	height: 100%;
 }
