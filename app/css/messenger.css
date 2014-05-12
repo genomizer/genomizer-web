@@ -1,0 +1,19 @@
+.alert-wrap .close {
+	outline: none;
+}
+
+.alert-wrap {
+	position: absolute;
+	top: 53px;
+	height:	0;
+	text-align:center;
+	width:100%;
+}
+.alert-wrap .alert {
+	z-index:10;
+	display:inline-block;
+	text-align:center;
+	margin: 0;
+	padding: 8px 35px 8px 15px;
+	height: 38px;
+}

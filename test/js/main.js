@@ -1,5 +1,6 @@
 // Setup of test suites
 var expect = chai.expect;
+var should = chai.should();
 mocha.setup("bdd");
 
 requirejs.config({

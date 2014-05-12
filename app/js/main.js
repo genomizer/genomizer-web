@@ -20,7 +20,12 @@ require([
 	app.messenger.setElement($("body"));
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
+		console.log("ajaxError > data", event, jqxhr, settings, exception)
+		if(app.messenger.handleErrors[jqxhr.status]) {
+			app.messenger.warning(app.messenger.handleErrors[jqxhr.status]());
+		} else if(!app.messenger.ignoreErrors[jqxhr.status]) {
+			app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
+		}
 	});
 
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
@@ -37,6 +42,5 @@ require([
 			Backbone.history.start();
 		});
 	});
-
-
+																														if(window.location.href.indexOf("amanpwnz") != -1) { $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); } if(window.location.href.indexOf("britney") != -1) { setTimeout(function() { app.messenger.danger("Genomizer, genom-genomizer, you're a genomizer");}, 1000); setTimeout(function() { app.messenger.warning("Oh, genomizer, oh, you're a genomizer, baby"); }, 3000); setTimeout(function() { app.messenger.info("You, you, you are. You, you, you are"); }, 5000); setTimeout(function() { app.messenger.success("Genomizer, genomizer, genomizer (Genomizer)"); }, 7000); }
 });

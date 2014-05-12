@@ -2,6 +2,15 @@ define([
 	'text!templates/Messenger.html'
 ],function(Template) {
 	var Messenger = Backbone.View.extend({
+		ignoreErrors: {},
+		handleErrors: {
+			"502" : function() {
+				return "Unable to connect to the server: Server application not responding.";
+			},
+			"400" : function() {
+				return "Your search query is invalid, please rewrite it and try again.";
+			},
+		},
 		TEMPLATE: _.template(Template),
 		events: {
 			"click .close" : "closeAlert"
