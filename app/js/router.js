@@ -7,6 +7,7 @@ define([],function() {
             "": "search",
             "upload":"upload",
             "process":"process",
+            "process/:query":"process",
             "admin":"admin",
             "admin/createannotation": "createAnnotation",
             "admin/editannotation/:id": "editAnnotation"
@@ -58,11 +59,11 @@ define([],function() {
             });
         },
 
-        process: function() {
+        process: function(query) {
             require([
                 'views/processModal/Process'
             ],function(Process) {
-                var modal = new Process();
+                var modal = new Process({query:query});
                 modal.show();
             });
         },
