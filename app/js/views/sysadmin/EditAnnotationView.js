@@ -40,21 +40,27 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 var y = window.confirm("Annotation will be completely removed!");
                 if (y) {
                     var payload = new Backbone.Model();
-                    tempAnnotation = new Annotation();
                     
-                    tempAnnotation.set({"id":this.annotation.get('id'),"values":[]});
+                    //delete /annotation/{id}
+                                        
+                    Gateway.deleteAnnotation(payload, this.annotation.get('id'));
                     
-                    var innerPayload = tempAnnotation.toJSON();
-                    
-                    delete innerPayload.name;
-                    delete innerPayload.type;
-                    delete innerPayload.forced;
-                    
-                    payload.set({
-                        'deleteId' : [innerPayload]
-                    });
 
-                    var result = Gateway.deleteAnnotation(payload);
+					// tempAnnotation = new Annotation();
+//                     
+                    // tempAnnotation.set({"id":this.annotation.get('id'),"values":[]});
+//                     
+                    // var innerPayload = tempAnnotation.toJSON();
+//                     
+                    // delete innerPayload.name;
+                    // delete innerPayload.type;
+                    // delete innerPayload.forced;
+//                     
+                    // payload.set({
+                        // 'deleteId' : [innerPayload]
+                    // });
+// 
+                    // var result = Gateway.deleteAnnotation(payload);
 
 					history.back();
                     alert('Annotation deleted');

@@ -1,6 +1,6 @@
 define([
 	'collections/Files'
-	],function(Files) {
+],function(Files) {
 	var Experiment = Backbone.Model.extend({
 
 		defaults : {
