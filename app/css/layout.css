@@ -7,3 +7,7 @@ body {
 document {
 	height: 100%;
 }
+
+.btn {
+	outline: none !important;
+}

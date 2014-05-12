@@ -1,15 +1,15 @@
-.alert-wrap .close {
+.alert-container .close {
 	outline: none;
 }
 
-.alert-wrap {
+.alert-container {
 	position: absolute;
 	top: 53px;
 	height:	0;
 	text-align:center;
 	width:100%;
 }
-.alert-wrap .alert {
+.alert-container .alert {
 	z-index:10;
 	display:inline-block;
 	text-align:center;
