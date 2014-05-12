@@ -22,15 +22,13 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
             modified = modified.split(",");
 
 			var deletedResult = Annotations.findDeletedValues(original, modified);
-			if (deletedResult != -1) {
-				Gateway.deleteAnnotationValues(deletedResult, this.annotation.get('id'));
-			}
-			// var addedResult = Annotations.findAddedValues(original, modified);
+			var addedResult = Annotations.findAddedValues(original, modified);
+			Gateway.deleteAnnotationValues(deletedResult, addedResult, this.annotation.get('id'));
+			
 			// if (addedResult != -1) {
 				// Gateway.addAnnotationValues(addedResult, this.annotation.get('id'));
 			// }
 
-            alert("Annotation saved!");
         },
 
         deleteAnnotation : function() {
@@ -39,29 +37,9 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 var y = window.confirm("Annotation will be completely removed!");
                 if (y) {
                     var payload = new Backbone.Model();
-                    
-                    //delete /annotation/{id}
-                    
-                    Gateway.deleteAnnotation(payload, this.annotation.get('id'));
+                                        
+                    var success = Gateway.deleteAnnotation(payload, this.annotation.get('id'));
 
-					// tempAnnotation = new Annotation();
-//                     
-                    // tempAnnotation.set({"id":this.annotation.get('id'),"values":[]});
-//                     
-                    // var innerPayload = tempAnnotation.toJSON();
-//                     
-                    // delete innerPayload.name;
-                    // delete innerPayload.type;
-                    // delete innerPayload.forced;
-//                     
-                    // payload.set({
-                        // 'deleteId' : [innerPayload]
-                    // });
-// 
-                    // var result = Gateway.deleteAnnotation(payload);
-
-					history.back();
-                    alert('Annotation deleted');
                 }
             }
         },
@@ -93,7 +71,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
             annotations = new Annotations();
             annotations.fetch({
                 success : function(annotations) {
-                    annotation = annotations.getAnnotationByID(that.id);
+                    annotation = annotations.getAnnotationByName(that.id);
                     that.render(annotation, annotations);
                 }
             });

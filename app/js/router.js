@@ -9,7 +9,7 @@ define([],function() {
             "process":"process",
             "admin":"admin",
             "admin/createannotation": "createAnnotation",
-            "admin/editannotation/:id": "editAnnotation"
+            "admin/editannotation/:name": "editAnnotation"
         },
 
         initialize: function(options) {
@@ -97,12 +97,12 @@ define([],function() {
             });
         },
         
-        editAnnotation: function(id) {
+        editAnnotation: function(name) {
             var that = this;
             require([
                 'views/sysadmin/EditAnnotationView'
             ],function(EditAnnotationView) {
-                new EditAnnotationView({el:that.getNewAdminView(), id:id});                
+                new EditAnnotationView({el:that.getNewAdminView(), id:name});                
             });
         }    
 

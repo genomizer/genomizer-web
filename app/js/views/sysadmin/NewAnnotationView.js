@@ -67,11 +67,9 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 		checkAnnotationType : function(e) {
 			switch(e.currentTarget.value) {
 				case "two":
-					console.log("switch");
 					$('#itemlist_input').removeAttr('disabled');
 					break;
 				default:
-					console.log("switch2");
 					$('#itemlist_input').attr('disabled', 'true');
 					break;
 			}

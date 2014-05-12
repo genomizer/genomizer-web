@@ -13,10 +13,10 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 				})));
 		},
 
-		getAnnotationByID : function(id) {
+		getAnnotationByName : function(name) {
 			var annotation = null;
 			for (var i = 0; i < this.length; i++) {
-				if (this.at(i).get('id') == id) {
+				if (this.at(i).get('name') == name) {
 					annotation = this.at(i);
 					break;
 				}
