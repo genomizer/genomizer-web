@@ -1,6 +1,6 @@
 define(['models/File'],function(File) {
 	var Files = Backbone.Collection.extend({
-		url: 'http://scratchy.cs.umu.se:8000/api/files',
+		url: app.BASE_URL + 'files',
 		model: File,
 		initialize:function (models,options) {
 			if(options) {

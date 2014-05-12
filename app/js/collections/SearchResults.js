@@ -1,7 +1,7 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
-			return 'http://scratchy.cs.umu.se:8000/api/search/?annotations=' + this.query;
+			return app.BASE_URL + 'search/?annotations=' + this.query;
 		},
 		model: Experiment,
 		initialize:function (models,options) {

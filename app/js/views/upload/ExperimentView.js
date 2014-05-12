@@ -11,7 +11,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		initialize: function() {
 		},
 		events: {
-			"submit #experiment-form": "saveExperiment"
+			"submit #experiment-form": "saveExperiment",
+			"click #removeExperiment": "removeExperiment"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -25,9 +26,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
-		},
-		events: {
-			"click #removeExperiment": "removeExperiment"
 		},
 		removeExperiment: function() {
 			this.el.remove();
