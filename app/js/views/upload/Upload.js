@@ -27,6 +27,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
+			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
 			var experiment = new Experiment();
