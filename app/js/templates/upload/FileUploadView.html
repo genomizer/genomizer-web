@@ -1,12 +1,17 @@
-<input name="" id="" class="form-control" type="text" value=<%- fileName %> placeholder="File Name" required></input>
+<div class="form-inline file-info-list">
+<input name="fileName" class="form-control" type="text" value=<%- fileName %> placeholder="File Name" required style="width:50%"></input>
+<div class="form-inline" style="float:right;">
 <%- fileSize %>
 
-<button type="button" id="removeFile" class="btn btn-default">
-	<span class="glyphicon glyphicon-remove"></span>
-</button>
 <select id="selector" class="form-control">
 	<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>Raw</option>
 	<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>Profile</option>
 	<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>Region</option>
 </select>
+
+<button type="button" id="removeFile" class="btn btn-default">
+	<span class="glyphicon glyphicon-remove"></span>
+</button>
+</div>
+</div>
 <!--<div class="progress"></div>-->
