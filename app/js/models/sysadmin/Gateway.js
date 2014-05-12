@@ -33,8 +33,8 @@ define([], function() {
 			return this.createPacket("POST", "/annotation", payload);
 		},
 
-		deleteAnnotation : function(payload) {
-			return this.createPacket("DELETE", "/annotation", payload);
+		deleteAnnotation : function(payload, id) {
+			return this.createPacket("DELETE", "/annotation/" + id, payload);
 		}
 	});
 	return Gateway;
