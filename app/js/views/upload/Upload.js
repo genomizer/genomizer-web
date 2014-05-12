@@ -13,9 +13,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
-			this.experiment; // should this new be here?
-			//this.experiments.add(this.experiment);
-			//this.files = new Files([],{experiment: this.experiment});
 			this.experimentViews = [];
 			this.enableOnUnloadWarning();
 			this.render();
@@ -23,9 +20,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-			for (var ev in this.experimentViews) {
-				ev.render();
-			}
 		},
 	
 		events: {
@@ -36,23 +30,28 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
-			var experimentView = new ExperimentView({model: this.experiment});
-			experimentView.setElement(this.$el.find(".experiment-container"));
-			this.experimentViews.push(experimentView);
-			this.experiments.add(experimentView.getModel());
-			//experimentView.render();
+			var experiment = new Experiment();
+			this.appendNewExperimentView(experiment);
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
 			var that = this;
-			this.experiment = new Experiment();
-			this.experiments.add(this.experiment);
-			this.experiment.set("id",experimentId);
-			this.experiment.existingExperiment = true;
-			this.experiment.fetch().success(function() {
+			var experiment = new Experiment();
+			this.experiments.add(experiment);
+			experiment.set("id",experimentId);
+			experiment.existingExperiment = true;
+			experiment.fetch().success(function() {
 				console.log("creating existing experiment: ", this.experiment);
-				that.createExperiment();
+				//that.createExperiment();
+				that.appendNewExperimentView(experiment);
 			});
+		},
+		appendNewExperimentView: function(experiment) {
+			var experimentView = new ExperimentView({model: experiment});
+			this.$el.find(".experiment-container").append(experimentView.el);
+			this.experimentViews.push(experimentView);
+			this.experiments.add(experimentView.getModel());
+			experimentView.render();
 		},
 		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {

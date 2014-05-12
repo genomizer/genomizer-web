@@ -14,13 +14,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				console.log("created new empty experiment");
 				this.model = new Experiment();
 			}
-			
-			
-			this.render();
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-			console.log("the experimentView's $el: ", this.$el);
 			
 			this.annotationsForm = new AnnotationsForm({model:this.model});
 			this.annotationsForm.setElement(this.$el.find(".newAnnotation"));
@@ -30,16 +26,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.fileUploadList.setElement(this.$el.find(".fileUploadList"));
 			
 			this.annotationsForm.render();
-			console.log("rendered annotationsForm: ", this.annotationsForm);
 			this.fileUploadList.render();
-			console.log("rendered fileUploadList: ", this.fileUploadList);
-		},
-		getModel: function() {
-			return this.model;
 		}
-		/*events: {
-			
-		}*/
 	});
 
 	return ExperimentView;
