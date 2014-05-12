@@ -12,7 +12,7 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 					return pattern.test(data.get("name"));
 				})));
 		},
-		
+
 		getAnnotationByID : function(id) {
 			var annotation = null;
 			for (var i = 0; i < this.length; i++) {
@@ -23,8 +23,29 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 			}
 			return annotation;
 		}
+	}, 
+	
+	{
+		findDeletedValues : function(original, modified) {
+			var result = $(original).not(modified).get();
+			if (result.length <= 0) {
+				return -1;
+			} else {
+				return result;
+			}
+		},
+
+		findAddedValues : function(original, modified) {
+			var result = $(modified).not(original).get();
+			if (result.length <= 0) {
+				return -1;
+			} else {
+				return result;
+			}
+		}
 	});
 	return Annotations;
-}); 
+});
+
 
 

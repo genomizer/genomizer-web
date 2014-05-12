@@ -1,52 +1,54 @@
 define([
-	'text!templates/upload/Upload.html',
-	'views/upload/AddExperiment',
-	'views/upload/FileUploadList',
-	'collections/Experiments',
-	'models/Experiment',
-	'collections/Files'
+	   'text!templates/upload/Upload.html',
+	   'views/upload/AnnotationsForm',
+	   'views/upload/FileUploadList',
+	   'views/upload/ExperimentView',
+	   'collections/Experiments',
+	   'models/Experiment',
+	   'collections/Files'
 ],
 
-function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,Files) {
+function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
-			this.experiment = new Experiment();
-			this.experiments.add(this.experiment);
-			this.files = new Files([],{experiment: this.experiment});
+			this.experimentViews = [];
 			this.enableOnUnloadWarning();
 			this.render();
+			this.enableAddButton(); // not needed when automatic test value is removed
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 		},
-	
+
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
+			"change #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
-			"submit #experiment-form": "saveExperiment"
 		},
 		createExperiment: function() {
-			this.$(".experiment-container").show();
-			this.$("#upload_form").hide();
-			this.addExperiment = new AddExperiment({model:this.experiment});
-			this.addExperiment.setElement(this.$el.find("#newAnnotation"));
-			this.addExperiment.render();
-
-			this.fileUploadList = new FileUploadList({collection:this.files});
-			this.fileUploadList.setElement(this.$el.find("#fileUploadList"));
-			this.fileUploadList.render();
+			var experiment = new Experiment();
+			this.appendNewExperimentView(experiment);
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
 			var that = this;
-			this.experiment.set("id",experimentId);
-			this.experiment.existingExperiment = true;
-			this.experiment.fetch().success(function() {
-				that.createExperiment();
+			var experiment = new Experiment();
+			this.experiments.add(experiment);
+			experiment.set("id",experimentId);
+			experiment.existingExperiment = true;
+			experiment.fetch().success(function() {
+				that.appendNewExperimentView(experiment);
 			});
+		},
+		appendNewExperimentView: function(experiment) {
+			var experimentView = new ExperimentView({model: experiment});
+			this.$el.find(".experiment-container").append(experimentView.el);
+			this.experimentViews.push(experimentView);
+			this.experiments.add(experiment);
+			experimentView.render();
 		},
 		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {
@@ -55,19 +57,11 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 				$('#add_button').prop('disabled', true);
 			}
 		},
-		saveExperiment: function(e) {
-			e.preventDefault();
-			var that = this;
-			this.experiment.save().success(function() {
-				files.updateExperimentIds();
-				files.fetchAndSaveFiles();
-			});
-		},
 		enableOnUnloadWarning: function() {
 			var that = this;
 			$(window).bind('beforeunload',function() {
 				if(that.files.hasUnfinishedUploads()) {
-					return "You have file(s) that is not finished uploading!";
+					return "You have file(s) that are not finished uploading!";
 				}
 			});
 		}
