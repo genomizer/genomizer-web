@@ -24,13 +24,13 @@ define(['collections/sysadmin/Annotations', 'models/sysadmin/Annotation'], funct
 
 			var annotations = new Annotations([annotation1, annotation2, annotation3, annotation4]);
 
-			var result = annotations.getAnnotationByID('18');
+			var result = annotations.getAnnotationByName('A3');
 			result.get('name').should.equal('A3');
-			result = annotations.getAnnotationByID('2');
+			result = annotations.getAnnotationByName('A1');
 			result.get('name').should.equal('A1');
-			result = annotations.getAnnotationByID('35');
+			result = annotations.getAnnotationByName('A4');
 			result.get('name').should.equal('A4');
-			result = annotations.getAnnotationByID('14');
+			result = annotations.getAnnotationByName('A2');
 			result.get('name').should.equal('A2');
 		});
 		it("Should return null when getByID does not find the annotation", function() {
@@ -53,7 +53,7 @@ define(['collections/sysadmin/Annotations', 'models/sysadmin/Annotation'], funct
 
 			var annotations = new Annotations([annotation1, annotation2, annotation3, annotation4]);
 
-			var result = annotations.getAnnotationByID('128');
+			var result = annotations.getAnnotationByName('NotAvailableAnnotation');
 			expect(result).to.be.null;
 		});
 		it("Should filter the collection after input string", function() {
