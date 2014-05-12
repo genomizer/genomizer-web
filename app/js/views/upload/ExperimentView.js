@@ -35,11 +35,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			//annots = _.map(annots,function(an) {
 			//	return _.omit(an,'id');
 			//});
-			this.model.set("annotations",[{id:1,name:"Development Stage",value:"aster"}]);
-			this.model.set("createdBy","jonas");
-			this.model.set("name","webb-"+Date.now());
+			//this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
+			//this.model.set("createdBy","jonas");
+			//this.model.set("name","webb-"+Date.now());
 			this.model.save(null,{success:function() {
-				that.model.files.updateExperimentIds(that.model.get("name"));
+				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
 			}
 			});

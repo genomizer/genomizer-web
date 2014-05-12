@@ -28,6 +28,10 @@ define([
 				}
 			}
 			return {};
+		},
+		updateExperimentIdsForFiles: function () {
+			this.files.updateExperimentIds(this.get("name"));
+
 		}
 	});
 	return Experiment;

@@ -9,9 +9,9 @@ define(['models/File'],function(File) {
 
 		},
 		updateExperimentIds: function(id) {
-				this.each(function(file) {
-					file.set("experimentID", id);
-				});
+			this.each(function(file) {
+				file.set("experimentID", id);
+			});
 		},
 		fetchAndSaveFiles: function() {
 			this.each(function(file) {
