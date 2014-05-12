@@ -2,7 +2,7 @@ define([
 	'models/AnnotationType'
 ],function(AnnotationType) {
 	var AnnotationTypes = Backbone.Collection.extend({
-		url: 'http://scratchy.cs.umu.se:8000/api/annotation',
+		url: app.BASE_URL + 'annotation',
 		model: AnnotationType,
 		defaults : {
 			

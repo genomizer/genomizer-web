@@ -6,6 +6,8 @@ require.config({
 });
 
 var app = {};
+app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
+//app.BASE_URL = "http://harry.cs.umu.se:7000/"
 require([
 		'views/MainMenu',
 		'collections/AnnotationTypes',
@@ -17,7 +19,6 @@ require([
 	app.annotationTypes = new AnnotationTypes();
 	app.auth = new Auth();
 	app.messenger = new Messenger();
-	
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
 		if(app.messenger.handleErrors[jqxhr.status]) {

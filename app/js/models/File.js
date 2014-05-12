@@ -5,17 +5,21 @@ define([],function() {
 			this.uploadDone = false;
 		},
 		defaults: {
-			"type":"raw"
+			"type":"raw",
+			// TODO: remove hardcoded default values (below)
+			 "metaData": "metameta",
+			 "author": "name",
+			 "uploader": "user1",
+			 "grVersion": "hg18",
+
 		},
+		// Requires: URLupload in attributes
 		uploadFile: function() {
-			// TODO: Take url from model instead..
-			// Use real url when api is ready...
 			var formData = new FormData();
 			var that = this;
 			formData.append('uploadfile',this.fileObj);
-			//formData.append('path','/var/www/html/data/humanarm.fastq');
 			$.ajax({
-				url: "http://scratchy.cs.umu.se:8000/upload.php?path=/var/www/data/humanarm.fastq",
+				url: this.get("URLupload"),
 				type: "POST",
 				data: formData,
 				username: "pvt",
@@ -51,7 +55,7 @@ define([],function() {
 			var that = this;
 			this.save().success(function() {
 				// Url should now be available
-				this.uploadFile();
+				that.uploadFile();
 			});
 		}
 	});
