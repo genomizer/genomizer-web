@@ -49,7 +49,7 @@ define([],function() {
 		},
 		fetchAndUpload: function() {
 			var that = this;
-			this.fetch().success(function() {
+			this.save().success(function() {
 				// Url should now be available
 				this.uploadFile();
 			});

@@ -58,10 +58,20 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-			this.experiment.save().success(function() {
-				files.updateExperimentIds();
-				files.fetchAndSaveFiles();
-			});
+				// API test
+				this.experiment.unset("files");
+				//var annots = this.experiment.get("annotations");
+				//annots = _.map(annots,function(an) {
+				//	return _.omit(an,'id');
+				//});
+				this.experiment.set("annotations",[{id:1,name:"Development Stage",value:"aster"}]);
+				this.experiment.set("createdBy","jonas");
+				this.experiment.set("name","webb-"+Date.now());
+				this.experiment.save(null,{success:function() {
+					that.files.updateExperimentIds();
+					that.files.fetchAndSaveFiles();
+				}
+				});
 		},
 		enableOnUnloadWarning: function() {
 			var that = this;
