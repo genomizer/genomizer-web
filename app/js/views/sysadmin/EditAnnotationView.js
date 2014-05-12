@@ -11,25 +11,24 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 alert("Annotation name is required");
                 return;
             }
-            
-            this.annotation.set({
-                "name" : $('#edit_annotation_name').val()
-            });
+            if ($('#edit_annotation_value').val() === "") {
+                alert("Annotation value is required");
+                return;
+            }
 
-            this.annotation.set({
-                "forced" : $('#edit_annotation_forced').val()
-            });
+			var original = this.annotation.get('values');
+            var modified = $('#edit_annotation_value').val();
 
-            var temp = $('#edit_annotation_value').val();
+            modified = modified.split(",");
 
-            temp = temp.split(",");
-            this.annotation.set({
-                "type" : temp
-            });
-
-            this.annotation.set({
-                "default" : temp[0]
-            });
+			var deletedResult = Annotations.findDeletedValues(original, modified);
+			if (deletedResult != -1) {
+				Gateway.deleteAnnotationValues(deletedResult, this.annotation.get('id'));
+			}
+			// var addedResult = Annotations.findAddedValues(original, modified);
+			// if (addedResult != -1) {
+				// Gateway.addAnnotationValues(addedResult, this.annotation.get('id'));
+			// }
 
             alert("Annotation saved!");
         },
@@ -42,9 +41,8 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                     var payload = new Backbone.Model();
                     
                     //delete /annotation/{id}
-                                        
-                    Gateway.deleteAnnotation(payload, this.annotation.get('id'));
                     
+                    Gateway.deleteAnnotation(payload, this.annotation.get('id'));
 
 					// tempAnnotation = new Annotation();
 //                     
@@ -90,7 +88,6 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
             }
         },
         initialize : function() {
-            
             var annotation;
             var that = this;
             annotations = new Annotations();
