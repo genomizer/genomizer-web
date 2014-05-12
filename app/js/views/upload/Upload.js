@@ -1,6 +1,6 @@
 define([
 	'text!templates/upload/Upload.html',
-	'views/upload/AddExperiment',
+	'views/upload/AnnotationsForm',
 	'views/upload/FileUploadList',
 	'views/upload/ExperimentView',
 	'collections/Experiments',
@@ -8,7 +8,7 @@ define([
 	'collections/Files'
 ],
 
-function(UploadTemplate,AddExperiment,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
+function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {

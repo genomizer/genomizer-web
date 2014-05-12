@@ -1,11 +1,11 @@
 define([
 	'text!templates/upload/ExperimentContainer.html',
-	'views/upload/AddExperiment',
+	'views/upload/AnnotationsForm',
 	'views/upload/FileUploadList',
 	'models/Experiment'
 ],
 
-function(ExperimentTemplate,AddExperiment,FileUploadList,Experiment) {
+function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
@@ -22,15 +22,15 @@ function(ExperimentTemplate,AddExperiment,FileUploadList,Experiment) {
 			this.$el.html(this.TEMPLATE());
 			console.log("the experimentView's $el: ", this.$el);
 			
-			this.addExperiment = new AddExperiment({model:this.model});
-			this.addExperiment.setElement(this.$el.find(".newAnnotation"));
+			this.annotationsForm = new AnnotationsForm({model:this.model});
+			this.annotationsForm.setElement(this.$el.find(".newAnnotation"));
 			
 
 			this.fileUploadList = new FileUploadList({collection:this.model.getFiles()});
 			this.fileUploadList.setElement(this.$el.find(".fileUploadList"));
 			
-			this.addExperiment.render();
-			console.log("rendered addExperiment: ", this.addExperiment);
+			this.annotationsForm.render();
+			console.log("rendered annotationsForm: ", this.annotationsForm);
 			this.fileUploadList.render();
 			console.log("rendered fileUploadList: ", this.fileUploadList);
 		},
