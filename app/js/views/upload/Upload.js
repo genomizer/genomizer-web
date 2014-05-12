@@ -41,8 +41,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			experiment.set("id",experimentId);
 			experiment.existingExperiment = true;
 			experiment.fetch().success(function() {
-				console.log("creating existing experiment: ", this.experiment);
-				//that.createExperiment();
 				that.appendNewExperimentView(experiment);
 			});
 		},
@@ -50,7 +48,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			var experimentView = new ExperimentView({model: experiment});
 			this.$el.find(".experiment-container").append(experimentView.el);
 			this.experimentViews.push(experimentView);
-			this.experiments.add(experimentView.getModel());
+			this.experiments.add(experiment);
 			experimentView.render();
 		},
 		enableAddButton: function() {

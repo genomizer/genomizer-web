@@ -9,11 +9,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
-			
-			if (this.model == undefined) {
-				console.log("created new empty experiment");
-				this.model = new Experiment();
-			}
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
