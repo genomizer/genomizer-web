@@ -4,7 +4,7 @@ require.config({
 		text:'lib/require.text'
 	}
 });
-
+// this is a release
 var app = {};
 require([
 		'views/MainMenu',
