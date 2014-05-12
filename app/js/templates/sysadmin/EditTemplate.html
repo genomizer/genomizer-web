@@ -4,7 +4,7 @@
 	</legend>
 
 	<label>Annotation Name</label>
-	<input class="form-control" id="edit_annotation_name"type="text" value="<%= annotation ? annotation.get('name') : '' %>">
+	<input class="form-control" id="edit_annotation_name" type="text" disabled="" value="<%= annotation ? annotation.get('name') : '' %>">
 	<hr />
 
 	<label>Annotation Values (add on the form "female,male,unknown,...")</label>
@@ -12,13 +12,13 @@
 	<hr />
 
 	<label>Forced Annotation</label>
-	<select class="form-control" id="edit_annotation_forced">
+	<select class="form-control" id="edit_annotation_forced" disabled="">
 		<option value="<%= annotation ? annotation.get('forced') : '' %>"><%= annotation ? annotation.get('forced') : '' %></option>
 		<option value="<%= (!(annotation ? annotation.get('forced') : '')) %>"><%= (!(annotation ? annotation.get('forced') : '')) %></option>
 	</select>
 	<hr />
 
-	<button id="updateAnnotation" class="btn btn-default" disabled="">
+	<button id="updateAnnotation" class="btn btn-default">
 		<%= annotation ? 'Update Annotation' : 'Edit' %>
 	</button>
 

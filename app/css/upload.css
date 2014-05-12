@@ -1,4 +1,10 @@
-#experiment_form {
+#upload_form {
+	text-align: center;
+	margin: 40px auto;
+}
+
+#upload_form #existing_experiment_field{
+	width: 400px;
 }
 
 #experiment_form .annotation-list {
@@ -31,15 +37,6 @@
 	font-weight: normal;
 }
 
-#upload_form {
-	text-align: center;
-	margin: 40px auto;
-}
-
-#upload_form #existing_experiment_field{
-	width: 400px;
-}
-
 #file_upload {
 	text-align: center;
 }
@@ -62,5 +59,16 @@
 	margin-top: 12px;
 	margin-left: 10px;
 	float: right;
+}
 
+#remove_experiment {
+	margin-left: 10px;
+}
+
+#clone_annotations {
+	margin-left: 10px;
+}
+
+#removeExperiment {
+	margin-top: -7px;
 }

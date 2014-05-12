@@ -35,7 +35,7 @@ function(UploadTemplate) {
 					value:input[at.get("name")] 
 				})
 			});
-			this.model.set({"annotations":annot,"name":input["Experiment name"]});
+			this.model.set({"annotations":annot,"name":input["Experiment name"],"createdBy":input["Created by"]});
 		}
 		
 	});

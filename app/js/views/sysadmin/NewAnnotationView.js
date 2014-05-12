@@ -41,9 +41,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 			switch($('#annotation_type').val()) {
 				case "one":
 					annotation.set({
-						"type" : ["yes", "no"]
-					});
-					annotation.set({
+						"type" : ["yes", "no"], 
 						"default" : "yes"	
 					});
 					break;
@@ -51,15 +49,14 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 					var temp = $('#itemlist_input').val();
 					temp = temp.split(",");
 					annotation.set({
-						"type" : temp
-					});
-					annotation.set({
+						"type" : temp, 
 						"default" : temp[0]
 					});
 					break;
 				default:
 					annotation.set({
-						"type" : "freetext"
+						"type" : ["freetext"],
+						"default" : ""
 					});
 					break;
 			}
