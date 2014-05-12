@@ -11,6 +11,9 @@ requirejs.config({
     }
 });
 
+var app = {};
+app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
+
 require(testModulePaths,function() {
 	mocha.run();
 });

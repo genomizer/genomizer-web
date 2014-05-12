@@ -9,6 +9,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
+			this.model.files.on("add remove",this.changeUploadable,this);
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
@@ -48,6 +49,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
+		},
+		changeUploadable: function() {
+			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
 		}
 
 	});

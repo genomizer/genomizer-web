@@ -32,6 +32,9 @@ define([
 		updateExperimentIdsForFiles: function () {
 			this.files.updateExperimentIds(this.get("name"));
 
+		},
+		isUploadable: function() {
+			return this.files.length > 0;
 		}
 	});
 	return Experiment;
