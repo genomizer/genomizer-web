@@ -30,7 +30,12 @@ define([
 		},
 		removeModal: function() {
 
-			app.router.navigate('search', {trigger:false});
+			// attempt to navigate to previous page, go to search if no previous
+			if(app.router.hasPrevious()) {
+				app.router.previous({trigger:false});
+			} else {
+				app.router.navigate('search', {trigger:true})
+			}
 			this.$modal.remove();
 
 		}

@@ -6,7 +6,7 @@ define([
 	var SearchResultsView = Backbone.View.extend({
 
 		tagName: 'table',
-		className: 'table',
+		className: 'table search-table',
 		headerTemplate: _.template(headerTemplateHtml),
 
 		initialize: function(options) {
@@ -14,33 +14,40 @@ define([
 
 			this.collection.on("highlightChange", this.checkFiles, this);
 			this.collection.on("change", this.render, this);
-			this.collection.on("add", this.render, this);
-			//this.render();
+			this.collection.on("sync", this.render, this);
+			this.render();
 		},
-		render: function() {
-			this.experimentViews = [];
+		render: function(event) {
+			
+			$('#results_container').show();
 
-			// create subviews for each experiment in the given collection
-			this.collection.each(function(experiment) {
-				this.experimentViews.push(new ExperimentView({
-					annotations: this.annotations,
-					model : experiment,
-				}));
-			}, this);
+			if(this.collection.fetching == true) {
+				this.$el.html('<div class="loading panel-body"><h2>Loading Search results</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>');
 
-			// render header template
-			this.$el.html(this.headerTemplate({annotations: this.annotations}));
+			} else if(this.collection.length == 0){
+				this.$el.html('<div class="panel-body">No search results found.</div>');
 
-			_.each(this.experimentViews, function(experimentView) {
+			} else {
+
+				// render table header
+				this.$el.html(this.headerTemplate({annotations: this.annotations}));
+
+
+				// create and render experiment views
+				this.collection.each(function(experiment) {
+					var experimentView = new ExperimentView({
+						annotations: this.annotations,
+						model : experiment,
+					});
+
+					experimentView.render();
+					this.$el.append(experimentView.$el);
+				}, this);
+			}
 				
-				// render experiment rows
-				experimentView.render();
-
-				// append experiment rows to table
-				this.$el.append(experimentView.$el);
-			}, this);
 		},
 		checkFiles: function(files) {
+			//REFACTOR
 			var rows = this.$el.find(".file-row");
 			
 			rows.each(function() {

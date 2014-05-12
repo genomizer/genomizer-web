@@ -1,6 +1,8 @@
 define([
-	'text!views/search/experimentViewTemplate.html'
-],function(templateHtml) {
+	'text!views/search/experimentViewTemplate.html',
+	"text!views/search/fileHeaderTemplate.html",
+	"views/search/FileView"
+],function(templateHtml, fileHeaderTemplateHtml, FileView) {
 	
 	var ExperimentView = Backbone.View.extend({
 
@@ -16,14 +18,30 @@ define([
 		},
 
 		render: function() {
+
+			// render from template
 			this.$el.html(this.template({
 				'annotations': this.annotations,
 				'experiment': this.model
 			}));
+
+			// render file headers from template
+			this.$el.find(".table-row thead").html(fileHeaderTemplateHtml);
+
+			// create and render experiment views
+			this.model.files.each(function(file) {
+				var fileView = new FileView({
+					model : file
+				});
+
+				fileView.render();
+				console.log("ExperimentView > render > filetype: ", file.get("type"))
+				this.$el.find(".js-" + file.get("type") + "-container").append(fileView.$el);
+			}, this);
 		},
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
-			"click .expand-button": "toggleFileRows",
+			"click .expand-file-button": "toggleFileRows",
 			"click .checked-input": "fileSelect",
 		},
 		toggleTypeRows: function(event) {

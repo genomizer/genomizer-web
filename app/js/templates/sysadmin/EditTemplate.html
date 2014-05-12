@@ -1,6 +1,6 @@
 <form class="edit-annotation-form">
 	<legend>
-		Edit <%= annotation ? annotation.get('name') : '' %>
+		Edit annotation: <%= annotation ? annotation.get('name') : '' %>
 	</legend>
 
 	<label>Annotation Name</label>
@@ -18,7 +18,7 @@
 	</select>
 	<hr />
 
-	<button id="updateAnnotation" class="btn btn-default">
+	<button id="updateAnnotation" class="btn btn-default" disabled="">
 		<%= annotation ? 'Update Annotation' : 'Edit' %>
 	</button>
 

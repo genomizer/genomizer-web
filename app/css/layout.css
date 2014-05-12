@@ -1,0 +1,9 @@
+body {
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 100%;
+}
+
+document {
+	height: 100%;
+}

@@ -15,13 +15,13 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			this.experiment = new Experiment();
 			this.experiments.add(this.experiment);
 			this.files = new Files([],{experiment: this.experiment});
+			this.enableOnUnloadWarning();
 			this.render();
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
-
 		},
-		
+	
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
@@ -47,7 +47,6 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 			this.experiment.fetch().success(function() {
 				that.createExperiment();
 			});
-
 		},
 		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {
@@ -63,10 +62,15 @@ function(UploadTemplate,AddExperiment,FileUploadList,Experiments,Experiment,File
 				files.updateExperimentIds();
 				files.fetchAndSaveFiles();
 			});
+		},
+		enableOnUnloadWarning: function() {
+			var that = this;
+			$(window).bind('beforeunload',function() {
+				if(that.files.hasUnfinishedUploads()) {
+					return "You have file(s) that is not finished uploading!";
+				}
+			});
 		}
-		
-		
-	   
 	});
 	return Upload;
 });

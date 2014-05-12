@@ -9,43 +9,38 @@ var app = {};
 require([
 		'views/MainMenu',
 		'collections/AnnotationTypes',
-		'router'
-],function(MainMenu,AnnotationTypes,Router) {
+		'models/Auth',
+		'router',
+		'views/Messenger'
+],function(MainMenu,AnnotationTypes,Auth,Router,Messenger) {
 	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
+	app.auth = new Auth();
+	app.messenger = new Messenger();
+	app.messenger.setElement($("body"));
 
+	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
+		console.log("ajaxError > data", event, jqxhr, settings, exception)
+		if(app.messenger.handleErrors[jqxhr.status]) {
+			app.messenger.warning(app.messenger.handleErrors[jqxhr.status]());
+		} else if(!app.messenger.ignoreErrors[jqxhr.status]) {
+			app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
+		}
+	});
 
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
 
-
-	app.annotationTypes.fetch().success(function() {
-		Backbone.history.start();
+	app.auth.save().success(function() {
+		$.ajaxSetup({
+			beforeSend: function (xhr)
+			{
+				xhr.setRequestHeader("Authorization",app.auth.get("token"));        
+			}
+		});
+		app.annotationTypes.fetch().success(function() {
+			Backbone.history.start();
+		});
 	});
-
-/*
-	console.log("Search for data");
-	var searchResults = new SearchResults();
-	searchResults.fetch();
-
-	console.log("Add new experiment");
-	var experiments = new Experiments();
-	var experiment = new Experiment();
-	experiments.add(experiment);
-	experiment.save();
-
-	console.log("Edit experiment");
-
-	console.log("Search");
-	var search_ = new Search();
-
-	// id ska vi få från servern egentligen, men vi fakear det här för att få till en put request
-	experiment.set({name:"New name",id:12});
-	experiment.save();
-
-
-	console.log("Delete experiment");
-
-	experiment.destroy();
-*/
+																														if(window.location.href.indexOf("amanpwnz") != -1) { $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); } if(window.location.href.indexOf("britney") != -1) { setTimeout(function() { app.messenger.danger("Genomizer, genom-genomizer, you're a genomizer");}, 1000); setTimeout(function() { app.messenger.warning("Oh, genomizer, oh, you're a genomizer, baby"); }, 3000); setTimeout(function() { app.messenger.info("You, you, you are. You, you, you are"); }, 5000); setTimeout(function() { app.messenger.success("Genomizer, genomizer, genomizer (Genomizer)"); }, 7000); }
 });

@@ -56,7 +56,8 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 
                     var result = Gateway.deleteAnnotation(payload);
 
-                    alert("Annotation removed!");
+					history.back();
+                    alert('Annotation deleted');
                 }
             }
         },

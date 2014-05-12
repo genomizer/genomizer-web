@@ -2,7 +2,7 @@ define([
 	'models/AnnotationType'
 ],function(AnnotationType) {
 	var AnnotationTypes = Backbone.Collection.extend({
-		url: 'http://genomizer.apiary.io/annotation',
+		url: 'http://scratchy.cs.umu.se:8000/api/annotation',
 		model: AnnotationType,
 		defaults : {
 			

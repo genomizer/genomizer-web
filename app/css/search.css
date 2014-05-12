@@ -35,18 +35,52 @@
 	border-bottom: 0;
 }
 
-#results_container thead {
+.search-table-head thead {
 	background: #f5f5f5;
 }
 
-.experiment-group:not(.expanded) .expand-row,
-.experiment-group:not(.raw-expanded) .raw-header-row,
-.experiment-group:not(.raw-expanded) .raw-file-row,
-.experiment-group:not(.profile-expanded) .profile-header-row,
-.experiment-group:not(.profile-expanded) .profile-file-row,
-.experiment-group:not(.region-expanded) .region-header-row,
-.experiment-group:not(.region-expanded) .region-file-row {
+.experiment-group .expand-cell {
+	width: 50px;
+}
+
+.experiment-group .check-cell {
+	width: 50px;
+}
+
+.experiment-group > tr:not(.title-row) {
 	display: none;
+}
+
+.experiment-group.expanded .expand-row,
+.experiment-group.expanded.raw-expanded .raw-table-row,
+.experiment-group.expanded.profile-expanded .profile-table-row,
+.experiment-group.expanded.region-expanded .region-table-row {
+	display: table-row;
+}
+
+.experiment-group .table-row > td {
+	padding: 0;
+	border: none;
+}
+
+.experiment-group .table {
+	margin: 0;
+}
+
+.experiment-group .table thead {
+	margin: 0;
+	background: none;
+}
+
+.experiment-group.raw-expanded .raw-expand-row td,
+.experiment-group.profile-expanded .profile-expand-row td,
+.experiment-group.region-expanded .region-expand-row td {
+	
+}
+
+.experiment-group.expanded .header-row th {
+	padding-top: 0;
+	border: none;
 }
 
 .expand-button {
@@ -72,6 +106,56 @@
 .expand-row .expand-button {
 	position: relative;
 	left: 10px;
+}
+
+.search-table h2 {
+    color: #646464;
+    border-radius: 6px;
+    margin: 0;
+    font: .8em verdana;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.loading {
+	text-align: center;
+}
+
+.loading span {
+    display: inline-block;
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    margin: .2em;
+    background: #39b3d7;
+    border-radius: .6em;
+    -webkit-animation: loading 1s infinite alternate;
+}
+.loading span:nth-of-type(2) {
+    -webkit-animation-delay: 0.2s;
+}
+.loading span:nth-of-type(3) {
+    -webkit-animation-delay: 0.4s;
+}
+.loading span:nth-of-type(4) {
+    -webkit-animation-delay: 0.6s;
+}
+.loading span:nth-of-type(5) {
+    -webkit-animation-delay: 0.8s;
+}
+.loading span:nth-of-type(6) {
+    -webkit-animation-delay: 1.0s;
+}
+.loading span:nth-of-type(7) {
+    -webkit-animation-delay: 1.2s;
+}
+@-webkit-keyframes loading {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /* === END SEARCH RESULTS === */

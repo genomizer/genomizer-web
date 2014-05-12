@@ -1,21 +1,15 @@
 define(['models/Experiment'],function(Experiment) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
-			return 'http://genomizer.apiary.io/search/?annotations=' + this.query;
+			return 'http://scratchy.cs.umu.se:8000/api/search/?annotations=' + this.query;
 		},
 		model: Experiment,
 		initialize:function (models,options) {
 			this.query = options.query;
-			var that = this;
 
-			if(this.query !== undefined) {
-			    this.fetch().success(function(res) {
-			    	console.log("SearchResults > fetch > success: ", res);
-			    }).error(function(xhr, status, error) {
-			    	console.log("SearchResults > fetch > error: ");
-			    	var err = eval("(" + xhr.responseText + ")");
-  					console.log(arguments[1] + " " + arguments[2]);
-			    });
+			if(options.query != undefined) {
+				this.fetchModels(options.query);
+
 			}
 			this.selectedFiles = [];
 
@@ -30,13 +24,11 @@ define(['models/Experiment'],function(Experiment) {
 			}
 		},
 		selectFile: function(file) {
-			console.log("SearchResults > selectFile > file: ", file);
 			//Only one file may be selected at a time.
 			this.selectedFiles = [file];
 			this.trigger('highlightChange', this.selectedFiles);
 		},
 		deselectFile: function(file) {
-			console.log("SearchResults > deselectFile > file: ", file);
 			//Must take argument of which ID to remove when multiple files can be selected.
 			this.selectedFiles = [];
 			this.trigger('highlightChange', this.selectedFiles);
@@ -44,21 +36,29 @@ define(['models/Experiment'],function(Experiment) {
 		getSelectedFiles: function() {
 			return this.selectedFiles;
 		},
+		fetchModels: function(query) {
+			this.fetching = true;
+			this.trigger('change');
+
+			var that = this;
+
+			this.fetch().success(function(res) {
+				that.fetching = false;
+				that.trigger('change');
+			}).error(function(xhr, status, error) {
+				that.reset([]);
+				that.fetching = false;
+				that.trigger('change');
+			});
+		},
 		setSearchQuery: function(query) {
 			this.query = query;
-			var that = this;
-			this.fetch().success(function(res) {
-			    	console.log("SearchResults > fetch > success: ", res);
-			    }).error(function(xhr, status, error) {
-			    	console.log("SearchResults > fetch > error: ");
-			    	var err = eval("(" + xhr.responseText + ")");
-  					console.log(arguments[1] + " " + arguments[2]);
-			    });
+			this.fetchModels(query);
 		},
 		getSelectedFileURLs: function() {
 			var res = [];
 			for(var i=0; i<this.selectedFiles.length; i++) {
-				res.push(this.selectedFiles[i].get("URL"));
+				res.push(this.selectedFiles[i].get("url"));
 			}
 			return res;
 		}
