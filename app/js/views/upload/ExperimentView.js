@@ -22,6 +22,13 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+		},
+		events: {
+			"click #removeExperiment": "removeExperiment"
+		},
+		removeExperiment: function() {
+			this.el.remove();
+			this.model.collection.remove(this.model);
 		}
 	});
 
