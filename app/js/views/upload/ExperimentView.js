@@ -10,6 +10,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 		},
+		events: {
+			"submit #experiment-form": "saveExperiment"
+		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 			
@@ -22,7 +25,26 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+		},
+		saveExperiment: function(e) {
+			e.preventDefault();
+			var that = this;
+			// API test
+			this.model.unset("files");
+			//var annots = this.model.get("annotations");
+			//annots = _.map(annots,function(an) {
+			//	return _.omit(an,'id');
+			//});
+			this.model.set("annotations",[{id:1,name:"Development Stage",value:"aster"}]);
+			this.model.set("createdBy","jonas");
+			this.model.set("name","webb-"+Date.now());
+			this.model.save(null,{success:function() {
+				that.model.files.updateExperimentIds(that.model.get("name"));
+				that.model.files.fetchAndSaveFiles();
+			}
+			});
 		}
+
 	});
 
 	return ExperimentView;

@@ -8,8 +8,7 @@ define(['models/File'],function(File) {
 			}
 
 		},
-		updateExperimentIds: function() {
-				var id = this.experiment.get("name");
+		updateExperimentIds: function(id) {
 				this.each(function(file) {
 					file.set("experimentID", id);
 				});
