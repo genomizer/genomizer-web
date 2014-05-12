@@ -1,12 +1,12 @@
 <input name="" id="" class="form-control" type="text" value=<%- fileName %> placeholder="File Name" required></input>
-<%- this.size %>
+<%- fileSize %>
 
 <button type="button" id="removeFile" class="btn btn-default">
 	<span class="glyphicon glyphicon-remove"></span>
 </button>
 <select id="selector" class="form-control">
-	<option value=raw >Raw</option>
-	<option value=profile >Profile</option>
-	<option value=region >Region</option>
+	<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>Raw</option>
+	<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>Profile</option>
+	<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>Region</option>
 </select>
-<div class="progress"></div>
+<!--<div class="progress"></div>-->

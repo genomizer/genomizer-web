@@ -16,7 +16,9 @@ function(File,FileUploadTemplate) {
 			'click #removeFile': 'removeFileFunction' 
 		},
 		render: function() {
-			this.$el.html(this.TEMPLATE(this.model.toJSON()));
+			this.$el.html(this.TEMPLATE(_.extend(
+				this.model.toJSON(), {fileSize:this.model.getReadableFileSize()}
+			)));
 			this.renderProgress();
 		},
 		renderProgress: function() {
