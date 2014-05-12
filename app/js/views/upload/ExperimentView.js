@@ -32,7 +32,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		removeExperiment: function() {
 			this.el.remove();
 			this.model.collection.remove(this.model);
-		}
+		},
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
