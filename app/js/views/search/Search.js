@@ -87,11 +87,8 @@ define([
 
 		},
 		processSelected: function() {
-			app.router.navigate("process", {trigger:true});
-			//alert("process");
-
-			//alert("processing "+$(searchResults.getSelectedFileID()));
-			//TODO skicka fileID till process (BARSK)
+			var files = this.collection.getSelectedFiles();
+			app.router.navigate("process/" + files[0].get("filename") + "," + files[0].get("id") + "," + files[0].get("expId"), {trigger:true});
 		}
 		
 	});

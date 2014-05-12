@@ -7,6 +7,12 @@ define([
 		TEMPLATE_VARS: {
 			modalTitle: "Process raw file"
 		},
+		initialize: function(options) {
+			this._super();
+			this.fileName = options.query.split(',')[0];
+			this.fileID = options.query.split(',')[1];
+			this.expID = options.query.split(',')[2];
+		},
 		events: {
 			'submit form':'submitProcess',
 			'click #step-box' : 'toggleStepsInput'
@@ -17,7 +23,7 @@ define([
 		submitProcess: function(e) {
 			e.preventDefault();
 			if($('#nr-of-steps').prop('disabled') == false && $('#nr-of-steps').val() < 0) {
-				console.log('negative number!!!!! :(');
+//				console.log('negative number!!!!! :(');
 				//TODO do not send form.
 			}else {
 				var bowtieFlags = ($('#bowtie-params').val());
@@ -39,11 +45,11 @@ define([
 				} else {
 					createStep = "n 0";
 				}
-				console.log('bowtieFlags: ',bowtieFlags);
+/*				console.log('bowtieFlags: ',bowtieFlags);
 				console.log('genomeFilePath: ',genomeFilePath);
 				console.log('smoothParams: ',smoothParams);
 				console.log('createStep: ',createStep);
-
+*/
 
 			}
 			alert("Not yet implemented!");
