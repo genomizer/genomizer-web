@@ -17,14 +17,13 @@ require([
 	app.annotationTypes = new AnnotationTypes();
 	app.auth = new Auth();
 	app.messenger = new Messenger();
-	app.messenger.setElement($("body"));
+	
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		console.log("ajaxError > data", event, jqxhr, settings, exception)
 		if(app.messenger.handleErrors[jqxhr.status]) {
 			app.messenger.warning(app.messenger.handleErrors[jqxhr.status]());
 		} else if(!app.messenger.ignoreErrors[jqxhr.status]) {
-			app.messenger.warning("Error when requesting " + settings.url + " please reload the page.");
+			app.messenger.warning("Error " + jqxhr.status + " when requesting " + settings.url + " please reload the page.");
 		}
 	});
 
