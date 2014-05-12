@@ -1,6 +1,6 @@
 define(['models/File'],function(File) {
 	var Files = Backbone.Collection.extend({
-		url: '/api/files',
+		url: 'http://scratchy.cs.umu.se:8000/api/files',
 		model: File,
 		initialize:function (models,options) {
 			if(options) {
@@ -8,8 +8,7 @@ define(['models/File'],function(File) {
 			}
 
 		},
-		updateExperimentIds: function() {
-				var id = this.experiment.id;
+		updateExperimentIds: function(id) {
 				this.each(function(file) {
 					file.set("experimentID", id);
 				});

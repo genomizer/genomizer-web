@@ -1,11 +1,11 @@
 define([
-	'text!templates/upload/Upload.html',
-	'views/upload/AnnotationsForm',
-	'views/upload/FileUploadList',
-	'views/upload/ExperimentView',
-	'collections/Experiments',
-	'models/Experiment',
-	'collections/Files'
+	   'text!templates/upload/Upload.html',
+	   'views/upload/AnnotationsForm',
+	   'views/upload/FileUploadList',
+	   'views/upload/ExperimentView',
+	   'collections/Experiments',
+	   'models/Experiment',
+	   'collections/Files'
 ],
 
 function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
@@ -21,7 +21,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 		},
-	
+
 		events: {
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
@@ -57,14 +57,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			} else {
 				$('#add_button').prop('disabled', true);
 			}
-		},
-		saveExperiment: function(e) {
-			e.preventDefault();
-			var that = this;
-			this.experiment.save().success(function() {
-				files.updateExperimentIds();
-				files.fetchAndSaveFiles();
-			});
 		},
 		enableOnUnloadWarning: function() {
 			var that = this;

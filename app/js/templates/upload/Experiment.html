@@ -17,7 +17,7 @@
 		<li>
 			<label for="<%- annotation.name %>"><%- annotation.name %></label>
 			<% if(annotation.values == "freetext") { %> 
-			<input name="<%- annotation.name %>" id="<%- annotation.name %>" <%- annotation.forced ? "required" : "" %> class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
+			<input name="<%- annotation.name %>" id="<%- annotation.name %>" <%- annotation.forced ? "required value=derp" : "" %> class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
 					<% if(existingExperiment) { 
 							_.each(experiment.annotations,function(expAnnot){
 								if(annotation.name == expAnnot.name){ %>

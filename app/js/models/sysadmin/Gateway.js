@@ -8,7 +8,7 @@ define([], function() {
 			return this.url;
 		},
 
-		createPacket : function(type, urlExtension, payload) {
+		sendPacket : function(type, urlExtension, payload) {
 			var result = false;
 			$.ajax({
 				type : type,
@@ -30,11 +30,19 @@ define([], function() {
 		},
 
 		postAnnotation : function(payload) {
-			return this.createPacket("POST", "/annotation", payload);
+			return this.sendPacket("POST", "/annotation", payload);
 		},
 
 		deleteAnnotation : function(payload, id) {
-			return this.createPacket("DELETE", "/annotation/" + id, payload);
+			return this.sendPacket("DELETE", "/annotation/" + id, payload);
+		},
+		
+		deleteAnnotationValues : function(payload, id) {
+			return this.sendPacket("PUT", "/annotation/removevalues/" + id, payload);
+		},
+		
+		addAnnotationValues : function(payload, id) {
+			
 		}
 	});
 	return Gateway;
