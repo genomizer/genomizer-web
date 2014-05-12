@@ -3,7 +3,7 @@
 	<ul class="annotation-list" id="annotation_fields">
 		<li>
 			<label>experiment name</label>
-			<input required name="Experiment name" id="experiment name" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
+			<input required name="Experiment name" id="experiment name" value="web-<%- Date.now()  %>" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
 				<% if(existingExperiment) { %> value="<%-experiment.name %>" <% } %>>
 			</input>
 		</li>

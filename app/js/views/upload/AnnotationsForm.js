@@ -15,6 +15,7 @@ function(UploadTemplate) {
 				experiment:this.model.toJSON(),
 				existingExperiment:this.model.existingExperiment
 			}));
+			this.updateModel();
 		},
 		events: {
 			"change input":"updateModel",

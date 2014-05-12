@@ -9,9 +9,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
+			this.model.files.on("add remove",this.changeUploadable,this);
 		},
 		events: {
-			"submit #experiment-form": "saveExperiment"
+			"submit #experiment-form": "saveExperiment",
+			"click #removeExperiment": "removeExperiment"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -26,9 +28,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.annotationsForm.render();
 			this.fileUploadList.render();
 		},
-		events: {
-			"click #removeExperiment": "removeExperiment"
-		},
 		removeExperiment: function() {
 			this.el.remove();
 			this.model.collection.remove(this.model);
@@ -42,14 +41,17 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			//annots = _.map(annots,function(an) {
 			//	return _.omit(an,'id');
 			//});
-			this.model.set("annotations",[{id:1,name:"Development Stage",value:"aster"}]);
-			this.model.set("createdBy","jonas");
-			this.model.set("name","webb-"+Date.now());
+			//this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
+			//this.model.set("createdBy","jonas");
+			//this.model.set("name","webb-"+Date.now());
 			this.model.save(null,{success:function() {
-				that.model.files.updateExperimentIds(that.model.get("name"));
+				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
+		},
+		changeUploadable: function() {
+			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
 		}
 
 	});
