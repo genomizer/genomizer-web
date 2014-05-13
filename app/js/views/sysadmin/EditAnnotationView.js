@@ -23,12 +23,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 
 			var deletedResult = Annotations.findDeletedValues(original, modified);
 			var addedResult = Annotations.findAddedValues(original, modified);
-			Gateway.deleteAnnotationValues(deletedResult, addedResult, this.annotation.get('id'));
-			
-			// if (addedResult != -1) {
-				// Gateway.addAnnotationValues(addedResult, this.annotation.get('id'));
-			// }
-
+			Gateway.updateAnnotationValues(deletedResult, addedResult, this.annotation.get('id'));
         },
 
         deleteAnnotation : function() {
