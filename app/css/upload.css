@@ -1,6 +1,6 @@
 #upload_form {
 	text-align: center;
-	margin: 40px auto;
+	margin: 20px auto;
 }
 
 #upload_form #existing_experiment_field{
@@ -14,7 +14,7 @@
 #experiment_form .annotation-list li {
 	display: inline-block;
 	list-style: none;
-	margin: 5px;
+	margin: 10px;
 	padding: 0;
 	padding-top: 10px;
 	position: relative;
@@ -37,6 +37,11 @@
 	font-weight: normal;
 }
 
+#experiment_container{
+	
+}
+
+
 #file_upload {
 	text-align: center;
 }
@@ -45,7 +50,7 @@
 	margin-top: 40px;
 }
 
-#selector {
+/*#selector {
 	display: inline-block;
 	list-style: none;
 	width:150px;
@@ -59,7 +64,7 @@
 	margin-top: 12px;
 	margin-left: 10px;
 	float: right;
-}
+}*/
 
 #remove_experiment {
 	margin-left: 10px;
