@@ -1,7 +1,7 @@
 define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
-		url : "http://scratchy.cs.umu.se:7000",
+		url : "http://scratchy.cs.umu.se:8000/api/",
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
 		getURL : function() {
