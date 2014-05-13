@@ -17,7 +17,7 @@ define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/Annotation
 		},
 
 		events : {
-			"click #search_btn" : "search",
+			"click #search_button" : "search",
 			"keyup #search_field" : "search",
 			"focus #search_field" : "updateSearchList"
 		},
