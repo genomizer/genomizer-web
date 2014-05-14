@@ -1,7 +1,8 @@
 define([
 	'text!templates/processModal/Process.html',
-	'views/ModalAC'
-],function(processTemplate,ModalAC) {
+	'views/ModalAC',
+	'models/RawToProfileInfo'
+],function(processTemplate,ModalAC, RawToProfileInfo) {
 	var Modal = ModalAC.extend({
 		TEMPLATE: _.template(processTemplate),
 		TEMPLATE_VARS: {
@@ -45,14 +46,25 @@ define([
 				} else {
 					createStep = "n 0";
 				}
-/*				console.log('bowtieFlags: ',bowtieFlags);
-				console.log('genomeFilePath: ',genomeFilePath);
-				console.log('smoothParams: ',smoothParams);
-				console.log('createStep: ',createStep);
-*/
+				var data = 	{
+							"filename": this.fileName,
+							"fileId": this.fileID,
+							"expid": this.expID,
+							"processtype": "rawtoprofile",
+							"parameters": [
+											bowtieFlags,
+											genomeFilePath,
+											smoothParams,
+											createStep
+										  ],
+							"metadata": bowtieFlags + ", " + genomeFilePath + ", " + smoothParams + ", " + createStep,
+							"genomeRelease": "hg38",
+							"author": "Kalle"							
+							}
+				var rawToProfileInfo = new RawToProfileInfo(data);
+				rawToProfileInfo.save({}, {"type":"put"});
 
 			}
-			alert("Not yet implemented!");
 		},
 		toggleStepsInput: function() {
 			if ($('#step-box').prop('checked')) {
