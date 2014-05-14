@@ -33,9 +33,9 @@ define([], function() {
 			return this.sendPacket("POST", "annotation", payload, successMsg);
 		},
 
-		deleteAnnotation : function(payload, id) {
+		deleteAnnotation : function(payload, name) {
 			var successMsg = "Successfully deleted the annotation";
-			return this.sendPacket("DELETE", "annotation/" + id, payload, successMsg);
+			return this.sendPacket("DELETE", "annotation/" + name, payload, successMsg);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, id) {

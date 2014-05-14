@@ -1,0 +1,11 @@
+<div class="modal-body" id="caModal-container">
+    <div id="name"><label>Name</label><%= annotation.get('name') %></div>
+    <hr>
+    <div id="type"><label>Type</label><%=annotation.get('type') %></div>
+    <hr>
+    <div id="forced"><label>Forced</label><%=annotation.get('forced') ? "Yes" : "No" %></div>
+    <div id="values"><label>Values</label>
+        <ul id="value_list"></ul>
+    </div>
+</div>
+

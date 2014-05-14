@@ -33,7 +33,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 if (y) {
                     var payload = new Backbone.Model();
                                         
-                    var success = Gateway.deleteAnnotation(payload, this.annotation.get('id'));
+                    var success = Gateway.deleteAnnotation(payload, this.annotation.get('name'));
 
                 }
             }

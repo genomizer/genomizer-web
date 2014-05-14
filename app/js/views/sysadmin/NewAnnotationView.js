@@ -1,4 +1,8 @@
-define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(newAnnotationTemplate, Annotation, Gateway) {
+define(['text!templates/sysadmin/NewAnnotationTemplate.html',
+		'models/sysadmin/Annotation',
+		'models/sysadmin/Gateway',
+		'views/sysadmin/ConfirmAnnotationModal'
+],function(newAnnotationTemplate, Annotation, Gateway, ConfirmAnnotationModal) {
 	var NewAnnotationView = Backbone.View.extend({
 		render : function() {
 			var template = _.template(newAnnotationTemplate);
@@ -13,13 +17,13 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 			"click #submit" : "submit",
 			"change #annotation_type" : "checkAnnotationType"
 		},
-		
+
 		submit : function() {
 			if ($('#annotation_name').val() === "") {
-					alert("Some required fields are empty");
+				alert("Some required fields are empty");
 				return;
 			}
-			
+
 			annotation = new Annotation();
 			annotation.set({
 				"name" : $('#annotation_name').val()
@@ -41,15 +45,15 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 			switch($('#annotation_type').val()) {
 				case "one":
 					annotation.set({
-						"type" : ["yes", "no"], 
-						"default" : "yes"	
+						"type" : ["yes", "no"],
+						"default" : "yes"
 					});
 					break;
 				case "two":
 					var temp = $('#itemlist_input').val();
 					temp = temp.split(",");
 					annotation.set({
-						"type" : temp, 
+						"type" : temp,
 						"default" : temp[0]
 					});
 					break;
@@ -60,10 +64,12 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 					});
 					break;
 			}
-			this.postNewAnnotation(annotation);
-			alert("Submitted annotation");
+			var caModal = new ConfirmAnnotationModal(annotation);
+			caModal.show();
+			//this.postNewAnnotation(annotation);
+			//alert("Submitted annotation");
 		},
-		
+
 		checkAnnotationType : function(e) {
 			switch(e.currentTarget.value) {
 				case "two":
@@ -74,7 +80,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 					break;
 			}
 		},
-		
+
 		postNewAnnotation : function(annotation) {
 			var payload = annotation.toJSON();
 			delete payload.id;
@@ -84,7 +90,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html', 'models/sysadmin/A
 
 			this.clearForm();
 		},
-		
+
 		clearForm : function() {
 			$('#annotation_name').val("");
 			$('#itemlist_input').val("");
