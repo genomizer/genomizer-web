@@ -35,9 +35,25 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-			// API test
-			this.model.unset("files");
-			//var annots = this.model.get("annotations");
+
+			/*
+			 * Begin of ugly fix, we remove ExpID from annotations
+			 * so that the request function (collidies with experiment_name on the server)
+			 */
+			var annots = this.model.get("annotations");
+			var newAn = []
+			_.each(annots,function(an) {
+				if(an.name != "ExpID") {
+					newAn.push(an);
+				}
+			});
+			this.model.set("annotations",newAn);
+
+			/*
+			 * END OF FIX
+			 */
+
+			//this.model.unset("files");
 			//annots = _.map(annots,function(an) {
 			//	return _.omit(an,'id');
 			//});
