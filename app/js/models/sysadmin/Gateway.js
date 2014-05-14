@@ -1,7 +1,7 @@
 define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
-		url : "http://scratchy.cs.umu.se:8000/api",
+		url : app.BASE_URL,
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
 		getURL : function() {
@@ -30,12 +30,12 @@ define([], function() {
 
 		postAnnotation : function(payload) {
 			var successMsg = "Successfully created the annotation";
-			return this.sendPacket("POST", "/annotation", payload, successMsg);
+			return this.sendPacket("POST", "annotation", payload, successMsg);
 		},
 
 		deleteAnnotation : function(payload, id) {
 			var successMsg = "Successfully deleted the annotation";
-			return this.sendPacket("DELETE", "/annotation/" + id, payload, successMsg);
+			return this.sendPacket("DELETE", "annotation/" + id, payload, successMsg);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, id) {
@@ -48,7 +48,7 @@ define([], function() {
 		},
 		
 		deleteAnnotationValues : function(payload, id) {
-			return this.sendPacket("PUT", "/annotation/removevalues/" + id, payload, successMsg);
+			return this.sendPacket("PUT", "annotation/removevalues/" + id, payload, successMsg);
 		},
 		
 		addAnnotationValues : function(payload, id) {
