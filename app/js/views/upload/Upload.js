@@ -61,6 +61,8 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		enableOnUnloadWarning: function() {
 			var that = this;
 			$(window).bind('beforeunload',function() {
+				alert("hej");
+				console.log("då");
 				if(that.files.hasUnfinishedUploads()) {
 					return "You have file(s) that are not finished uploading!";
 				}

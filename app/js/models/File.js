@@ -57,6 +57,21 @@ define([],function() {
 				// Url should now be available
 				that.uploadFile();
 			});
+		},
+		getReadableFileSize: function() {
+			var size = this.fileObj.size;
+			
+			if (size < 1024) {
+				return  (size.toFixed(2).toString() + " B");
+			} else if (size < 1048576) {
+				return ((size / 1024).toFixed(2).toString() + " KiB");
+			} else if (size < 1073741824) {
+				return ((size / 1048576).toFixed(2).toString() + " MiB");
+			} else if (size < 1099511627776) {
+				return ((size / 1073741824).toFixed(2).toString() + " GiB");
+			} else {
+				return ((size / 1099511627776).toFixed(2).toString() + " TiB");
+			}
 		}
 	});
 	return File;

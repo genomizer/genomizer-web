@@ -13,19 +13,33 @@ define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/Annotation
 			var annotations = new Annotations();
 			this.annotationsListView = new AnnotationListView(annotations);
 			this.render();
+			this.searchList = new Annotations();
 		},
 
 		events : {
-			"click #search_btn" : "search"
+			"click #search_button" : "search",
+			"keyup #search_field" : "search",
+			"focus #search_field" : "updateSearchList"
 		},
 
 		search : function(e) {
 			var searchParam = $('#search_field').val();
-			if (searchParam == "") {
-				this.annotationsListView.render(new Annotations(), true);
-			} else {
-				this.annotationsListView.render(this.annotationsListView.filter(searchParam), false);
+			if(e.keyCode == 8){
+				//backspace
+				var that = this;
+				this.searchList.fetch().complete(function(){
+					that.searchList.filterCollection(searchParam);
+					that.annotationsListView.render(that.searchList, false);					
+				});
+			} else{
+				
+				this.searchList.filterCollection(searchParam);
+				this.annotationsListView.render(this.searchList, false);
 			}
+		},
+		
+		updateSearchList : function(e){
+			this.searchList.fetch();
 		}
 	});
 	return AnnotationsView;

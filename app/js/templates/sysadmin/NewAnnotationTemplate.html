@@ -1,32 +1,33 @@
-<form class="new-annotation-form">
-	<legend>
-		Create new annotation
-	</legend>
+<div id="container">
+	<form class="new-annotation-form">
+		<legend>
+			Create new annotation
+		</legend>
 
-	<label>Annotation Name</label>
-	<input class="form-control" id="annotation_name"type="text" value="">
-	<hr />
-	<label>Annotation Type</label>
-	<select class="form-control" id="annotation_type">
-		<option value="one">Yes/No</option>
-		<option value="two">Drop-down List</option>
-		<option value="three">Freetext</option>
-	</select>
-	<hr />
-	<label>Forced Annotation</label>
-	<select class="form-control" id="annotation_forced">
-		<option value="one">Yes</option>
-		<option value="two">No</option>
-	</select>
+		<label>Annotation Name</label>
+		<input class="form-control" id="annotation_name"type="text" value="">
+		<hr />
+		<label>Annotation Type</label>
+		<select class="form-control" id="annotation_type">
+			<option value="one">Yes/No</option>
+			<option value="two">Drop-down List</option>
+			<option value="three">Freetext</option>
+		</select>
+		<hr />
+		<label>Forced Annotation</label>
+		<select class="form-control" id="annotation_forced">
+			<option value="one">Yes</option>
+			<option value="two">No</option>
+		</select>
 
-	<hr />
+		<hr />
 
-	<label>Items in drop-down list: (Example: Male,Female,Unknown)</label>
-	<input class="form-control" id="itemlist_input" disabled="">
-	<hr />
-	<button class="btn btn-default" id="submit">
-		Create Annotation
-	</button>
-	<a href="#/admin" class="btn btn-default">Back</a>
-</form>
-
+		<label>Items in drop-down list: (Example: Male,Female,Unknown)</label>
+		<input class="form-control" id="itemlist_input" disabled="">
+		<hr />
+		<button class="btn btn-default" id="submit">
+			Create Annotation
+		</button>
+		<a href="#/admin" class="btn btn-default">Back</a>
+	</form>
+</div>

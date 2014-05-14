@@ -4,19 +4,27 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 		url : Gateway.getURL() + "/annotation",
 
 		filterCollection : function(searchString) {
-			if (searchString == "")
-				return this;
-
-			var pattern = new RegExp("^" + searchString, "gi");
-			return new Backbone.Collection((this.filter(function(data) {
-					return pattern.test(data.get("name"));
-				})));
+			var pattern = new RegExp(searchString, "i");
+			var that = this;
+			
+			var toBeRemoved = [];
+			var res = true;
+			for (var i = 0; i < this.length; i++) {
+				data = this.at(i);
+				res = pattern.test(data.get('name'));
+				if(res === false){
+					toBeRemoved.push(data);
+				}
+			}	
+			toBeRemoved.forEach(function(data){
+				that.remove(data);		
+			});		
 		},
 
-		getAnnotationByID : function(id) {
+		getAnnotationByName : function(name) {
 			var annotation = null;
 			for (var i = 0; i < this.length; i++) {
-				if (this.at(i).get('id') == id) {
+				if (this.at(i).get('name') == name) {
 					annotation = this.at(i);
 					break;
 				}
