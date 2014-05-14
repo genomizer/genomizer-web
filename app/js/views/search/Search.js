@@ -2,7 +2,7 @@ define([
 	'collections/SearchResults',
 	'views/search/SearchResultsView',
 	'collections/AnnotationTypes',
-	'text!views/search/searchInputGroup.html'
+	'text!templates/search/searchInputGroup.html'
 ],function(SearchResults, SearchResultsView, AnnotationTypes, inputGroupTemplate) {
 
 	var Search = Backbone.View.extend({
