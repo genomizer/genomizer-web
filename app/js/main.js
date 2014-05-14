@@ -4,7 +4,7 @@ require.config({
 		text:'lib/require.text'
 	}
 });
-
+// this is a release
 var app = {};
 app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
 //app.BASE_URL = "http://harry.cs.umu.se:7000/"

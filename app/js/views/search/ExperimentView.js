@@ -1,6 +1,6 @@
 define([
-	'text!views/search/experimentViewTemplate.html',
-	"text!views/search/fileHeaderTemplate.html",
+	'text!templates/search/experimentViewTemplate.html',
+	"text!templates/search/fileHeaderTemplate.html",
 	"views/search/FileView"
 ],function(templateHtml, fileHeaderTemplateHtml, FileView) {
 	

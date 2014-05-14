@@ -1,6 +1,6 @@
 define([
 	'views/search/ExperimentView',
-	'text!views/search/headerTemplate.html'
+	'text!templates/search/headerTemplate.html'
 ],function(ExperimentView, headerTemplateHtml) {
 
 	var SearchResultsView = Backbone.View.extend({

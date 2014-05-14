@@ -2,7 +2,7 @@ define([
 	'collections/SearchResults',
 	'views/search/SearchResultsView',
 	'collections/AnnotationTypes',
-	'text!views/search/searchInputGroup.html'
+	'text!templates/search/searchInputGroup.html'
 ],function(SearchResults, SearchResultsView, AnnotationTypes, inputGroupTemplate) {
 
 	var Search = Backbone.View.extend({
@@ -25,7 +25,7 @@ define([
 			this.$el.html(this.TEMPLATE());
 
 			this.$el.find('#search_input').val(this.collection.query);
-			this.$el.find('#results_container').append(this.resultsView.$el);
+			this.$el.find('#results_container #table_container').append(this.resultsView.$el);
 
 			if(this.collection.query != undefined) {
 				this.showSearchButton();
