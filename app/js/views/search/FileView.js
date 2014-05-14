@@ -1,5 +1,5 @@
 define([
-	'text!views/search/fileViewTemplate.html'
+	'text!templates/search/fileViewTemplate.html'
 ],function(templateHtml) {
 	
 	var FileView = Backbone.View.extend({

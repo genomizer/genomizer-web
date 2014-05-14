@@ -28,11 +28,25 @@
 /* === BEGIN SEARCH RESULTS === */
 
 #results_container {
+	overflow: hidden;
 	
+}
+
+#results_container #table_container {
+	overflow: scroll;
 }
 
 #results_container .panel-heading {
 	border-bottom: 0;
+	width:100%;
+}
+
+.search-table td {
+	white-space: nowrap;
+}
+
+.search-table {
+	margin: 0;
 }
 
 .search-table-head thead {
