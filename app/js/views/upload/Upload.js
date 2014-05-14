@@ -29,8 +29,12 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"click #add_button": "addToExistingExperiment",
 			"submit #experiment-form": "saveExperiment"
 		},
-		createExperiment: function() {
+		createExperiment: function(clonedAnnotations) {
 			var experiment = new Experiment();
+			this.appendNewExperimentView(experiment);
+		},
+		cloneExperiment: function(clonedAnnotations) {
+			var experiment = clonedAnnotations.clone();
 			this.appendNewExperimentView(experiment);
 		},
 		addToExistingExperiment: function() {
@@ -46,6 +50,9 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		},
 		appendNewExperimentView: function(experiment) {
 			var experimentView = new ExperimentView({model: experiment});
+			
+			this.listenTo(experimentView,'cloneEvent',this.cloneExperiment);
+			
 			this.$el.find(".experiment-container").append(experimentView.el);
 			this.experimentViews.push(experimentView);
 			this.experiments.add(experiment);
@@ -61,8 +68,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		enableOnUnloadWarning: function() {
 			var that = this;
 			$(window).bind('beforeunload',function() {
-				alert("hej");
-				console.log("då");
 				if(that.files.hasUnfinishedUploads()) {
 					return "You have file(s) that are not finished uploading!";
 				}

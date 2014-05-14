@@ -13,7 +13,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
-			"click #removeExperiment": "removeExperiment"
+			"click #removeExperiment": "removeExperiment",
+			"click #cloneButton": "cloneExperiment"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -31,6 +32,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		removeExperiment: function() {
 			this.el.remove();
 			this.model.collection.remove(this.model);
+		},
+		cloneExperiment: function() {
+			this.trigger('cloneEvent',this.model);
 		},
 		saveExperiment: function(e) {
 			e.preventDefault();
