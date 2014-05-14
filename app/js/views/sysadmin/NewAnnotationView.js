@@ -24,21 +24,25 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 				return;
 			}
 
+			var output = [];
 			annotation = new Annotation();
 			annotation.set({
 				"name" : $('#annotation_name').val()
 			});
+			output.push($('#annotation_name').val()); 
 
 			switch($('#annotation_forced').val()) {
 				case "one":
 					annotation.set({
 						"forced" : "true"
 					});
+					output.push('Yes');
 					break;
 				case "two":
 					annotation.set({
 						"forced" : "false"
 					});
+					output.push('No');
 					break;
 			}
 
@@ -48,6 +52,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 						"type" : ["yes", "no"],
 						"default" : "yes"
 					});
+					output.push('Yes/No');
 					break;
 				case "two":
 					var temp = $('#itemlist_input').val();
@@ -56,15 +61,18 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 						"type" : temp,
 						"default" : temp[0]
 					});
+					output.push('Drop-down list');
+					output.push(temp);
 					break;
 				default:
 					annotation.set({
 						"type" : ["freetext"],
 						"default" : ""
 					});
+					output.push('Freetext');
 					break;
 			}
-			var caModal = new ConfirmAnnotationModal(annotation);
+			var caModal = new ConfirmAnnotationModal(output, this);
 			caModal.show();
 			//this.postNewAnnotation(annotation);
 			//alert("Submitted annotation");
@@ -82,11 +90,12 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 		},
 
 		postNewAnnotation : function(annotation) {
-			var payload = annotation.toJSON();
-			delete payload.id;
-			delete payload.values;
-
-			var result = Gateway.postAnnotation(payload);
+			console.log("tesgesgvesvs");
+			// var payload = annotation.toJSON();
+			// delete payload.id;
+			// delete payload.values;
+// 
+			// var result = Gateway.postAnnotation(payload);
 
 			this.clearForm();
 		},
