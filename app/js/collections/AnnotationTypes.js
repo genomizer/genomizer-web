@@ -9,7 +9,16 @@ define([
 		},
 		initialize:function () {
 
-		}
+		},
+		getAnnotation: function(name) {
+			for (var i = 0; i < this.length; i++) {
+				var annotation = this.at(i);
+				if(annotation.get("name") == name) {
+					return annotation;
+				}
+			}	
+			return {};
+		},
 
 	});
 	return AnnotationTypes;
