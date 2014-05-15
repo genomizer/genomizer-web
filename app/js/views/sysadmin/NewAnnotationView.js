@@ -14,7 +14,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 		},
 
 		events : {
-			"click #submit" : "submit",
+			"click #createNewAnnotation" : "submit",
 			"change #annotation_type" : "checkAnnotationType"
 		},
 
