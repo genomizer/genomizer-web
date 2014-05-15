@@ -76,3 +76,10 @@
 #clone_annotations {
 	margin-left: 10px;
 }
+
+#removeExperiment {
+	margin-top: -7px;
+}
+.collapsed-experiment #removeExperiment{
+	display: none;
+}
