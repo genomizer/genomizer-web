@@ -1,0 +1,21 @@
+<div class="modal-body" id="caModal-container">
+    <div id="name"><label>Name</label><br><%= values[0] %></div>
+    <hr>
+    <div id="type"><label>Type</label><br><%= values[2] %></div>
+    <hr>
+    <div id="forced"><label>Forced</label><br><%= values[1] %></div>
+    <hr>
+    
+    <% if(values[2] == "Drop-down list") { %>  
+    <div id="values"><label>Values</label><br>
+        <% _.each(values[3], function(value) { %>
+            <%=value %><br>
+        <% }); %>
+    </div>
+    <hr>
+    <% } %>
+    
+    <button class="btn btn-default" id="confirmAnnotation-btn">Confirm</button>
+    <button class="btn btn-danger" id="cancelAnnotation-btn">Cancel</button>
+</div>
+
