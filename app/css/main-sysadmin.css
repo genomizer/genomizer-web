@@ -1,6 +1,8 @@
 #container {
 	padding-left: 40px;
 	padding-right: 40px;
+	float:left;
+    width: 90%;
 }
 
 #search_field {
@@ -10,3 +12,13 @@
 #confirmAnnotation-btn {
     margin-right: 30px;
 }
+
+#sidebarID {
+    width: 10%;
+    float:left;
+}
+
+.active {
+    background-color: #FFFFFF;
+}
+

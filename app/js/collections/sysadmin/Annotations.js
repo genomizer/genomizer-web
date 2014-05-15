@@ -32,8 +32,9 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 			return annotation;
 		}
 	}, 
-	
+	//static methods
 	{
+		
 		findDeletedValues : function(original, modified) {
 			var result = $(original).not(modified).get();
 			if (result.length <= 0) {

@@ -18,7 +18,7 @@ define([
 		render: function() {
 			this.$el.html(this.template);	
 		},
-		
+
 		post : function() {
 			this.newAnnotationView.postNewAnnotation();
 			this.hide();

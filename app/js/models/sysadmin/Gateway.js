@@ -2,6 +2,7 @@ define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
 		url : app.BASE_URL,
+// app.BASE_URL
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
 		getURL : function() {
