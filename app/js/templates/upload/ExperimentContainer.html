@@ -1,7 +1,16 @@
 <div id="input-container" class="panel panel-default">
-	<div class="panel-heading">Experiment
-		<button type="button" id="removeExperiment" class="btn btn-default pull-right"><span class="glyphicon glyphicon-remove"></span></button></div>
-	<div class="panel-body">
+	<div class="panel-heading">Experiment 
+		<button type="button" id="removeExperiment" class="btn btn-default pull-right">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+	</div>
+
+	<div class="panel-body" id="experimentBody">
+  			<div class="progress" id="progressbar" hidden>
+  				<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+    				60%
+  				</div>
+			</div>
 		<form id="experiment-form">
 			<div class="newAnnotation"></div>
 			<hr>
@@ -10,7 +19,7 @@
 			<button id="cloneButton" type="button" class="btn btn-default">
 				Clone Experiment
 			</button>
-			<button type="submit" disabled class="btn btn-primary pull-right">
+			<button type="submit" disabled class="btn btn-primary pull-right" id="uploadButton">
 				Upload files to experiment
 			</button>
 		</form>

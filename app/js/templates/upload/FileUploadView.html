@@ -1,17 +1,14 @@
-<div class="form-inline file-info-list">
-<input name="fileName" class="form-control" type="text" value=<%- fileName %> placeholder="File Name" required style="width:50%"></input>
-<div class="form-inline" style="float:right;">
-<%- fileSize %>
+<div class="input-group" id="test">
+  <input type="text" name="fileName" class="form-control" value=<%- fileName %> placeholder="File Name" required >
+  <span class="input-group-addon"><%- fileSize %></span>
 
-<select id="selector" class="form-control">
-	<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>Raw</option>
-	<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>Profile</option>
-	<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>Region</option>
-</select>
+  <button type="button" id="removeFile" class="btn btn-default form-control">
+		<span class="glyphicon glyphicon-remove"></span>
+	</button>
 
-<button type="button" id="removeFile" class="btn btn-default">
-	<span class="glyphicon glyphicon-remove"></span>
-</button>
+  <select id="selector" class="form-control">
+		<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>Raw</option>
+		<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>Profile</option>
+		<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>Region</option>
+	</select>
 </div>
-</div>
-<!--<div class="progress"></div>-->
