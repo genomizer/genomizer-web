@@ -11,7 +11,7 @@ function(UploadTemplate) {
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE({
-				annotations: app.annotationTypes.toJSON(),
+				annotations: app.annotationTypes.withoutExpID().toJSON(),
 				experiment:this.model.toJSON(),
 				existingExperiment:this.model.existingExperiment
 			}));
@@ -29,7 +29,7 @@ function(UploadTemplate) {
 			});
 
 			var annot = [];
-			app.annotationTypes.each(function(at) {
+			app.annotationTypes.withoutExpID().each(function(at) {
 				annot.push({
 					id:at.id,
 					name:at.get("name"),
