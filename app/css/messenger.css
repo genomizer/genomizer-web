@@ -8,9 +8,9 @@
 	height:	0;
 	text-align:center;
 	width:100%;
+	z-index:2000;
 }
 .alert-container .alert {
-	z-index:10;
 	display:inline-block;
 	text-align:center;
 	margin: 0;

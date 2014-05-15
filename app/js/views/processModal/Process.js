@@ -1,17 +1,19 @@
 define([
 	'text!templates/processModal/Process.html',
+	'text!templates/processModal/ProcessAlert.html',
 	'views/ModalAC',
 	'models/RawToProfileInfo'
-],function(processTemplate,ModalAC, RawToProfileInfo) {
+],function(processTemplate, processAlertTemplate,ModalAC, RawToProfileInfo) {
 	var Modal = ModalAC.extend({
 		TEMPLATE: _.template(processTemplate),
+		TEMPLATEALERT: _.template(processAlertTemplate),
 		TEMPLATE_VARS: {
 			modalTitle: "Process raw file"
 		},
 		initialize: function(options) {
 			this._super();
 			this.expID = options.query.split(',')[0];
-			//this.fileName = options.query.split(',')[1];
+			this.fileName = options.query.split(',')[1];
 			//this.fileID = options.query.split(',')[2];
 		},
 		events: {
@@ -20,7 +22,22 @@ define([
 			'click [name=process-radios]' : 'radioClicked'
 		},
 		render: function() {
-			this.$el.html(this.TEMPLATE());	
+			this.$el.html(this.TEMPLATE());
+			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
+				'fileName': this.fileName,
+				'expID': this.expID
+			}));
+			//To add more files use append instead of html like below.
+			/*this.$el.find('#alert-container').append(this.TEMPLATEALERT({
+				'fileName': this.fileName,
+				'expID': this.expID
+			}));*/
+
+
+			/*this.$el.find('#alert-file-name').text(this.fileName);
+			this.$el.find('#alert-exp-name').text(this.expID);
+			console.log(this.fileName, ' file: ', $('#alert-file-name').text());
+			console.log(this.expID, ' exp: ', $('#alert-exp-name').text());*/
 		},
 		radioClicked: function(e) {
 			switch(e.target.id) {
@@ -103,6 +120,7 @@ define([
 				success: function () {
 					console.log("successfully sent process request");
 					that.hide();
+					app.messenger.success("WOOHOOO!! The processing has begun!");
 				},
 				error: function() {
 					console.log("failed to send process request");

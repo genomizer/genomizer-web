@@ -35,6 +35,10 @@
     /* just for demo */
 }
 
+#raw-process-container .alert span {
+    font-weight: 700;
+}
+
 .checkbox {
 	width: 150px;
     height: 25px;
