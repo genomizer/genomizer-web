@@ -21,10 +21,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragover":"dragOverHandler",
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
-			"drop":"dropHandler",
-			"click #uploadFilesButton": "uploadExperiment"
+			"drop":"dropHandler"
 		},
 		render: function() {
+			window.this = this;
 			this.$el.html(this.TEMPLATE());
 			
 			this.annotationsForm = new AnnotationsForm({model:this.model});
@@ -53,9 +53,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
+			this.collapseView();
 		},
-		uploadExperiment: function(){
-
+		collapseView: function(){
+			this.$el.find('.panel-collapse').collapse('hide');
+			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
 			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());

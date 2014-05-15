@@ -19,8 +19,13 @@ function(UploadTemplate) {
 		},
 		events: {
 			"change input":"updateModel",
-			"change select":"updateModel"
+			"change select":"updateModel",
+			"change input": "changeLabelName"
 		},
+		changeLabelName: function() {
+			alert(this.$el.find("experiment name").val());
+		},
+
 		updateModel:function() {
 			var input = {};
 			this.$el.find("input, select").each(function() {
