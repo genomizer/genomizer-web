@@ -21,7 +21,7 @@ define(['models/File'],function(File) {
 		hasUnfinishedUploads: function() {
 			var nrOfFinnishedFiles = 0;
 			this.each(function(file) {
-				if(file.uploadDone == true) {
+				if(file.uploadDone) {
 					nrOfFinnishedFiles++;
 				}
 			});

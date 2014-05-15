@@ -79,20 +79,17 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			console.log("DragEnter");
 
 		},
 		dragOverHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			console.log("dragOver");
 		},
 		dropHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			console.log("drop");
-			var fileObjs = e.dataTransfer.files;
-
+			var fileObjs = e.originalEvent.dataTransfer.files;
+			this.model.files.addFilesByFileObject(fileObjs);
 		}
 
 	});
