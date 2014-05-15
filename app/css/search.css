@@ -33,7 +33,7 @@
 }
 
 #results_container #table_container {
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 
 #results_container .panel-heading {
