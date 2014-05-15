@@ -10,13 +10,17 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
+			new Dragster( this.el );
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
 			"click #removeExperiment": "removeExperiment",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
+			"dragleave":"dragLeaveHandler",
 			"dragover":"dragOverHandler",
+			"dragster:enter":"dragsterEnter",
+			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler"
 		},
 		render: function() {
@@ -79,19 +83,24 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-
 		},
 		dragOverHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 		},
+		dragsterLeave: function(e) {
+			this.$el.removeClass("drag-over");
+		},
+		dragsterEnter: function(e) {
+			this.$el.addClass("drag-over");
+		},
 		dropHandler: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
+			this.$el.removeClass("drag-over");
 			var fileObjs = e.originalEvent.dataTransfer.files;
 			this.model.files.addFilesByFileObject(fileObjs);
 		}
-
 	});
 
 	return ExperimentView;

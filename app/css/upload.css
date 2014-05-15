@@ -37,10 +37,19 @@
 	font-weight: normal;
 }
 
-#experiment_container{
-	
+.experiment-container .drag-over .panel-body {
+	background-color: rgba(167, 207, 144, 0.3);
+}
+.experiment-container .panel-body {
+	transition: background-color 0.3s ease-out;
+}
+.experiment-container .drag-over * {
+	pointer-events: none;
 }
 
+/*
+ * To avoid dragenter and dragleave triggering on child elements
+ */
 
 #file_upload {
 	text-align: center;
