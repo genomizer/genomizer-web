@@ -19,11 +19,11 @@ function(UploadTemplate) {
 		},
 		events: {
 			"change input":"updateModel",
-			"change select":"updateModel",
-			"change input": "changeLabelName"
+			'keyup input[name="Experiment name"]':"changeLabelName",
+			"change select":"updateModel"
 		},
 		changeLabelName: function() {
-			alert(this.$el.find("experiment name").val());
+			console.log("Haoeuouea");
 		},
 
 		updateModel:function() {
