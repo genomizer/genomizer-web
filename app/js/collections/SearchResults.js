@@ -24,14 +24,15 @@ define(['models/Experiment'],function(Experiment) {
 			}
 		},
 		selectFile: function(file) {
-			//Only one file may be selected at a time.
-			this.selectedFiles = [file];
+			this.selectedFiles.push(file);
 			this.trigger('highlightChange', this.selectedFiles);
 		},
 		deselectFile: function(file) {
-			//Must take argument of which ID to remove when multiple files can be selected.
-			this.selectedFiles = [];
-			this.trigger('highlightChange', this.selectedFiles);
+			var index = this.selectedFiles.indexOf(file);
+			if(index != -1) {
+				this.selectedFiles.splice(index, 1);
+				this.trigger('highlightChange', this.selectedFiles);
+			}
 		},
 		getSelectedFiles: function() {
 			return this.selectedFiles;

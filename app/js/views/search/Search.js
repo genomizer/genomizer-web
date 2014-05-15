@@ -45,17 +45,18 @@ define([
 			"click #builder_button": "openBuilder"
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
-			//handles whether or not the download button should be clickable.
-			if(fileArray.length != 0) {
+			//handles whether or not the download or process buttons should be clickable.
+			if(fileArray.length > 0) {
 				$('#download_button').prop('disabled', false);
+				$('#process_button').prop('disabled', false);
+				for(var i = 0;i<fileArray.length;i++) {
+					if(fileArray[i].get("type").toLowerCase() != "raw") {
+						$('#process_button').prop('disabled', true);
+						break;
+					}
+				}
 			} else {
 				$('#download_button').prop('disabled', true);
-			}
-
-			//handles whether or not the process button should be clickable.
-			if(fileArray.length == 1 && fileArray[0].get("type").toLowerCase() == "raw") {
-				$('#process_button').prop('disabled', false);
-			} else {
 				$('#process_button').prop('disabled', true);
 			}
 		},
@@ -95,8 +96,17 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-<<<<<<< HEAD
-			app.router.navigate("process/" + files[0].get("filename") + "," + files[0].get("id") + "," + files[0].get("expId"), {trigger:true});
+			//console.log(files.length);
+			var processFiles = "";
+			for(var i = 0; i<files.length;i++) {
+				if(processFiles != "") {
+					processFiles += ",";
+				}
+				processFiles += files[i].get("expId") + "," + files[i].get("filename");
+			}
+			//console.log('processfiles: ',processFiles);
+			app.router.navigate("process/"+processFiles, {trigger:true});
+//			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename")/* + "," + files[0].get("id")*/, {trigger:true});
 		},
 		openBuilder: function() {
 			console.log("Search > openBuilder")
@@ -113,12 +123,7 @@ define([
 
 			input.val(string);
 			input.trigger("input");
- 		}
-=======
-			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename") + "," + files[0].get("id"), {trigger:true});
-		}
->>>>>>> c8450621b21b774135a297b74838fe3928b388f3
-		
+ 		}		
 	});
 	return Search;
 });
