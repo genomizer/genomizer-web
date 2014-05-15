@@ -16,6 +16,9 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
                 return;
             }
 
+			var originalName = this.annotation.get('name');
+			var newName = $('#edit_annotation_name').val();
+
 			var original = this.annotation.get('values');
             var modified = $('#edit_annotation_value').val();
 
@@ -23,7 +26,14 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 
 			var deletedResult = Annotations.findDeletedValues(original, modified);
 			var addedResult = Annotations.findAddedValues(original, modified);
-			Gateway.updateAnnotationValues(deletedResult, addedResult, this.annotation.get('id'));
+			Gateway.updateAnnotationValues(deletedResult, addedResult, originalName, newName);
+
+			if (originalName != newName) {
+				var renamePayload = new Backbone.Model();
+				renamePayload.set({"name" : originalName, "newName" : newName});
+				Gateway.renameAnnotation(renamePayload);
+			}
+
         },
 
         deleteAnnotation : function() {
@@ -31,10 +41,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
             if (x) {
                 var y = window.confirm("Annotation will be completely removed!");
                 if (y) {
-                    var payload = new Backbone.Model();
-                                        
-                    var success = Gateway.deleteAnnotation(payload, this.annotation.get('name'));
-
+                    var success = Gateway.deleteAnnotation({}, this.annotation.get('name'));
                 }
             }
         },

@@ -9,7 +9,6 @@ define([], function() {
 		},
 
 		sendPacket : function(type, urlExtension, payload) {
-			var result = false;
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -19,40 +18,42 @@ define([], function() {
 				password : "",
 				data : JSON.stringify(payload),
 				complete : function(xhr) {
-					if (xhr.status == 200 || xhr.status == 201) {
-						result = true;
-					} else {
-						result = false;
-					} 
 				},
 			});
-			return result;
 		},
-
+ 
 		postAnnotation : function(payload) {
-			return this.sendPacket("POST", "annotation", payload);
+			this.sendPacket("POST", "annotation/field", payload);
 		},
 
 		deleteAnnotation : function(payload, name) {
-			return this.sendPacket("DELETE", "annotation/" + name, payload);
+			this.sendPacket("DELETE", "annotation/field/" + name, payload);
 		},
 		
-		updateAnnotationValues : function(deletePayload, addPayload, id) {
+		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
 			if (deletePayload != -1) {
-				this.deleteAnnotationValues(deletePayload, id, successMsg);
+				this.deleteAnnotationValues(deletePayload, originalName);
 			}
 			if (addPayload != -1) {
-				this.addAnnotationValues(addPayload, id, successMsg);
+				this.addAnnotationValues(addPayload, originalName);
 			}
 		},
 		
-		deleteAnnotationValues : function(payload, id) {
-			return this.sendPacket("PUT", "annotation/removevalues/" + id, payload, successMsg);
+		deleteAnnotationValues : function(payload, name) {
+			var that = this;
+			payload.forEach(function(value) {
+				that.sendPacket("DELETE", "annotation/value/" + name + "/" + value, {});	
+			});
 		},
 		
-		addAnnotationValues : function(payload, id) {
+		addAnnotationValues : function(payload, name) {
 			
+		},
+		
+		renameAnnotation : function(payload) {
+			this.sendPacket("PUT", "annotation/field", payload);
 		}
+		
 	});
 	return Gateway;
 });
