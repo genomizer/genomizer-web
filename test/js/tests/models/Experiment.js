@@ -80,12 +80,12 @@ define(['models/Experiment'],function(Experiment) {
 		});
 		describe("should get correct annotation using getAnnotation with specific id",function() {
 			it("checking value of annotation[1]", function() {
-				var firstAnnotation = experiment.getAnnotation(1);
+				var firstAnnotation = experiment.getAnnotation("pubmedId");
 				expect(firstAnnotation.value).to.equal("abc123");
 				
 			});
 			it("checking name of annotation[8]", function() {
-				var firstAnnotation = experiment.getAnnotation(8);
+				var firstAnnotation = experiment.getAnnotation("tissue");
 				expect(firstAnnotation.name).to.equal("tissue");
 			});
 

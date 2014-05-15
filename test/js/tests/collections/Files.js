@@ -16,21 +16,19 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					expect(experiment.id).to.equal(3);
 				});
 				it("should update experiment id", function () {
-					var experiment = new Experiment({id:3});
-					var files = new Files([],{experiment:experiment});
+					var files = new Files();
 					files.add(new File());
 					expect(files.at(0).get("experimentID")).to.not.equal(3);
-					files.updateExperimentIds();
+					files.updateExperimentIds(3);
 					expect(files.at(0).get("experimentID")).to.equal(3);
 				});
 				it("should update multiple files with experiment id", function () {
-					var experiment = new Experiment({id:3});
-					var files = new Files([],{experiment:experiment});
+					var files = new Files([]);
 					files.add(new File());
 					files.add(new File());
 					expect(files.at(0).get("experimentID")).to.not.equal(3);
 					expect(files.at(1).get("experimentID")).to.not.equal(3);
-					files.updateExperimentIds();
+					files.updateExperimentIds(3);
 					expect(files.at(0).get("experimentID")).to.equal(3);
 					expect(files.at(1).get("experimentID")).to.equal(3);
 				});

@@ -63,5 +63,31 @@ define(['collections/Files','models/Experiment','models/File'], function(Files,E
 				expect(callback.calledOnce).to.be.true;
 			});
 		});
+		describe("should be able to uploadFile", function() {
+			var file;
+			var server;
+			it("should use URLupload", function() {
+				// SET UP
+				server = sinon.fakeServer.create();
+				server.respondWith("http://example.se",[201, {"Content-Type": "text/html"},""]);
+				file = new File({URLupload:"http://example.se"});
+				var called = false;
+
+				// TEST
+				file.on("uploadProgress",function() {
+					   called = true;
+					   expect(file.progress).to.be.true;
+					   expect(file.uploadDone).to.equal(1);
+				});
+				file.uploadFile()
+				server.respond();
+				expect(called).to.be.true;
+
+
+				// RESTORE
+				server.restore();
+				
+			});
+		});
 	});
 });
