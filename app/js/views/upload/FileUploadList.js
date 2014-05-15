@@ -27,15 +27,7 @@ function(UploadTemplate,File,Files,FileUploadView) {
 		addSelectedFiles: function() {
 			var that = this;
 			var formFiles = this.$el.find(".fileInput")[0].files;
-			_.each(formFiles,function(formFile) {
-
-				var file = new File({
-					fileName:formFile.name
-				});
-				file.fileObj = formFile;
-
-				that.collection.add(file);
-			});
+			this.collection.addFilesByFileObject(formFiles);
 			this.render();
 		}
 		
