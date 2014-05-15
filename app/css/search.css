@@ -19,7 +19,7 @@
 }
 
 #search_input {
-	width: 400px;
+	width: 600px;
 }
 
 /* === END SEARCH FORM === */
@@ -173,3 +173,55 @@
 }
 
 /* === END SEARCH RESULTS === */
+
+/* === BEGIN QUERY BUILDER === */
+
+.query-builder {
+	max-width: none;
+	width: 728px;
+	left: 0;
+	top: 25px;
+}
+
+.query-builder .arrow {
+	left: 618px !important;
+}
+
+.query-builder .popover-content {
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+
+.query-builder .dropdown-menu {
+	text-align: left;
+}
+
+.query-builder .popover-content > div > * {
+	padding: 5px;
+}
+
+.query-builder .popover-content > div > :not(:last-child) {
+	padding-right: 0;
+}
+
+.query-builder .popover-content > div > * > * {
+	width: 100%;
+}
+
+.query-builder.appending .append-only {
+	display: none;
+}
+
+.dropdown-toggle.left-align {
+	padding-right: 25px;
+	text-align: left;
+}
+
+.dropdown-toggle.left-align :last-child {
+	position: absolute;
+	right: 12px;
+	top: 14px;
+}
+
+/* === END QUERY BUILDER === */
