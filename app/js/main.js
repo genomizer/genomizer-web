@@ -6,8 +6,12 @@ require.config({
 });
 // this is a release
 var app = {};
-//.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
-app.BASE_URL = "http://harry.cs.umu.se:7000/"
+
+app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
+if(window.location.pathname.indexOf("c11vbk") != -1) {
+	app.BASE_URL = "http://harry.cs.umu.se:7000/"
+}
+
 require([
 		'views/MainMenu',
 		'collections/AnnotationTypes',
