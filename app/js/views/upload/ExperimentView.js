@@ -47,31 +47,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-
-			/*
-			 * Begin of ugly fix, we remove ExpID from annotations
-			 * so that the request function (collidies with experiment_name on the server)
-			 */
-			var annots = this.model.get("annotations");
-			var newAn = []
-			_.each(annots,function(an) {
-				if(an.name != "ExpID") {
-					newAn.push(an);
-				}
-			});
-			this.model.set("annotations",newAn);
-
-			/*
-			 * END OF FIX
-			 */
-
-			//this.model.unset("files");
-			//annots = _.map(annots,function(an) {
-			//	return _.omit(an,'id');
-			//});
-			this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
-			this.model.set("createdBy","jonas");
-			this.model.set("name","webb-"+Date.now());
 			this.model.save(null,{success:function() {
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();

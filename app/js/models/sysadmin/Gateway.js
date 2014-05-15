@@ -2,14 +2,14 @@ define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
 		url : app.BASE_URL,
+// app.BASE_URL
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
 		getURL : function() {
 			return this.url;
 		},
 
-		sendPacket : function(type, urlExtension, payload, successMsg) {
-			var result = false;
+		sendPacket : function(type, urlExtension, payload) {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -19,41 +19,42 @@ define([], function() {
 				password : "",
 				data : JSON.stringify(payload),
 				complete : function(xhr) {
-					if (xhr.status == 200 || xhr.status == 201) {
-						alert(successMsg);
-						result = true;
-					} 
 				},
 			});
-			return result;
 		},
-
+ 
 		postAnnotation : function(payload) {
-			var successMsg = "Successfully created the annotation";
-			return this.sendPacket("POST", "annotation", payload, successMsg);
+			this.sendPacket("POST", "annotation/field", payload);
 		},
 
-		deleteAnnotation : function(payload, id) {
-			var successMsg = "Successfully deleted the annotation";
-			return this.sendPacket("DELETE", "annotation/" + id, payload, successMsg);
+		deleteAnnotation : function(payload, name) {
+			this.sendPacket("DELETE", "annotation/field/" + name, payload);
 		},
 		
-		updateAnnotationValues : function(deletePayload, addPayload, id) {
+		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
 			if (deletePayload != -1) {
-				this.deleteAnnotationValues(deletePayload, id, successMsg);
+				this.deleteAnnotationValues(deletePayload, originalName);
 			}
 			if (addPayload != -1) {
-				this.addAnnotationValues(addPayload, id, successMsg);
+				this.addAnnotationValues(addPayload, originalName);
 			}
 		},
 		
-		deleteAnnotationValues : function(payload, id) {
-			return this.sendPacket("PUT", "annotation/removevalues/" + id, payload, successMsg);
+		deleteAnnotationValues : function(payload, name) {
+			var that = this;
+			payload.forEach(function(value) {
+				that.sendPacket("DELETE", "annotation/value/" + name + "/" + value, {});	
+			});
 		},
 		
-		addAnnotationValues : function(payload, id) {
+		addAnnotationValues : function(payload, name) {
 			
+		},
+		
+		renameAnnotation : function(payload) {
+			this.sendPacket("PUT", "annotation/field", payload);
 		}
+		
 	});
 	return Gateway;
 });

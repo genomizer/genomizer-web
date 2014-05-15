@@ -14,7 +14,7 @@ define([
 
 			this.resultsView = new SearchResultsView({
 				collection: this.collection,
-				annotations: app.annotationTypes
+				annotations: app.annotationTypes.withoutExpID()
 			});
 
 			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
