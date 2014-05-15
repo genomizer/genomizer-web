@@ -47,6 +47,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
+			this.$("#experiment-form button[type=submit]").button('loading');
 			this.model.save(null,{success:function() {
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
