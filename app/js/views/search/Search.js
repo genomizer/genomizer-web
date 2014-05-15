@@ -88,7 +88,7 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-			app.router.navigate("process/" + files[0].get("filename") + "," + files[0].get("id") + "," + files[0].get("expId"), {trigger:true});
+			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename") + "," + files[0].get("id"), {trigger:true});
 		}
 		
 	});
