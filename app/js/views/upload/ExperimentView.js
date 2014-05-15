@@ -10,7 +10,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
-			new Dragster( this.el );
+			this.dragster = new Dragster( this.el );
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
@@ -98,6 +98,12 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			e.stopPropagation();
 			e.preventDefault();
 			this.$el.removeClass("drag-over");
+
+			// FIX for dragster, drop causes dragsterEnter to not trigger.
+			this.dragster.removeListeners();
+			this.dragster = new Dragster( this.el );
+			// end of FIX for dragster 
+			
 			var fileObjs = e.originalEvent.dataTransfer.files;
 			this.model.files.addFilesByFileObject(fileObjs);
 		}
