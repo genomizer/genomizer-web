@@ -21,7 +21,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragover":"dragOverHandler",
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
-			"drop":"dropHandler"
+			"drop":"dropHandler",
+			"click #uploadFilesButton": "uploadExperiment"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -51,6 +52,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
+		},
+		uploadExperiment: function(){
+
 		},
 		onChangeUploadable: function() {
 			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
