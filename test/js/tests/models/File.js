@@ -63,6 +63,33 @@ define(['collections/Files','models/Experiment','models/File'], function(Files,E
 				expect(callback.calledOnce).to.be.true;
 			});
 		});
+		describe("should display correct byte prefixing", function() {
+			var file;
+			beforeEach(function() {
+				file = new File();
+				file.fileObj = {};
+			});
+			it("bytes", function() {
+				file.fileObj.size = 322;
+				expect(file.getReadableFileSize()).to.equal("322.00 B");
+			});
+			it("kilobytes", function() {
+				file.fileObj.size = 1337;
+				expect(file.getReadableFileSize()).to.equal("1.31 KiB");
+			});
+			it("megabytes", function() {
+				file.fileObj.size = 1073741823;
+				expect(file.getReadableFileSize()).to.equal("1024.00 MiB");
+			});
+			it("gigabytes", function() {
+				file.fileObj.size = 1073741824;
+				expect(file.getReadableFileSize()).to.equal("1.00 GiB");
+			});
+			it("terabytes", function() {
+				file.fileObj.size = 14700470463365.12;
+				expect(file.getReadableFileSize()).to.equal("13.37 TiB");
+			});
+		});
 		describe("should be able to uploadFile", function() {
 			var file;
 			var server;
