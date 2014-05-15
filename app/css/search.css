@@ -28,12 +28,12 @@
 /* === BEGIN SEARCH RESULTS === */
 
 #results_container {
-	overflow: hidden;
+	overflow-x: hidden;
 	
 }
 
 #results_container #table_container {
-	overflow: scroll;
+	overflow-x: scroll;
 }
 
 #results_container .panel-heading {
