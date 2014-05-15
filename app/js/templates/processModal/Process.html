@@ -11,93 +11,81 @@
 				<div class="form-group">
 					<h5>Genome reference</h5>
 					<select class="form-control" id="genome-reference">
-					<!-- THIS NEEDS TO BE CHANGED LATER! -->
-					<option>d_melanogaster_fb5_22</option>
-					<option>d_melanogaster_fb5_25</option>
+						<!-- THIS NEEDS TO BE CHANGED LATER! -->
+						<option>d_melanogaster_fb5_22</option>
+						<option>d_melanogaster_fb5_25</option>
 					</select>
 				</div>
 				<h5>Output format</h5>
 			</div>
 		</div>
-		<div class="form-inline form-group">
-			<div class="control-group">
-			  	<div class="controls">
-			  		<div class="row">
-			  			<div class="col-xs-1">
-			  				<input type="radio" name="process-radios" id="sam" value="1" checked>
-			  			</div>
-			  			<div class="col-xs-11">
-							<label for="sam">SAM</label>
-			  			</div>
-		  			</div>
-		  			<div class="row">
-			  			<div class="col-xs-1">
-			  				<input type="radio" name="process-radios" id="gff" value="2">
-			  			</div>
-			  			<div class="col-xs-11">
-			  				<label for="gff">ReadsGFF</label>
-			  			</div>
-		  			</div>
-		  			<div class="row">
-			  			<div class="col-xs-1">
-			  				<input type="radio" name="process-radios" id="sgr" value="3">
-			  			</div>
-			  			<div class="col-xs-11">
-			  				<label for="sgr">AllnucSGR</label>
-			  			</div>
-		  			</div>
-			  </div>
-			</div>
+		<div class="form-group">
+	  		<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="sam" checked>
+	  			</div>
+	  			<div class="col-xs-11">
+					<label for="sam">SAM</label>
+	  			</div>
+  			</div>
+  			<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="gff">
+	  			</div>
+	  			<div class="col-xs-11">
+	  				<label for="gff">ReadsGFF</label>
+	  			</div>
+  			</div>
+  			<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="sgr">
+	  			</div>
+	  			<div class="col-xs-11">
+	  				<label for="sgr">AllnucSGR</label>
+	  			</div>
+  			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-1">
-  				<input type="radio" name="process-radios" id="smooth-radio" value="4">
+  				<input type="radio" name="process-radios" id="smooth-radio">
   			</div>
   			<div class="col-xs-11" id="smooth-col">
 				<label for="smooth-radio"><h5>Smoothing</h5></label>
 				<div class="form-inline form-group triple-container" id="smoothing">
 					<div class="form-group">
-						<input disabled type="number" name="quantity" min="1"  class="form-control" placeholder="Window size" id="window-size" required>
+						<input disabled type="number" name="quantity" min="1"  class="form-control" placeholder="Window size" id="window-size" required value="10">
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="smooth-type" required>
+						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="smooth-type" required value="1">
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="step-pos" required>
+						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="step-pos" required value="5">
 					</div>
 				</div>
-				<div class="form-inline form-group">
-					<div class="control-group">
-					  	<div class="controls">
-							<label class="checkbox-inline" for="print-mean">
-						  		<input disabled type="checkbox" name="checkboxes" id="print-mean" value="1">
-						  	 Print mean 
-							</label>
-							<label class="checkbox-inline" for="print-zeros">
-						  		<input disabled type="checkbox" name="checkboxes" id="print-zeros" value="2">
-						  	 Print zeros 
-							</label>
-					  </div>
-					</div>
+				<div class="form-group">
+					<label class="checkbox-inline" for="print-mean">
+				  		<input disabled type="checkbox" name="checkboxes" id="print-mean">
+				  		 Print mean 
+					</label>
+					<label class="checkbox-inline" for="print-zeros">
+				  		<input disabled type="checkbox" name="checkboxes" id="print-zeros" checked>
+				  		 Print zeros 
+					</label>
 				</div>
   			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-1">
-  				<input type="radio" name="process-radios" id="steps-radio" value="5">
+  				<input type="radio" name="process-radios" id="steps-radio">
   			</div>
   			<div class="col-xs-11" id="steps-col">
 				<label for="steps-radio"><h5>Steps</h5></label>
 				<div class="form-inline form-group">
-					<div class="control-group">
-					  	<div class="controls">
-							<input type="number" name="quantity" min="0" class="form-control" placeholder="Number of steps" id="nr-of-steps" disabled required/>
-					  </div>
-					</div>
-				</div>
+					<input type="number" name="quantity" min="1" class="form-control" placeholder="Number of steps" id="nr-of-steps" disabled required value="10"/>
+			  </div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-1">
-  				<input type="radio" name="process-radios" id="ratio-radio" value="6">
+  				<input type="radio" name="process-radios" id="ratio-radio">
   			</div>
   			<div class="col-xs-11" id="ratio-col">
 				<label for="ratio-radio"><h5>Ratio calculation</h5></label>
@@ -108,35 +96,31 @@
 							<option>double</option>
 						</select>
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0" class="form-control" placeholder="Input reads cut-off" id="ratio-smooth-type" required>
+						<input disabled type="number" name="quantity" min="0" class="form-control" placeholder="Input reads cut-off" id="ratio-smooth-type" required value="4">
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0" max="1"  class="form-control" placeholder="Chromosomes" id="ratio-chromosomes" required>
+						<input disabled type="number" name="quantity" min="0" max="1"  class="form-control" placeholder="Chromosomes" id="ratio-chromosomes" required value="0">
 					</div>
 				</div>
 				<h5>Ratio smoothing</h5>
 				<div class="form-inline form-group triple-container" id="ratio-smoothing">
 					<div class="form-group">
-						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Window size" id="ratio-window-size" required>
+						<input disabled type="number" name="quantity" min="1"  class="form-control" placeholder="Window size" id="ratio-window-size" required value="150">
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="ratio-smooth-type" required>
+						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="ratio-smooth-type" required value="1">
 					</div><div class="form-group">
-						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="ratio-step-pos" required>
+						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="ratio-step-pos" required value="7">
 					</div>
 				</div>
 				<div class="form-inline form-group">
-					<div class="control-group">
-					  	<div class="controls">
-							<label class="checkbox-inline" for="ratio-print-mean">
-						  		<input disabled type="checkbox" name="checkboxes" id="ratio-print-mean" value="1">
-						  	 Print mean 
-							</label>
-							<label class="checkbox-inline" for="ratio-print-zeros">
-						  		<input disabled type="checkbox" name="checkboxes" id="ratio-print-zeros" value="2">
-						  	 Print zeros 
-							</label>
-					  </div>
-					</div>
-				</div>
+					<label class="checkbox-inline" for="ratio-print-mean">
+				  		<input disabled type="checkbox" name="checkboxes" id="ratio-print-mean">
+				  	 Print mean 
+					</label>
+					<label class="checkbox-inline" for="ratio-print-zeros">
+				  		<input disabled type="checkbox" name="checkboxes" id="ratio-print-zeros">
+				  	 Print zeros 
+					</label>
+			  </div>
 			</div>
 		</div>
 	</div>
