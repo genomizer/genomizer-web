@@ -18,7 +18,7 @@ define([
 
 			this.resultsView = new SearchResultsView({
 				collection: this.collection,
-				annotations: app.annotationTypes
+				annotations: app.annotationTypes.withoutExpID()
 			});
 
 			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
@@ -95,6 +95,7 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
+<<<<<<< HEAD
 			app.router.navigate("process/" + files[0].get("filename") + "," + files[0].get("id") + "," + files[0].get("expId"), {trigger:true});
 		},
 		openBuilder: function() {
@@ -113,6 +114,10 @@ define([
 			input.val(string);
 			input.trigger("input");
  		}
+=======
+			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename") + "," + files[0].get("id"), {trigger:true});
+		}
+>>>>>>> c8450621b21b774135a297b74838fe3928b388f3
 		
 	});
 	return Search;

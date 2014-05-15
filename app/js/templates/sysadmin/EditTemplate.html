@@ -1,14 +1,13 @@
 <div id="container">
-	<form class="edit-annotation-form">
 		<legend>
 			Edit annotation: <%= annotation ? annotation.get('name') : '' %>
 		</legend>
 
 		<label>Annotation Name</label>
-		<input class="form-control" id="edit_annotation_name" type="text" disabled="" value="<%= annotation ? annotation.get('name') : '' %>">
+		<input class="form-control" id="edit_annotation_name" type="text" value="<%= annotation ? annotation.get('name') : '' %>">
 		<hr />
 
-		<label>Annotation Values (add on the form "female,male,unknown,...")</label>
+		<label>Annotation Values (on the form "female,male,unknown,...")</label>
 		<input class="form-control" id="edit_annotation_value" disabled="" type="text" value="<%= annotation ? annotation.get('values') : '' %>">
 		<hr />
 
@@ -19,16 +18,10 @@
 		</select>
 		<hr />
 
-		<button id="updateAnnotation" class="btn btn-default">
-			<%= annotation ? 'Update Annotation' : 'Edit' %>
-		</button>
+		<button id="updateAnnotation" class="btn btn-default">Update Annotation</button>
 
 		<a href="#admin" class="btn btn-default">Back</a>
 
 		<hr />
-		<button id="deleteAnnotation" type="button" class="btn btn-danger">
-
-			<%= annotation ? 'Delete Annotation' : 'Delete' %>
-		</button>
-	</form>
+		<button id="deleteAnnotation" type="button" class="btn btn-danger">Delete Annotation</button>
 </div>

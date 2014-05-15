@@ -11,7 +11,7 @@ function(UploadTemplate) {
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE({
-				annotations: app.annotationTypes.toJSON(),
+				annotations: app.annotationTypes.withoutExpID().toJSON(),
 				experiment:this.model.toJSON(),
 				existingExperiment:this.model.existingExperiment
 			}));
@@ -19,8 +19,13 @@ function(UploadTemplate) {
 		},
 		events: {
 			"change input":"updateModel",
+			'keyup input[name="Experiment name"]':"changeLabelName",
 			"change select":"updateModel"
 		},
+		changeLabelName: function() {
+			console.log("Haoeuouea");
+		},
+
 		updateModel:function() {
 			var input = {};
 			this.$el.find("input, select").each(function() {
@@ -29,7 +34,7 @@ function(UploadTemplate) {
 			});
 
 			var annot = [];
-			app.annotationTypes.each(function(at) {
+			app.annotationTypes.withoutExpID().each(function(at) {
 				annot.push({
 					id:at.id,
 					name:at.get("name"),

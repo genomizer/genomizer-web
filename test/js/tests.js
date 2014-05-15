@@ -4,6 +4,7 @@ var testModulePaths = [
 	'tests/collections/SearchResults',
 	'tests/collections/Files',
 	'tests/collections/Annotations',
+	'tests/collections/AnnotationTypes',
 
 	// Models
 	'tests/models/Experiment',
