@@ -10,16 +10,45 @@ define([
 		},
 		initialize: function(options) {
 			this._super();
+//			$('#window-size').val(10);
+//			$('#smooth-type').val(1);
+//			$('#step-pos').val(5);
 			this.fileName = options.query.split(',')[0];
 			this.fileID = options.query.split(',')[1];
 			this.expID = options.query.split(',')[2];
+			$('#ratio-smoothing input').prop("disabled",true);
 		},
 		events: {
 			'submit form':'submitProcess',
-			'click #step-box' : 'toggleStepsInput'
+			'click #step-box' : 'toggleStepsInput',
+			'click [name=process-radios]' : 'radioClicked'
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());	
+		},
+		radioClicked: function(e) {
+			switch(e.target.id) {
+				case "sam":
+				case "gff":
+				case "sgr":
+					$('#raw-process-container input').prop('disabled', false);
+					$('#ratio-col input, #smooth-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+				break;
+				case "smooth-radio":
+					$('#raw-process-container input').prop('disabled', false);
+					$('#ratio-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+				break;
+				case "steps-radio":
+					$('#raw-process-container input').prop('disabled', false);
+					$('#ratio-col input, #ratio-col select').prop('disabled', true);
+				break;
+				case "ratio-radio":
+					$('#raw-process-container input, #raw-process-container select').prop('disabled', false);
+				break;
+				default:
+					console.log('undefined')
+				break;
+			}
 		},
 		submitProcess: function(e) {
 			e.preventDefault();
@@ -54,8 +83,12 @@ define([
 							"parameters": [
 											bowtieFlags,
 											genomeFilePath,
+											"y",
+											"y",
 											smoothParams,
-											createStep
+											createStep,
+											"single 4 0",
+											"150 1 7 0 0"
 										  ],
 							"metadata": bowtieFlags + ", " + genomeFilePath + ", " + smoothParams + ", " + createStep,
 							"genomeRelease": "hg38",
@@ -73,18 +106,6 @@ define([
 						console.log("failed to send process request");
 					}
 					});
-				/*
-				this.model.save(null, {
-				    success: function (model, response) {
-				        console.log("success");
-				    },
-				    error: function (model, response) {
-				        console.log("error");
-				    }
-				});*/
-
-
-
 			}
 		},
 		toggleStepsInput: function() {
@@ -99,3 +120,6 @@ define([
 	});
 	return Modal;
 });
+
+
+
