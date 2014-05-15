@@ -21,15 +21,27 @@ define(['models/File'],function(File) {
 		hasUnfinishedUploads: function() {
 			var nrOfFinnishedFiles = 0;
 			this.each(function(file) {
-				if(file.uploadDone == true) {
+				if(file.uploadDone) {
 					nrOfFinnishedFiles++;
 				}
 			});
-			if(nrOfFinnishedFiles == this.length) {
-				return false;
-			} else {
-				return true;
-			}
+			return nrOfFinnishedFiles != this.length
+		},
+		/*
+		 * Adds File Models to the collection by using a fileObject list (as in
+		 * javascript file object)
+		 */
+		addFilesByFileObject: function(fileObjects) {
+			var that = this;
+			_.each(fileObjects,function(fileObj) {
+				var file = new File({
+					fileName:fileObj.name
+				});
+				file.fileObj = fileObj;
+
+				that.add(file);
+			});
+
 		}
 	});
 	return Files;

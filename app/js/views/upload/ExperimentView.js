@@ -9,11 +9,15 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
-			this.model.files.on("add remove",this.changeUploadable,this);
+			this.model.files.on("add remove",this.onChangeUploadable,this);
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
-			"click #removeExperiment": "removeExperiment"
+			"click #removeExperiment": "removeExperiment",
+			"click #cloneButton": "cloneExperiment",
+			"dragenter":"dragEnterHandler",
+			"dragover":"dragOverHandler",
+			"drop":"dropHandler"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -31,6 +35,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		removeExperiment: function() {
 			this.el.remove();
 			this.model.collection.remove(this.model);
+		},
+		cloneExperiment: function() {
+			this.trigger('cloneEvent',this.model);
 		},
 		saveExperiment: function(e) {
 			e.preventDefault();
@@ -57,17 +64,32 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			//annots = _.map(annots,function(an) {
 			//	return _.omit(an,'id');
 			//});
-			//this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
-			//this.model.set("createdBy","jonas");
-			//this.model.set("name","webb-"+Date.now());
+			this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
+			this.model.set("createdBy","jonas");
+			this.model.set("name","webb-"+Date.now());
 			this.model.save(null,{success:function() {
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
 		},
-		changeUploadable: function() {
+		onChangeUploadable: function() {
 			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
+		},
+		dragEnterHandler: function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+		},
+		dragOverHandler: function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+		},
+		dropHandler: function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			var fileObjs = e.originalEvent.dataTransfer.files;
+			this.model.files.addFilesByFileObject(fileObjs);
 		}
 
 	});

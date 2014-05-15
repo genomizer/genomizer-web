@@ -61,8 +61,29 @@ define([
 							"genomeRelease": "hg38",
 							"author": "Kalle"							
 							}
+
 				var rawToProfileInfo = new RawToProfileInfo(data);
-				rawToProfileInfo.save({}, {"type":"put"});
+				var that = this;
+				rawToProfileInfo.save({}, {"type":"put", 
+					success: function () {
+						console.log("successfully sent process request");
+						that.hide();
+					},
+					error: function() {
+						console.log("failed to send process request");
+					}
+					});
+				/*
+				this.model.save(null, {
+				    success: function (model, response) {
+				        console.log("success");
+				    },
+				    error: function (model, response) {
+				        console.log("error");
+				    }
+				});*/
+
+
 
 			}
 		},
