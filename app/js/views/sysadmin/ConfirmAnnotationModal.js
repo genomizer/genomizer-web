@@ -6,26 +6,30 @@ define([
 		TEMPLATE_VARS: {
 			modalTitle: "Confirm New Annotation"
 		},
-		initialize: function(values, postNewAnnotation) {
+		initialize: function(values, newAnnotationView) {
 			this._super();
-			this.post = postNewAnnotation;
+			this.newAnnotationView = newAnnotationView;
 			this.template = _.template(caTemplate, {values : values});
-			this.annotation = annotation;
 		},
 		events: {
-			"click #confirmAnnotation-btn" : "posta"
+			"click #confirmAnnotation-btn" : "post",
+			"click #cancelAnnotation-btn" : "cancel"
 		},
 		render: function() {
 			this.$el.html(this.template);	
 		},
 		
-		removeModal: function() {
-			console.log('closed');
+		post : function() {
+			this.newAnnotationView.postNewAnnotation();
+			this.hide();
 		},
 		
-		posta : function() {
-			this.post.clearForm();
-			this.removeModal();
+		cancel : function() {
+			this.hide();
+		},
+		
+		removeModal: function() {
+			
 		}
 		
 	});

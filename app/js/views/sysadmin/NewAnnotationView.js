@@ -25,21 +25,21 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			}
 
 			var output = [];
-			annotation = new Annotation();
-			annotation.set({
+			this.annotation = new Annotation();
+			this.annotation.set({
 				"name" : $('#annotation_name').val()
 			});
 			output.push($('#annotation_name').val()); 
 
 			switch($('#annotation_forced').val()) {
 				case "one":
-					annotation.set({
+					this.annotation.set({
 						"forced" : "true"
 					});
 					output.push('Yes');
 					break;
 				case "two":
-					annotation.set({
+					this.annotation.set({
 						"forced" : "false"
 					});
 					output.push('No');
@@ -48,7 +48,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 
 			switch($('#annotation_type').val()) {
 				case "one":
-					annotation.set({
+					this.annotation.set({
 						"type" : ["yes", "no"],
 						"default" : "yes"
 					});
@@ -57,7 +57,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 				case "two":
 					var temp = $('#itemlist_input').val();
 					temp = temp.split(",");
-					annotation.set({
+					this.annotation.set({
 						"type" : temp,
 						"default" : temp[0]
 					});
@@ -65,7 +65,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 					output.push(temp);
 					break;
 				default:
-					annotation.set({
+					this.annotation.set({
 						"type" : ["freetext"],
 						"default" : ""
 					});
@@ -74,10 +74,8 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			}
 			var caModal = new ConfirmAnnotationModal(output, this);
 			caModal.show();
-			//this.postNewAnnotation(annotation);
-			//alert("Submitted annotation");
 		},
-
+		
 		checkAnnotationType : function(e) {
 			switch(e.currentTarget.value) {
 				case "two":
@@ -89,13 +87,11 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			}
 		},
 
-		postNewAnnotation : function(annotation) {
-			console.log("tesgesgvesvs");
-			// var payload = annotation.toJSON();
-			// delete payload.id;
-			// delete payload.values;
-// 
-			// var result = Gateway.postAnnotation(payload);
+		postNewAnnotation : function() {
+			var payload = this.annotation.toJSON();
+			delete payload.id;
+			delete payload.values;
+			var result = Gateway.postAnnotation(payload);
 
 			this.clearForm();
 		},

@@ -8,7 +8,7 @@ define([], function() {
 			return this.url;
 		},
 
-		sendPacket : function(type, urlExtension, payload, successMsg) {
+		sendPacket : function(type, urlExtension, payload) {
 			var result = false;
 			$.ajax({
 				type : type,
@@ -20,8 +20,9 @@ define([], function() {
 				data : JSON.stringify(payload),
 				complete : function(xhr) {
 					if (xhr.status == 200 || xhr.status == 201) {
-						alert(successMsg);
 						result = true;
+					} else {
+						result = false;
 					} 
 				},
 			});
@@ -29,13 +30,11 @@ define([], function() {
 		},
 
 		postAnnotation : function(payload) {
-			var successMsg = "Successfully created the annotation";
-			return this.sendPacket("POST", "annotation", payload, successMsg);
+			return this.sendPacket("POST", "annotation", payload);
 		},
 
 		deleteAnnotation : function(payload, name) {
-			var successMsg = "Successfully deleted the annotation";
-			return this.sendPacket("DELETE", "annotation/" + name, payload, successMsg);
+			return this.sendPacket("DELETE", "annotation/" + name, payload);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, id) {
