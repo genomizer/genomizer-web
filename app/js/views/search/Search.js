@@ -80,23 +80,25 @@ define([
 			//Downloads all the selected files.
 			var that = this;
 			var URLsToDownload = this.collection.getSelectedFileURLs();
+			// this is horrible but as we see it the only way to download multiple files
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				setTimeout(function() {
+				console.log(URLsToDownload[i]);
 					that.downloadURL(URLsToDownload[i]);
-				}, 0);
 			};
-
 		},
 		downloadURL: function(url) {
-			var hiddenIFrameID = 'hiddenDownloader',
-				iframe = document.getElementById(hiddenIFrameID);
-				if (iframe === null) {
-					iframe = document.createElement('iframe');
-					iframe.id = hiddenIFrameID;
-					iframe.style.display = 'none';
-					document.body.appendChild(iframe);
-				}
-			iframe.src = url;
+			
+			var iframe = $(document.createElement('iframe'));
+			//iframe.id = hiddenIFrameID;
+			iframe.css('display', 'none');
+			$(document.body).append(iframe);
+			console.log('downloading url: ',url);
+			iframe.attr('src', url);
+			iframe.ready(function() {
+				setTimeout(function() {
+					iframe.remove();
+				}, 10000); // arbitrary amount of milliseconds :DDDD
+			})
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
