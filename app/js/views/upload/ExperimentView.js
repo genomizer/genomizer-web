@@ -22,7 +22,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
-			'keyup input[name="Experiment name"]':"changeLabelName",
+			'keyup input[name="Experiment name"]':"changeLabelName"
 		},
 		render: function() {
 			window.this = this;
