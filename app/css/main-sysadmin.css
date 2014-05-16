@@ -5,8 +5,12 @@
     width: 90%;
 }
 
+.search-toolbar {
+	width: 100%;
+}
+
 #search_field {
-	width: 400px;
+	/*width: 400px;*/
 }
 
 #confirmAnnotation-btn {
