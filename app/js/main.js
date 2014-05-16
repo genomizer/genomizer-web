@@ -7,10 +7,12 @@ require.config({
 // this is a release
 var app = {};
 
-app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/"
+app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/";
 //app.BASE_URL = "http://Hagrid.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
 	app.BASE_URL = "http://harry.cs.umu.se:7000/";
+} else if (window.location.host == "127.0.0.1:8080" || window.location.pathname.indexOf("c11jpn") != -1) {
+	//app.BASE_URL = "http://scratchy.cs.umu.se:7331/";
 }
 console.log("main:", app.BASE_URL);
 
