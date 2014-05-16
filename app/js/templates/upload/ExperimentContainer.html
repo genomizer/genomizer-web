@@ -5,20 +5,24 @@
 		</div>	
 		<button type="button" id="removeExperiment" class="btn btn-default pull-right">
 				<span class="glyphicon glyphicon-remove"></span>
-			</button>
+		</button>
+
 		<div id="collapseOne" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<form id="experiment-form">
-				<div class="newAnnotation"></div>
-				<hr>
+					<div class="newAnnotation"></div>
+					<hr/>
 					<div class="fileUploadList"></div>
-				<hr>
-				<button id="cloneButton" type="button" class="btn btn-default">
-				Clone Experiment
+					<hr/>
+					<button id="cloneButton" type="button" class="btn btn-default">
+						Clone Experiment
 					</button>
-				<button type="submit" disabled class="btn btn-primary pull-right" id="uploadFilesButton">
-				Upload files to experiment
-				</button>
+					<div class="btn-group pull-right">
+						<button type="submit" disabled class="btn btn-primary" id="uploadFilesButton">
+							<span class="glyphicon glyphicon-upload"></span>
+							Upload files to experiment
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
