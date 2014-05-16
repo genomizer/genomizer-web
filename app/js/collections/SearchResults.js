@@ -37,6 +37,23 @@ define(['models/Experiment'],function(Experiment) {
 		getSelectedFiles: function() {
 			return this.selectedFiles;
 		},
+		getSpeciesForExperiment: function(expID) {
+
+			var attribs;
+
+			_.each(this.models, function(c){
+				if(c.get("name") == expID) {
+					attribs = c.get("annotations");
+
+					for(var i = 0; i < attribs.length; i++) {
+						if(attribs[i].name == "Species") {
+							return attribs[i].value;
+						}
+					}
+				}
+			}, this);
+
+		},
 		fetchModels: function(query) {
 			this.fetching = true;
 			this.trigger('change');
@@ -46,6 +63,8 @@ define(['models/Experiment'],function(Experiment) {
 			this.fetch().success(function(res) {
 				that.fetching = false;
 				that.trigger('change');
+				//that.getSpeciesForExperiment("WebNeedsRaw");
+
 			}).error(function(xhr, status, error) {
 				that.reset([]);
 				that.fetching = false;
