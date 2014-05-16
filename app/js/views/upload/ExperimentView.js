@@ -42,8 +42,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
  			this.$el.find('.panel-heading').text(this.model.get("name"));
 		},
 		removeExperiment: function() {
-			this.el.remove();
-			this.model.collection.remove(this.model);
+			this.trigger('removeEvent',this);
 		},
 		cloneExperiment: function() {
 			this.trigger('cloneEvent',this.model);

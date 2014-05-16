@@ -40,19 +40,19 @@ define(['models/Experiment'],function(Experiment) {
 		getSpeciesForExperiment: function(expID) {
 
 			var attribs;
-
+			var retVal;
 			_.each(this.models, function(c){
 				if(c.get("name") == expID) {
 					attribs = c.get("annotations");
-
 					for(var i = 0; i < attribs.length; i++) {
 						if(attribs[i].name == "Species") {
-							return attribs[i].value;
+							retVal = attribs[i].value;
+							return;
 						}
 					}
 				}
 			}, this);
-
+			return retVal;
 		},
 		fetchModels: function(query) {
 			this.fetching = true;
@@ -63,7 +63,6 @@ define(['models/Experiment'],function(Experiment) {
 			this.fetch().success(function(res) {
 				that.fetching = false;
 				that.trigger('change');
-				//that.getSpeciesForExperiment("WebNeedsRaw");
 
 			}).error(function(xhr, status, error) {
 				that.reset([]);

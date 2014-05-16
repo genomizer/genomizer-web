@@ -78,7 +78,8 @@
 }
 
 #removeExperiment {
-	margin-top: -7px;
+	margin-top: -37px;
+	margin-right: 10px;
 }
 .collapsed-experiment #removeExperiment{
 	display: none;

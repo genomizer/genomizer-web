@@ -17,6 +17,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.enableOnUnloadWarning();
 			this.render();
 			this.enableAddButton(); // not needed when automatic test value is removed
+			this.showUploadAllButton();
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -27,7 +28,8 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
 			"click #add_button": "addToExistingExperiment",
-			"submit #experiment-form": "saveExperiment"
+			"submit #experiment-form": "saveExperiment",
+			"click #uploadAllButton": "uploadAll"
 		},
 		createExperiment: function(clonedAnnotations) {
 			var experiment = new Experiment();
@@ -37,6 +39,13 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			var experiment = clonedAnnotations.clone();
 			this.appendNewExperimentView(experiment);
 			this.experimentViews[this.experimentViews.length -1].changeLabelName();
+		},
+		removeExperiment: function(experimentView) {
+			var index = this.experimentViews.indexOf(experimentView);
+			experimentView.el.remove();
+			experimentView.model.collection.remove(this.model);
+			this.experimentViews.splice(index,1);
+			this.showUploadAllButton();
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
@@ -53,11 +62,25 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			var experimentView = new ExperimentView({model: experiment});
 			
 			this.listenTo(experimentView,'cloneEvent',this.cloneExperiment);
+			this.listenTo(experimentView,'removeEvent',this.removeExperiment);
 			
 			this.$el.find(".experiment-container").append(experimentView.el);
 			this.experimentViews.push(experimentView);
 			this.experiments.add(experiment);
 			experimentView.render();
+			this.showUploadAllButton();
+		},
+		uploadAll: function() {
+			_.each(this.experimentViews, function(expView) {
+				expView.saveExperiment(new Event("uselessEvent"));
+			});
+		},
+		showUploadAllButton: function() {
+			if(this.experimentViews.length >= 2) {
+				$('#uploadAllButton').prop('disabled', false);
+			} else {
+				$('#uploadAllButton').prop('disabled', true);
+			}
 		},
 		enableAddButton: function() {
 			if($('#existing_experiment_field').val().length != 0) {

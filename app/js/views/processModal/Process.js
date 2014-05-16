@@ -1,12 +1,15 @@
 define([
 	'text!templates/processModal/Process.html',
 	'text!templates/processModal/ProcessAlert.html',
+	'text!templates/processModal/ProcessGenomeTemplate.html',
 	'views/ModalAC',
-	'models/RawToProfileInfo'
-],function(processTemplate, processAlertTemplate,ModalAC, RawToProfileInfo) {
+	'models/RawToProfileInfo',
+	'collections/GenomeReferences'
+],function(processTemplate, processAlertTemplate, genomeTemplate, ModalAC, RawToProfileInfo, GenomeReferences) {
 	var Modal = ModalAC.extend({
 		TEMPLATE: _.template(processTemplate),
 		TEMPLATEALERT: _.template(processAlertTemplate),
+		TEMPLATEGENOMEOPS: _.template(genomeTemplate),
 		TEMPLATE_VARS: {
 			modalTitle: "Process raw file"
 		},
@@ -16,10 +19,39 @@ define([
 			this.expID = [];
 			this.fileName = [];
 			// MIGHT NOT WORK WITH EMPTY EXPID!!!!
-			for(var i = 0; i<queryArray.length; i++) {
+			this.genomeVersion = queryArray[0];
+
+
+			for(var i = 1; i<queryArray.length; i++) {
 				this.expID.push(queryArray[i]);
 				this.fileName.push(queryArray[++i]);
 			}
+
+			this.collection = new GenomeReferences({"species":this.genomeVersion});
+			this.genomeReferences = this.collection.models;
+
+			var that = this;
+
+			this.genomeRefs = [];
+
+			this.collection.fetch({
+				success: function() {
+
+					that.collection.each(function(genomeRef){
+						that.genomeRefs.push(genomeRef.get("genomeVersion"));
+					});
+					that.$el.find('#genome-reference').html(that.TEMPLATEGENOMEOPS({genomes:that.genomeRefs}));
+				},
+				error: function() {
+
+				}
+			});
+
+
+
+//			console.log(this.collection.species);
+//			this.collection.fetch();
+//			console.log("here");
 			/*this.expID = options.query.split(',')[0];
 			this.fileName = options.query.split(',')[1];*/
 			//this.fileID = options.query.split(',')[2];
@@ -30,7 +62,9 @@ define([
 			'click [name=process-radios]' : 'radioClicked'
 		},
 		render: function() {
+
 			this.$el.html(this.TEMPLATE());
+			this.$el.find('#genome-reference').html(this.TEMPLATEGENOMEOPS({genomes:this.genomeRefs}));
 			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
 				'fileName': this.fileName[0],
 				'expID': this.expID[0]
@@ -41,6 +75,8 @@ define([
 					'expID': this.expID[i]
 				}));
 			}
+
+
 		},
 		radioClicked: function(e) {
 			switch(e.target.id) {
@@ -108,6 +144,7 @@ define([
 				+ ($('#ratio-print-mean').prop('checked') ? " 1": " 0") 
 				+ ($('#ratio-print-zeros').prop('checked') ? " 1": " 0"))
 				: "");
+			var genomeVer = ($('#genome-reference').val());
 
 			var parameters = [	
 				bowtieFlags,
@@ -124,10 +161,9 @@ define([
 					//"filename": this.fileName,
 					//"fileId": this.fileID,
 					"expid": this.expID[i],
-					"processtype": "rawtoprofile",
 					"parameters": parameters,
 					"metadata": (parameters.join(", ")+", "+genomeReference),
-					"genomeRelease": "hg38", //TODO FIX tempvalue
+					"genomeVersion": genomeVer, //TODO FIX tempvalue
 					"author": "Kalle" //TODO FIX tempvalue
 				};
 	 
@@ -159,3 +195,4 @@ define([
 	});
 	return Modal;
 });
+
