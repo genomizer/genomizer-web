@@ -33,7 +33,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 				renamePayload.set({"name" : originalName, "newName" : newName});
 				Gateway.renameAnnotation(renamePayload);
 			}
-
+			history.back();
         },
 
         deleteAnnotation : function() {

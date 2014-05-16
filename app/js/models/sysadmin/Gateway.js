@@ -48,7 +48,12 @@ define([], function() {
 		},
 		
 		addAnnotationValues : function(payload, name) {
-			
+			var that = this;
+			var model = new Backbone.Model();
+			payload.forEach(function(value) {
+				model.set({"name" : name, "value" : value});
+				that.sendPacket("POST", "annotation/value", model);
+			});
 		},
 		
 		renameAnnotation : function(payload) {
