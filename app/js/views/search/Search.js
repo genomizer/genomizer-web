@@ -78,9 +78,12 @@ define([
 		},
 		downloadSelected: function() {
 			//Downloads all the selected files.
+			var that = this;
 			var URLsToDownload = this.collection.getSelectedFileURLs();
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				this.downloadURL(URLsToDownload[i]);
+				setTimeout(function() {
+					that.downloadURL(URLsToDownload[i]);
+				}, 0);
 			};
 
 		},
@@ -98,6 +101,7 @@ define([
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
 			//console.log(files.length);
+			var specie = this.collection.getSpeciesForExperiment(files[i].get("expId"));
 			var processFiles = "";
 			for(var i = 0; i<files.length;i++) {
 				if(processFiles != "") {
@@ -106,7 +110,7 @@ define([
 				processFiles += files[i].get("expId") + "," + files[i].get("filename");
 			}
 			//console.log('processfiles: ',processFiles);
-			app.router.navigate("process/"+processFiles, {trigger:true});
+			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
 //			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename")/* + "," + files[0].get("id")*/, {trigger:true});
 		},
 		openBuilder: function() {
