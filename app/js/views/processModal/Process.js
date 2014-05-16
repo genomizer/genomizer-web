@@ -50,20 +50,33 @@ define([
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #smooth-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+					$('#ratio-col, #smooth-col, #steps-col').addClass('disabled');
+
 					break;
 				case "smooth-radio":
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+					$('#ratio-col, #steps-col').addClass('disabled');
+
 					break;
 				case "steps-radio":
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #ratio-col select').prop('disabled', true);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+					$('#ratio-col').addClass('disabled');
+
 					break;
 				case "ratio-radio":
 
 					$('#raw-process-container input, #raw-process-container select').prop('disabled', false);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+
 					break;
 				default:
 					console.log('undefined')
