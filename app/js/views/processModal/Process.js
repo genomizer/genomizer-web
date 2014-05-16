@@ -98,14 +98,14 @@ define([
 
 			var parameters = [	
 				bowtieFlags,
-				genomeReference,
+				"",//genomeReference,
 				gffFormat,
 				sgrFormat,
 				smoothParams,
 				steps,
 				ratioCalculation,
 				ratioSmoothing];
-
+				
 			for(var i = 0; i<this.expID.length;i++) {
 				var data = {
 					//"filename": this.fileName,
@@ -113,7 +113,7 @@ define([
 					"expid": this.expID[i],
 					"processtype": "rawtoprofile",
 					"parameters": parameters,
-					"metadata": parameters.join(", "),
+					"metadata": (parameters.join(", ")+", "+genomeReference),
 					"genomeRelease": "hg38", //TODO FIX tempvalue
 					"author": "Kalle" //TODO FIX tempvalue
 				};

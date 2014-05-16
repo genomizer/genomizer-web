@@ -50,6 +50,7 @@ define([
 				$('#download_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
 				for(var i = 0;i<fileArray.length;i++) {
+					console.log('fileArray: ', fileArray[i]);
 					if(fileArray[i].get("type").toLowerCase() != "raw") {
 						$('#process_button').prop('disabled', true);
 						break;
