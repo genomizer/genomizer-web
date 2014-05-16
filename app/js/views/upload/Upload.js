@@ -36,6 +36,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		cloneExperiment: function(clonedAnnotations) {
 			var experiment = clonedAnnotations.clone();
 			this.appendNewExperimentView(experiment);
+			this.experimentViews[this.experimentViews.length -1].changeLabelName();
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();

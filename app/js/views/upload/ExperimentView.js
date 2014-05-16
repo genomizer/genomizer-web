@@ -21,7 +21,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragover":"dragOverHandler",
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
-			"drop":"dropHandler"
+			"drop":"dropHandler",
+			'keyup input[name="Experiment name"]':"changeLabelName"
 		},
 		render: function() {
 			window.this = this;
@@ -36,6 +37,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+		},
+		changeLabelName: function() {
+ 			this.$el.find('.panel-heading').text(this.model.get("name"));
 		},
 		removeExperiment: function() {
 			this.el.remove();

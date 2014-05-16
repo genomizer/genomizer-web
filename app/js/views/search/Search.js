@@ -20,7 +20,6 @@ define([
 				collection: this.collection,
 				annotations: app.annotationTypes.withoutExpID()
 			});
-
 			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
 		},
@@ -45,17 +44,20 @@ define([
 			"click #builder_button": "openBuilder"
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
-			//handles whether or not the download button should be clickable.
-			if(fileArray.length != 0) {
+			console.log()
+			//handles whether or not the download or process buttons should be clickable.
+			if(fileArray.length > 0) {
 				$('#download_button').prop('disabled', false);
+				$('#process_button').prop('disabled', false);
+				var startSpecies = this.collection.getSpeciesForExperiment(fileArray[0].get("expId"));
+				for(var i = 0;i<fileArray.length;i++) {
+					if(fileArray[i].get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(fileArray[i].get("expId"))==startSpecies)) {
+						$('#process_button').prop('disabled', true);
+						break;
+					}
+				}
 			} else {
 				$('#download_button').prop('disabled', true);
-			}
-
-			//handles whether or not the process button should be clickable.
-			if(fileArray.length == 1 && fileArray[0].get("type").toLowerCase() == "raw") {
-				$('#process_button').prop('disabled', false);
-			} else {
 				$('#process_button').prop('disabled', true);
 			}
 		},
@@ -76,9 +78,12 @@ define([
 		},
 		downloadSelected: function() {
 			//Downloads all the selected files.
+			var that = this;
 			var URLsToDownload = this.collection.getSelectedFileURLs();
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				this.downloadURL(URLsToDownload[i]);
+				setTimeout(function() {
+					that.downloadURL(URLsToDownload[i]);
+				}, 0);
 			};
 
 		},
@@ -95,8 +100,18 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-<<<<<<< HEAD
-			app.router.navigate("process/" + files[0].get("filename") + "," + files[0].get("id") + "," + files[0].get("expId"), {trigger:true});
+			//console.log(files.length);
+			var specie = this.collection.getSpeciesForExperiment(files[i].get("expId"));
+			var processFiles = "";
+			for(var i = 0; i<files.length;i++) {
+				if(processFiles != "") {
+					processFiles += ",";
+				}
+				processFiles += files[i].get("expId") + "," + files[i].get("filename");
+			}
+			//console.log('processfiles: ',processFiles);
+			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
+//			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename")/* + "," + files[0].get("id")*/, {trigger:true});
 		},
 		openBuilder: function() {
 			console.log("Search > openBuilder")
@@ -113,12 +128,7 @@ define([
 
 			input.val(string);
 			input.trigger("input");
- 		}
-=======
-			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename") + "," + files[0].get("id"), {trigger:true});
-		}
->>>>>>> c8450621b21b774135a297b74838fe3928b388f3
-		
+ 		}		
 	});
 	return Search;
 });

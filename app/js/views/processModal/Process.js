@@ -12,8 +12,16 @@ define([
 		},
 		initialize: function(options) {
 			this._super();
-			this.expID = options.query.split(',')[0];
-			this.fileName = options.query.split(',')[1];
+			var queryArray = options.query.split(',');
+			this.expID = [];
+			this.fileName = [];
+			// MIGHT NOT WORK WITH EMPTY EXPID!!!!
+			for(var i = 0; i<queryArray.length; i++) {
+				this.expID.push(queryArray[i]);
+				this.fileName.push(queryArray[++i]);
+			}
+			/*this.expID = options.query.split(',')[0];
+			this.fileName = options.query.split(',')[1];*/
 			//this.fileID = options.query.split(',')[2];
 		},
 		events: {
@@ -24,20 +32,15 @@ define([
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
-				'fileName': this.fileName,
-				'expID': this.expID
+				'fileName': this.fileName[0],
+				'expID': this.expID[0]
 			}));
-			//To add more files use append instead of html like below.
-			/*this.$el.find('#alert-container').append(this.TEMPLATEALERT({
-				'fileName': this.fileName,
-				'expID': this.expID
-			}));*/
-
-
-			/*this.$el.find('#alert-file-name').text(this.fileName);
-			this.$el.find('#alert-exp-name').text(this.expID);
-			console.log(this.fileName, ' file: ', $('#alert-file-name').text());
-			console.log(this.expID, ' exp: ', $('#alert-exp-name').text());*/
+			for(var i = 1; i<this.expID.length;i++) {
+				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
+					'fileName': this.fileName[i],
+					'expID': this.expID[i]
+				}));
+			}
 		},
 		radioClicked: function(e) {
 			switch(e.target.id) {
@@ -95,37 +98,41 @@ define([
 
 			var parameters = [	
 				bowtieFlags,
-				genomeReference,
+				"",//genomeReference,
 				gffFormat,
 				sgrFormat,
 				smoothParams,
 				steps,
 				ratioCalculation,
 				ratioSmoothing];
-
-			var data = {
-				//"filename": this.fileName,
-				//"fileId": this.fileID,
-				"expid": this.expID,
-				"processtype": "rawtoprofile",
-				"parameters": parameters,
-				"metadata": parameters.join(", "),
-				"genomeRelease": "hg38", //TODO FIX tempvalue
-				"author": "Kalle" //TODO FIX tempvalue
-			};
- 
- 			var rawToProfileInfo = new RawToProfileInfo(data);
- 			var that = this;
- 			rawToProfileInfo.save({}, {"type":"put", 
-				success: function () {
-					console.log("successfully sent process request");
-					that.hide();
-					app.messenger.success("WOOHOOO!! The processing has begun!");
-				},
-				error: function() {
-					console.log("failed to send process request");
-				}
-			});
+				
+			for(var i = 0; i<this.expID.length;i++) {
+				var data = {
+					//"filename": this.fileName,
+					//"fileId": this.fileID,
+					"expid": this.expID[i],
+					"processtype": "rawtoprofile",
+					"parameters": parameters,
+					"metadata": (parameters.join(", ")+", "+genomeReference),
+					"genomeRelease": "hg38", //TODO FIX tempvalue
+					"author": "Kalle" //TODO FIX tempvalue
+				};
+	 
+	 			var rawToProfileInfo = new RawToProfileInfo(data);
+	 			var that = this;
+	 			var file = this.fileName[i];
+	 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
+	 			rawToProfileInfo.save({}, {"type":"put", 
+					success: function () {
+						console.log("successfully sent process request");
+						that.hide();
+						app.messenger.success("WOOHOOO!! The processing of "+ file +" has begun!");
+					},
+					error: function() {
+						console.log("failed to send process request");
+					}
+				});	
+			}
 		},
 		toggleStepsInput: function() {
 			if ($('#step-box').prop('checked')) {

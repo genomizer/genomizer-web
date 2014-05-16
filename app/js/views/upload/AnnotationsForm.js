@@ -18,14 +18,9 @@ function(UploadTemplate) {
 			this.updateModel();
 		},
 		events: {
-			"change input":"updateModel",
-			'keyup input[name="Experiment name"]':"changeLabelName",
+			"keyup input":"updateModel",
 			"change select":"updateModel"
 		},
-		changeLabelName: function() {
-			console.log("Haoeuouea");
-		},
-
 		updateModel:function() {
 			var input = {};
 			this.$el.find("input, select").each(function() {

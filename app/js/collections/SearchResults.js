@@ -24,17 +24,35 @@ define(['models/Experiment'],function(Experiment) {
 			}
 		},
 		selectFile: function(file) {
-			//Only one file may be selected at a time.
-			this.selectedFiles = [file];
+			this.selectedFiles.push(file);
 			this.trigger('highlightChange', this.selectedFiles);
 		},
 		deselectFile: function(file) {
-			//Must take argument of which ID to remove when multiple files can be selected.
-			this.selectedFiles = [];
-			this.trigger('highlightChange', this.selectedFiles);
+			var index = this.selectedFiles.indexOf(file);
+			if(index != -1) {
+				this.selectedFiles.splice(index, 1);
+				this.trigger('highlightChange', this.selectedFiles);
+			}
 		},
 		getSelectedFiles: function() {
 			return this.selectedFiles;
+		},
+		getSpeciesForExperiment: function(expID) {
+
+			var attribs;
+			var retVal;
+			_.each(this.models, function(c){
+				if(c.get("name") == expID) {
+					attribs = c.get("annotations");
+					for(var i = 0; i < attribs.length; i++) {
+						if(attribs[i].name == "Species") {
+							retVal = attribs[i].value;
+							return;
+						}
+					}
+				}
+			}, this);
+			return retVal;
 		},
 		fetchModels: function(query) {
 			this.fetching = true;
@@ -45,6 +63,7 @@ define(['models/Experiment'],function(Experiment) {
 			this.fetch().success(function(res) {
 				that.fetching = false;
 				that.trigger('change');
+
 			}).error(function(xhr, status, error) {
 				that.reset([]);
 				that.fetching = false;
