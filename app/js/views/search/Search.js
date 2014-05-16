@@ -20,7 +20,6 @@ define([
 				collection: this.collection,
 				annotations: app.annotationTypes.withoutExpID()
 			});
-
 			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
 		},
@@ -45,13 +44,14 @@ define([
 			"click #builder_button": "openBuilder"
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
+			console.log()
 			//handles whether or not the download or process buttons should be clickable.
 			if(fileArray.length > 0) {
 				$('#download_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
+				var startSpecies = this.collection.getSpeciesForExperiment(fileArray[0].get("expId"));
 				for(var i = 0;i<fileArray.length;i++) {
-					console.log('fileArray: ', fileArray[i]);
-					if(fileArray[i].get("type").toLowerCase() != "raw") {
+					if(fileArray[i].get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(fileArray[i].get("expId"))==startSpecies)) {
 						$('#process_button').prop('disabled', true);
 						break;
 					}
