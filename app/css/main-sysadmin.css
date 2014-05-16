@@ -26,3 +26,22 @@
     background-color: #FFFFFF;
 }
 
+#genome_table a {
+display:block;
+width:100%
+margin:1ex;
+padding:0.5ex;
+text-align:center;
+}
+
+#genome_table a {
+text-decoration:none;
+background-color:#;
+color:#000;
+}
+
+#genome_table a:hover, a:active {
+text-decoration:none;
+background-color:#d3d3d3;
+color:#000;
+}
