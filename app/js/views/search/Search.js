@@ -101,7 +101,7 @@ define([
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
 			//console.log(files.length);
-			var specie = this.collection.getSpeciesForExperiment(files[i].get("expId"));
+			var specie = this.collection.getSpeciesForExperiment(files[0].get("expId"));
 			var processFiles = "";
 			for(var i = 0; i<files.length;i++) {
 				if(processFiles != "") {
