@@ -154,20 +154,44 @@ define([
 					"author": "Kalle" //TODO FIX tempvalue
 				};
 	 
-	 			var rawToProfileInfo = new RawToProfileInfo(data);
+	 			//Did this into a function to save which file/experiment is run in this loop.
+				var f = (function (data, that, experiment) {
+					return function() {
+			 			var rawToProfileInfo = new RawToProfileInfo(data);
+			 			console.log('1 file: ',experiment);
+			 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
+			 			rawToProfileInfo.save({}, {"type":"put", 
+							success: function () {
+								console.log("successfully sent process request");
+								that.hide();
+								console.log('2 file: ',experiment);
+								app.messenger.success("WOOHOOO!! The processing of raw data from the experiment "+ experiment +" has begun!");
+							},
+							error: function() {
+								console.log("failed to send process request of raw data from experiment "+expriment);
+							}
+						});
+					};
+				})(data, this, this.expID[i]);
+				console.log('callling f');
+				f.call();
+
+	 			/*var rawToProfileInfo = new RawToProfileInfo(data);
 	 			var that = this;
 	 			var file = this.fileName[i];
+	 			console.log('1 file: ',file);
 	 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
 	 			rawToProfileInfo.save({}, {"type":"put", 
 					success: function () {
 						console.log("successfully sent process request");
 						that.hide();
+						console.log('2 file: ',file);
 						app.messenger.success("WOOHOOO!! The processing of "+ file +" has begun!");
 					},
 					error: function() {
 						console.log("failed to send process request");
 					}
-				});	
+				});*/	
 			}
 		},
 		toggleStepsInput: function() {
