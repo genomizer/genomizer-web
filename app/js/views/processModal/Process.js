@@ -67,6 +67,18 @@ define([
 
 			this.$el.html(this.TEMPLATE());
 			this.$el.find('#genome-reference').html(this.TEMPLATEGENOMEOPS({genomes:this.genomeRefs}));
+			this.renderNotices();
+			/*this.$el.find('#alert-container').html(this.TEMPLATEALERT({
+				'expID': this.expID[0]
+			}));
+
+			for(var i = 1; i<this.expID.length;i++) {
+				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
+					'expID': this.expID[i]
+				}));
+			}*/
+		},
+		renderNotices: function() {
 			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
 				'expID': this.expID[0]
 			}));
@@ -225,6 +237,7 @@ define([
 						this.expID.splice(index, 1);
 					}
 				}
+				this.renderNotices();
 			}
 		},
 		toggleStepsInput: function() {
