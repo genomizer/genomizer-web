@@ -30,6 +30,7 @@ define([],function() {
 					debugger;
 					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 				}
+*/
 				xhr: function()
 				{
 					//Upload progress
@@ -37,7 +38,6 @@ define([],function() {
 					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 					return xhr;
 				} 
-*/
 			}).done(_.bind(this.setUploadDone,this));
 		},
 		setUploadProgress:function(evt) {
