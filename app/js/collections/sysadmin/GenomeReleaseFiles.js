@@ -23,5 +23,3 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 	return GenomeReleaseFiles;
 });
 
-
-
