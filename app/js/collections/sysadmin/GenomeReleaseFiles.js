@@ -2,9 +2,22 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 	var GenomeReleaseFiles = Backbone.Collection.extend({
 		model : GenomeReleaseFile,
 		url : Gateway.getURL() + "/genomeRelease",
-		
-//"http://genomizer.apiary-mock.com/"
 
+		comparator : function(model) {
+			if (this._order_by == 'genomeVersion')
+				return model.get('genomeVersion');
+			else if (this._order_by == 'fileName')
+				return model.get('fileName');
+			else
+				return model.get('specie');
+		}, 
+		
+		orderBy: function(sortString) {
+			this._order_by = sortString;
+			this.sort();
+		}, 
+		
+		_order_by: 'specie'
 
 	});
 	return GenomeReleaseFiles;
