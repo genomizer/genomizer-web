@@ -59,14 +59,23 @@
 	margin-top: 40px;
 }
 
-#selector {
+.fileUploadList .type-select {
 	width: 100px;
-	float: right;
+	position: absolute;
+	right: 40px;
+	border: none;
+	background: none;
+	outline: none;
+	box-shadow: none;
 }
 
-#removeFile {
-	float: right;
+.fileUploadList .btn-remove {
+	position: absolute;
+	right: 0;
 	width: 40px;
+	border: none;
+	background: none;
+	outline: none;
 }
 
 #remove_experiment {
@@ -84,3 +93,9 @@
 .collapsed-experiment #removeExperiment{
 	display: none;
 }
+
+.fileUploadList .input-group {
+	width: 100%;
+	padding-right: 140px;
+}
+

@@ -19,13 +19,10 @@ define(['models/File'],function(File) {
 			});
 		},
 		hasUnfinishedUploads: function() {
-			var nrOfFinnishedFiles = 0;
-			this.each(function(file) {
-				if(file.uploadDone) {
-					nrOfFinnishedFiles++;
-				}
+			var aNotDoneUpload = this.find(function(f) {
+				return !f.uploadDone;
 			});
-			return nrOfFinnishedFiles != this.length
+			return aNotDoneUpload !== undefined
 		},
 		/*
 		 * Adds File Models to the collection by using a fileObject list (as in
@@ -42,6 +39,34 @@ define(['models/File'],function(File) {
 				that.add(file);
 			});
 
+		},
+		/*
+		 * returns the total size of the files to be uploaded
+		 */
+		getTotalUploadFileSize: function() {
+			var size = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					size += f.getFileSize();
+				}
+			});
+			return size;
+			
+		},
+		/*
+		 * Get the total upload progress as a value between 0 and 1
+		 */
+		getTotalUploadProgress: function() {
+			if(this.getTotalUploadFileSize() == 0) {
+				return 1;
+			}
+			var uploadedSize = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					uploadedSize += f.getFileSize() * f.progress;
+				}
+			});
+			return uploadedSize / this.getTotalUploadFileSize();
 		}
 	});
 	return Files;

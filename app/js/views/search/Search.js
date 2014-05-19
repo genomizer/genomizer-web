@@ -102,18 +102,15 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-			//console.log(files.length);
 			var specie = this.collection.getSpeciesForExperiment(files[0].get("expId"));
 			var processFiles = "";
 			for(var i = 0; i<files.length;i++) {
 				if(processFiles != "") {
 					processFiles += ",";
 				}
-				processFiles += files[i].get("expId") + "," + files[i].get("filename");
+				processFiles += files[i].get("expId");
 			}
-			//console.log('processfiles: ',processFiles);
 			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
-//			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename")/* + "," + files[0].get("id")*/, {trigger:true});
 		},
 		openBuilder: function() {
 			console.log("Search > openBuilder")

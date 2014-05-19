@@ -23,7 +23,6 @@ define([
 			this.render();
 		},
 		render: function() {
-			this.$el.empty();
 			this.$el.append(this.template({"annotations": app.annotationTypes}));			
 			if(this.isAppending) {
 				this.$el.addClass("appending");

@@ -10,7 +10,8 @@ define([],function() {
             "process/:query":"process",
             "admin":"admin",
             "admin/createannotation": "createAnnotation",
-            "admin/editannotation/:name": "editAnnotation"
+            "admin/editannotation/:name": "editAnnotation",
+            "admin/genomereleases" : "genomeReleases"
         },
 
         initialize: function(options) {
@@ -92,8 +93,10 @@ define([],function() {
         createAnnotation: function() {
             var that = this;
             require([
+            	'views/sysadmin/SysadminMainView',
                 'views/sysadmin/NewAnnotationView'
-            ],function(NewAnnotationView) {
+            ],function(SysadminMainView, NewAnnotationView) {
+            	new SysadminMainView({el:that.getNewMainView()});
                 new NewAnnotationView({el:that.getNewAdminView()});
             });
         },
@@ -101,11 +104,24 @@ define([],function() {
         editAnnotation: function(name) {
             var that = this;
             require([
+            	'views/sysadmin/SysadminMainView',
                 'views/sysadmin/EditAnnotationView'
-            ],function(EditAnnotationView) {
+            ],function(SysadminMainView, EditAnnotationView) {
+            	new SysadminMainView({el:that.getNewMainView()});
                 new EditAnnotationView({el:that.getNewAdminView(), id:name});                
             });
-        }    
+        },
+        
+        genomeReleases: function() {
+            var that = this;
+        	require([
+        		'views/sysadmin/SysadminMainView',
+                'views/sysadmin/GenomeReleaseView'
+            ],function(SysadminMainView, GenomeReleaseView) {
+            	new SysadminMainView({el:that.getNewMainView()});
+                new GenomeReleaseView({el:that.getNewAdminView()});                
+            });
+        }
 
     });
     return Router;
