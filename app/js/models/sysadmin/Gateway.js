@@ -9,7 +9,7 @@ define([], function() {
 			return this.url;
 		},
 
-		sendPacket : function(type, urlExtension, payload) {
+		sendPacket : function(type, urlExtension, payload, successFunc) {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -18,17 +18,25 @@ define([], function() {
 				username : "",
 				password : "",
 				data : JSON.stringify(payload),
-				complete : function(xhr) {
+				success: function(data){
+					if(successFunc != null){
+						successFunc(data);
+					}
 				},
+				complete : function(xhr) {
+					
+				},
+				
 			});
+
 		},
  
 		postAnnotation : function(payload) {
-			this.sendPacket("POST", "annotation/field", payload);
+			this.sendPacket("POST", "annotation/field", payload, null);
 		},
 
 		deleteAnnotation : function(payload, name) {
-			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload);
+			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload, null);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
@@ -43,7 +51,7 @@ define([], function() {
 		deleteAnnotationValues : function(payload, name) {
 			var that = this;
 			payload.forEach(function(value) {
-				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {});	
+				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {}, null);	
 			});
 		},
 		
@@ -52,12 +60,17 @@ define([], function() {
 			var model = new Backbone.Model();
 			payload.forEach(function(value) {
 				model.set({"name" : name, "value" : value});
-				that.sendPacket("POST", "annotation/value", model);
+				that.sendPacket("POST", "annotation/value", model, null);
 			});
 		},
 		
 		renameAnnotation : function(payload) {
-			this.sendPacket("PUT", "annotation/field", payload);
+			this.sendPacket("PUT", "annotation/field", payload, null);
+		},
+		
+		postGenomeRelease : function(payload, successFunc) {
+			this.sendPacket("POST", "genomeRelease", payload, successFunc);
+			
 		}
 		
 	});

@@ -18,7 +18,8 @@ define([], function() {
 			this.uploadURL = url;
 		},
 		
-		uploadFile: function() {
+		uploadFile: function(urlbody) {
+			console.log("URL: " + urlbody.URLupload);
 			// var formData = new FormData();
 			// var that = this;
 			// formData.append('uploadfile',this.fileObj);

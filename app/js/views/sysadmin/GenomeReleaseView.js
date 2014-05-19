@@ -1,4 +1,4 @@
-define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleaseFile'], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile) {
+define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleaseFile', 'views/sysadmin/UploadGenomeReleaseModal'], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
 			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
@@ -56,9 +56,11 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 			var fileObj = formFiles[0];
 			var genomeReleaseFile = new GenomeReleaseFile();
 			genomeReleaseFile.setFileObj(fileObj);
+			genomeReleaseFile.set({"fileName": fileObj.name});
+			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile);
+			uploadGenomeReleaseModal.show();
+			this.$el.find(".fileInput").val("");
 
-			$('#test').remove();
-			$('#test').append("<a>Test</a>");
 		}
 	
 	});
