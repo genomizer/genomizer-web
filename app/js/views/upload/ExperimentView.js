@@ -39,7 +39,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.fileUploadList.render();
 		},
 		changeLabelName: function() {
- 			this.$el.find('.panel-heading').text(this.model.get("name"));
+ 			if(this.model.get('name').length >0) {
+ 				this.$el.find('.panel-heading').text(this.model.get("name"));
+ 			} else {
+ 				this.$el.find('.panel-heading').text("Unnamed Experiment");
+ 			}
 		},
 		removeExperiment: function() {
 			this.trigger('removeEvent',this);
