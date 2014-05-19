@@ -13,7 +13,7 @@ define([], function() {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
-				url : encodeURI(this.url + urlExtension),
+				url : this.url + urlExtension,
 				dataType : 'json',
 				username : "",
 				password : "",
@@ -28,7 +28,7 @@ define([], function() {
 		},
 
 		deleteAnnotation : function(payload, name) {
-			this.sendPacket("DELETE", "annotation/field/" + name, payload);
+			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
@@ -43,7 +43,7 @@ define([], function() {
 		deleteAnnotationValues : function(payload, name) {
 			var that = this;
 			payload.forEach(function(value) {
-				that.sendPacket("DELETE", "annotation/value/" + name + "/" + value, {});	
+				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {});	
 			});
 		},
 		
