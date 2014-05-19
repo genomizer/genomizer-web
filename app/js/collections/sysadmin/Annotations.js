@@ -1,7 +1,7 @@
 define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annotation, Gateway) {
 	var Annotations = Backbone.Collection.extend({
 		model : Annotation,
-		url : "http://genomizer.apiary-mock.com/" + "annotation",
+		url : Gateway.getURL() + "annotation",
 
 		filterCollection : function(searchString) {
 			var pattern = new RegExp(searchString, "i");
