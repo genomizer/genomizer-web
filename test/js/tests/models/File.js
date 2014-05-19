@@ -139,5 +139,19 @@ define(['collections/Files','models/Experiment','models/File'], function(Files,E
 				expect(file.getFileSize()).to.be.undefined;
 			});
 		});
+		describe("isFileUpload", function() {
+			var file;
+			beforeEach(function() {
+				file = new File();
+			});
+			it("isFileUpload",function() {
+				file.fileObj = {};
+				file.fileObj.size = 1337;
+				expect(file.isFileUpload()).to.be.true;
+			});
+			it("isFileUpload",function() {
+				expect(file.isFileUpload()).to.be.false;
+			});
+		});
 	});
 });

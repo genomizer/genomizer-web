@@ -43,6 +43,9 @@ define(['models/File'],function(File) {
 			});
 
 		},
+		/*
+		 * returns the total size of the files to be uploaded
+		 */
 		getTotalUploadFileSize: function() {
 			var size = 0;
 			this.each(function(f) {
@@ -53,6 +56,9 @@ define(['models/File'],function(File) {
 			return size;
 			
 		},
+		/*
+		 * Get the total upload progress as a value between 0 and 1
+		 */
 		getTotalUploadProgress: function() {
 			if(this.getTotalUploadFileSize() == 0) {
 				return 1;

@@ -10,6 +10,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
+			this.model.files.on("uploadProgress",this.renderUploadProgress,this);
 			this.dragster = new Dragster( this.el );
 		},
 		events: {
@@ -37,6 +38,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+		},
+		renderUploadProgress: function() {
+			var progress = this.model.files.getTotalUploadProgress() * 100;
+			console.log("pro",progress);
+			this.$('.panel-heading').css('background','linear-gradient(to right, rgb(91, 192, 222) 0%, rgb(91, 192, 222) '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
 		},
 		changeLabelName: function() {
  			if(this.model.get('name').length >0) {
