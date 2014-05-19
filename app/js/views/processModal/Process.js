@@ -17,14 +17,12 @@ define([
 			this._super();
 			var queryArray = options.query.split(',');
 			this.expID = [];
-			this.fileName = [];
 			// MIGHT NOT WORK WITH EMPTY EXPID!!!!
 			this.genomeVersion = queryArray[0];
 
 
 			for(var i = 1; i<queryArray.length; i++) {
 				this.expID.push(queryArray[i]);
-				this.fileName.push(queryArray[++i]);
 			}
 
 			this.collection = new GenomeReferences({"species":this.genomeVersion});
@@ -46,15 +44,6 @@ define([
 
 				}
 			});
-
-
-
-//			console.log(this.collection.species);
-//			this.collection.fetch();
-//			console.log("here");
-			/*this.expID = options.query.split(',')[0];
-			this.fileName = options.query.split(',')[1];*/
-			//this.fileID = options.query.split(',')[2];
 		},
 		events: {
 			'submit form':'submitProcess',
@@ -66,14 +55,21 @@ define([
 			this.$el.html(this.TEMPLATE());
 			this.$el.find('#genome-reference').html(this.TEMPLATEGENOMEOPS({genomes:this.genomeRefs}));
 			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
-				'fileName': this.fileName[0],
 				'expID': this.expID[0]
 			}));
 			for(var i = 1; i<this.expID.length;i++) {
-				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
-					'fileName': this.fileName[i],
-					'expID': this.expID[i]
-				}));
+				var appendExp = true;
+				for(var j = 0; j<i;j++) {
+					console.log('append: i: ',this.expID[i], ' j: ',this.expID[j]);
+					if(this.expID[i] == this.expID[j]) {
+						appendExp = false;
+					}
+				}
+				if(appendExp) {
+					this.$el.find('#alert-container').append(this.TEMPLATEALERT({
+						'expID': this.expID[i]
+					}));
+				}
 			}
 
 
@@ -157,36 +153,46 @@ define([
 				ratioSmoothing];
 				
 			for(var i = 0; i<this.expID.length;i++) {
-				var data = {
-					//"filename": this.fileName,
-					//"fileId": this.fileID,
-					"expid": this.expID[i],
-					"parameters": parameters,
-					"metadata": (parameters.join(", ")+", "+genomeReference),
-					"genomeVersion": genomeVer, //TODO FIX tempvalue
-					"author": "Kalle" //TODO FIX tempvalue
-				};
-	 
-	 			//Did this into a function to save which file/experiment is run in this loop.
-				var f = (function (data, that, experiment) {
-					return function() {
-			 			var rawToProfileInfo = new RawToProfileInfo(data);
-			 			console.log('1 file: ',experiment);
-			 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
-			 			rawToProfileInfo.save({}, {"type":"put", 
-							success: function () {
-								console.log("successfully sent process request");
-								that.hide();
-								app.messenger.success("WOOHOOO!! The processing of raw data from the experiment "+ experiment +" has begun!");
-							},
-							error: function() {
-								console.log("failed to send process request of raw data from experiment "+expriment);
-							}
-						});
+				//Should not be able to process the same experiment twice.
+				var sendRequest = true;
+				for(var j = 0; j<i;j++) {
+					console.log('j: ',this.expID[j],' i: ',this.expID[i]);
+					if(this.expID[j] ==this.expID[i]) {
+						sendRequest = false;
+					}
+				}
+				if(sendRequest) {
+					var data = {
+						"expid": this.expID[i],
+						"parameters": parameters,
+						"metadata": (parameters.join(", ")+", "+genomeReference),
+						"genomeVersion": genomeVer,
+						"author": "Kalle" //TODO FIX tempvalue
 					};
-				})(data, this, this.expID[i]);
-				console.log('callling f');
-				f.call();	
+		 
+		 			//Did this into a function to save which file/experiment is run in this loop.
+					var f = (function (data, that, experiment) {
+						return function() {
+				 			var rawToProfileInfo = new RawToProfileInfo(data);
+				 			console.log('1 file: ',experiment);
+				 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
+				 			rawToProfileInfo.save({}, {"type":"put", 
+								success: function () {
+									console.log("successfully sent process request");
+									that.hide();
+									app.messenger.success("WOOHOOO!! The processing of raw data "
+										+ "from the experiment "+ experiment +" has begun!");
+								},
+								error: function() {
+									console.log("failed to send process request of raw data from "
+										+ "experiment "+expriment);
+								}
+							});
+						};
+					})(data, this, this.expID[i]);
+					console.log('callling f');
+					f.call();
+				}
 			}
 		},
 		toggleStepsInput: function() {
