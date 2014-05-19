@@ -13,9 +13,9 @@
 				<td><%= annotation.get('forced') %></td>
 
 				<% if (annotation.get('name') == "ExpID") { %>
-				<td><a href="#admin/editannotation/<%= annotation.get('name') %>" class="btn btn-default" disabled="">Edit</a></td>
+				<td><a href="#admin/editannotation/<%= encodeURI(annotation.get('name')) %>" class="btn btn-default" disabled="">Edit</a></td>
 				<% } else { %>
-				<td><a href="#admin/editannotation/<%= annotation.get('name') %>" class="btn btn-default">Edit</a></td>
+				<td><a href="#admin/editannotation/<%= encodeURI(annotation.get('name')) %>" class="btn btn-default">Edit</a></td>
 				<% }%>
 			</tr>
 			<% }); %>

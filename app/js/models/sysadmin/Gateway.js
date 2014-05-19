@@ -13,7 +13,7 @@ define([], function() {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
-				url : this.url + urlExtension,
+				url : encodeURI(this.url + urlExtension),
 				dataType : 'json',
 				username : "",
 				password : "",
