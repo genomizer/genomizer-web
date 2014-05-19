@@ -7,7 +7,7 @@ require.config({
 // this is a release
 var app = {};
 
-app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/";
+app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
 //app.BASE_URL = "http://Hagrid.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
 	app.BASE_URL = "http://harry.cs.umu.se:7000/";
@@ -19,13 +19,15 @@ console.log("main:", app.BASE_URL);
 require([
 		'views/MainMenu',
 		'collections/AnnotationTypes',
+		'collections/ProcessStatuses',
 		'models/Auth',
 		'router',
 		'views/Messenger'
-],function(MainMenu,AnnotationTypes,Auth,Router,Messenger) {
+],function(MainMenu, AnnotationTypes, ProcessStatuses, Auth, Router, Messenger) {
 	console.log("main > app:", app.BASE_URL);
 	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
+	app.processStatuses = new ProcessStatuses();
 	app.auth = new Auth();
 	app.messenger = new Messenger();
 
@@ -40,6 +42,9 @@ require([
 	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
 	mainMenu.render();
 
+	
+
+
 	app.auth.save().success(function() {
 		$.ajaxSetup({
 			beforeSend: function (xhr)
@@ -50,6 +55,16 @@ require([
 		app.annotationTypes.fetch().success(function() {
 			Backbone.history.start();
 		});
+
+		app.processStatuses.fetch();
+		setInterval(function() {
+			app.processStatuses.fetch().success(function() {
+				console.log("main > processStatuses > fetch > collection: ", app.processStatuses);
+			});
+		}, 30000);
+		
+
+
 	});
 																														if(window.location.href.indexOf("amanpwnz") != -1) { $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); } if(window.location.href.indexOf("britney") != -1) { setTimeout(function() { app.messenger.danger("Genomizer, genom-genomizer, you're a genomizer");}, 1000); setTimeout(function() { app.messenger.warning("Oh, genomizer, oh, you're a genomizer, baby"); }, 3000); setTimeout(function() { app.messenger.info("You, you, you are. You, you, you are"); }, 5000); setTimeout(function() { app.messenger.success("Genomizer, genomizer, genomizer (Genomizer)"); }, 7000); }
 });
