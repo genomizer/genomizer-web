@@ -19,13 +19,10 @@ define(['models/File'],function(File) {
 			});
 		},
 		hasUnfinishedUploads: function() {
-			var nrOfFinnishedFiles = 0;
-			this.each(function(file) {
-				if(file.uploadDone) {
-					nrOfFinnishedFiles++;
-				}
+			var aNotDoneUpload = this.find(function(f) {
+				return !f.uploadDone;
 			});
-			return nrOfFinnishedFiles != this.length
+			return aNotDoneUpload !== undefined
 		},
 		/*
 		 * Adds File Models to the collection by using a fileObject list (as in

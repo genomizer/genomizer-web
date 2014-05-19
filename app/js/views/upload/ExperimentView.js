@@ -41,7 +41,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		renderUploadProgress: function() {
 			var progress = this.model.files.getTotalUploadProgress() * 100;
-			console.log("pro",progress);
 			this.$('.panel-heading').css('background','linear-gradient(to right, rgb(91, 192, 222) 0%, rgb(91, 192, 222) '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
 		},
 		changeLabelName: function() {
