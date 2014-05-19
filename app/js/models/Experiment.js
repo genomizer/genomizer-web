@@ -16,7 +16,10 @@ define([
 			this.syncFiles();
 		},
 		syncFiles: function() {
-			this.files = new Files(this.get("files"));
+			if((this.files === undefined && this.get("files").length == 0 ) || this.get("files") > 0) {
+				this.files = new Files(this.get("files"));
+				console.log("Syncing files");
+			}
 		},
 		getFiles: function() {
 			return this.files;
