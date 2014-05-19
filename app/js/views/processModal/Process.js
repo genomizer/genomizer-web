@@ -20,9 +20,22 @@ define([
 			// MIGHT NOT WORK WITH EMPTY EXPID!!!!
 			this.genomeVersion = queryArray[0];
 
+			this.successes = 0;
+			this.failures = 0;
+			this.experiments = 0;
 
+			//Don't process multiple experiments with same ID.
 			for(var i = 1; i<queryArray.length; i++) {
-				this.expID.push(queryArray[i]);
+				var addExp = true;
+				for(var j = 1; j<i;j++) {
+					if(queryArray[i] == queryArray[j]) {
+						addExp = false;
+					}
+				}
+				if(addExp) {
+					this.experiments++;
+					this.expID.push(queryArray[i]);
+				}				
 			}
 
 			this.collection = new GenomeReferences({"species":this.genomeVersion});
@@ -57,22 +70,12 @@ define([
 			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
 				'expID': this.expID[0]
 			}));
+
 			for(var i = 1; i<this.expID.length;i++) {
-				var appendExp = true;
-				for(var j = 0; j<i;j++) {
-					console.log('append: i: ',this.expID[i], ' j: ',this.expID[j]);
-					if(this.expID[i] == this.expID[j]) {
-						appendExp = false;
-					}
-				}
-				if(appendExp) {
-					this.$el.find('#alert-container').append(this.TEMPLATEALERT({
-						'expID': this.expID[i]
-					}));
-				}
+				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
+					'expID': this.expID[i]
+				}));
 			}
-
-
 		},
 		radioClicked: function(e) {
 			switch(e.target.id) {
@@ -117,6 +120,8 @@ define([
 		},
 		submitProcess: function(e) {
 			e.preventDefault();
+			this.successIDs = [];
+			this.failIDs = [];
 
 			var level = $('[name=process-radios]:checked').val();
 			var bowtieFlags = ($('#bowtie-params').val());
@@ -142,7 +147,7 @@ define([
 				: "");
 			var genomeVer = ($('#genome-reference').val());
 
-			var parameters = [	
+			var parameters = [
 				bowtieFlags,
 				"",//genomeReference,
 				gffFormat,
@@ -153,45 +158,72 @@ define([
 				ratioSmoothing];
 				
 			for(var i = 0; i<this.expID.length;i++) {
-				//Should not be able to process the same experiment twice.
-				var sendRequest = true;
-				for(var j = 0; j<i;j++) {
-					console.log('j: ',this.expID[j],' i: ',this.expID[i]);
-					if(this.expID[j] ==this.expID[i]) {
-						sendRequest = false;
-					}
+				var data = {
+					"expid": this.expID[i],
+					"parameters": parameters,
+					"metadata": (parameters.join(", ")+", "+genomeReference),
+					"genomeVersion": genomeVer,
+					"author": "Kalle" //TODO FIX tempvalue
+				};
+	
+				if(i==1) {
+					data.parameters = "";
 				}
-				if(sendRequest) {
-					var data = {
-						"expid": this.expID[i],
-						"parameters": parameters,
-						"metadata": (parameters.join(", ")+", "+genomeReference),
-						"genomeVersion": genomeVer,
-						"author": "Kalle" //TODO FIX tempvalue
+
+				//Did this into a function to save which file/experiment is run in this loop.
+				var f = (function (data, that, experiment) {
+					return function() {
+						var rawToProfileInfo = new RawToProfileInfo(data);
+						console.log('1 file: ',experiment);
+						//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
+						rawToProfileInfo.save({}, {"type":"put", 
+							success: function () {
+								console.log("successfully sent process request");
+								that.handleProcessAnswer(true,experiment);
+								//that.hide();
+								//app.messenger.success("WOOHOOO!! The processing of raw data "
+								//	+ "from the experiment "+ experiment +" has begun!");
+							},
+							error: function() {
+								that.handleProcessAnswer(false,experiment);
+								console.log("failed to send process request of raw data from "
+									+ "experiment "+experiment);
+							}
+						});
 					};
-		 
-		 			//Did this into a function to save which file/experiment is run in this loop.
-					var f = (function (data, that, experiment) {
-						return function() {
-				 			var rawToProfileInfo = new RawToProfileInfo(data);
-				 			console.log('1 file: ',experiment);
-				 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
-				 			rawToProfileInfo.save({}, {"type":"put", 
-								success: function () {
-									console.log("successfully sent process request");
-									that.hide();
-									app.messenger.success("WOOHOOO!! The processing of raw data "
-										+ "from the experiment "+ experiment +" has begun!");
-								},
-								error: function() {
-									console.log("failed to send process request of raw data from "
-										+ "experiment "+expriment);
-								}
-							});
-						};
-					})(data, this, this.expID[i]);
-					console.log('callling f');
-					f.call();
+				})(data, this, this.expID[i]);
+				console.log('callling f');
+				f.call();
+			}
+		},
+		handleProcessAnswer: function(successfull, exp) {
+			if(successfull) {
+				this.successes++;
+				this.successIDs.push(exp);
+			} else {
+				this.failures++;
+				this.failIDs.push(exp);
+			}
+			if(this.successes == this.experiments) {
+				this.hide();
+				app.messenger.success("WOOHOOO!! The processing of raw data from the experimets: "
+					+ this.expID.join(', ') + " has begun!");
+			}
+			else if(this.successes+this.failures == this.experiments) {
+				//TODO rendra att ett eller flera experiment redan processas.
+				if(this.successIDs.length>0) {
+					app.messenger.warning("The processing of " + this.successIDs.join(', ')
+						+ " were successfull. HOWEVER the processing of " + this.failIDs.join(', ') 
+						+ " failed, try again.");
+				} else {
+					app.messenger.warning("The processing of " + this.failIDs.join(', ')  + " failed."
+						+ " please try again.");
+				}
+				for (var i = 0; i<this.failIDs.length; i++) {
+					var index = this.expID.indexOf(this.failIDs[i]);
+					if (index > -1) {
+						this.expID.splice(index, 1);
+					}
 				}
 			}
 		},
@@ -202,7 +234,6 @@ define([
 				$('#nr-of-steps').val('');
 				$('#nr-of-steps').prop('disabled', true);
 			}
-
 		}
 	});
 	return Modal;
