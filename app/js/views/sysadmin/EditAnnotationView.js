@@ -27,7 +27,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 			var deletedResult = Annotations.findDeletedValues(original, modified);
 			var addedResult = Annotations.findAddedValues(original, modified);
 			Gateway.updateAnnotationValues(deletedResult, addedResult, originalName, newName);
-
+	
 			if (originalName != newName) {
 				var renamePayload = new Backbone.Model();
 				renamePayload.set({"name" : originalName, "newName" : newName});

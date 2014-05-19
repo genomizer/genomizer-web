@@ -5,21 +5,20 @@
 		Select file to upload
 		<input id="choose_files" type="file" accept="" class="fileInput" value="Browse"/>
 	</span>
-	<div id="test"></div>
 	<table class="table striped">
 		<thead id="genome_table">
 			<tr>
 				<th id="th_species"><a>Species</a></th><th id="th_version"><a>Version</a></th><th id="th_filename"><a>Filename</a></th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="genome_table_body">
 			<% _.each(genomeReleaseFiles, function(genomeReleaseFile) { %>
 			<tr>
 				<td><%= genomeReleaseFile.get('specie') %></td>
 				<td><%= genomeReleaseFile.get('genomeVersion') %></td>
 				<td><%= genomeReleaseFile.get('fileName') %></td>
 
-<td><a class="btn btn-danger" id="delete_genome_btn" value="<%= genomeReleaseFile.fileName %>">Delete</a></td>
+				<td><a class="btn btn-danger" id="delete_genome_btn" value="<%= genomeReleaseFile.fileName %>">Delete</a></td>
 			</tr>
 			<% }); %>
 		</tbody>
