@@ -16,7 +16,12 @@ define([
 			this.syncFiles();
 		},
 		syncFiles: function() {
-			this.files = new Files(this.get("files"));
+
+			// TODO: check if this satement does things right, so it works for both a new experiment (file upload) and existing experiment (search restults).
+			if(this.files === undefined || this.get("files") > 0) {
+				this.files = new Files(this.get("files"));
+				console.log("Syncing files");
+			}
 		},
 		getFiles: function() {
 			return this.files;

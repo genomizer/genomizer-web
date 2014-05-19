@@ -1,11 +1,13 @@
 define([
 	'models/File',
-	'text!templates/upload/FileUploadView.html'
+	'text!templates/upload/FileUploadView.html',
+	'text!templates/upload/FileUploadViewExisting.html'
 ],
-function(File,FileUploadTemplate) {
+function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 	var FileUploadView = Backbone.View.extend({
 		TEMPLATE: _.template(FileUploadTemplate),
-		PROGRESS_TEMPLATE:_.template('<div class="progress-bar <%- done ? "progress-bar-success" : "" %>" role="progressbar" aria-valuenow="<%- progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- progress %>%;"></div>'),
+		EXISTING_TEMPLATE: _.template(FileUploadTemplateExisting),
+		PROGRESS_TEMPLATE: _.template('<div class="progress-bar <%- done ? "progress-bar-success" : "" %>" role="progressbar" aria-valuenow="<%- progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- progress %>%;"></div>'),
 		initialize: function() {
 			this.model.on("uploadProgress",this.renderProgress,this);
 		},
@@ -13,12 +15,18 @@ function(File,FileUploadTemplate) {
 		className:'list-group-item',
 		events: {
 			'change select': 'changeSelect',
-			'click #removeFile': 'removeFileFunction' 
+			'click .btn-remove': 'removeFileFunction' 
 		},
 		render: function() {
-			this.$el.html(this.TEMPLATE(_.extend(
-				this.model.toJSON(), {fileSize:this.model.getReadableFileSize()}
-			)));
+			if (this.model.isFileUpload()) {
+				this.$el.html(this.TEMPLATE(_.extend(
+					this.model.toJSON(), {fileSize:this.model.getReadableFileSize()}
+				)));
+			} else {
+				this.$el.html(this.EXISTING_TEMPLATE(_.extend(
+					this.model.toJSON()
+				)));
+			}
 			this.renderProgress();
 		},
 		renderProgress: function() {

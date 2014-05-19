@@ -30,6 +30,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 				"name" : $('#annotation_name').val()
 			});
 			output.push($('#annotation_name').val()); 
+			console.log(output[0]);
 
 			switch($('#annotation_forced').val()) {
 				case "one":
@@ -49,10 +50,10 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			switch($('#annotation_type').val()) {
 				case "one":
 					this.annotation.set({
-						"type" : ["yes", "no"],
-						"default" : "yes"
+						"type" : ["Yes", "No", "Unknown"],
+						"default" : "Unknown"
 					});
-					output.push('Yes/No');
+					output.push('Yes/No/Unknown');
 					break;
 				case "two":
 					var temp = $('#itemlist_input').val();
