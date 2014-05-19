@@ -1,12 +1,15 @@
 define([
 	'text!templates/processModal/Process.html',
 	'text!templates/processModal/ProcessAlert.html',
+	'text!templates/processModal/ProcessGenomeTemplate.html',
 	'views/ModalAC',
-	'models/RawToProfileInfo'
-],function(processTemplate, processAlertTemplate,ModalAC, RawToProfileInfo) {
+	'models/RawToProfileInfo',
+	'collections/GenomeReferences'
+],function(processTemplate, processAlertTemplate, genomeTemplate, ModalAC, RawToProfileInfo, GenomeReferences) {
 	var Modal = ModalAC.extend({
 		TEMPLATE: _.template(processTemplate),
 		TEMPLATEALERT: _.template(processAlertTemplate),
+		TEMPLATEGENOMEOPS: _.template(genomeTemplate),
 		TEMPLATE_VARS: {
 			modalTitle: "Process raw file"
 		},
@@ -14,15 +17,46 @@ define([
 			this._super();
 			var queryArray = options.query.split(',');
 			this.expID = [];
-			this.fileName = [];
 			// MIGHT NOT WORK WITH EMPTY EXPID!!!!
-			for(var i = 0; i<queryArray.length; i++) {
-				this.expID.push(queryArray[i]);
-				this.fileName.push(queryArray[++i]);
+			this.genomeVersion = queryArray[0];
+
+			this.successes = 0;
+			this.failures = 0;
+			this.experiments = 0;
+
+			//Don't process multiple experiments with same ID.
+			for(var i = 1; i<queryArray.length; i++) {
+				var addExp = true;
+				for(var j = 1; j<i;j++) {
+					if(queryArray[i] == queryArray[j]) {
+						addExp = false;
+					}
+				}
+				if(addExp) {
+					this.experiments++;
+					this.expID.push(queryArray[i]);
+				}				
 			}
-			/*this.expID = options.query.split(',')[0];
-			this.fileName = options.query.split(',')[1];*/
-			//this.fileID = options.query.split(',')[2];
+
+			this.collection = new GenomeReferences({"species":this.genomeVersion});
+			this.genomeReferences = this.collection.models;
+
+			var that = this;
+
+			this.genomeRefs = [];
+
+			this.collection.fetch({
+				success: function() {
+
+					that.collection.each(function(genomeRef){
+						that.genomeRefs.push(genomeRef.get("genomeVersion"));
+					});
+					that.$el.find('#genome-reference').html(that.TEMPLATEGENOMEOPS({genomes:that.genomeRefs}));
+				},
+				error: function() {
+
+				}
+			});
 		},
 		events: {
 			'submit form':'submitProcess',
@@ -30,14 +64,27 @@ define([
 			'click [name=process-radios]' : 'radioClicked'
 		},
 		render: function() {
+
 			this.$el.html(this.TEMPLATE());
-			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
-				'fileName': this.fileName[0],
+			this.$el.find('#genome-reference').html(this.TEMPLATEGENOMEOPS({genomes:this.genomeRefs}));
+			this.renderNotices();
+			/*this.$el.find('#alert-container').html(this.TEMPLATEALERT({
 				'expID': this.expID[0]
 			}));
+
 			for(var i = 1; i<this.expID.length;i++) {
 				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
-					'fileName': this.fileName[i],
+					'expID': this.expID[i]
+				}));
+			}*/
+		},
+		renderNotices: function() {
+			this.$el.find('#alert-container').html(this.TEMPLATEALERT({
+				'expID': this.expID[0]
+			}));
+
+			for(var i = 1; i<this.expID.length;i++) {
+				this.$el.find('#alert-container').append(this.TEMPLATEALERT({
 					'expID': this.expID[i]
 				}));
 			}
@@ -50,20 +97,33 @@ define([
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #smooth-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+					$('#ratio-col, #smooth-col, #steps-col').addClass('disabled');
+
 					break;
 				case "smooth-radio":
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #steps-col input, #ratio-col select').prop('disabled', true);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+					$('#ratio-col, #steps-col').addClass('disabled');
+
 					break;
 				case "steps-radio":
 
 					$('#raw-process-container input').prop('disabled', false);
 					$('#ratio-col input, #ratio-col select').prop('disabled', true);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+					$('#ratio-col').addClass('disabled');
+
 					break;
 				case "ratio-radio":
 
 					$('#raw-process-container input, #raw-process-container select').prop('disabled', false);
+
+					$('#raw-process-container .disabled').removeClass('disabled');
+
 					break;
 				default:
 					console.log('undefined')
@@ -72,6 +132,8 @@ define([
 		},
 		submitProcess: function(e) {
 			e.preventDefault();
+			this.successIDs = [];
+			this.failIDs = [];
 
 			var level = $('[name=process-radios]:checked').val();
 			var bowtieFlags = ($('#bowtie-params').val());
@@ -95,43 +157,82 @@ define([
 				+ ($('#ratio-print-mean').prop('checked') ? " 1": " 0") 
 				+ ($('#ratio-print-zeros').prop('checked') ? " 1": " 0"))
 				: "");
+			var genomeVer = ($('#genome-reference').val());
 
-			var parameters = [	
+			var parameters = [
 				bowtieFlags,
-				genomeReference,
+				"",//genomeReference,
 				gffFormat,
 				sgrFormat,
 				smoothParams,
 				steps,
 				ratioCalculation,
 				ratioSmoothing];
-
+				
 			for(var i = 0; i<this.expID.length;i++) {
 				var data = {
-					//"filename": this.fileName,
-					//"fileId": this.fileID,
 					"expid": this.expID[i],
-					"processtype": "rawtoprofile",
 					"parameters": parameters,
-					"metadata": parameters.join(", "),
-					"genomeRelease": "hg38", //TODO FIX tempvalue
+					"metadata": (parameters.join(", ")+", "+genomeReference),
+					"genomeVersion": genomeVer,
 					"author": "Kalle" //TODO FIX tempvalue
 				};
-	 
-	 			var rawToProfileInfo = new RawToProfileInfo(data);
-	 			var that = this;
-	 			var file = this.fileName[i];
-	 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
-	 			rawToProfileInfo.save({}, {"type":"put", 
-					success: function () {
-						console.log("successfully sent process request");
-						that.hide();
-						app.messenger.success("WOOHOOO!! The processing of "+ file +" has begun!");
-					},
-					error: function() {
-						console.log("failed to send process request");
+				
+				//Did this into a function to save which file/experiment is run in this loop.
+				var f = (function (data, that, experiment) {
+					return function() {
+						var rawToProfileInfo = new RawToProfileInfo(data);
+						console.log('1 file: ',experiment);
+						//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
+						rawToProfileInfo.save({}, {"type":"put", 
+							success: function () {
+								console.log("successfully sent process request");
+								that.handleProcessAnswer(true,experiment);
+								//that.hide();
+								//app.messenger.success("WOOHOOO!! The processing of raw data "
+								//	+ "from the experiment "+ experiment +" has begun!");
+							},
+							error: function() {
+								that.handleProcessAnswer(false,experiment);
+								console.log("failed to send process request of raw data from "
+									+ "experiment "+experiment);
+							}
+						});
+					};
+				})(data, this, this.expID[i]);
+				console.log('callling f');
+				f.call();
+			}
+		},
+		handleProcessAnswer: function(successfull, exp) {
+			if(successfull) {
+				this.successes++;
+				this.successIDs.push(exp);
+			} else {
+				this.failures++;
+				this.failIDs.push(exp);
+			}
+			if(this.successes == this.experiments) {
+				this.hide();
+				app.messenger.success("WOOHOOO!! The processing of raw data from the experimets: "
+					+ this.expID.join(', ') + " has begun!");
+			}
+			else if(this.successes+this.failures == this.experiments) {
+				if(this.successIDs.length>0) {
+					app.messenger.warning("The processing of " + this.successIDs.join(', ')
+						+ " were successfull. HOWEVER the processing of " + this.failIDs.join(', ') 
+						+ " failed, try again.");
+				} else {
+					app.messenger.warning("The processing of " + this.failIDs.join(', ')  + " failed."
+						+ " please try again.");
+				}
+				for (var i = 0; i<this.failIDs.length; i++) {
+					var index = this.expID.indexOf(this.failIDs[i]);
+					if (index > -1) {
+						this.expID.splice(index, 1);
 					}
-				});	
+				}
+				this.renderNotices();
 			}
 		},
 		toggleStepsInput: function() {
@@ -141,8 +242,8 @@ define([
 				$('#nr-of-steps').val('');
 				$('#nr-of-steps').prop('disabled', true);
 			}
-
 		}
 	});
 	return Modal;
 });
+

@@ -10,6 +10,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
+			this.model.files.on("uploadProgress",this.renderUploadProgress,this);
 			this.dragster = new Dragster( this.el );
 		},
 		events: {
@@ -21,7 +22,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragover":"dragOverHandler",
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
-			"drop":"dropHandler"
+			"drop":"dropHandler",
+			'keyup input[name="Experiment name"]':"changeLabelName"
 		},
 		render: function() {
 			window.this = this;
@@ -37,9 +39,23 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.annotationsForm.render();
 			this.fileUploadList.render();
 		},
+		renderUploadProgress: function() {
+			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
+				this.$('.panel-heading').css('background','#5cb85c');
+			} else {
+				var progress = this.model.files.getTotalUploadProgress() * 100;
+				this.$('.panel-heading').css('background','linear-gradient(to right, #428bca 0%, #428bca '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
+			}
+		},
+		changeLabelName: function() {
+ 			if(this.model.get('name').length >0) {
+ 				this.$el.find('.panel-heading').text(this.model.get("name"));
+ 			} else {
+ 				this.$el.find('.panel-heading').text("Unnamed Experiment");
+ 			}
+		},
 		removeExperiment: function() {
-			this.el.remove();
-			this.model.collection.remove(this.model);
+			this.trigger('removeEvent',this);
 		},
 		cloneExperiment: function() {
 			this.trigger('cloneEvent',this.model);

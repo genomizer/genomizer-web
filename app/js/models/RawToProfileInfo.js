@@ -1,7 +1,7 @@
 define([],function() {
 	var RawToProfileInfo = Backbone.Model.extend({
 		url: function() {
-			return app.BASE_URL + 'process';
+			return app.BASE_URL + 'process/rawtoprofile';
 		},
 		initialize: function() {
 

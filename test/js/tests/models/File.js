@@ -90,6 +90,15 @@ define(['collections/Files','models/Experiment','models/File'], function(Files,E
 				expect(file.getReadableFileSize()).to.equal("13.37 TiB");
 			});
 		});
+		describe("getReadableFileSize", function() {
+			var file;
+			beforeEach(function() {
+				file = new File();
+			});
+			it("should return undefined if no file", function() {
+				expect(file.getReadableFileSize()).to.be.undefined;
+			});
+		});
 		describe("should be able to uploadFile", function() {
 			var file;
 			var server;
@@ -114,6 +123,34 @@ define(['collections/Files','models/Experiment','models/File'], function(Files,E
 				// RESTORE
 				server.restore();
 				
+			});
+		});
+		describe("getFileSize", function() {
+			var file;
+			beforeEach(function() {
+				file = new File();
+			});
+			it("should get fileSize if file exists",function() {
+				file.fileObj = {};
+				file.fileObj.size = 1337;
+				expect(file.getFileSize()).to.equal(1337);
+			});
+			it("should return undefined if fileSize if file does not exist",function() {
+				expect(file.getFileSize()).to.be.undefined;
+			});
+		});
+		describe("isFileUpload", function() {
+			var file;
+			beforeEach(function() {
+				file = new File();
+			});
+			it("isFileUpload",function() {
+				file.fileObj = {};
+				file.fileObj.size = 1337;
+				expect(file.isFileUpload()).to.be.true;
+			});
+			it("isFileUpload",function() {
+				expect(file.isFileUpload()).to.be.false;
 			});
 		});
 	});

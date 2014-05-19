@@ -20,7 +20,6 @@ define([
 				collection: this.collection,
 				annotations: app.annotationTypes.withoutExpID()
 			});
-
 			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
 			this.render();
 		},
@@ -45,12 +44,14 @@ define([
 			"click #builder_button": "openBuilder"
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
+			console.log()
 			//handles whether or not the download or process buttons should be clickable.
 			if(fileArray.length > 0) {
 				$('#download_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
+				var startSpecies = this.collection.getSpeciesForExperiment(fileArray[0].get("expId"));
 				for(var i = 0;i<fileArray.length;i++) {
-					if(fileArray[i].get("type").toLowerCase() != "raw") {
+					if(fileArray[i].get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(fileArray[i].get("expId"))==startSpecies)) {
 						$('#process_button').prop('disabled', true);
 						break;
 					}
@@ -77,36 +78,39 @@ define([
 		},
 		downloadSelected: function() {
 			//Downloads all the selected files.
+			var that = this;
 			var URLsToDownload = this.collection.getSelectedFileURLs();
+			// this is horrible but as we see it the only way to download multiple files
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				this.downloadURL(URLsToDownload[i]);
+				console.log(URLsToDownload[i]);
+					that.downloadURL(URLsToDownload[i]);
 			};
-
 		},
 		downloadURL: function(url) {
-			var hiddenIFrameID = 'hiddenDownloader',
-				iframe = document.getElementById(hiddenIFrameID);
-				if (iframe === null) {
-					iframe = document.createElement('iframe');
-					iframe.id = hiddenIFrameID;
-					iframe.style.display = 'none';
-					document.body.appendChild(iframe);
-				}
-			iframe.src = url;
+			
+			var iframe = $(document.createElement('iframe'));
+			//iframe.id = hiddenIFrameID;
+			iframe.css('display', 'none');
+			$(document.body).append(iframe);
+			console.log('downloading url: ',url);
+			iframe.attr('src', url);
+			iframe.ready(function() {
+				setTimeout(function() {
+					iframe.remove();
+				}, 10000); // arbitrary amount of milliseconds :DDDD
+			})
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-			//console.log(files.length);
+			var specie = this.collection.getSpeciesForExperiment(files[0].get("expId"));
 			var processFiles = "";
 			for(var i = 0; i<files.length;i++) {
 				if(processFiles != "") {
 					processFiles += ",";
 				}
-				processFiles += files[i].get("expId") + "," + files[i].get("filename");
+				processFiles += files[i].get("expId");
 			}
-			//console.log('processfiles: ',processFiles);
-			app.router.navigate("process/"+processFiles, {trigger:true});
-//			app.router.navigate("process/" + files[0].get("expId") + "," + files[0].get("filename")/* + "," + files[0].get("id")*/, {trigger:true});
+			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
 		},
 		openBuilder: function() {
 			console.log("Search > openBuilder")
