@@ -177,11 +177,7 @@ define([
 					"genomeVersion": genomeVer,
 					"author": "Kalle" //TODO FIX tempvalue
 				};
-	
-				if(i==1) {
-					data.parameters = "";
-				}
-
+				
 				//Did this into a function to save which file/experiment is run in this loop.
 				var f = (function (data, that, experiment) {
 					return function() {
