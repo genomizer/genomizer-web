@@ -222,7 +222,6 @@ define([
 					+ this.expID.join(', ') + " has begun!");
 			}
 			else if(this.successes+this.failures == this.experiments) {
-				//TODO rendra att ett eller flera experiment redan processas.
 				if(this.successIDs.length>0) {
 					app.messenger.warning("The processing of " + this.successIDs.join(', ')
 						+ " were successfull. HOWEVER the processing of " + this.failIDs.join(', ') 
