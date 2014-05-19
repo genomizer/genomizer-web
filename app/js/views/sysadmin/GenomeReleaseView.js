@@ -35,15 +35,15 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 		},
 		
 		sortBySpecies : function() {
-		
+			this.genomeReleaseFiles.sortBy("specie");
 		},
 		
 		sortByVersion : function() {
-		
+			this.genomeReleaseFiles.sortBy("genomeVersion");
 		},
 		
 		sortByFileName : function() {
-		
+			this.genomeReleaseFiles.sortBy("fileName");
 		},
 		
 		deleteGenomeRelease : function(e) {
