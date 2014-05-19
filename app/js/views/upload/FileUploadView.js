@@ -18,7 +18,7 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 			'click #removeFile': 'removeFileFunction' 
 		},
 		render: function() {
-			if (!this.model.existingExperiment) {
+			if (this.model.isFileUpload()) {
 				this.$el.html(this.TEMPLATE(_.extend(
 					this.model.toJSON(), {fileSize:this.model.getReadableFileSize()}
 				)));
