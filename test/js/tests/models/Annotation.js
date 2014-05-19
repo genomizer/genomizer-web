@@ -6,8 +6,8 @@ define(['models/sysadmin/Annotation'],function(Annotation) {
 			});
 			it("Should have correct default values", function () {
 				var annotation = new Annotation();
-				annotation.get('name').should.equal('Not specified');
-				annotation.get('values').should.equal('Not specified');
+				annotation.get('name').should.equal('Not defined');
+				annotation.get('values').should.equal('Not defined');
 				annotation.get('forced').should.equal('false');
 			});
 				it("Should have correct values after setting them", function () {
