@@ -1,8 +1,8 @@
 define([], function() {
 	var Annotation = Backbone.Model.extend({
 		defaults : {
-			"name" : "Not specified",
-			"values" : "Not specified",
+			"name" : "Not defined",
+			"values" : "Not defined",
 			"forced" : "false"
 
 		},
@@ -11,5 +11,4 @@ define([], function() {
 	});
 	return Annotation;
 });
-
 
