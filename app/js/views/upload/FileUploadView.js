@@ -15,7 +15,7 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 		className:'list-group-item',
 		events: {
 			'change select': 'changeSelect',
-			'click #removeFile': 'removeFileFunction' 
+			'click .btn-remove': 'removeFileFunction' 
 		},
 		render: function() {
 			if (this.model.isFileUpload()) {
