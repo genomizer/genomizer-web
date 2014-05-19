@@ -42,6 +42,28 @@ define(['models/File'],function(File) {
 				that.add(file);
 			});
 
+		},
+		getTotalUploadFileSize: function() {
+			var size = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					size += f.getFileSize();
+				}
+			});
+			return size;
+			
+		},
+		getTotalUploadProgress: function() {
+			if(this.getTotalUploadFileSize() == 0) {
+				return 1;
+			}
+			var uploadedSize = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					uploadedSize += f.getFileSize() * f.progress;
+				}
+			});
+			return uploadedSize / this.getTotalUploadFileSize();
 		}
 	});
 	return Files;

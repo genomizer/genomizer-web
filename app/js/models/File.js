@@ -59,7 +59,10 @@ define([],function() {
 			});
 		},
 		getReadableFileSize: function() {
-			var size = this.fileObj.size;
+			var size = this.getFileSize();
+			if(size === undefined) {
+				return undefined;
+			}
 			
 			if (size < 1024) {
 				return  (size.toFixed(2).toString() + " B");
@@ -72,6 +75,15 @@ define([],function() {
 			} else {
 				return ((size / 1099511627776).toFixed(2).toString() + " TiB");
 			}
+		},
+		getFileSize: function() {
+			if(this.fileObj === undefined) {
+				return undefined;
+			}
+			return this.fileObj.size;
+		},
+		isFileUpload: function() {
+			return !!this.fileObj 
 		}
 	});
 	return File;

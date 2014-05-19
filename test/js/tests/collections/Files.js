@@ -94,6 +94,69 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					expect(this.files.at(0).get("fileName")).to.equal("hej.fastq");
 					expect(this.files.at(1).get("fileName")).to.equal("hello.fastq");
 				})
+				it("file should have isFileUpload == true", function() {
+					this.files.addFilesByFileObject(this.fileObjs);
+					expect(this.files.at(0).isFileUpload()).to.be.true;
+					expect(this.files.at(1).isFileUpload()).to.be.true;
+				})
+			});
+			describe("getTotalUploadProgress", function() {
+				beforeEach(function() {
+					this.files = new Files();
+				});
+				it("should return correct file progress if no progress", function() {
+					var f1 = new File();
+					f1.fileObj = {size:10};
+					this.files.add(f1);
+					expect(this.files.getTotalUploadProgress()).to.equal(0)
+				});
+				it("should return 1 if no files", function() {
+					expect(this.files.getTotalUploadProgress()).to.equal(1)
+				});
+				it("should return 1 if only uploaded files", function() {
+					var f1 = new File();
+					this.files.add(f1);
+					expect(this.files.getTotalUploadProgress()).to.equal(1)
+				});
+				it("should return correct file progress if some progress", function() {
+					var f1 = new File();
+					f1.fileObj = {size:30};
+					this.files.add(f1);
+					f1.setUploadDone();
+
+					var f2 = new File();
+					f2.fileObj = {size:70};
+					this.files.add(f2);
+					expect(this.files.getTotalUploadProgress()).to.equal(0.3)
+				});
+			});
+			describe("getTotalFileSize", function() {
+				beforeEach(function() {
+					this.files = new Files();
+				});
+				it("should return 0 if no files", function() {
+					expect(this.files.getTotalUploadFileSize()).to.equal(0)
+				});
+				it("should return 0 if only uploaded files", function() {
+					var f1 = new File();
+					this.files.add(f1);
+					expect(this.files.getTotalUploadFileSize()).to.equal(0)
+				});
+				it("should return size if fileUpload", function() {
+					var f1 = new File();
+					f1.fileObj = {size:10};
+					this.files.add(f1);
+					expect(this.files.getTotalUploadFileSize()).to.equal(10)
+				});
+				it("should return size if fileUpload, multiple files", function() {
+					var f1 = new File();
+					f1.fileObj = {size:10};
+					this.files.add(f1);
+					var f2 = new File();
+					f2.fileObj = {size:12};
+					this.files.add(f2);
+					expect(this.files.getTotalUploadFileSize()).to.equal(22)
+				});
 			});
 	});
 });

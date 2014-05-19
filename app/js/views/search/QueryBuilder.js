@@ -83,8 +83,11 @@ define([
 				value = "\"" + value + "\"";
 			}
 
-			if(annotation == "annotation" || value == "" || value == "value") {
-				console.log("asdasdasd")
+			if(annotation == "annotation") {
+				app.messenger.warning("Please select an annotation.");
+				return;
+			} else if (value == "value") {
+				app.messenger.warning("Please input an annotation value.");
 				return;
 			}
 
@@ -110,7 +113,7 @@ define([
 			event.preventDefault();
 			var target = $(event.target);
 			var text = target.text();
-			if(text == "") {
+			if(text == "no operator") {
 				text = "op";
 			}
 			this.$el.find(".op-container .dropdown-label").text(text);
