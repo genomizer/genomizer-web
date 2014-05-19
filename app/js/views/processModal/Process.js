@@ -177,7 +177,6 @@ define([
 							success: function () {
 								console.log("successfully sent process request");
 								that.hide();
-								console.log('2 file: ',experiment);
 								app.messenger.success("WOOHOOO!! The processing of raw data from the experiment "+ experiment +" has begun!");
 							},
 							error: function() {
@@ -187,24 +186,7 @@ define([
 					};
 				})(data, this, this.expID[i]);
 				console.log('callling f');
-				f.call();
-
-	 			/*var rawToProfileInfo = new RawToProfileInfo(data);
-	 			var that = this;
-	 			var file = this.fileName[i];
-	 			console.log('1 file: ',file);
-	 			//TELL USER WHICH PROCESSES STARTED AND WAS SUCCESSFULL
-	 			rawToProfileInfo.save({}, {"type":"put", 
-					success: function () {
-						console.log("successfully sent process request");
-						that.hide();
-						console.log('2 file: ',file);
-						app.messenger.success("WOOHOOO!! The processing of "+ file +" has begun!");
-					},
-					error: function() {
-						console.log("failed to send process request");
-					}
-				});*/	
+				f.call();	
 			}
 		},
 		toggleStepsInput: function() {
