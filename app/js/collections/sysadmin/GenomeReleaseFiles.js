@@ -1,7 +1,7 @@
 define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], function(GenomeReleaseFile, Gateway) {
 	var GenomeReleaseFiles = Backbone.Collection.extend({
 		model : GenomeReleaseFile,
-		url : Gateway.getURL() + "/genomeRelease",
+		url : Gateway.getURL() + "genomeRelease",
 
 		addFilesByFileObject: function(fileObjects) {
 			var that = this;

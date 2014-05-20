@@ -30,7 +30,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 	
 			if (originalName != newName) {
 				var renamePayload = new Backbone.Model();
-				renamePayload.set({"name" : originalName, "newName" : newName});
+				renamePayload.set({"newName" : newName, "oldName" : originalName});
 				Gateway.renameAnnotation(renamePayload);
 			}
 			history.back();
