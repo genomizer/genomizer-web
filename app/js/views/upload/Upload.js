@@ -38,7 +38,6 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		cloneExperiment: function(clonedAnnotations) {
 			var experiment = clonedAnnotations.clone();
 			this.appendNewExperimentView(experiment);
-			this.experimentViews[this.experimentViews.length -1].changeLabelName();
 		},
 		removeExperiment: function(experimentView) {
 			var index = this.experimentViews.indexOf(experimentView);
@@ -69,6 +68,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.experiments.add(experiment);
 			experimentView.render();
 			this.showUploadAllButton();
+			experimentView.changeLabelName();
 		},
 		uploadAll: function() {
 			_.each(this.experimentViews, function(expView) {

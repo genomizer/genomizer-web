@@ -177,7 +177,7 @@ define([
 					"genomeVersion": genomeVer,
 					"author": "Kalle" //TODO FIX tempvalue
 				};
-				
+
 				//Did this into a function to save which file/experiment is run in this loop.
 				var f = (function (data, that, experiment) {
 					return function() {
@@ -216,8 +216,7 @@ define([
 				this.hide();
 				app.messenger.success("WOOHOOO!! The processing of raw data from the experimets: "
 					+ this.expID.join(', ') + " has begun!");
-			}
-			else if(this.successes+this.failures == this.experiments) {
+			} else if(this.successes+this.failures == this.experiments) {
 				if(this.successIDs.length>0) {
 					app.messenger.warning("The processing of " + this.successIDs.join(', ')
 						+ " were successfull. HOWEVER the processing of " + this.failIDs.join(', ') 
@@ -226,10 +225,11 @@ define([
 					app.messenger.warning("The processing of " + this.failIDs.join(', ')  + " failed."
 						+ " please try again.");
 				}
-				for (var i = 0; i<this.failIDs.length; i++) {
-					var index = this.expID.indexOf(this.failIDs[i]);
+				for (var i = 0; i<this.successIDs.length; i++) {
+					var index = this.expID.indexOf(this.successIDs[i]);
 					if (index > -1) {
 						this.expID.splice(index, 1);
+						this.experiments--;
 					}
 				}
 				this.renderNotices();

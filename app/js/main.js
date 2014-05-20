@@ -1,14 +1,15 @@
 require.config({
 	urlArgs: "bust=" + (new Date()).getTime(), // TODO: stop server from caching, remove this before going live
 	paths: {
-		text:'lib/require.text'
+		text:'lib/require.text',
+		moment: 'lib/moment.min'
 	}
 });
 // this is a release
 var app = {};
 
 app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
-//app.BASE_URL = "http://Hagrid.cs.umu.se:7000/";
+//app.BASE_URL = "http://harry.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
 //	app.BASE_URL = "http://harry.cs.umu.se:7000/";
 app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
