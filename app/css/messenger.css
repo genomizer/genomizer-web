@@ -3,7 +3,7 @@
 }
 
 .alert-container {
-	position: absolute;
+	position: fixed;
 	top: 53px;
 	height:	0;
 	text-align:center;
