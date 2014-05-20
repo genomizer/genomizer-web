@@ -19,9 +19,7 @@ define([], function() {
 				password : "",
 				data : JSON.stringify(payload),
 				success: function(data){
-					if(successFunc != null){
-						successFunc(data);
-					}
+
 				},
 				complete : function(xhr) {
 					
