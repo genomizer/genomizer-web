@@ -9,7 +9,7 @@ define([], function() {
 			return this.url;
 		},
 
-		sendPacket : function(type, urlExtension, payload) {
+		sendPacket : function(type, urlExtension, payload, shouldGoBack) {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -19,7 +19,9 @@ define([], function() {
 				password : "",
 				data : JSON.stringify(payload),
 				success: function(data){
-
+					if (shouldGoBack) {
+						history.back();
+					}
 				},
 				complete : function(xhr) {
 					
@@ -78,11 +80,11 @@ define([], function() {
 		},
  
 		postAnnotation : function(payload) {
-			this.sendPacket("POST", "annotation/field", payload);
+			this.sendPacket("POST", "annotation/field", payload, false);
 		},
 
-		deleteAnnotation : function(payload, name) {
-			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload);
+		deleteAnnotation : function(payload, name, shouldGoBack) {
+			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload, shouldGoBack);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
@@ -97,7 +99,7 @@ define([], function() {
 		deleteAnnotationValues : function(payload, name) {
 			var that = this;
 			payload.forEach(function(value) {
-				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {});	
+				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {}, false);	
 			});
 		},
 		
@@ -106,16 +108,16 @@ define([], function() {
 			var model = new Backbone.Model();
 			payload.forEach(function(value) {
 				model.set({"name" : name, "value" : value});
-				that.sendPacket("POST", "annotation/value", model, null);
+				that.sendPacket("POST", "annotation/value", model, false);
 			});
 		},
 		
 		renameAnnotation : function(payload) {
-			this.sendPacket("PUT", "annotation/field", payload, null);
+			this.sendPacket("PUT", "annotation/field", payload, false);
 		},
 			
 		deleteGenomeReleaseFile : function(specie, genomeVersion) {
-			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {});
+			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {} , false);
 		}
 	});
 	return Gateway;

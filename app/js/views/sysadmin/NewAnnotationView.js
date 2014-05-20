@@ -30,7 +30,6 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 				"name" : $('#annotation_name').val()
 			});
 			output.push($('#annotation_name').val()); 
-			console.log(output[0]);
 
 			switch($('#annotation_forced').val()) {
 				case "one":
