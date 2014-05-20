@@ -16,7 +16,8 @@ define([
 		events: {
 			"click #upload_genome_release-btn": "uploadGR",
 			"keyup #specie_field" : "changeConfirmAvailability",
-			"keyup #version_field" : "changeConfirmAvailability"
+			"keyup #version_field" : "changeConfirmAvailability",
+			"click #cancel_genome_release-btn" : "cancel"
 		},
 		render: function() {
 			this.$el.html(this.template);	
@@ -36,10 +37,12 @@ define([
 		
 		cancel : function() {
 			this.hide();
+			//this.close();
 		},
 		
 		removeModal: function() {
-			
+			this.$modal.remove();
+
 		},
 		
 		changeConfirmAvailability: function() {
