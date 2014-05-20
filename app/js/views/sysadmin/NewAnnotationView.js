@@ -22,7 +22,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			if ($('#annotation_name').val() === "") {
 				alert("Some required fields are empty");
 				return;
-			}
+			} 
 
 			var output = [];
 			this.annotation = new Annotation();
