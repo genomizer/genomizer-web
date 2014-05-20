@@ -1,4 +1,9 @@
-define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleaseFile', 'views/sysadmin/UploadGenomeReleaseModal'], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal) {
+define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 
+		'collections/sysadmin/GenomeReleaseFiles', 
+		'models/sysadmin/GenomeReleaseFile', 
+		'views/sysadmin/UploadGenomeReleaseModal',
+		'models/sysadmin/Gateway'
+], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
 			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
