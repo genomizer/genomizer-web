@@ -7,7 +7,9 @@ require.config({
 // this is a release
 var app = {};
 
-app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
+app.BASE_URL = "http://itchy.cs.umu.se:7000/";
+
+//app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
 //app.BASE_URL = "http://harry.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
 	app.BASE_URL = "http://harry.cs.umu.se:7000/";
