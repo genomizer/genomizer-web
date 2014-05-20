@@ -9,7 +9,6 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 			// this.genomeReleaseFiles.push(file2);
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
-					console.log(that.genomeReleaseFiles);
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
@@ -19,31 +18,33 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 		},
 
 		render : function(genomeReleaseFiles) {
-			console.log(genomeReleaseFiles);
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
 
 		},
 		
 		events : {
-			"click #th_species": "sortBySpecies",
-			"click #th_version": "sortByVersion",
-			"click #th_filename": "sortByFileName",
+			"click #th_species": "orderBySpecies",
+			"click #th_version": "orderByVersion",
+			"click #th_filename": "orderByFileName",
 			"click #delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile"
 			
 		},
 		
-		sortBySpecies : function() {
-			this.genomeReleaseFiles.sortBy("specie");
+		orderBySpecies : function() {
+			this.genomeReleaseFiles.orderBy("specie");
+			this.render(this.genomeReleaseFiles);
 		},
 		
-		sortByVersion : function() {
-			this.genomeReleaseFiles.sortBy("genomeVersion");
+		orderByVersion : function() {
+			this.genomeReleaseFiles.orderBy("genomeVersion");
+			this.render(this.genomeReleaseFiles);
 		},
 		
-		sortByFileName : function() {
-			this.genomeReleaseFiles.sortBy("fileName");
+		orderByFileName : function() {
+			this.genomeReleaseFiles.orderBy("fileName");
+			this.render(this.genomeReleaseFiles);
 		},
 		
 		deleteGenomeRelease : function(e) {
