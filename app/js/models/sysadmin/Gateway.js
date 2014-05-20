@@ -9,7 +9,7 @@ define([], function() {
 			return this.url;
 		},
 
-		sendPacket : function(type, urlExtension, payload, successFunc) {
+		sendPacket : function(type, urlExtension, payload) {
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -31,9 +31,33 @@ define([], function() {
 
 		},
 		
-		uploadGenomeReleaseFile : function(url, payload){
+		postGenomeRelease : function(payload, genomeReleaseFile) {
+			that = this;
+
 			$.ajax({
-				url: url,
+				type : "POST",
+				ContentType : "application/json",
+				url : this.url + "genomeRelease",
+				dataType : 'json',
+				username : "",
+				password : "",
+				data : JSON.stringify(payload),
+				success : function(data) {
+					that.uploadGenomeReleaseFile(data, genomeReleaseFile);
+				},
+				complete : function(xhr) {
+
+				},
+			});
+
+		},
+	
+		uploadGenomeReleaseFile : function(url, genomeReleaseFile){
+			var payload = new FormData();
+			console.log(genomeReleaseFile.getFileObj());
+			payload.append('uploadfile',genomeReleaseFile.getFileObj());
+			$.ajax({
+				url: url.URLupload,
 				type: "POST",
 				data: payload,
 				username: "pvt",
@@ -56,11 +80,11 @@ define([], function() {
 		},
  
 		postAnnotation : function(payload) {
-			this.sendPacket("POST", "annotation/field", payload, null);
+			this.sendPacket("POST", "annotation/field", payload);
 		},
 
 		deleteAnnotation : function(payload, name) {
-			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload, null);
+			this.sendPacket("DELETE", "annotation/field/" + encodeURIComponent(name), payload);
 		},
 		
 		updateAnnotationValues : function(deletePayload, addPayload, originalName) {
@@ -75,7 +99,7 @@ define([], function() {
 		deleteAnnotationValues : function(payload, name) {
 			var that = this;
 			payload.forEach(function(value) {
-				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {}, null);	
+				that.sendPacket("DELETE", "annotation/value/" + encodeURIComponent(name) + "/" + encodeURIComponent(value), {});	
 			});
 		},
 		
@@ -91,14 +115,9 @@ define([], function() {
 		renameAnnotation : function(payload) {
 			this.sendPacket("PUT", "annotation/field", payload, null);
 		},
-		
-		postGenomeRelease : function(payload, successFunc) {
-			this.sendPacket("POST", "genomeRelease", payload, successFunc);
 			
-		},
-		
 		deleteGenomeReleaseFile : function(specie, genomeVersion) {
-			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {}, null);
+			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {});
 		}
 	});
 	return Gateway;

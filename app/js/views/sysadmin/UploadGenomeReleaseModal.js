@@ -31,7 +31,7 @@ define([
 			payload.set({"fileName": name,
 						 "specie": specie,
 						 "genomeVersion": genomeVersion});
-			var url = Gateway.postGenomeRelease(payload, this.genomeReleaseFile.uploadFile);
+			Gateway.postGenomeRelease(payload, this.genomeReleaseFile);
 			this.hide();
 		},
 		

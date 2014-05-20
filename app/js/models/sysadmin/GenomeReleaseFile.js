@@ -1,4 +1,4 @@
-define([], function() {
+define(['models/sysadmin/Gateway'], function(Gateway) {
 	var GenomeReleaseFile = Backbone.Model.extend({
 		defaults : {
 			"genomeVersion" : "Not defined",
@@ -18,11 +18,10 @@ define([], function() {
 			this.uploadURL = url;
 		},
 		
-		uploadFile: function(url) {
-			var payload = new FormData();
-			payload.append('uploadfile',this.fileObj);
-			Gateway.uploadGenomeReleaseFile(url.URLupload,payload);
-		},
+		getFileObj : function(){
+			return this.fileObj;
+		}
+		
 	});
 	return GenomeReleaseFile;
 });
