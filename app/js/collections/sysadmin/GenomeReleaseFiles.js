@@ -1,7 +1,7 @@
 define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], function(GenomeReleaseFile, Gateway) {
 	var GenomeReleaseFiles = Backbone.Collection.extend({
 		model : GenomeReleaseFile,
-		url : Gateway.getURL() + "/genomeRelease",
+		url : Gateway.getURL() + "genomeRelease",
 
 		comparator : function(model) {
 			if (this._order_by == 'genomeVersion')
@@ -17,7 +17,14 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			this.sort();
 		}, 
 		
-		_order_by: 'specie'
+		_order_by: 'specie',
+		
+		getForSpecies: function(specie) {
+			var gfs = this.filter(function(gr) {
+				return gr.get("specie").toLowerCase() == specie.toLowerCase();
+			});
+			return new GenomeReleaseFiles(gfs);
+		}
 
 	});
 	return GenomeReleaseFiles;

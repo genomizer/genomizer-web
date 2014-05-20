@@ -29,7 +29,7 @@ define([
 		},
 		
 		removeModal: function() {
-			
+			this.$modal.remove();
 		}
 		
 	});

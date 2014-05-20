@@ -6,6 +6,9 @@ define(['models/ProcessStatus'],function(ProcessStatus) {
 		model: ProcessStatus,
 		initialize:function (options) {
 
+		},
+		comparator: function(process) {
+			return -process.get("timeAdded");
 		}
 	});
 	return ProcessStatuses;
