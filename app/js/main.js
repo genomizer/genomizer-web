@@ -9,10 +9,9 @@ require.config({
 var app = {};
 
 app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
-//app.BASE_URL = "http://Hagrid.cs.umu.se:7000/";
+//app.BASE_URL = "http://harry.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
-//	app.BASE_URL = "http://harry.cs.umu.se:7000/";
-	app.BASE_URL = "http://scratchy.cs.umu.se:8000/api/";
+	app.BASE_URL = "http://harry.cs.umu.se:7000/";
 }
 console.log("main:", app.BASE_URL);
 
