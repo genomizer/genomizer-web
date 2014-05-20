@@ -42,7 +42,8 @@ define([
 			return this.files.length > 0;
 		},
 		getPossibleGenomeReleases: function() {
-			return app.genomeReleaseFiles;
+			var species = this.getAnnotation("Species").value;
+			return app.genomeReleaseFiles.getForSpecies(species);
 		}
 	});
 	return Experiment;

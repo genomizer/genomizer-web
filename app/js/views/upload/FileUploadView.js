@@ -7,8 +7,10 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 	var FileUploadView = Backbone.View.extend({
 		TEMPLATE: _.template(FileUploadTemplate),
 		EXISTING_TEMPLATE: _.template(FileUploadTemplateExisting),
+		GN_TEMPLATE: _.template('<% _.each(genomeReleases,function(genomeRelease) { %><option value="<%- genomeRelease %>" ><%- genomeRelease %></option><% }); %>'),
 		initialize: function() {
 			this.model.on("uploadProgress",this.renderProgress,this);
+			this.model.collection.experiment.on("change:annotations",this.renderGenomeReleases,this);
 		},
 		tagName:'li',
 		className:'list-group-item',
@@ -21,10 +23,10 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 			if (this.model.isFileUpload()) {
 				this.$el.html(this.TEMPLATE(_.extend(
 					this.model.toJSON(), {
-						fileSize:this.model.getReadableFileSize(),
-						genomeReleases:this.getGenomeRealeases()
+						fileSize:this.model.getReadableFileSize()
 					}
 				)));
+				this.renderGenomeReleases();
 			} else {
 				this.$el.html(this.EXISTING_TEMPLATE(_.extend(
 					this.model.toJSON()
@@ -44,6 +46,15 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 			return genRel.map(function(g) {
 				return g.get("genomeVersion");
 			});
+		},
+		renderGenomeReleases:function() {
+			var newSpecies = this.model.collection.experiment.getAnnotation("Species").value;
+			if(newSpecies != this.currentSpecies) {
+				this.$(".gr-version").html(this.GN_TEMPLATE({
+					genomeReleases:this.getGenomeRealeases()
+				}));
+				this.currentSpecies = newSpecies;
+			}
 		},
 		updateModel:function() {
 			var input = {};

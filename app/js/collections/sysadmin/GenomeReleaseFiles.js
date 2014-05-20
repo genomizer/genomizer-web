@@ -17,7 +17,14 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			this.sort();
 		}, 
 		
-		_order_by: 'specie'
+		_order_by: 'specie',
+		
+		getForSpecies: function(specie) {
+			var gfs = this.filter(function(gr) {
+				return gr.get("specie").toLowerCase() == specie.toLowerCase();
+			});
+			return new GenomeReleaseFiles(gfs);
+		}
 
 	});
 	return GenomeReleaseFiles;

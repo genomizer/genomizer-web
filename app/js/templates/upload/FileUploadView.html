@@ -6,10 +6,7 @@
 	<%- fileSize %>
 </div>
 <div class=col-xs-2>
-	<select name="grVersion" class="form-control type-select">
-		<% _.each(genomeReleases,function(genomeRelease) { %>
-			<option value="<%- genomeRelease %>" ><%- genomeRelease %></option>
-		<% }); %>
+	<select name="grVersion" class="gr-version form-control type-select">
 	</select>
 </div>
 <div class="col-xs-2 remove-col">
