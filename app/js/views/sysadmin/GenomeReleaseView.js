@@ -1,4 +1,10 @@
-define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleaseFile'], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile) {
+define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 
+		'collections/sysadmin/GenomeReleaseFiles', 
+		'models/sysadmin/GenomeReleaseFile', 
+		'views/sysadmin/UploadGenomeReleaseModal',
+		'models/sysadmin/Gateway',
+		'collections/sysadmin/Annotations'
+], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
 			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
@@ -9,7 +15,6 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 			// this.genomeReleaseFiles.push(file2);
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
-					console.log(that.genomeReleaseFiles);
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
@@ -19,36 +24,39 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 		},
 
 		render : function(genomeReleaseFiles) {
-			console.log(genomeReleaseFiles);
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
 
 		},
 		
 		events : {
-			"click #th_species": "sortBySpecies",
-			"click #th_version": "sortByVersion",
-			"click #th_filename": "sortByFileName",
-			"click #delete_genome_btn" : "deleteGenomeRelease",
-			"change .fileInput": "addSelectedFile"
+			"click #th_species": "orderBySpecies",
+			"click #th_version": "orderByVersion",
+			"click #th_filename": "orderByFileName",
+			"click .delete_genome_btn" : "deleteGenomeRelease",
+			"change .fileInput": "addSelectedFile",
+			"click #choose_files" : "getSpecies"
 			
 		},
 		
-		sortBySpecies : function() {
-			this.genomeReleaseFiles.sortBy("specie");
+		orderBySpecies : function() {
+			this.genomeReleaseFiles.orderBy("specie");
+			this.render(this.genomeReleaseFiles);
 		},
 		
-		sortByVersion : function() {
-			this.genomeReleaseFiles.sortBy("genomeVersion");
+		orderByVersion : function() {
+			this.genomeReleaseFiles.orderBy("genomeVersion");
+			this.render(this.genomeReleaseFiles);
 		},
 		
-		sortByFileName : function() {
-			this.genomeReleaseFiles.sortBy("fileName");
+		orderByFileName : function() {
+			this.genomeReleaseFiles.orderBy("fileName");
+			this.render(this.genomeReleaseFiles);
 		},
 		
 		deleteGenomeRelease : function(e) {
-			console.log(e);
-			console.log($('#delete_genome_btn').find('value'));
+			var payload = e.currentTarget.id.split(",");
+			Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
 		},
 		
 		addSelectedFile: function() {
@@ -56,9 +64,21 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 			var fileObj = formFiles[0];
 			var genomeReleaseFile = new GenomeReleaseFile();
 			genomeReleaseFile.setFileObj(fileObj);
+			genomeReleaseFile.set({"fileName": fileObj.name});
+			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile, this.speciesList);
+			uploadGenomeReleaseModal.show();
+			this.$el.find(".fileInput").val("");
 
-			$('#test').remove();
-			$('#test').append("<a>Test</a>");
+		},
+				
+		getSpecies : function(){
+			var annotations = new Annotations();
+			that = this;
+            annotations.fetch({
+                success : function(annotations) {
+                    that.speciesList = annotations.getValuesOf("Species");
+                }
+            });
 		}
 	
 	});
