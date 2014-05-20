@@ -1,9 +1,19 @@
-#raw-process-container .triple-container .form-group {
-	width: 33.33333%;
-	margin: 0;
-	box-sizing: border-box;
-	padding: 0;
+#raw-process-container .column-container {
+	padding-right: 15px;
 }
+
+#raw-process-container .column-container .col-sm-4 {
+    padding-right: 0;
+}
+
+#raw-process-container .checkbox-inline {
+    margin-bottom: 5px;
+}
+
+#raw-process-container .checkbox-inline:not(:first-child) {
+    margin-left: 15px;
+}
+
 #raw-process-container h5 {
     margin-top: 2px;
     font-size:13pt;
@@ -24,6 +34,8 @@
 	padding-left: 15px;
 }
 
+
+
 #raw-process-container .form-inline .input-group {
 	border: 2px dashed #444;
     height: 125px;
@@ -31,8 +43,6 @@
     text-align: justify;
     -ms-text-justify: distribute-all-lines;
     text-justify: distribute-all-lines;
-
-    /* just for demo */
 }
 
 #raw-process-container .alert span {
