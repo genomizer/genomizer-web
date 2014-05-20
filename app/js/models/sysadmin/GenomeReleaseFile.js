@@ -18,32 +18,10 @@ define([], function() {
 			this.uploadURL = url;
 		},
 		
-		uploadFile: function(urlbody) {
-			console.log("URL: " + urlbody.URLupload);
-			// var formData = new FormData();
-			// var that = this;
-			// formData.append('uploadfile',this.fileObj);
-			// $.ajax({
-				// url: this.get("URLupload"),
-				// type: "POST",
-				// data: formData,
-				// username: "pvt",
-				// password: "pvt",
-				// processData: false,
-				// contentType: false,
-		// /*		beforeSend: function(jqXHR) {
-					// debugger;
-					// jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-				// }
-				// xhr: function()
-				// {
-					// //Upload progress
-					// var xhr = $.ajaxSettings.xhr();
-					// xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-					// return xhr;
-				// } 
-// */
-			// }).done(_.bind(this.setUploadDone,this));
+		uploadFile: function(url) {
+			var payload = new FormData();
+			payload.append('uploadfile',this.fileObj);
+			Gateway.uploadGenomeReleaseFile(url.URLupload,payload);
 		},
 	});
 	return GenomeReleaseFile;

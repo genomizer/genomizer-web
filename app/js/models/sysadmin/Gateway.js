@@ -30,6 +30,30 @@ define([], function() {
 			});
 
 		},
+		
+		uploadGenomeReleaseFile : function(url, payload){
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: payload,
+				username: "pvt",
+				password: "pvt",
+				processData: false,
+				contentType: false,
+		/*		beforeSend: function(jqXHR) {
+					debugger;
+					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
+				}
+				xhr: function()
+				{
+					//Upload progress
+					var xhr = $.ajaxSettings.xhr();
+					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
+					return xhr;
+				} 
+*/
+			});
+		},
  
 		postAnnotation : function(payload) {
 			this.sendPacket("POST", "annotation/field", payload, null);
@@ -71,8 +95,11 @@ define([], function() {
 		postGenomeRelease : function(payload, successFunc) {
 			this.sendPacket("POST", "genomeRelease", payload, successFunc);
 			
-		}
+		},
 		
+		deleteGenomeReleaseFile : function(specie, genomeVersion) {
+			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {}, null);
+		}
 	});
 	return Gateway;
 });
