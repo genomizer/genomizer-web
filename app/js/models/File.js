@@ -5,12 +5,13 @@ define([],function() {
 			this.uploadDone = false;
 		},
 		defaults: {
-			"type":"raw",
-			// TODO: remove hardcoded default values (below)
+			"type":"raw", // This one is used and should be kept
+			/*
 			 "metaData": "metameta",
 			 "author": "name",
-			 "uploader": "user1",
 			 "grVersion": "hg18",
+			*/
+			 "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
 
 		},
 		// Requires: URLupload in attributes

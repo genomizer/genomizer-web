@@ -6,20 +6,14 @@
 	<%- fileSize %>
 </div>
 <div class=col-xs-2>
-	<select class="form-control type-select">
-		<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>
-		Raw
-		</option>
-		<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>
-		Profile
-		</option>
-		<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>
-		Region
-		</option>
+	<select name="grVersion" class="form-control type-select">
+		<% _.each(genomeReleases,function(genomeRelease) { %>
+			<option value="<%- genomeRelease %>" ><%- genomeRelease %></option>
+		<% }); %>
 	</select>
 </div>
 <div class="col-xs-2 remove-col">
-	<select class="form-control type-select">
+	<select name="type" class="form-control type-select">
 		<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>
 		Raw
 		</option>

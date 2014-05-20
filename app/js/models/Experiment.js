@@ -19,7 +19,7 @@ define([
 
 			// TODO: check if this satement does things right, so it works for both a new experiment (file upload) and existing experiment (search restults).
 			if(this.files === undefined || this.get("files").length > 0) {
-				this.files = new Files(this.get("files"));
+				this.files = new Files(this.get("files"),{experiment:this});
 				console.log("Syncing files");
 			}
 		},
@@ -40,6 +40,9 @@ define([
 		},
 		isUploadable: function() {
 			return this.files.length > 0;
+		},
+		getPossibleGenomeReleases: function() {
+			return app.genomeReleaseFiles;
 		}
 	});
 	return Experiment;
