@@ -119,7 +119,7 @@ define([
 			"click tr" : "clickHandler"
 		},
 		clickHandler: function(event) {
-			document.location.href = "/#search/" + $(event.currentTarget).data("expid") + "[ExpID]";
+			app.router.navigate("search/" + $(event.currentTarget).data("expid") + "[ExpID]", {trigger: true});
 			console.log("ProcessPopover > clickHandler: ", this, event);
 			this.hide();
 		}
