@@ -27,7 +27,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 			"click #th_species": "orderBySpecies",
 			"click #th_version": "orderByVersion",
 			"click #th_filename": "orderByFileName",
-			"click #delete_genome_btn" : "deleteGenomeRelease",
+			"click .delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile"
 			
 		},
@@ -48,8 +48,8 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 'collections/sysad
 		},
 		
 		deleteGenomeRelease : function(e) {
-			console.log(e);
-			console.log($('#delete_genome_btn').find('value'));
+			var payload = e.currentTarget.id.split(",");
+			Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
 		},
 		
 		addSelectedFile: function() {

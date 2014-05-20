@@ -5,7 +5,7 @@
 		Select file to upload
 		<input id="choose_files" type="file" accept="" class="fileInput" value="Browse"/>
 	</span>
-	<table class="table striped">
+	<table class="table table-striped">
 		<thead id="genome_table">
 			<tr>
 				<th id="th_species"><a>Species</a></th><th id="th_version"><a>Version</a></th><th id="th_filename"><a>Filename</a></th>
@@ -18,7 +18,7 @@
 				<td><%= genomeReleaseFile.get('genomeVersion') %></td>
 				<td><%= genomeReleaseFile.get('fileName') %></td>
 
-				<td><a class="btn btn-danger" id="delete_genome_btn" value="<%= genomeReleaseFile.fileName %>">Delete</a></td>
+				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('specie')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
 			</tr>
 			<% }); %>
 		</tbody>
