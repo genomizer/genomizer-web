@@ -2,8 +2,9 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		'collections/sysadmin/GenomeReleaseFiles', 
 		'models/sysadmin/GenomeReleaseFile', 
 		'views/sysadmin/UploadGenomeReleaseModal',
-		'models/sysadmin/Gateway'
-], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway) {
+		'models/sysadmin/Gateway',
+		'collections/sysadmin/Annotations'
+], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
 			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
@@ -33,7 +34,8 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			"click #th_version": "orderByVersion",
 			"click #th_filename": "orderByFileName",
 			"click .delete_genome_btn" : "deleteGenomeRelease",
-			"change .fileInput": "addSelectedFile"
+			"change .fileInput": "addSelectedFile",
+			"click #choose_files" : "getSpecies"
 			
 		},
 		
@@ -63,10 +65,20 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			var genomeReleaseFile = new GenomeReleaseFile();
 			genomeReleaseFile.setFileObj(fileObj);
 			genomeReleaseFile.set({"fileName": fileObj.name});
-			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile);
+			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile, this.speciesList);
 			uploadGenomeReleaseModal.show();
 			this.$el.find(".fileInput").val("");
 
+		},
+				
+		getSpecies : function(){
+			var annotations = new Annotations();
+			that = this;
+            annotations.fetch({
+                success : function(annotations) {
+                    that.speciesList = annotations.getValuesOf("Species");
+                }
+            });
 		}
 	
 	});

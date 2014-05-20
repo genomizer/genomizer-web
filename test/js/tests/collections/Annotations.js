@@ -49,6 +49,25 @@ define(['collections/sysadmin/Annotations', 'models/sysadmin/Annotation'], funct
 				var result = annotations.getAnnotationByName('NotAvailableAnnotation');
 				expect(result).to.be.null;
 			});
+			it("Should return find correct annotation when lowercase", function() {
+				var annotation1 = new Annotation({
+					"name" : 'A1'
+				});
+				var annotation2 = new Annotation({
+					"name" : 'A2'
+				});
+				var annotation3 = new Annotation({
+					"name" : 'A3'
+				});
+				var annotation4 = new Annotation({
+					"name" : 'A4'
+				});
+	
+				var annotations = new Annotations([annotation1, annotation2, annotation3, annotation4]);
+	
+				var result = annotations.getAnnotationByName('a2');
+				result.get('name').should.equal('A2');
+			});
 		});
 		
 		describe("Tests of filterCollection", function (){
@@ -159,6 +178,69 @@ define(['collections/sysadmin/Annotations', 'models/sysadmin/Annotation'], funct
 				expect($.inArray('Horse', addedResult)).to.not.equal(-1);
 				deletedResult.length.should.equal(1);
 				addedResult.length.should.equal(1);
+			});
+
+		});
+		describe("Tests of getValuesOf", function (){
+			it("Should find the values of the given annotation", function() {
+				var annotation0 = new Annotation({
+					"name" : 'Sex',
+					"values" : ["Female","Dog","Male"]
+				});
+				var annotation1 = new Annotation({
+					"name" : 'Species',
+					"values" : ["Human","Dog","Cow","Turtle","Tortoise"]
+				});
+				var annotation2 = new Annotation({
+					"name" : 'MhosmbrspioseVebv rde fes',
+					"values" : []
+				});
+				var annotation3 = new Annotation({
+					"name" : 'poiversfe5s68412fesakjnca',
+					"values" : ["gesfes", "gfersd"]
+				});
+				var annotation4 = new Annotation({
+					"name" : 'A4vrgrdshdrnh',
+					"values" : ["niujgrds"]
+				});
+	
+				var annotations = new Annotations([annotation0, annotation1, annotation2, annotation3, annotation4]);
+				var result = annotations.getValuesOf('Species');
+				result[0].should.equal("Human");
+				result[1].should.equal("Dog");
+				result[2].should.equal("Cow");
+				result[3].should.equal("Turtle");
+				result[4].should.equal("Tortoise");
+				
+				
+			});
+			it("Should NOT find the values of the given annotation", function() {
+				var annotation0 = new Annotation({
+					"name" : 'Sex',
+					"values" : ["Female","Dog","Male"]
+				});
+				var annotation1 = new Annotation({
+					"name" : 'species',
+					"values" : ["Human","Dog","Cow","Turtle","Tortoise"]
+				});
+				var annotation2 = new Annotation({
+					"name" : 'MhosmbrspioseVebv rde fes',
+					"values" : []
+				});
+				var annotation3 = new Annotation({
+					"name" : 'poiversfe5s68412fesakjnca',
+					"values" : ["gesfes", "gfersd"]
+				});
+				var annotation4 = new Annotation({
+					"name" : 'A4vrgrdshdrnh',
+					"values" : ["niujgrds"]
+				});
+	
+				var annotations = new Annotations([annotation0, annotation1, annotation2, annotation3, annotation4]);
+				var result = annotations.getValuesOf('Speeechies');
+				result.should.equal(-1);
+				
+				
 			});
 
 		});

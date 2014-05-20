@@ -7,17 +7,19 @@ define([
 		TEMPLATE_VARS: {
 			modalTitle: "Upload Genome Release File"
 		},
-		initialize: function(genomeReleaseFile) {
+		initialize: function(genomeReleaseFile, speciesList) {
 			this._super();
 			this.genomeReleaseFile = genomeReleaseFile;
+			this.speciesList = speciesList;
 			var fileName = genomeReleaseFile.get('fileName');
-			this.template = _.template(grTemplate, {fileName : fileName});
+			this.template = _.template(grTemplate, {fileName : fileName, speciesList : speciesList});
 		},
 		events: {
 			"click #upload_genome_release-btn": "uploadGR",
 			"keyup #specie_field" : "changeConfirmAvailability",
 			"keyup #version_field" : "changeConfirmAvailability",
 			"click #cancel_genome_release-btn" : "cancel"
+			
 		},
 		render: function() {
 			this.$el.html(this.template);	
@@ -52,7 +54,7 @@ define([
 				 $('#upload_genome_release-btn').attr('disabled', '');
 			}
 		}
-		
+
 	});
 	return Modal;
 });
