@@ -1,12 +1,17 @@
 <div class="modal-body" id="grModal-container">
     <div id="name">
         <label>File Name</label>
-        <br>
-        <%= fileName %>
+        <% _.each(fileNames, function(fileName){ %>
+             <br><%= fileName %>    
+        <% }); %> 
     </div>
     <hr>
     <label>Specie</label>
-    <input class="form-control" id="specie_field"type="text" placeholder="Specie e.g. Human"value="">
+    <select class="form-control" id="species_drop-down">
+            <% _.each(speciesList, function(specie) { %>
+                <option value="<%=specie%>"><%=specie%></option>
+            <% }); %>
+        </select>
     <hr>
     <label>Version</label>
     <input class="form-control" id="version_field"type="text" placeholder="Version e.g. hy17" value="">

@@ -7,12 +7,12 @@ define([
 		TEMPLATE_VARS: {
 			modalTitle: "Upload Genome Release File"
 		},
-		initialize: function(genomeReleaseFile, speciesList) {
+		initialize: function(genomeReleaseFiles, speciesList) {
 			this._super();
-			this.genomeReleaseFile = genomeReleaseFile;
+			this.genomeReleaseFiles = genomeReleaseFiles;
 			this.speciesList = speciesList;
-			var fileName = genomeReleaseFile.get('fileName');
-			this.template = _.template(grTemplate, {fileName : fileName, speciesList : speciesList});
+			var fileNames = genomeReleaseFiles.getFileNames();
+			this.template = _.template(grTemplate, {fileNames : fileNames, speciesList : speciesList});
 		},
 		events: {
 			"click #upload_genome_release-btn": "uploadGR",
@@ -26,14 +26,14 @@ define([
 		},
 
 		uploadGR : function() {
-			var payload = new Backbone.Model();
-			var name = this.genomeReleaseFile.get('fileName');
-			var specie = $('#specie_field').val();
-			var genomeVersion = $('#version_field').val();
-			payload.set({"fileName": name,
-						 "specie": specie,
-						 "genomeVersion": genomeVersion});
-			Gateway.postGenomeRelease(payload, this.genomeReleaseFile);
+			// var payload = new Backbone.Model();
+			// var name = this.genomeReleaseFile.get('fileName');
+			// var specie = $('#species_drop-down').val();
+			// var genomeVersion = $('#version_field').val();
+			// payload.set({"fileName": name,
+						 // "specie": specie,
+						 // "genomeVersion": genomeVersion});
+			//Gateway.postGenomeRelease(payload, this.genomeReleaseFile);
 			this.hide();
 		},
 		
@@ -48,7 +48,7 @@ define([
 		},
 		
 		changeConfirmAvailability: function() {
-			if(($('#specie_field').val() != "") && ($('#version_field').val() != "")){
+			if(($('#version_field').val() != "")){
 				 $('#upload_genome_release-btn').removeAttr('disabled');
 			} else{
 				 $('#upload_genome_release-btn').attr('disabled', '');

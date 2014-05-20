@@ -3,6 +3,37 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 		model : GenomeReleaseFile,
 		url : Gateway.getURL() + "/genomeRelease",
 
+		addFilesByFileObject: function(fileObjects) {
+			var that = this;
+			_.each(fileObjects,function(fileObj) {
+				var file = new GenomeReleaseFile({
+					fileName:fileObj.name
+				});
+				file.fileObj = fileObj;
+				that.add(file);
+			});
+
+		},
+		
+		getGenomeReleaseByName : function(name) {
+			var genomeReleaseFile = null;
+			for (var i = 0; i < this.length; i++) {
+				if ((this.at(i).get('fileName')).toLowerCase() == name.toLowerCase()) {
+					genomeReleaseFile = this.at(i);
+					break;
+				}
+			}
+			return genomeReleaseFile;
+		},
+		
+		getFileNames : function(){
+			var result = [];
+			for (var i = 0; i < this.length; i++) {
+				result.push(this.at(i).get('fileName'));
+			}
+			return result;
+		},
+
 		comparator : function(model) {
 			if (this._order_by == 'genomeVersion')
 				return model.get('genomeVersion');

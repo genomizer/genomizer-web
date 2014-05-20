@@ -9,7 +9,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		initialize : function() {
 			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
 			var that = this;
-
+			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
 			// this.genomeReleaseFiles = new GenomeReleaseFiles(file1);
 			// this.genomeReleaseFiles.push(file2);
@@ -18,12 +18,12 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
-
 			// console.log(this.genomeReleaseFiles);
 			// this.render(this.genomeReleaseFiles);
 		},
 
 		render : function(genomeReleaseFiles) {
+			
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
 
@@ -35,7 +35,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			"click #th_filename": "orderByFileName",
 			"click .delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile",
-			"click #choose_files" : "getSpecies"
+			"click #choose_files" : "setSpecies"
 			
 		},
 		
@@ -61,17 +61,14 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		
 		addSelectedFile: function() {
 			var formFiles = this.$el.find(".fileInput")[0].files;
-			var fileObj = formFiles[0];
-			var genomeReleaseFile = new GenomeReleaseFile();
-			genomeReleaseFile.setFileObj(fileObj);
-			genomeReleaseFile.set({"fileName": fileObj.name});
-			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile, this.speciesList);
+			this.genomeReleaseFileList.addFilesByFileObject(formFiles);
+			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(this.genomeReleaseFileList, this.speciesList);
 			uploadGenomeReleaseModal.show();
-			this.$el.find(".fileInput").val("");
+			//this.$el.find(".fileInput").val("");
 
 		},
 				
-		getSpecies : function(){
+		setSpecies : function(){
 			var annotations = new Annotations();
 			that = this;
             annotations.fetch({
