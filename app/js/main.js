@@ -57,10 +57,8 @@ require([
 
 		app.processStatuses.fetch();
 		setInterval(function() {
-			app.processStatuses.fetch().success(function() {
-				console.log("main > processStatuses > fetch > collection: ", app.processStatuses);
-			});
-		}, 30000);
+			app.processStatuses.fetch().success();
+		}, 10000);
 		
 
 
