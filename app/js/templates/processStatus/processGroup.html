@@ -3,7 +3,7 @@
 			<td rowspan="<%- processes.length + 1 %>" class="status-cell"><span class="glyphicon" data-toggle="tooltip" data-placement="left" title="<%- status %>"></span></td>
 		</tr>
 	<% _.each(processes, function(process, i) { %>
-		<tr>
+		<tr class="clickable" data-expid="<%- process["experimentName"] %>">
 			<td><%- process["experimentName"] %></td>
 			<td class="text-right"><%- process["timeAdded"] %></td>
 			<td class="text-right"><%- process["timeStarted"] %></td>

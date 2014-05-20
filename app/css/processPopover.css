@@ -8,7 +8,7 @@
 
 .process-popover .arrow {
 	left: initial !important;
-	right: 13px;
+	right: 18px;
 }
 
 .process-popover .table {
@@ -27,12 +27,33 @@
 
 .process-popover .popover-title {
 	border-bottom: none !important;
+	text-decoration: underline;
 }
 
 .process-popover .status-cell {
 	vertical-align: middle !important;
 	border-top: 1px solid white;
 	color: white;
+}
+
+.process-popover tr.clickable:hover {
+	cursor: pointer;
+}
+
+.process-popover .waiting tr:hover td {
+	background-color: #fcf8e3; 
+}
+
+.process-popover .started tr:hover td {
+	background-color: #d9edf7; 
+}
+
+.process-popover .crashed tr:hover td {
+	background-color: #f2dede; 
+}
+
+.process-popover .finished tr:hover td {
+	background-color: #dff0d8;
 }
 
 .process-popover tbody:last-child .status-cell {
@@ -53,22 +74,6 @@
 
 .process-popover .finished td.status-cell {
 	background-color: #5cb85c !important;
-}
-
-.process-popover .waiting tr:hover td {
-	background-color: #fcf8e3; 
-}
-
-.process-popover .started tr:hover td {
-	background-color: #d9edf7; 
-}
-
-.process-popover .crashed tr:hover td {
-	background-color: #f2dede; 
-}
-
-.process-popover .finished tr:hover td {
-	background-color: #dff0d8;
 }
 
 .process-popover .waiting .status-cell .glyphicon:before {

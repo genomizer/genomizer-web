@@ -48,12 +48,10 @@ define([
 			if(finished.length > 0)
 				this.$el.find("table").append(this.templateGroup({ "processes": this.formatProcessData(finished), "status": "finished" }));
 
-			// set up tooltips
-			console.log("ProcessPopover > render > tooltop", this.$el.find('.status-cell span'))
+			this.delegateEvents();
 		},
 		formatProcessData: function(object) {
 			var result = [];
-			console.log("ProcessPopover > formatDate > processes: ", object, object[0])
 			for (var i = 0; i < object.length; i++) {
 				result[i] = {};
 				result[i]["status"] = object[i].get("status");
@@ -67,7 +65,6 @@ define([
 		},
 		formatDate: function(date) {
 			if(date != 0) {
-				console.log("ProcessPopover > formatDate > date: ", date)
 				date = new Date(date);
 				// the difference between given time and now in hours
 				var difference = (date - new Date()) / (1000 * 3600); 
@@ -95,6 +92,9 @@ define([
 				var that = this;
 				console.log("ProcessPopover > show")
 				this.$el.fadeIn(200);
+
+				// it seems as if we need to do this or events wont fire until re-render
+				this.delegateEvents();
 				this.trigger("show");
 				setTimeout(function() {
 					$(document).click(that.documentClickHandler);
@@ -116,10 +116,12 @@ define([
 			
 		},
 		events: {
-			"click .row" : "clickHandler"
+			"click tr" : "clickHandler"
 		},
-		clickHandler: function() {
-			
+		clickHandler: function(event) {
+			document.location.href = "/#search/" + $(event.currentTarget).data("expid") + "[ExpID]";
+			console.log("ProcessPopover > clickHandler: ", this, event);
+			this.hide();
 		}
 	});
 	return QueryBuilder;
