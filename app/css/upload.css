@@ -60,22 +60,28 @@
 }
 
 .fileUploadList .type-select {
-	width: 100px;
-	position: absolute;
-	right: 40px;
 	border: none;
 	background: none;
 	outline: none;
 	box-shadow: none;
+	padding-left: 0px;
+	margin-left: -4px;
 }
 
 .fileUploadList .btn-remove {
-	position: absolute;
-	right: 0;
-	width: 40px;
+	width: 30%;
 	border: none;
 	background: none;
 	outline: none;
+	position:absolute;
+	right:0px;
+	top:2px;
+}
+.fileUploadList .only-text {
+	line-height:34px;
+}
+.fileUploadList .remove-col select {
+	width:70%;
 }
 
 #remove_experiment {
