@@ -18,8 +18,16 @@
 	vertical-align: top;
 }
 
-#search_input {
-	width: 600px;
+@media (min-width: 768px) {
+	#search_input {
+		width: 365px;
+	}
+}
+
+@media (min-width: 992px) {
+	#search_input {
+		width: 585px;
+	}
 }
 
 /* === END SEARCH FORM === */
@@ -178,13 +186,25 @@
 
 .query-builder {
 	max-width: none;
-	width: 728px;
 	left: 0;
 	top: 25px;
 }
 
+@media (min-width: 768px) {
+	.query-builder {
+		width: 493px;
+	}
+}
+
+@media (min-width: 992px) {
+	.query-builder {
+		width: 711px;
+	}
+}
+
 .query-builder .arrow {
-	left: 618px !important;
+	left: initial !important;
+	right: 98px;
 }
 
 .query-builder .popover-content {
