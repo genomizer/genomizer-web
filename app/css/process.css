@@ -1,18 +1,40 @@
-#raw-process-container .smoothing-container .form-group {
-	width: 33.33333%;
-	margin: 0;
-	box-sizing: border-box;
-	padding: 0;
+#raw-process-container .column-container {
+	padding-right: 15px;
 }
 
-#raw-process-container .smoothing-container input {
+#raw-process-container .column-container .col-sm-4 {
+    padding-right: 0;
+}
+
+#raw-process-container .checkbox-inline {
+    margin-bottom: 5px;
+}
+
+#raw-process-container .checkbox-inline:not(:first-child) {
+    margin-left: 15px;
+}
+
+#raw-process-container h5 {
+    margin-top: 2px;
+    font-size:13pt;
+    font-weight: bold;
+}
+
+#raw-process-container label {
+    font-size:10pt;
+    font-weight: normal;
+}
+
+#raw-process-container .triple-container > div > * {
 	width: 100%;
 	margin: 0;
 }
 
-#raw-process-container .smoothing-container .form-group:not(:first-child) {
+#raw-process-container .triple-container .form-group:not(:first-child) {
 	padding-left: 15px;
 }
+
+
 
 #raw-process-container .form-inline .input-group {
 	border: 2px dashed #444;
@@ -21,8 +43,19 @@
     text-align: justify;
     -ms-text-justify: distribute-all-lines;
     text-justify: distribute-all-lines;
+}
 
-    /* just for demo */
+#raw-process-container .alert span {
+    font-weight: 700;
+}
+
+#raw-process-container .disabled {
+    opacity: 0.5;
+}
+
+
+#raw-process-container .row .col-xs-1 {
+    padding: 0 0 0 30px;
 }
 
 .checkbox {
@@ -39,8 +72,4 @@
     display: inline-block;
     font-size: 0;
     line-height: 0
-}
-
-#raw-process-container #nr-of-steps {
-	margin-left: 15px;
 }

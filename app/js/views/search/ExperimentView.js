@@ -35,7 +35,6 @@ define([
 				});
 
 				fileView.render();
-				console.log("ExperimentView > render > filetype: ", file.get("type"))
 				this.$el.find(".js-" + file.get("type") + "-container").append(fileView.$el);
 			}, this);
 		},

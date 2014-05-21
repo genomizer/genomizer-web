@@ -5,12 +5,13 @@ define([],function() {
 			this.uploadDone = false;
 		},
 		defaults: {
-			"type":"raw",
-			// TODO: remove hardcoded default values (below)
+			"type":"raw", // This one is used and should be kept
+			/*
 			 "metaData": "metameta",
 			 "author": "name",
-			 "uploader": "user1",
 			 "grVersion": "hg18",
+			*/
+			 "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
 
 		},
 		// Requires: URLupload in attributes
@@ -30,6 +31,7 @@ define([],function() {
 					debugger;
 					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 				}
+*/
 				xhr: function()
 				{
 					//Upload progress
@@ -37,7 +39,6 @@ define([],function() {
 					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 					return xhr;
 				} 
-*/
 			}).done(_.bind(this.setUploadDone,this));
 		},
 		setUploadProgress:function(evt) {
@@ -59,7 +60,10 @@ define([],function() {
 			});
 		},
 		getReadableFileSize: function() {
-			var size = this.fileObj.size;
+			var size = this.getFileSize();
+			if(size === undefined) {
+				return undefined;
+			}
 			
 			if (size < 1024) {
 				return  (size.toFixed(2).toString() + " B");
@@ -72,6 +76,15 @@ define([],function() {
 			} else {
 				return ((size / 1099511627776).toFixed(2).toString() + " TiB");
 			}
+		},
+		getFileSize: function() {
+			if(this.fileObj === undefined) {
+				return undefined;
+			}
+			return this.fileObj.size;
+		},
+		isFileUpload: function() {
+			return !!this.fileObj 
 		}
 	});
 	return File;

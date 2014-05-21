@@ -1,0 +1,102 @@
+.process-popover {
+	position: absolute;
+	top: 42px;
+	right: 0;
+	left: initial;
+	max-width: initial;
+	white-space: nowrap;
+}
+
+.process-popover .arrow {
+	left: initial !important;
+	right: 18px;
+}
+
+.process-popover .table {
+	margin-bottom: 0;
+}
+
+.process-popover tbody {
+	border-top: none !important;
+}
+
+.process-popover th {
+	border-bottom: 1px solid #ebebeb !important;
+	background-color: #f7f7f7;
+	padding-top: 0 !important;
+}
+
+.process-popover .popover-title {
+	border-bottom: none !important;
+	text-decoration: underline;
+}
+
+.process-popover .status-cell {
+	vertical-align: middle !important;
+	border-top: 1px solid white;
+	color: white;
+}
+
+.process-popover tr.clickable:hover {
+	cursor: pointer;
+}
+
+.process-popover .waiting tr:hover td {
+	background-color: #fcf8e3; 
+}
+
+.process-popover .started tr:hover td {
+	background-color: #d9edf7; 
+}
+
+.process-popover .crashed tr:hover td {
+	background-color: #f2dede; 
+}
+
+.process-popover .finished tr:hover td {
+	background-color: #dff0d8;
+}
+
+.process-popover tbody:last-child .status-cell {
+	border-radius: 0 0 0 4px;
+}
+
+.process-popover .waiting td.status-cell {
+	background-color: #f0ad4e !important; 
+}
+
+.process-popover .started td.status-cell {
+	background-color: #428bca !important; 
+}
+
+.process-popover .crashed td.status-cell {
+	background-color: #d9534f !important; 
+}
+
+.process-popover .finished td.status-cell {
+	background-color: #5cb85c !important;
+}
+
+.process-popover .waiting .status-cell .glyphicon:before {
+	content: "\e023";
+}
+
+.process-popover .started .status-cell .glyphicon:before {
+	content: "\e019";
+}
+
+.process-popover .crashed .status-cell .glyphicon:before {
+	content: "\e014";
+}
+
+.process-popover .finished .status-cell .glyphicon:before {
+	content: "\e013";
+}
+
+#process_container.open>a {
+	color: black;
+}
+
+#process_container .caret {
+	margin-left: 5px;
+}

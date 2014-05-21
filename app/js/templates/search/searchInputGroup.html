@@ -4,6 +4,9 @@
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Type query" id="search_input" />
 			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" id="builder_button">
+					<span class="glyphicon glyphicon-flash"></span>
+				</button>
 				<button type="submit" disabled="disabled" class="btn btn-default" id="search_button">
 					<span class="glyphicon glyphicon-search"></span> Search
 				</button>
@@ -12,6 +15,7 @@
 		</div>
 		<div>
 			<div class="btn-group">
+
 				<button type="button" disabled="disabled" class="btn btn-default" id="download_button">
 					<span class="glyphicon glyphicon-download"></span> Download
 				</button>
@@ -20,8 +24,7 @@
 				</button>
 			</div>
 		</div>
-
-		
+		<div id="builder_container"></div>
 	</div>
 </form>
 <div id="results_container" style="display:none;" class="panel panel-default">

@@ -11,3 +11,7 @@ document {
 .btn {
 	outline: none !important;
 }
+
+.popover-title {
+	font-weight: bold;
+}

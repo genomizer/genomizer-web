@@ -59,14 +59,29 @@
 	margin-top: 40px;
 }
 
-#selector {
-	width: 100px;
-	float: right;
+.fileUploadList .type-select {
+	border: none;
+	background: none;
+	outline: none;
+	box-shadow: none;
+	padding-left: 0px;
+	margin-left: -4px;
 }
 
-#removeFile {
-	float: right;
-	width: 40px;
+.fileUploadList .btn-remove {
+	width: 30%;
+	border: none;
+	background: none;
+	outline: none;
+	position:absolute;
+	right:0px;
+	top:2px;
+}
+.fileUploadList .only-text {
+	line-height:34px;
+}
+.fileUploadList .remove-col select {
+	width:70%;
 }
 
 #remove_experiment {
@@ -76,3 +91,17 @@
 #clone_annotations {
 	margin-left: 10px;
 }
+
+#removeExperiment {
+	margin-top: -37px;
+	margin-right: 10px;
+}
+.collapsed-experiment #removeExperiment{
+	display: none;
+}
+
+.fileUploadList .input-group {
+	width: 100%;
+	padding-right: 140px;
+}
+

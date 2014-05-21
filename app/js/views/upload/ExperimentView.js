@@ -10,6 +10,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
+			this.model.files.on("uploadProgress",this.renderUploadProgress,this);
 			this.dragster = new Dragster( this.el );
 		},
 		events: {
@@ -22,9 +23,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
-			"click #uploadFilesButton": "uploadExperiment"
+			'keyup input[name="Experiment name"]':"changeLabelName"
 		},
 		render: function() {
+			window.this = this;
 			this.$el.html(this.TEMPLATE());
 			
 			this.annotationsForm = new AnnotationsForm({model:this.model});
@@ -37,9 +39,23 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.annotationsForm.render();
 			this.fileUploadList.render();
 		},
+		renderUploadProgress: function() {
+			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
+				this.$('.panel-heading').css('background','#5cb85c');
+			} else {
+				var progress = this.model.files.getTotalUploadProgress() * 100;
+				this.$('.panel-heading').css('background','linear-gradient(to right, #428bca 0%, #428bca '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
+			}
+		},
+		changeLabelName: function() {
+ 			if(this.model.get('name').length >0) {
+ 				this.$el.find('.panel-heading').text(this.model.get("name"));
+ 			} else {
+ 				this.$el.find('.panel-heading').text("Unnamed Experiment");
+ 			}
+		},
 		removeExperiment: function() {
-			this.el.remove();
-			this.model.collection.remove(this.model);
+			this.trigger('removeEvent',this);
 		},
 		cloneExperiment: function() {
 			this.trigger('cloneEvent',this.model);
@@ -47,39 +63,17 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-
-			/*
-			 * Begin of ugly fix, we remove ExpID from annotations
-			 * so that the request function (collidies with experiment_name on the server)
-			 */
-			var annots = this.model.get("annotations");
-			var newAn = []
-			_.each(annots,function(an) {
-				if(an.name != "ExpID") {
-					newAn.push(an);
-				}
-			});
-			this.model.set("annotations",newAn);
-
-			/*
-			 * END OF FIX
-			 */
-
-			//this.model.unset("files");
-			//annots = _.map(annots,function(an) {
-			//	return _.omit(an,'id');
-			//});
-			this.model.set("annotations",[{id:8,name:"Development Stage",value:"aster"}]);
-			this.model.set("createdBy","jonas");
-			this.model.set("name","webb-"+Date.now());
+			this.$("#experiment-form button[type=submit]").button('loading');
 			this.model.save(null,{success:function() {
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
 			}
 			});
+			this.collapseView();
 		},
-		uploadExperiment: function(){
-
+		collapseView: function(){
+			this.$el.find('.panel-collapse').collapse('hide');
+			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
 			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
