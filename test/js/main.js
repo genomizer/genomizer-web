@@ -7,7 +7,8 @@ requirejs.config({
     baseUrl: '../app/js',
 	paths: {
         tests: '../../test/js/tests/',
-		text:'lib/require.text'
+		text:'lib/require.text',
+		moment: 'lib/moment.min'
     }
 });
 
