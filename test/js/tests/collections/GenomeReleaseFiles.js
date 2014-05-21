@@ -104,7 +104,7 @@ define(['collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleas
 			});
 		});
 		describe("Tests of getGenomeReleaseByName", function (){
-				it("Should retrieve correct genomeReleaseFile when using getByGenomeReleaseName", function() {
+				it("Should retrieve correct file names when using getGenomeReleaseByName", function() {
 				var genomeRelease1 = new GenomeReleaseFile({
 					"fileName" : 'A1.fasta'
 				});
@@ -150,6 +150,13 @@ define(['collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleas
 				result[1].should.equal('AA2.fasta');
 				result[2].should.equal('A3.fasta');
 				result[3].should.equal('BASE3da.js');
+			});
+			it("Should return empty list if the collection is empty", function() {
+				
+				var genomeReleaseFiles = new GenomeReleaseFiles();
+	
+				var result = genomeReleaseFiles.getFileNames();
+				result.length.should.equal(0);
 			});
 		});
 	});
