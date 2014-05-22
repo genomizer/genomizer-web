@@ -39,12 +39,10 @@ define([
 		
 		cancel : function() {
 			this.hide();
-			//this.close();
 		},
 		
 		removeModal: function() {
 			this.$modal.remove();
-
 		},
 		
 		changeConfirmAvailability: function() {

@@ -64,11 +64,10 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			this.genomeReleaseFileList.addFilesByFileObject(formFiles);
 			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(this.genomeReleaseFileList, this.speciesList);
 			uploadGenomeReleaseModal.show();
-			//this.$el.find(".fileInput").val("");
-
 		},
 				
 		setSpecies : function(){
+			this.genomeReleaseFileList.reset();
 			var annotations = new Annotations();
 			that = this;
             annotations.fetch({
