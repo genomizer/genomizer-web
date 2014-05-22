@@ -7,19 +7,14 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 ], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
-			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
 			var that = this;
 			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
-			// this.genomeReleaseFiles = new GenomeReleaseFiles(file1);
-			// this.genomeReleaseFiles.push(file2);
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
-			// console.log(this.genomeReleaseFiles);
-			// this.render(this.genomeReleaseFiles);
 		},
 
 		render : function(genomeReleaseFiles) {
