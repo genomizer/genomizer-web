@@ -63,13 +63,21 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
+			var failed = true;
 			this.$("#experiment-form button[type=submit]").button('loading');
 			this.model.save(null,{success:function() {
+				that.collapseView();
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
-			}
+				that.model.collection.remove(that.model);
+				failed = false;
+			} 
 			});
-			this.collapseView();
+			if(failed) {
+				app.messenger.warning("Name of experiment already exists in the database, please enter a unique name");
+				this.$("#experiment-form button[type=submit]").button('reset');
+			}
+			return failed;
 		},
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');
