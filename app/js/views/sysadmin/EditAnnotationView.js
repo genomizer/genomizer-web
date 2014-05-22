@@ -30,7 +30,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
 	
 			if (originalName != newName) {
 				var renamePayload = new Backbone.Model();
-				renamePayload.set({"name" : originalName, "newName" : newName});
+				renamePayload.set({"newName" : newName, "oldName" : originalName});
 				Gateway.renameAnnotation(renamePayload);
 			}
 			history.back();
@@ -41,8 +41,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
             if (x) {
                 var y = window.confirm("Annotation will be completely removed!");
                 if (y) {
-                    Gateway.deleteAnnotation({}, this.annotation.get('name'));
-                    history.back();
+                    Gateway.deleteAnnotation({}, this.annotation.get('name'), true);
                 }
             }
         },

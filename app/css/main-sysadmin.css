@@ -45,3 +45,6 @@ background-color:#d3d3d3;
 color:#000;
 }
 
+#container .selectedFilesTable {
+	width: 20%;
+}

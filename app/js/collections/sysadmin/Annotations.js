@@ -24,12 +24,21 @@ define(['models/sysadmin/Annotation', 'models/sysadmin/Gateway'], function(Annot
 		getAnnotationByName : function(name) {
 			var annotation = null;
 			for (var i = 0; i < this.length; i++) {
-				if (this.at(i).get('name') == name) {
+				if ((this.at(i).get('name')).toLowerCase() == name.toLowerCase()) {
 					annotation = this.at(i);
 					break;
 				}
 			}
 			return annotation;
+		},
+		
+		getValuesOf : function(annotation){
+			var annotation = this.getAnnotationByName(annotation);
+			if(annotation == null){
+				return -1;
+			}
+			return annotation.get('values');
+			
 		}
 	}, 
 	//static methods
