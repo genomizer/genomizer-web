@@ -26,14 +26,14 @@ define([
 		},
 
 		uploadGR : function() {
-			// var payload = new Backbone.Model();
-			// var name = this.genomeReleaseFile.get('fileName');
-			// var specie = $('#species_drop-down').val();
-			// var genomeVersion = $('#version_field').val();
-			// payload.set({"fileName": name,
-						 // "specie": specie,
-						 // "genomeVersion": genomeVersion});
-			//Gateway.postGenomeRelease(payload, this.genomeReleaseFile);
+			var payload = new Backbone.Model();
+						
+			var specie = $('#species_drop-down').val();
+			var genomeVersion = $('#version_field').val();
+
+			this.genomeReleaseFiles.setFileInfo(specie, genomeVersion);
+			
+			Gateway.postGenomeRelease(this.genomeReleaseFiles);
 			this.hide();
 		},
 		

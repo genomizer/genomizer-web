@@ -1,7 +1,7 @@
 define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
-		url : app.BASE_URL,
+		url : "http://scratchy.cs.umu.se:7000/",
 // app.BASE_URL
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
@@ -31,7 +31,7 @@ define([], function() {
 
 		},
 		
-		postGenomeRelease : function(payload, genomeReleaseFile) {
+		postGenomeRelease : function(genomeReleaseFiles) {
 			that = this;
 
 			$.ajax({
@@ -41,44 +41,28 @@ define([], function() {
 				dataType : 'json',
 				username : "",
 				password : "",
-				data : JSON.stringify(payload),
+				data : JSON.stringify(genomeReleaseFiles),
 				success : function(data) {
-					that.uploadGenomeReleaseFile(data, genomeReleaseFile);
 				},
-				complete : function(xhr) {
-
+				complete : function(data) {
+					data = [
+ {
+  "URLupload": "url1"
+ },
+ {
+  "URLupload": "url2"
+ },
+ {
+  "URLupload": "url3"
+ }
+];
+					console.log(data);
+					genomeReleaseFiles.uploadGenomeReleaseFiles(data);
 				},
 			});
 
 		},
 	
-		uploadGenomeReleaseFile : function(url, genomeReleaseFile){
-			var payload = new FormData();
-			console.log(genomeReleaseFile.getFileObj());
-			payload.append('uploadfile',genomeReleaseFile.getFileObj());
-			$.ajax({
-				url: url.URLupload,
-				type: "POST",
-				data: payload,
-				username: "pvt",
-				password: "pvt",
-				processData: false,
-				contentType: false,
-		/*		beforeSend: function(jqXHR) {
-					debugger;
-					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-				}
-				xhr: function()
-				{
-					//Upload progress
-					var xhr = $.ajaxSettings.xhr();
-					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-					return xhr;
-				} 
-*/
-			});
-		},
- 
 		postAnnotation : function(payload) {
 			this.sendPacket("POST", "annotation/field", payload, false);
 		},

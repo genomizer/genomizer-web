@@ -15,6 +15,29 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 
 		},
 		
+		uploadGenomeReleaseFiles : function(data) {
+			// array URL
+
+			var i = 0;
+			_.forEach(this.models, function(file) {
+				file.setUploadURL(data[i].URLupload);
+				console.log(data[i].URLupload);
+				console.log(file.get('fileName'));
+				i++;	
+				file.uploadGenomeReleaseFile();
+			});
+			
+		},
+		
+		setFileInfo : function(specie, genomeVersion) {
+			var that = this;
+			_.forEach(that.models, function(file) {
+				console.log(that.models);
+				console.log(file);
+				file.set({"specie" : specie, "genomeVersion" : genomeVersion});
+			});
+		},
+		
 		getGenomeReleaseByName : function(name) {
 			var genomeReleaseFile = null;
 			for (var i = 0; i < this.length; i++) {
