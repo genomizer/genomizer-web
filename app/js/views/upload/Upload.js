@@ -31,31 +31,43 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"submit #experiment-form": "saveExperiment",
 			"click #uploadAllButton": "uploadAll"
 		},
-		createExperiment: function(clonedAnnotations) {
+		createExperiment: function() {
 			var experiment = new Experiment();
 			this.appendNewExperimentView(experiment);
 		},
 		cloneExperiment: function(clonedAnnotations) {
-			var experiment = clonedAnnotations.clone();
+			var experiment = new Experiment(_.omit(clonedAnnotations.toJSON(),'files','id'));
 			this.appendNewExperimentView(experiment);
 		},
 		removeExperiment: function(experimentView) {
 			var index = this.experimentViews.indexOf(experimentView);
 			experimentView.el.remove();
-			experimentView.model.collection.remove(this.model);
+			this.experiments.remove(experimentView.model);
 			this.experimentViews.splice(index,1);
 			this.enableUploadAllButton();
 		},
 		addToExistingExperiment: function() {
+			var denySameExperimentName = false;
 			var experimentId = $('#existing_experiment_field').val();
-			var that = this;
-			var experiment = new Experiment();
-			this.experiments.add(experiment);
-			experiment.set("id",experimentId);
-			experiment.existingExperiment = true;
-			experiment.fetch().success(function() {
-				that.appendNewExperimentView(experiment);
+
+			this.experiments.each(function(exp) {
+				if (exp.id == experimentId) {
+					app.messenger.warning("The experiment \'" + exp.id + "\' is already open");
+					denySameExperimentName = true;
+				}
 			});
+
+			if(!denySameExperimentName) {
+				var that = this;
+				var experiment = new Experiment();
+				this.experiments.add(experiment);
+				experiment.set("id",experimentId);
+				experiment.existingExperiment = true;
+				experiment.fetch().success(function() {
+					that.appendNewExperimentView(experiment);
+				});
+			}
+		
 		},
 		appendNewExperimentView: function(experiment) {
 			var experimentView = new ExperimentView({model: experiment});
@@ -72,8 +84,12 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			experimentView.changeLabelName();
 		},
 		uploadAll: function() {
+			var that = this;
 			_.each(this.experimentViews, function(expView) {
-				expView.saveExperiment(new Event("uselessEvent"));
+				if(!expView.saveExperiment(new Event("uselessEvent"))) {
+					var index = that.experimentViews.indexOf(experimentView);
+					that.experimentViews.splice(index,1);
+				}
 			});
 		},
 		enableUploadAllButton: function() {

@@ -162,5 +162,29 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					expect(this.files.getTotalUploadFileSize()).to.equal(22)
 				});
 			});
+			describe("hasUploads", function() {
+				beforeEach(function() {
+					this.files = new Files();
+				});
+				it("return true if it has files that are uploads", function() {
+					var f1 = new File();
+					f1.fileObj = {size:10};
+					this.files.add(f1);
+					var f2 = new File();
+					f2.fileObj = {size:12};
+					this.files.add(f2);
+					expect(this.files.hasUpload()).to.be.true;
+				});
+				it("return false if it has no files that are uploads", function() {
+					var f1 = new File();
+					this.files.add(f1);
+					var f2 = new File();
+					this.files.add(f2);
+					expect(this.files.hasUpload()).to.be.false;
+				});
+				it("return false if no files", function() {
+					expect(this.files.hasUpload()).to.be.false;
+				});
+			});
 	});
 });
