@@ -78,10 +78,6 @@ define([
 				value = this.$el.find(".choice-container .dropdown-label").text();
 			}
 
-			if(value.indexOf(" ") != -1) {
-				value = "\"" + value + "\"";
-			}
-
 			if(annotation == "annotation") {
 				app.messenger.warning("Please select an annotation.");
 				return;
