@@ -17,7 +17,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.enableOnUnloadWarning();
 			this.render();
 			this.enableAddButton(); // not needed when automatic test value is removed
-			this.showUploadAllButton();
+			$('#uploadAllButton').toggle(false);
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -44,7 +44,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			experimentView.el.remove();
 			experimentView.model.collection.remove(this.model);
 			this.experimentViews.splice(index,1);
-			this.showUploadAllButton();
+			this.enableUploadAllButton();
 		},
 		addToExistingExperiment: function() {
 			var experimentId = $('#existing_experiment_field').val();
@@ -59,6 +59,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		},
 		appendNewExperimentView: function(experiment) {
 			var experimentView = new ExperimentView({model: experiment});
+			$('#uploadAllButton').toggle(true);
 			
 			this.listenTo(experimentView,'cloneEvent',this.cloneExperiment);
 			this.listenTo(experimentView,'removeEvent',this.removeExperiment);
@@ -67,7 +68,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.experimentViews.push(experimentView);
 			this.experiments.add(experiment);
 			experimentView.render();
-			this.showUploadAllButton();
+			this.enableUploadAllButton();
 			experimentView.changeLabelName();
 		},
 		uploadAll: function() {
@@ -75,7 +76,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 				expView.saveExperiment(new Event("uselessEvent"));
 			});
 		},
-		showUploadAllButton: function() {
+		enableUploadAllButton: function() {
 			if(this.experimentViews.length >= 2) {
 				$('#uploadAllButton').prop('disabled', false);
 			} else {
