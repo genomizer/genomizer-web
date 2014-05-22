@@ -93,7 +93,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			});
 		},
 		enableUploadAllButton: function() {
-			if(this.experimentViews.length >= 2) {
+			if(this.experiments.hasUploadable()) {
 				$('#uploadAllButton').prop('disabled', false);
 			} else {
 				$('#uploadAllButton').prop('disabled', true);
