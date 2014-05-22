@@ -39,7 +39,7 @@ define([
 
 		},
 		isUploadable: function() {
-			return this.files.hasUpload();
+			return this.files.hasUpload() && !this.isUploading;
 		},
 		getPossibleGenomeReleases: function() {
 			var species = this.getAnnotation("Species").value;

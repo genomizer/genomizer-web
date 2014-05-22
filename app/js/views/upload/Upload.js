@@ -27,7 +27,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
-			"click #add_button": "addToExistingExperiment",
+			"submit form#upload_form": "addToExistingExperiment",
 			"submit #experiment-form": "saveExperiment",
 			"click #uploadAllButton": "uploadAll"
 		},

@@ -14,6 +14,7 @@ define(['models/File'],function(File) {
 			});
 		},
 		fetchAndSaveFiles: function() {
+			this.isUploading = true;
 			this.each(function(file) {
 				file.fetchAndUpload();
 			});
