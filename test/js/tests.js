@@ -6,6 +6,7 @@ var testModulePaths = [
 	'tests/collections/Annotations',
 	'tests/collections/AnnotationTypes',
 	'tests/collections/GenomeReleaseFiles',
+	'tests/collections/Experiments',
 
 	// Models
 	'tests/models/Experiment',
