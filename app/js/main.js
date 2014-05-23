@@ -53,7 +53,7 @@ require([
 		$.ajaxSetup({
 			beforeSend: function (xhr)
 			{
-				xhr.setRequestHeader("Authorization",app.auth.get("token"));        
+				xhr.setRequestHeader("Authorization",app.auth.get("token"));    
 			}
 		});
 		// TODO: fire simultaniously
