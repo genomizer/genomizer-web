@@ -41,7 +41,7 @@ define([], function() {
 				dataType : 'json',
 				username : "",
 				password : "",
-				data : JSON.stringify(genomeReleaseFiles),
+				data : JSON.stringify(genomeReleaseFiles.getPayload()),
 				success : function(data) {
 				},
 				complete : function(data) {

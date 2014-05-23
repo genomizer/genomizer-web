@@ -23,19 +23,21 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 				file.setUploadURL(data[i].URLupload);
 				console.log(data[i].URLupload);
 				console.log(file.get('fileName'));
-				i++;	
+				i++;
 				file.uploadGenomeReleaseFile();
 			});
 			
 		},
 		
 		setFileInfo : function(specie, genomeVersion) {
-			var that = this;
-			_.forEach(that.models, function(file) {
-				console.log(that.models);
-				console.log(file);
-				file.set({"specie" : specie, "genomeVersion" : genomeVersion});
-			});
+			this.specie = specie;
+			this.genomeVersion = genomeVersion;
+			// var that = this;
+			// _.forEach(that.models, function(file) {
+				// console.log(that.models);
+				// console.log(file);
+				// file.set({"specie" : specie, "genomeVersion" : genomeVersion});
+			// });
 		},
 		
 		getGenomeReleaseByName : function(name) {
@@ -53,6 +55,14 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			var result = [];
 			for (var i = 0; i < this.length; i++) {
 				result.push(this.at(i).get('fileName'));
+			}
+			return result;
+		},
+		
+		getFolderPaths : function(){
+			var result = [];
+			for (var i = 0; i < this.length; i++) {
+				result.push(this.at(i).get('folderPath'));
 			}
 			return result;
 		},
@@ -78,6 +88,12 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 				return gr.get("specie").toLowerCase() == specie.toLowerCase();
 			});
 			return new GenomeReleaseFiles(gfs);
+		},
+		
+		getPayload : function() {
+			var payload = new Backbone.Model();
+			payload.set({"genomeVersion": this.genomeVersion, "species" : this.specie, "files":this.getFileNames()});
+			return payload;
 		}
 
 	});

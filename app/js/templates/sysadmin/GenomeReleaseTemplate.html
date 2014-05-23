@@ -17,9 +17,9 @@
 		<tbody id="genome_table_body">
 			<% _.each(genomeReleaseFiles, function(genomeReleaseFile) { %>
 			<tr>
-				<td><%= genomeReleaseFile.get('specie') %></td>
+				<td><%= genomeReleaseFile.get('species') %></td>
 				<td><%= genomeReleaseFile.get('genomeVersion') %></td>
-				<td><%= genomeReleaseFile.get('fileName') %></td>
+				<td><%= genomeReleaseFile.get('folderPath') %></td>
 
 				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('specie')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
 			</tr>

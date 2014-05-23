@@ -2,8 +2,9 @@ define([], function() {
 	var GenomeReleaseFile = Backbone.Model.extend({
 		defaults : {
 			"fileName" : "Not defined",
-			"specie" : "Not defined",
-			"genomeVersion" : "Not defined"
+			"species" : "Not defined",
+			"genomeVersion" : "Not defined",
+			"folderPath" : "Not defined"
 
 		},
 		initialize : function() {
