@@ -27,13 +27,13 @@ define([], function() {
 		uploadGenomeReleaseFile : function() {
 			var payload = new FormData();
 			var that = this;
+			console.log(this.uploadURL);
 			payload.append('uploadfile', this.getFileObj());
 			$.ajax({
 				url : this.uploadURL,
 				type : "POST",
 				data : payload,
-				username : "pvt",
-				password : "pvt",
+				Authorization : app.auth.get("token"),
 				processData : false,
 				contentType : false,
 

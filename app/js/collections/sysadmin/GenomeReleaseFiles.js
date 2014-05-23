@@ -17,10 +17,12 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 		
 		uploadGenomeReleaseFiles : function(data) {
 			// array URL
-
+			
 			var i = 0;
+			console.log(data);
+			console.log(data[0]);
 			_.forEach(this.models, function(file) {
-				file.setUploadURL(data[i].URLupload);
+				file.setUploadURL(data[i]);
 				console.log(data[i].URLupload);
 				console.log(file.get('fileName'));
 				i++;

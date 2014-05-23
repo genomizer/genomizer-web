@@ -44,7 +44,7 @@ define([], function() {
 				success : function(data) {
 				},
 				complete : function(data) {
-					genomeReleaseFiles.uploadGenomeReleaseFiles(data);
+					genomeReleaseFiles.uploadGenomeReleaseFiles(eval(data.responseText));
 				},
 			});
 
