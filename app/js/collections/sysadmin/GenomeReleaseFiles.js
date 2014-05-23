@@ -29,6 +29,36 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			
 		},
 		
+		/*
+		 * returns the total size of the files to be uploaded
+		 */
+		getTotalUploadFileSize: function() {
+			var size = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					size += f.getFileSize();
+				}
+			});
+			return size;
+			
+		},
+		
+		/*
+		 * Get the total upload progress as a value between 0 and 1
+		 */
+		getTotalUploadProgress: function() {
+			if(this.getTotalUploadFileSize() == 0) {
+				return 1;
+			}
+			var uploadedSize = 0;
+			this.each(function(f) {
+				if(f.isFileUpload()) {
+					uploadedSize += f.getFileSize() * f.progress;
+				}
+			});
+			return uploadedSize / this.getTotalUploadFileSize();
+		},
+		
 		setFileInfo : function(specie, genomeVersion) {
 			var that = this;
 			_.forEach(that.models, function(file) {
