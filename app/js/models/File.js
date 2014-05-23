@@ -1,5 +1,8 @@
 define([],function() {
 	var File = Backbone.Model.extend({
+		url: function() {
+			return app.BASE_URL + 'file/' + this.id;
+		},
 		initialize: function() {
 			this.progress = 0;
 			this.uploadDone = false;

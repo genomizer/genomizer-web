@@ -138,7 +138,7 @@ define([
 			var level = $('[name=process-radios]:checked').val();
 			var bowtieFlags = ($('#bowtie-params').val());
 			var genomeReference = ($('#genome-reference').val());
-			var gffFormat = (level == 2 ? "y": "");
+			var gffFormat = (level >= 2 ? "y": "");
 			var sgrFormat = (level >= 3 ? "y": "");
 			var smoothParams = (level >= 4 ? (($('#window-size').val()) 
 				+ " " + ($('#smooth-type')).val()
