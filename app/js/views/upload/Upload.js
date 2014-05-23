@@ -13,6 +13,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
+			this.experiments.on("changeUploadable",this.enableUploadAllButton,this);
 			this.experimentViews = [];
 			this.enableOnUnloadWarning();
 			this.render();
@@ -84,6 +85,8 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			experimentView.changeLabelName();
 		},
 		uploadAll: function() {
+			this.$(".experiment-container>div:not(.collapsed-experiment) .upload-experiment").click();
+			/*
 			var that = this;
 			_.each(this.experimentViews, function(expView) {
 				if(!expView.saveExperiment(new Event("uselessEvent"))) {
@@ -91,9 +94,10 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 					that.experimentViews.splice(index,1);
 				}
 			});
+*/
 		},
 		enableUploadAllButton: function() {
-			if(this.experimentViews.length >= 2) {
+			if(this.experiments.hasUploadable()) {
 				$('#uploadAllButton').prop('disabled', false);
 			} else {
 				$('#uploadAllButton').prop('disabled', true);

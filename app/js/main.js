@@ -7,8 +7,7 @@ require.config({
 });
 // this is a release
 var app = {};
-app.BASE_URL = "http://sterner.cc:7000/";
-//app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
+app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
 //app.BASE_URL = "http://harry.cs.umu.se:7000/";
 if(window.location.pathname.indexOf("c11vbk") != -1) {
 	//	app.BASE_URL = "http://harry.cs.umu.se:7000/";
@@ -36,10 +35,11 @@ require([
 	app.messenger = new Messenger();
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		if(app.messenger.handleErrors[jqxhr.status]) {
-			app.messenger.warning(app.messenger.handleErrors[jqxhr.status]());
-		} else if(!app.messenger.ignoreErrors[jqxhr.status]) {
-			app.messenger.warning("Error " + jqxhr.status + " when requesting " + settings.url + " please reload the page.");
+		
+		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
+			app.messenger.warning(jqxhr.responseJSON.message);
+		} else {
+			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page.");
 		}
 	});
 
@@ -53,7 +53,7 @@ require([
 		$.ajaxSetup({
 			beforeSend: function (xhr)
 			{
-				xhr.setRequestHeader("Authorization",app.auth.get("token"));        
+				xhr.setRequestHeader("Authorization",app.auth.get("token"));    
 			}
 		});
 		// TODO: fire simultaniously

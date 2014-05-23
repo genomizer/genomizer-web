@@ -3,15 +3,6 @@ define([
 ],function(Template) {
 	var Messenger = Backbone.View.extend({
 		fadeTime: 500,
-		ignoreErrors: {},
-		handleErrors: {
-			"502" : function() {
-				return "Unable to connect to the server: Server application not responding.";
-			},
-			"400" : function() {
-				return "The given search query is invalid, please rewrite it and try again.";
-			},
-		},
 		TEMPLATE: _.template(Template),
 		events: {
 			"click .close" : "closeAlert"

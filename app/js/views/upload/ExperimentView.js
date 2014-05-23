@@ -49,7 +49,11 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		changeLabelName: function() {
  			if(this.model.get('name').length >0) {
- 				this.$el.find('.panel-heading').text(this.model.get("name"));
+ 				if($.trim(this.model.get('name')) == '') {
+ 					this.$el.find('.panel-heading').text("Unnamed Experiment");
+ 				} else {
+ 					this.$el.find('.panel-heading').text(this.model.get("name"));
+ 				}
  			} else {
  				this.$el.find('.panel-heading').text("Unnamed Experiment");
  			}
@@ -69,15 +73,16 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.collapseView();
 				that.model.updateExperimentIdsForFiles();
 				that.model.files.fetchAndSaveFiles();
+				$('#uploadAllButton').prop('disabled', true);
 				that.model.collection.remove(that.model);
 				failed = false;
-			} 
+			}
 			});
 			if(failed) {
-				app.messenger.warning("Name of experiment already exists in the database, please enter a unique name");
+				//app.messenger.warning("Name of experiment already exists in the database, please enter a unique name");
 				this.$("#experiment-form button[type=submit]").button('reset');
 			}
-			return failed;
+			
 		},
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');
