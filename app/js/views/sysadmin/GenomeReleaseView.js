@@ -18,17 +18,14 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		},
 
 		render : function(genomeReleaseFiles) {
-			
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
 			this.renderUploadProgress();
-
 		},
 		
 		events : {
 			"click #th_species": "orderBySpecies",
 			"click #th_version": "orderByVersion",
-			"click #th_filename": "orderByFileName",
 			"click .delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile",
 			"click #choose_files" : "setSpecies"
@@ -42,11 +39,6 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		
 		orderByVersion : function() {
 			this.genomeReleaseFiles.orderBy("genomeVersion");
-			this.render(this.genomeReleaseFiles);
-		},
-		
-		orderByFileName : function() {
-			this.genomeReleaseFiles.orderBy("fileName");
 			this.render(this.genomeReleaseFiles);
 		},
 		

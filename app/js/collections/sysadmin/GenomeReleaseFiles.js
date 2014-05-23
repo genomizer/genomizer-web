@@ -77,6 +77,10 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			// });
 		},
 		
+		getSpecie : function() {
+			return this.specie;
+		},
+		
 		getGenomeReleaseByName : function(name) {
 			var genomeReleaseFile = null;
 			for (var i = 0; i < this.length; i++) {
@@ -107,8 +111,6 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 		comparator : function(model) {
 			if (this._order_by == 'genomeVersion')
 				return model.get('genomeVersion');
-			else if (this._order_by == 'fileName')
-				return model.get('fileName');
 			else
 				return model.get('specie');
 		}, 
@@ -129,7 +131,7 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 		
 		getPayload : function() {
 			var payload = new Backbone.Model();
-			payload.set({"genomeVersion": this.genomeVersion, "species" : this.specie, "files":this.getFileNames()});
+			payload.set({"genomeVersion": this.genomeVersion, "specie" : this.specie, "files":this.getFileNames()});
 			return payload;
 		}
 

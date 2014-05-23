@@ -4,8 +4,8 @@ define([], function() {
 			"fileName" : "Not defined",
 			"species" : "Not defined",
 			"genomeVersion" : "Not defined",
-			"folderPath" : "Not defined"
-
+			"folderPath" : "Not defined",
+			"files" : "Not defined"
 		},
 		initialize : function() {
 			this.progress = 0;

@@ -16,8 +16,7 @@ define([], function() {
 				ContentType : "application/json",
 				url : this.url + urlExtension,
 				dataType : 'json',
-				username : "",
-				password : "",
+				Authorization: app.auth.get("token"),
 				data : JSON.stringify(payload),
 				success: function(data){
 					if (shouldGoBack) {
@@ -38,10 +37,9 @@ define([], function() {
 			$.ajax({
 				type : "POST",
 				ContentType : "application/json",
-				url : this.url + "genomeRelease",
+				url : this.url + "genomeRelease/" + encodeURIComponent(genomeReleaseFiles.getSpecie()),
 				dataType : 'json',
-				username : "",
-				password : "",
+				Authorization: app.auth.get("token"),
 				data : JSON.stringify(genomeReleaseFiles.getPayload()),
 				success : function(data) {
 				},
