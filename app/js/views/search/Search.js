@@ -64,13 +64,13 @@ define([
 
 			//kolla experiment och lägg till de
 
-			$('#delete-body-text').html(this.TEMPLATEDELETEFILE({
+			$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
 				'fileID': fileNames[0],
 				'expID': expIDs[0]
 			}));
 
 			for(var i = 1; i<fileNames.length;i++) {
-				this.$el.find('#delete-body-text').append(this.TEMPLATEDELETE({
+				this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
 					'fileID': fileNames[i],
 					'expID': expIDs[i]
 				}));
