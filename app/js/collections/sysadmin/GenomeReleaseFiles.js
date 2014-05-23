@@ -29,6 +29,13 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			
 		},
 		
+		hasUnfinishedUploads: function() {
+			var aNotDoneUpload = this.find(function(f) {
+				return !f.uploadDone;
+			});
+			return aNotDoneUpload !== undefined;
+		},
+		
 		/*
 		 * returns the total size of the files to be uploaded
 		 */

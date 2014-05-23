@@ -70,7 +70,16 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
                     that.speciesList = annotations.getValuesOf("Species");
                 }
             });
-		}
+		},
+		
+		renderUploadProgress: function() {
+			if(!this.genomeReleaseFiles.hasUnfinishedUploads() && genomeReleaseFiles.length) {
+				
+			} else {
+				var progress = this.genomeReleaseFiles.getTotalUploadProgress() * 100;
+				
+			}
+		},
 	
 	});
 	return GenomeReleaseView;
