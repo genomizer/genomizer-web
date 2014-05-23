@@ -3,12 +3,17 @@ define([
 	'views/search/SearchResultsView',
 	'collections/AnnotationTypes',
 	'views/search/QueryBuilder',
-	'text!templates/search/searchInputGroup.html'
-],function(SearchResults, SearchResultsView, AnnotationTypes, QueryBuilder, inputGroupTemplate) {
+	'text!templates/search/searchInputGroup.html',
+	'text!templates/search/filesToDeleteTemplate.html',
+	'text!templates/search/experimentsToDeleteTemplate.html'
+],function(SearchResults, SearchResultsView, AnnotationTypes, 
+	QueryBuilder, inputGroupTemplate, filesToDeleteTemplate, experimentsToDeleteTemplate) {
 
 	var Search = Backbone.View.extend({
 
 		TEMPLATE: _.template(inputGroupTemplate),
+		TEMPLATEDELETEFILE: _.template(filesToDeleteTemplate),
+		TEMPLADEDELETEEXP: _.template(experimentsToDeleteTemplate),
 		initialize: function(options) {
 
 			this.builder = new QueryBuilder();
@@ -41,12 +46,48 @@ define([
 			"input #search_input": "searchQueryChanged",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected",
-			"click #builder_button": "openBuilder"
+			"click #builder_button": "openBuilder",
+			"click #delete_button": "openDeleteModal",
+			"click #do_delete": "deleteData" 
+		},
+		openDeleteModal: function() {
+
+			var files = this.collection.getSelectedFiles();
+			var fileNames = [];
+			var expIDs = [];
+			for(var i = 0; i<files.length;i++) {
+				console.log("file to delete: ", files[i].get("id"));
+				console.log(files[i]);
+				fileNames.push(files[i].get("filename"));
+				expIDs.push(files[i].get("expId"));
+			}
+
+			//kolla experiment och lägg till de
+
+			$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
+				'fileID': fileNames[0],
+				'expID': expIDs[0]
+			}));
+
+			for(var i = 1; i<fileNames.length;i++) {
+				this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
+					'fileID': fileNames[i],
+					'expID': expIDs[i]
+				}));
+			}
+		},
+		deleteData: function() {
+			var files = this.collection.getSelectedFiles();
+			for(var i = 0; i<files.length;i++) {
+				console.log("file to delete: ", files[i].get("id"));
+				files[i].destroy();
+			}
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
 			console.log()
 			//handles whether or not the download or process buttons should be clickable.
 			if(fileArray.length > 0) {
+				$('#delete_button').prop('disabled', false);
 				$('#download_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
 				var startSpecies = this.collection.getSpeciesForExperiment(fileArray[0].get("expId"));
@@ -57,6 +98,7 @@ define([
 					}
 				}
 			} else {
+				$('#delete_button').prop('disabled', true);
 				$('#download_button').prop('disabled', true);
 				$('#process_button').prop('disabled', true);
 			}
