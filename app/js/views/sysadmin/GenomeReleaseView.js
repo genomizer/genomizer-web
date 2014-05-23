@@ -44,6 +44,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		
 		deleteGenomeRelease : function(e) {
 			var payload = e.currentTarget.id.split(",");
+			console.log(payload);
 			Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
 		},
 		
@@ -82,6 +83,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 				//$('.progess-bar').width(progress);
 			// }
 		},
+
 	
 	});
 	return GenomeReleaseView;

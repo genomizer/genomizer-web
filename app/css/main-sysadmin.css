@@ -60,6 +60,6 @@ margin:1ex;
 padding:0.5ex;
 }
 
-ul.vertical {
-	display:block;
+.progress {
+	height: 25px;
 }

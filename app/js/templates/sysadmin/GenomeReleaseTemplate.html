@@ -9,7 +9,7 @@
 
 	<div id="progress-bar-container">
 		<div class="progress">
-			<div class="progress-bar" id="pbar" style="width: 0%;"></div>
+			<div class="progress-bar" id="pbar" style="width: 20%;"></div>
 		</div>
 	</div>
 
@@ -27,7 +27,7 @@
 
 				<td title="<% _.each(genomeReleaseFile.get('files'), function(fileName) { %><%= fileName %> <% }); %>"><%=genomeReleaseFile.get('files')[0] + ", ..." %></td>
 
-				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('specie')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
+				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('species')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
 			</tr>
 			<% }); %>
 		</tbody>
