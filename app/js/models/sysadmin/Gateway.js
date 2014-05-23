@@ -37,7 +37,7 @@ define([], function() {
 			$.ajax({
 				type : "POST",
 				ContentType : "application/json",
-				url : this.url + "genomeRelease/" + encodeURIComponent(genomeReleaseFiles.getSpecie()),
+				url : this.url + "genomeRelease",
 				dataType : 'json',
 				Authorization: app.auth.get("token"),
 				data : JSON.stringify(genomeReleaseFiles.getPayload()),
