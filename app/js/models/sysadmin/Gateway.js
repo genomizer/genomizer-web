@@ -1,7 +1,7 @@
 define([], function() {
 	var Gateway = Backbone.Model.extend({
 	}, {
-		url : "http://scratchy.cs.umu.se:7000/",
+		url : app.BASE_URL,
 // app.BASE_URL
 //http://genomizer.apiary-mock.com
 //http://scratchy.cs.umu.se:7000
@@ -44,7 +44,7 @@ define([], function() {
 				success : function(data) {
 				},
 				complete : function(data) {
-					// genomeReleaseFiles.uploadGenomeReleaseFiles(data);
+					genomeReleaseFiles.uploadGenomeReleaseFiles(data);
 				},
 			});
 
