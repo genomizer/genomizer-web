@@ -40,14 +40,10 @@ define([
 		},
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
-			"click .expand-file-button": "toggleFileRows",
 			"click .checked-input": "fileSelect",
 		},
 		toggleTypeRows: function(event) {
 			$(event.delegateTarget).toggleClass("expanded");
-		},
-		toggleFileRows: function(event) {
-			$(event.delegateTarget).toggleClass($(event.currentTarget).data("filetype") + "-expanded");
 		},
 		fileSelect: function(event) {
 			var fileID = $(event.currentTarget).closest("tr").data("id");
