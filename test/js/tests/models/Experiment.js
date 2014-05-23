@@ -102,6 +102,5 @@ define(['models/Experiment'],function(Experiment) {
 				expect(experiment.getFiles().get("file-id2")).to.not.equal(undefined);
 			});
 		})
-
 	});
 });
