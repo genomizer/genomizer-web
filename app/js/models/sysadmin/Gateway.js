@@ -10,6 +10,7 @@ define([], function() {
 		},
 
 		sendPacket : function(type, urlExtension, payload, shouldGoBack) {
+			//console.log(app.auth.get("token"));
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
@@ -45,18 +46,6 @@ define([], function() {
 				success : function(data) {
 				},
 				complete : function(data) {
-					data = [
- {
-  "URLupload": "url1"
- },
- {
-  "URLupload": "url2"
- },
- {
-  "URLupload": "url3"
- }
-];
-					console.log(data);
 					genomeReleaseFiles.uploadGenomeReleaseFiles(data);
 				},
 			});

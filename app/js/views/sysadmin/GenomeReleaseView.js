@@ -21,6 +21,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
+			this.renderUploadProgress();
 
 		},
 		
@@ -73,12 +74,21 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		},
 		
 		renderUploadProgress: function() {
-			if(!this.genomeReleaseFiles.hasUnfinishedUploads() && genomeReleaseFiles.length) {
-				
-			} else {
-				var progress = this.genomeReleaseFiles.getTotalUploadProgress() * 100;
-				
-			}
+			// if(!this.genomeReleaseFiles.hasUnfinishedUploads() && genomeReleaseFiles.length) {
+// 				
+			// } else {
+				//var progress = this.genomeReleaseFiles.getTotalUploadProgress() * 100;
+				// var prog = 0;
+				// for(var i=0; i < 1000000000; i++){
+					// if(i%10000000==0){
+						// prog++;
+						// console.log(prog);
+						// $("#pbar").css('width',prog+'%');
+						// console.log($('#pbar').val());
+					// }
+				// }
+				//$('.progess-bar').width(progress);
+			// }
 		},
 	
 	});
