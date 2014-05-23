@@ -13,11 +13,12 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		TEMPLATE: _.template(UploadTemplate),
 		initialize: function() {
 			this.experiments = new Experiments();
+			this.experiments.on("changeUploadable",this.enableUploadAllButton,this);
 			this.experimentViews = [];
 			this.enableOnUnloadWarning();
 			this.render();
 			this.enableAddButton(); // not needed when automatic test value is removed
-			this.showUploadAllButton();
+			$('#uploadAllButton').toggle(false);
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -27,38 +28,51 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
-			"click #add_button": "addToExistingExperiment",
+			"submit form#upload_form": "addToExistingExperiment",
 			"submit #experiment-form": "saveExperiment",
 			"click #uploadAllButton": "uploadAll"
 		},
-		createExperiment: function(clonedAnnotations) {
+		createExperiment: function() {
 			var experiment = new Experiment();
 			this.appendNewExperimentView(experiment);
 		},
 		cloneExperiment: function(clonedAnnotations) {
-			var experiment = clonedAnnotations.clone();
+			var experiment = new Experiment(_.omit(clonedAnnotations.toJSON(),'files','id'));
 			this.appendNewExperimentView(experiment);
 		},
 		removeExperiment: function(experimentView) {
 			var index = this.experimentViews.indexOf(experimentView);
 			experimentView.el.remove();
-			experimentView.model.collection.remove(this.model);
+			this.experiments.remove(experimentView.model);
 			this.experimentViews.splice(index,1);
-			this.showUploadAllButton();
+			this.enableUploadAllButton();
 		},
 		addToExistingExperiment: function() {
+			var denySameExperimentName = false;
 			var experimentId = $('#existing_experiment_field').val();
-			var that = this;
-			var experiment = new Experiment();
-			this.experiments.add(experiment);
-			experiment.set("id",experimentId);
-			experiment.existingExperiment = true;
-			experiment.fetch().success(function() {
-				that.appendNewExperimentView(experiment);
+
+			this.experiments.each(function(exp) {
+				if (exp.id == experimentId) {
+					app.messenger.warning("The experiment \'" + exp.id + "\' is already open");
+					denySameExperimentName = true;
+				}
 			});
+
+			if(!denySameExperimentName) {
+				var that = this;
+				var experiment = new Experiment();
+				this.experiments.add(experiment);
+				experiment.set("id",experimentId);
+				experiment.existingExperiment = true;
+				experiment.fetch().success(function() {
+					that.appendNewExperimentView(experiment);
+				});
+			}
+		
 		},
 		appendNewExperimentView: function(experiment) {
 			var experimentView = new ExperimentView({model: experiment});
+			$('#uploadAllButton').toggle(true);
 			
 			this.listenTo(experimentView,'cloneEvent',this.cloneExperiment);
 			this.listenTo(experimentView,'removeEvent',this.removeExperiment);
@@ -67,16 +81,23 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.experimentViews.push(experimentView);
 			this.experiments.add(experiment);
 			experimentView.render();
-			this.showUploadAllButton();
+			this.enableUploadAllButton();
 			experimentView.changeLabelName();
 		},
 		uploadAll: function() {
+			this.$(".experiment-container>div:not(.collapsed-experiment) .upload-experiment").click();
+			/*
+			var that = this;
 			_.each(this.experimentViews, function(expView) {
-				expView.saveExperiment(new Event("uselessEvent"));
+				if(!expView.saveExperiment(new Event("uselessEvent"))) {
+					var index = that.experimentViews.indexOf(experimentView);
+					that.experimentViews.splice(index,1);
+				}
 			});
+*/
 		},
-		showUploadAllButton: function() {
-			if(this.experimentViews.length >= 2) {
+		enableUploadAllButton: function() {
+			if(this.experiments.hasUploadable()) {
 				$('#uploadAllButton').prop('disabled', false);
 			} else {
 				$('#uploadAllButton').prop('disabled', true);

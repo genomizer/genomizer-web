@@ -14,6 +14,8 @@ define(['models/File'],function(File) {
 			});
 		},
 		fetchAndSaveFiles: function() {
+			this.isUploading = true;
+			this.trigger("changeIsUploading");
 			this.each(function(file) {
 				file.fetchAndUpload();
 			});
@@ -67,6 +69,15 @@ define(['models/File'],function(File) {
 				}
 			});
 			return uploadedSize / this.getTotalUploadFileSize();
+		},
+		/*
+		 * Returns true if the collection has atleast one upload
+		 */
+		hasUpload: function() {
+			var aUpload = this.find(function(f) {
+				return f.isFileUpload();
+			});
+			return aUpload !== undefined
 		}
 	});
 	return Files;
