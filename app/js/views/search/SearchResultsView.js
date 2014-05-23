@@ -46,15 +46,16 @@ define([
 			}
 				
 		},
-		checkFiles: function(files) {
+		checkFiles: function() {
 			//REFACTOR
-			var rows = this.$el.find(".file-row");
+			var fileRows = this.$el.find(".file-row");
+			var selectedFiles = this.collection.getSelectedFiles();
 			
-			rows.each(function() {
+			fileRows.each(function() {
 				var isChecked = false;
 				var row = $(this);
-				for (var i = files.length - 1; i >= 0; i--) {
-					if(row.data("id") == files[i].get("id")) {
+				for (var i = selectedFiles.length - 1; i >= 0; i--) {
+					if(row.data("id") == selectedFiles.at(i).get("id")) {
 						isChecked = true;
 					}
 				}

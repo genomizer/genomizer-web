@@ -84,15 +84,16 @@ define([
 			}
 		},
 		showDownloadAndProcessButtons: function(fileArray) {
-			console.log()
+			var selectedFiles = this.collection.getSelectedFiles();
+
 			//handles whether or not the download or process buttons should be clickable.
-			if(fileArray.length > 0) {
+			if(selectedFiles.length > 0) {
 				$('#delete_button').prop('disabled', false);
 				$('#download_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
-				var startSpecies = this.collection.getSpeciesForExperiment(fileArray[0].get("expId"));
-				for(var i = 0;i<fileArray.length;i++) {
-					if(fileArray[i].get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(fileArray[i].get("expId"))==startSpecies)) {
+				var startSpecies = this.collection.getSpeciesForExperiment(selectedFiles.at(0).get("expId"));
+				for(var i = 0;i<selectedFiles.length;i++) {
+					if(selectedFiles.at(i).get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(selectedFiles.at(i).get("expId")) == startSpecies)) {
 						$('#process_button').prop('disabled', true);
 						break;
 					}
@@ -144,13 +145,13 @@ define([
 		},
 		processSelected: function() {
 			var files = this.collection.getSelectedFiles();
-			var specie = this.collection.getSpeciesForExperiment(files[0].get("expId"));
+			var specie = this.collection.getSpeciesForExperiment(files.at(0).get("expId"));
 			var processFiles = "";
 			for(var i = 0; i<files.length;i++) {
 				if(processFiles != "") {
 					processFiles += ",";
 				}
-				processFiles += files[i].get("expId");
+				processFiles += files.at(i).get("expId");
 			}
 			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
 		},
