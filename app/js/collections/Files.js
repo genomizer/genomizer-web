@@ -15,6 +15,7 @@ define(['models/File'],function(File) {
 		},
 		fetchAndSaveFiles: function() {
 			this.isUploading = true;
+			this.trigger("changeIsUploading");
 			this.each(function(file) {
 				file.fetchAndUpload();
 			});
