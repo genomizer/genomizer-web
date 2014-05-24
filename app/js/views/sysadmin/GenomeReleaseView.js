@@ -7,35 +7,28 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 ], function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
-			//this.genomeReleaseFiles = new GenomeReleaseFiles( { "genomeVersion": "hy17", "specie": "fly", "path": "pathToFile", "fileName": "nameOfFile" });
 			var that = this;
-
+			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
-			// this.genomeReleaseFiles = new GenomeReleaseFiles(file1);
-			// this.genomeReleaseFiles.push(file2);
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
-
-			// console.log(this.genomeReleaseFiles);
-			// this.render(this.genomeReleaseFiles);
 		},
 
 		render : function(genomeReleaseFiles) {
 			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
-
+			this.renderUploadProgress();
 		},
 		
 		events : {
 			"click #th_species": "orderBySpecies",
 			"click #th_version": "orderByVersion",
-			"click #th_filename": "orderByFileName",
 			"click .delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile",
-			"click #choose_files" : "getSpecies"
+			"click #choose_files" : "setSpecies"
 			
 		},
 		
@@ -49,29 +42,21 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			this.render(this.genomeReleaseFiles);
 		},
 		
-		orderByFileName : function() {
-			this.genomeReleaseFiles.orderBy("fileName");
-			this.render(this.genomeReleaseFiles);
-		},
-		
 		deleteGenomeRelease : function(e) {
 			var payload = e.currentTarget.id.split(",");
+			console.log(payload);
 			Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
 		},
 		
 		addSelectedFile: function() {
 			var formFiles = this.$el.find(".fileInput")[0].files;
-			var fileObj = formFiles[0];
-			var genomeReleaseFile = new GenomeReleaseFile();
-			genomeReleaseFile.setFileObj(fileObj);
-			genomeReleaseFile.set({"fileName": fileObj.name});
-			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(genomeReleaseFile, this.speciesList);
+			this.genomeReleaseFileList.addFilesByFileObject(formFiles);
+			var uploadGenomeReleaseModal = new UploadGenomeReleaseModal(this.genomeReleaseFileList, this.speciesList);
 			uploadGenomeReleaseModal.show();
-			this.$el.find(".fileInput").val("");
-
 		},
 				
-		getSpecies : function(){
+		setSpecies : function(){
+			this.genomeReleaseFileList.reset();
 			var annotations = new Annotations();
 			that = this;
             annotations.fetch({
@@ -79,7 +64,26 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
                     that.speciesList = annotations.getValuesOf("Species");
                 }
             });
-		}
+		},
+		
+		renderUploadProgress: function() {
+			// if(!this.genomeReleaseFiles.hasUnfinishedUploads() && genomeReleaseFiles.length) {
+// 				
+			// } else {
+				//var progress = this.genomeReleaseFiles.getTotalUploadProgress() * 100;
+				// var prog = 0;
+				// for(var i=0; i < 1000000000; i++){
+					// if(i%10000000==0){
+						// prog++;
+						// console.log(prog);
+						// $("#pbar").css('width',prog+'%');
+						// console.log($('#pbar').val());
+					// }
+				// }
+				//$('.progess-bar').width(progress);
+			// }
+		},
+
 	
 	});
 	return GenomeReleaseView;
