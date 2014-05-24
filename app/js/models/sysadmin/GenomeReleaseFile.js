@@ -50,6 +50,7 @@ define([], function() {
 			if (evt.lengthComputable) {
 				this.progress = evt.loaded / evt.total;
 				this.trigger("uploadProgress", this.progress);
+				$('.progress-bar').replaceWith("<div class=" + "progress-bar" + " id=" + "pbar" + " style=" + "width:"+ this.progress *100 + "%; + ></div>");
 			}
 		},
 		setUploadDone : function() {
