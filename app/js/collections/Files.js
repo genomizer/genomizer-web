@@ -17,7 +17,9 @@ define(['models/File'],function(File) {
 			this.isUploading = true;
 			this.trigger("changeIsUploading");
 			this.each(function(file) {
-				file.fetchAndUpload();
+				if(file.isFileUpload()) {
+					file.fetchAndUpload();
+				}
 			});
 		},
 		hasUnfinishedUploads: function() {
