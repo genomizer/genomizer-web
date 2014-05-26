@@ -17,7 +17,7 @@ define([],function() {
 		idAttribute:'token',
 		doLogin: function() {
 			var that = this;
-			this.save().success(function() {
+			return this.save().success(function() {
 				localStorage.setItem('authToken',that.get('token'));
 				that._afterLogin();
 			});

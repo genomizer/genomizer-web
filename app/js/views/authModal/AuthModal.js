@@ -20,10 +20,13 @@ define([
 			this.updateModel();
 			this.$('button[type=submit]').button('loading');
 			
-			this.model.doLogin()
+			this.model.doLogin();
 			
 			this.model.once('loggedIn',function() {
 				that.hide();
+			});
+			this.model.once('error',function() {
+				that.$('button[type=submit]').button('reset');
 			});
 		},
 		updateModel: function() {
