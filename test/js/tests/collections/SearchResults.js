@@ -1,5 +1,8 @@
-define(['collections/SearchResults',
-		'models/Experiment'],function(SearchResults, Experiment) {
+define([
+	'collections/SearchResults',
+	'models/Experiment',
+	'models/File'
+],function(SearchResults, Experiment, File) {
 
 	describe("Testing collections/SearchResults", function () {
 		describe("should initialize correctly",function() {
@@ -24,60 +27,116 @@ define(['collections/SearchResults',
 			});
 		});
 
-		describe("Should select files correctly",function() {
+		describe("Testing file selection",function() {
 			it("Should save a file ID if that file is checked in view, and deselect if it is not", function () {
-				var testExperiment = new Experiment({
-					"name": "experimentName",
-					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
-					});
+				var file = new File({"id": "file-id1"});
 
 				var searchResults = new SearchResults([],{query:undefined});
-				searchResults.fileSelectHandler(testExperiment, "file-id1", true);
+				searchResults.fileSelectHandler(file, true);
 				expect(searchResults.selectedFiles.length).to.equal(1);
-				expect(searchResults.selectedFiles[0].get("id")).to.equal('file-id1');
-				searchResults.fileSelectHandler(testExperiment, "file-id1", false);
+				expect(searchResults.isFileSelected("file-id1")).to.be.true;
+				searchResults.fileSelectHandler(file, false);
 				expect(searchResults.selectedFiles.length).to.equal(0);
 			});
 			it("Should select the file given in the parameter", function () {
 				var searchResults = new SearchResults([],{query:undefined});
+				var file = new File({"id": "file-id1"});
 				expect(searchResults.selectedFiles.length).to.equal(0);
-				searchResults.selectFile('testFile');
+				searchResults.selectFile(file);
 				expect(searchResults.selectedFiles.length).to.equal(1);
-				expect(searchResults.selectedFiles[0]).to.equal('testFile');
+				expect(searchResults.isFileSelected(file)).to.be.true;
 			});
 			it("Should deselect all files when deselectFile is called", function () {
 				var searchResults = new SearchResults([],{query:undefined});
-				searchResults.selectFile('testFile');
+				var file = new File({"id": "file-id1"});
+				searchResults.selectFile(file);
 				expect(searchResults.selectedFiles.length).to.equal(1);
-				searchResults.deselectFile();
+				searchResults.deselectFile(file);
 				expect(searchResults.selectedFiles.length).to.equal(0);
 			});
 			it("Should trigger highlightChange when a file is selected", function () {
 				var searchResults = new SearchResults([],{query:undefined});
 				var highlightSpy = sinon.spy();
 				searchResults.on("highlightChange", highlightSpy);
-				searchResults.selectFile('a');
+				searchResults.selectFile(new File({"id": "file-id1"}));
 				expect(highlightSpy.called).to.be.true;
 
 			});
 			it("Should trigger highlightChange when a file is deselected", function () {
 				var searchResults = new SearchResults([],{query:undefined});
 				var highlightSpy = sinon.spy();
+				var file = new File({"id": "file-id1"});
+				searchResults.selectFile(file);
 				searchResults.on("highlightChange", highlightSpy);
-				searchResults.deselectFile();
+				searchResults.deselectFile(file);
 				expect(highlightSpy.called).to.be.true;
 
 			});
 			it("Should return selected files when getSelectedFiles is called", function () {
 				var searchResults = new SearchResults([],{query:undefined});
 				var files = searchResults.getSelectedFiles();
+				var file = new File({"id": "file-id1"});
 				expect(files.length).to.equal(0);
 
-				searchResults.selectFile('testFile');
+				searchResults.selectFile(file);
 				files = searchResults.getSelectedFiles();
-				expect(files[0]).to.equal('testFile');
+				expect(files.get("file-id1")).to.equal(file);
 			});
+			it("Should know if an experiment contains selected files", function () {
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				var experiment2 = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id2"}], "annotations": []
+				});
+				var file = new File({"id": "file-id1"});
+
+				var searchResults = new SearchResults([experiment, experiment2],{query:undefined});
+				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
+				searchResults.selectFile(file);
+				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.true;
+				expect(searchResults.experimentHasSelectedFiles(experiment2)).to.be.false;
+				searchResults.deselectFile(file);
+				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
+			});
+		});
+
+		describe("Testing experiment selection",function() {
+			it("Should know if an experiment is selected or not", function () {
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+					});
+
+				var searchResults = new SearchResults([],{query:undefined});
+				searchResults.experimentSelectHandler(experiment, true);
+				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.true;
+				searchResults.experimentSelectHandler(experiment, false);
+				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.false;
+			});
+			it("Should not break if the same experiment is selected twice", function () {
+				
+			});
+			it("Should not break if an experiment that is not selected is deselected", function () {
+				
+			});
+			it("Should trigger highlightChange when an experiment is selected", function () {
+				
+
+			});
+			it("Should trigger highlightChange when an experiment is deselected", function () {
+				
+
+			});
+			it("Should return selected experiments", function () {
+				
+			});
+			
 		});
 
 		describe("Should set query correctly",function() {

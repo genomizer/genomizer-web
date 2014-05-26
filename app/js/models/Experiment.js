@@ -7,7 +7,6 @@ define([
 			files : [],
 			annotations: []
 		},
-
 		initialize: function() {
 			
 			this.on("sync", this.syncFiles, this);
@@ -22,6 +21,7 @@ define([
 				this.files = new Files(this.get("files"),{experiment:this});
 				//console.log("Syncing files");
 				this.files.on("add remove changeIsUploading",this.changeUploadable, this);
+				this.files.on("fileSelect", this.fileSelect, this);
 			}
 		},
 		getFiles: function() {
@@ -48,6 +48,9 @@ define([
 		},
 		changeUploadable: function() {
 			this.trigger("changeUploadable");
+		},
+		fileSelect: function(file, checked) {
+			this.trigger("fileSelect", file, checked);
 		}
 	});
 	return Experiment;

@@ -21,8 +21,7 @@ define([
 			this.on("fileSelect", this.fileSelectHandler, this);
 			this.on("experimentSelect", this.experimentSelectHandler, this);
 		},
-		fileSelectHandler: function(experiment, fileID, checked) {
-			var file = experiment.files.get(fileID);
+		fileSelectHandler: function(file, checked) {
 			if(checked) {
 				this.selectFile(file);
 			} else {
@@ -58,6 +57,9 @@ define([
 			}
 			return res;
 		},
+		isFileSelected: function(fileID) {
+			return this.selectedFiles.get(fileID) != undefined;
+		},
 		selectExperiment: function(experiment) {
 			if(!this.selectedExperiments.contains(experiment)) {
 				this.selectedExperiments.add(experiment);
@@ -72,6 +74,22 @@ define([
 		},
 		getSelectedExperiments: function() {
 			return this.selectedExperiments;
+		},
+		isExperimentSelected: function(experimentID) {
+			return this.selectedExperiments.get(experimentID) != undefined;
+		},
+		experimentHasSelectedFiles: function(experimentCID) { // we have to use the CID as experiments dont have IDs on the server
+			var experiment = this.get(experimentCID);
+			if(experiment != undefined) {
+				for (var i = 0; i < experiment.files.length; i++) {
+					if(this.isFileSelected(experiment.files.at(i).get("id"))) {
+						return true;
+					}
+				}
+			}
+			
+			return false;
+			
 		},
 		getSpeciesForExperiment: function(expID) {
 

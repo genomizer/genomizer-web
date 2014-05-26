@@ -12,7 +12,6 @@ define([
 		initialize: function(options) {
 			this.annotations = options.annotations;
 
-			this.collection.on("highlightChange", this.checkFiles, this);
 			this.collection.on("change", this.render, this);
 			this.collection.on("sync", this.render, this);
 			this.render();
@@ -32,38 +31,19 @@ define([
 				// render table header
 				this.$el.html(this.headerTemplate({annotations: this.annotations}));
 
-
 				// create and render experiment views
 				this.collection.each(function(experiment) {
 					var experimentView = new ExperimentView({
 						annotations: this.annotations,
 						model : experiment,
+						searchResults: this.collection
 					});
 
 					experimentView.render();
 					this.$el.append(experimentView.$el);
 				}, this);
-			}
-				
-		},
-		checkFiles: function() {
-			//REFACTOR
-			var fileRows = this.$el.find(".file-row");
-			var selectedFiles = this.collection.getSelectedFiles();
-			
-			fileRows.each(function() {
-				var isChecked = false;
-				var row = $(this);
-				for (var i = selectedFiles.length - 1; i >= 0; i--) {
-					if(row.data("id") == selectedFiles.at(i).get("id")) {
-						isChecked = true;
-					}
-				}
-
-				row.find(".checked-input").prop("checked", isChecked);
-			});
-		}
-		
+			}	
+		}		
 	});
 	return SearchResultsView;
 });
