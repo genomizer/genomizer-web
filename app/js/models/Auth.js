@@ -1,9 +1,5 @@
 define([],function() {
 	var Auth = Backbone.Model.extend({
-		defaults : {
-			username: "epicon",
-			password: "umea@2014"
-		},
 		url: function() {
 			return  app.BASE_URL + 'login';
 		},
@@ -13,6 +9,16 @@ define([],function() {
 				this.set('token',token);
 				this._afterLogin();
 			}
+
+			$(document).ajaxError(function( event, jqxhr, settings, exception ) {
+				// Show login window if token expires
+				// TODO: shoud we really reload asap?
+				if(jqxhr.status == 401) {
+					localStorage.clear()
+					window.location.href = '';
+				}
+			});
+
 		},
 		idAttribute:'token',
 		doLogin: function() {
@@ -36,7 +42,9 @@ define([],function() {
 		},
 		logout: function() {
 			localStorage.clear()
-			return this.destroy();
+			return this.destroy().success(function() {
+				window.location.href = '';
+			});
 		}
 	});
 	return Auth;

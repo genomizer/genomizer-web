@@ -126,9 +126,7 @@ define([],function() {
         },
 
 		logout: function() {
-			app.auth.logout().success(function() {
-				window.location.href = '';
-			});
+			app.auth.logout();
 		}
 
     });
