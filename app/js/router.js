@@ -6,12 +6,14 @@ define([],function() {
             "search": "search",
             "": "search",
             "upload":"upload",
+            "upload/:expIds": "upload",
             "process":"process",
             "process/:query":"process",
             "admin":"admin",
             "admin/createannotation": "createAnnotation",
             "admin/editannotation/:name": "editAnnotation",
-            "admin/genomereleases" : "genomeReleases"
+            "admin/genomereleases" : "genomeReleases",
+			"logout": "logout"
         },
 
         initialize: function(options) {
@@ -51,12 +53,12 @@ define([],function() {
             });
         },
 
-        upload: function() {
+        upload: function(expIds) {
             var that = this;
             require([
                 'views/upload/Upload'
             ],function(Upload) {
-                new Upload({el:that.getNewMainView()});
+                new Upload({el:that.getNewMainView(),expIds:expIds});
             });
         },
 
@@ -121,7 +123,11 @@ define([],function() {
             	new SysadminMainView({el:that.getNewMainView()});
                 new GenomeReleaseView({el:that.getNewAdminView()});                
             });
-        }
+        },
+
+		logout: function() {
+			app.auth.logout();
+		}
 
     });
     return Router;
