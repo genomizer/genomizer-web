@@ -91,6 +91,17 @@ define([
 			return false;
 			
 		},
+		getSelectedandExperimentFiles: function() {
+			var files = new Files();
+
+			files.set(this.selectedFiles);
+
+			this.selectedExperiments.each(function(experiment) {
+				files.set(experiment.files);
+			})
+
+			return files;
+		}
 		getSpeciesForExperiment: function(expID) {
 
 			var attribs;

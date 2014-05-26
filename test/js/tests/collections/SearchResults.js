@@ -103,6 +103,25 @@ define([
 				searchResults.deselectFile(file);
 				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
 			});
+			it("Should return the union of files in selected experiments and selected files", function () {
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				var file1 = new File({"id": "file-id1"});
+				var file2 = new File({"id": "file-id2"});
+				var file3 = new File({"id": "file-id3"});
+
+				var searchResults = new SearchResults([experiment],{query:undefined});
+				searchResults.selectExperiment(experiment);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(1);
+				searchResults.selectExperiment(file1);
+				searchResults.selectExperiment(file2);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(2);
+				searchResults.selectExperiment(file3);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(3);
+			});
 		});
 
 		describe("Testing experiment selection",function() {
