@@ -1,6 +1,6 @@
 define(['models/File'],function(File) {
 	var Files = Backbone.Collection.extend({
-		url: app.BASE_URL + 'files',
+		url: app.BASE_URL + 'file',
 		model: File,
 		initialize:function (models,options) {
 			if(options) {
