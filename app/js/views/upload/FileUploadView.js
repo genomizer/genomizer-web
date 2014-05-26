@@ -10,6 +10,7 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 		GN_TEMPLATE: _.template('<% _.each(genomeReleases,function(genomeRelease) { %><option value="<%- genomeRelease %>" ><%- genomeRelease %></option><% }); %>'),
 		initialize: function() {
 			this.model.on("uploadProgress",this.renderProgress,this);
+			this.model.on("change:type",this.toggleGenomeReleaseDropdown,this);
 			this.model.collection.experiment.on("change:annotations",this.renderGenomeReleases,this);
 		},
 		tagName:'li',
@@ -33,6 +34,7 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 				)));
 			}
 			this.updateModel();
+			this.toggleGenomeReleaseDropdown();
 		},
 		changeSelect: function() {
 			this.model.set("type",this.$("select").val());
@@ -63,6 +65,9 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 				input[$this.attr("name")] = $this.val();
 			});
 			this.model.set(input);
+		},
+		toggleGenomeReleaseDropdown: function() {
+			this.$(".gr-version").toggle(this.model.get('type') != "raw");
 		}
 	});
 	return FileUploadView;

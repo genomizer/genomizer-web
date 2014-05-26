@@ -23,7 +23,7 @@
 				<td><%= genomeReleaseFile.get('species') %></td>
 				<td><%= genomeReleaseFile.get('genomeVersion') %></td>
 
-				<td title="<% _.each(genomeReleaseFile.get('files'), function(fileName) { %><%= fileName %> <% }); %>"><%=genomeReleaseFile.get('files')[0] + ", ..." %></td>
+				<td title="<% _.each(genomeReleaseFile.get('files'), function(fileName) { %><%= fileName %> &#013<% }); %>"><%=genomeReleaseFile.get('files')[0] + ", ..." %></td>
 
 				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('species')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
 			</tr>
