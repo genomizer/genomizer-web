@@ -7,7 +7,7 @@
 		<% if (annotation.get('name') != "Species") { %>
 			<input class="form-control" id="edit_annotation_name" type="text" value="<%= annotation ? annotation.get('name') : '' %>">
 		<% } else { %>
-			<input class="form-control" id="" disabled="" type="text" value="<%= annotation ? annotation.get('name') : '' %>">
+			<input class="form-control" id="edit_annotation_name" disabled="" type="text" value="<%= annotation ? annotation.get('name') : '' %>">
 		<% } %>
 		<hr />
 

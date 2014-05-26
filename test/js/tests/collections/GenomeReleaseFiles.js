@@ -103,6 +103,62 @@ define(['collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleas
 				genomeReleaseFiles.models[0].get('genomeVersion').should.equal('hg1337');
 			});
 		});
+		describe("Tests of getGenomeReleaseByName", function (){
+				it("Should retrieve correct file names when using getGenomeReleaseByName", function() {
+				var genomeRelease1 = new GenomeReleaseFile({
+					"fileName" : 'A1.fasta'
+				});
+				var genomeRelease2 = new GenomeReleaseFile({
+					"fileName" : 'AA2.fasta'
+				});
+				var genomeRelease3 = new GenomeReleaseFile({
+					"fileName" : 'A3.fasta'
+				});
+				var genomeRelease4 = new GenomeReleaseFile({
+					"fileName" : 'BASE3da.js'
+				});
+				var genomeReleaseFiles = new GenomeReleaseFiles([genomeRelease1, genomeRelease2, genomeRelease3, genomeRelease4]);
+	
+				var result = genomeReleaseFiles.getGenomeReleaseByName('A1.fasta');
+				result.get('fileName').should.equal('A1.fasta');
+				var result = genomeReleaseFiles.getGenomeReleaseByName('AA2.fasta');
+				result.get('fileName').should.equal('AA2.fasta');
+				var result = genomeReleaseFiles.getGenomeReleaseByName('A3.fasta');
+				result.get('fileName').should.equal('A3.fasta');
+				var result = genomeReleaseFiles.getGenomeReleaseByName('BASE3da.js');
+				result.get('fileName').should.equal('BASE3da.js');
+			});
+		});
+		describe("Tests of getFileNames", function (){
+				it("Should retrieve correct Names when using getFileNames", function() {
+				var genomeRelease1 = new GenomeReleaseFile({
+					"fileName" : 'A1.fasta'
+				});
+				var genomeRelease2 = new GenomeReleaseFile({
+					"fileName" : 'AA2.fasta'
+				});
+				var genomeRelease3 = new GenomeReleaseFile({
+					"fileName" : 'A3.fasta'
+				});
+				var genomeRelease4 = new GenomeReleaseFile({
+					"fileName" : 'BASE3da.js'
+				});
+				var genomeReleaseFiles = new GenomeReleaseFiles([genomeRelease1, genomeRelease2, genomeRelease3, genomeRelease4]);
+	
+				var result = genomeReleaseFiles.getFileNames();
+				result[0].should.equal('A1.fasta');
+				result[1].should.equal('AA2.fasta');
+				result[2].should.equal('A3.fasta');
+				result[3].should.equal('BASE3da.js');
+			});
+			it("Should return empty list if the collection is empty", function() {
+				
+				var genomeReleaseFiles = new GenomeReleaseFiles();
+	
+				var result = genomeReleaseFiles.getFileNames();
+				result.length.should.equal(0);
+			});
+		});
 	});
 });
 
