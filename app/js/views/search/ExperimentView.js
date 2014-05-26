@@ -16,6 +16,8 @@ define([
 			this.annotations = options.annotations;
 			this.searchResults = options.searchResults;
 
+			this.expanded = false;
+
 			this.rawGroupView = new FileGroupView({
 				collection: this.model.files,
 				type: "Raw",
@@ -35,8 +37,10 @@ define([
 
 		render: function() {
 
+			this.$el.empty();
+
 			// render from template
-			this.$el.html(this.template({
+			this.$el.append(this.template({
 				'annotations': this.annotations,
 				'experiment': this.model
 			}));
@@ -49,9 +53,21 @@ define([
 			table.append(this.rawGroupView.$el);
 			table.append(this.profileGroupView.$el);
 			table.append(this.regionGroupView.$el);
+
 			if(this.searchResults.isExperimentSelected(this.model.cid)) {
 				this.$el.find(".experiment-checked-input").prop("checked", true);
 			}
+
+			if(this.expanded) {
+				this.$el.addClass("expanded");
+			} else {
+				this.$el.removeClass("expanded");
+			}
+
+			// repair child view event handlers
+			this.rawGroupView.delegateEvents();
+			this.profileGroupView.delegateEvents();
+			this.regionGroupView.delegateEvents();
 			
 		},
 		events: {
@@ -59,12 +75,18 @@ define([
 			"click .experiment-checked-input": "experimentSelect",
 		},
 		toggleTypeRows: function(event) {
-			$(event.delegateTarget).toggleClass("expanded");
+			if(this.expanded) {
+				this.$el.removeClass("expanded");
+			} else {
+				this.$el.addClass("expanded");
+			}
+
+			this.expanded = !this.expanded;
+			
 		},
 		experimentSelect: function(event) {
 			this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
-			this.render();
-		}	
+		}
 	});
 	return ExperimentView;
 
