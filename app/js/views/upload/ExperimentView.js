@@ -67,7 +67,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-			var failed = true;
 			this.$("#experiment-form button[type=submit]").button('loading');
 			this.model.save(null,{success:function() {
 				that.collapseView();
@@ -75,13 +74,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.model.files.fetchAndSaveFiles();
 				$('#uploadAllButton').prop('disabled', true);
 				that.model.collection.remove(that.model);
-				failed = false;
+			},error: function() {
+				that.$("#experiment-form button[type=submit]").button('reset');
 			}
 			});
-			if(failed) {
-				//app.messenger.warning("Name of experiment already exists in the database, please enter a unique name");
-				this.$("#experiment-form button[type=submit]").button('reset');
-			}
 			
 		},
 		collapseView: function(){

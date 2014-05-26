@@ -52,9 +52,18 @@ define([
 			"click #upload_button": "uploadToExperiment" 
 		},
 		uploadToExperiment: function() {
-			// TODO: GET EXPERIMENTS
-			var experiments = "riktigaRawFiles";
-			app.router.navigate("upload/"+experiments, {trigger:true});
+
+			var experiments = this.collection.getSelectedExperiments();
+
+			console.log(experiments);
+			var data = experiments.at(0).get("name");
+
+			for(var i = 1; i < experiments.length; i++) {
+				data = data + '☯' + experiments.at(i).get("name");
+			}
+			console.log("Experiments:", data);
+
+			app.router.navigate("upload/"+data, {trigger:true});
 
 		},
 		openDeleteModal: function() {
@@ -63,8 +72,6 @@ define([
 			var fileNames = [];
 			var expIDs = [];
 			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files.at(i).get("id"));
-				console.log(files.at(i));
 				fileNames.push(files.at(i).get("filename"));
 				expIDs.push(files.at(i).get("expId"));
 			}
@@ -85,30 +92,61 @@ define([
 		},
 		deleteData: function() {
 			var files = this.collection.getSelectedFiles();
-			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files.at(i).get("id"));
-				files.at(i).destroy();
+			while(!files.isEmpty()) {
+				files.at(0).destroy();
 			}
 		},
 		showButtons: function(fileArray) {
-			var selectedFiles = this.collection.getSelectedFiles();
 
-			//handles whether or not the download or process buttons should be clickable.
-			if(selectedFiles.length > 0) {
-				$('#delete_button').prop('disabled', false);
-				$('#download_button').prop('disabled', false);
+			var selectedFiles = this.collection.getSelectedFiles();
+			var selectedExperiments = this.collection.getSelectedExperiments();
+			//handles whether or not the upload or process buttons should be clickable.
+			if(selectedExperiments.length > 0) {
+				$('#upload_button').prop('disabled', false);
 				$('#process_button').prop('disabled', false);
-				var startSpecies = this.collection.getSpeciesForExperiment(selectedFiles.at(0).get("expId"));
-				for(var i = 0;i<selectedFiles.length;i++) {
-					if(selectedFiles.at(i).get("type").toLowerCase() != "raw" || !(this.collection.getSpeciesForExperiment(selectedFiles.at(i).get("expId")) == startSpecies)) {
+
+				//Makes sure there is two raw files in selected experiments and all have same species.
+				var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name")).toLowerCase();
+				for(var i = 0; i < selectedExperiments.length; i++) {
+					if(startSpecie != this.collection.getSpeciesForExperiment(selectedExperiments.at(i).get("name")).toLowerCase()) {
 						$('#process_button').prop('disabled', true);
+						break;
+					}
+					var expFiles = selectedExperiments.at(i).get("files");
+					if(expFiles.length == 0) {
+						$('#process_button').prop('disabled', true);
+						break;
+					} else {
+						var nrOfRawFiles = 0;
+						for(var j = 0; j < expFiles.length;j++) {
+							if(expFiles[j].type.toLowerCase() == "raw") {
+								nrOfRawFiles++;
+							}
+						}
+						if(nrOfRawFiles!=2) {
+							$('#process_button').prop('disabled', true);
+							break;
+						}
+					}
+				}
+			} else {
+				$('#upload_button').prop('disabled', true);
+			}
+
+			//handles whether or not the download or delete buttons should be clickable.
+			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
+				$('#delete_button').prop('disabled', false);
+
+				$('#download_button').prop('disabled', false);
+				for(var i = 0; i < selectedExperiments.length; i++) {
+					if(selectedExperiments.at(i).get("files").length == 0) {
+						$('#download_button').prop('disabled', true);
 						break;
 					}
 				}
 			} else {
 				$('#delete_button').prop('disabled', true);
 				$('#download_button').prop('disabled', true);
-				$('#process_button').prop('disabled', true);
 			}
 
 			/* TODO: GET SELECTED EXPERIMENTS!! */
@@ -134,7 +172,6 @@ define([
 			var URLsToDownload = this.collection.getSelectedFileURLs();
 			// this is horrible but as we see it the only way to download multiple files
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				console.log(URLsToDownload[i]);
 					that.downloadURL(URLsToDownload[i]);
 			};
 		},
@@ -144,7 +181,6 @@ define([
 			//iframe.id = hiddenIFrameID;
 			iframe.css('display', 'none');
 			$(document.body).append(iframe);
-			console.log('downloading url: ',url);
 			iframe.attr('src', url);
 			iframe.ready(function() {
 				setTimeout(function() {
@@ -165,7 +201,6 @@ define([
 			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
 		},
 		openBuilder: function() {
-			console.log("Search > openBuilder")
 			this.builder.show();
 		},
 		appendQueryInput: function(query) {

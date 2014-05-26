@@ -103,6 +103,26 @@ define([
 				searchResults.deselectFile(file);
 				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
 			});
+			it("Should return the union of files in selected experiments and selected files", function () {
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				var file1 = new File({"id": "file-id1"});
+				var file2 = new File({"id": "file-id2"});
+				var file3 = new File({"id": "file-id3"});
+				console.log("file3", file3.get("id"))
+
+				var searchResults = new SearchResults([experiment],{query:undefined});
+				searchResults.selectExperiment(experiment);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(1);
+				searchResults.selectFile(file1);
+				searchResults.selectFile(file2);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(2);
+				searchResults.selectFile(file3);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(3);
+			});
 		});
 
 		describe("Testing experiment selection",function() {
@@ -111,30 +131,76 @@ define([
 					"name": "experimentName",
 					"created by": "user",
 					"files": [{"id": "file-id1"}], "annotations": []
-					});
+				});
 
 				var searchResults = new SearchResults([],{query:undefined});
-				searchResults.experimentSelectHandler(experiment, true);
+				searchResults.selectExperiment(experiment);
 				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.true;
-				searchResults.experimentSelectHandler(experiment, false);
+				searchResults.deselectExperiment(experiment);
 				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.false;
 			});
 			it("Should not break if the same experiment is selected twice", function () {
-				
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+
+				var searchResults = new SearchResults([],{query:undefined});
+				searchResults.selectExperiment(experiment);
+				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.true;
+				searchResults.selectExperiment(experiment);
+				searchResults.deselectExperiment(experiment);
+				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.false;
 			});
 			it("Should not break if an experiment that is not selected is deselected", function () {
-				
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+
+				var searchResults = new SearchResults([],{query:undefined});
+				searchResults.deselectExperiment(experiment);
+				expect(searchResults.isExperimentSelected(experiment.cid)).to.be.false;
 			});
 			it("Should trigger highlightChange when an experiment is selected", function () {
-				
+				var searchResults = new SearchResults([],{query:undefined});
+				var highlightSpy = sinon.spy();
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				searchResults.on("highlightChange", highlightSpy);
+				searchResults.selectExperiment(experiment);
+				expect(highlightSpy.called).to.be.true;
 
 			});
 			it("Should trigger highlightChange when an experiment is deselected", function () {
-				
+				var searchResults = new SearchResults([],{query:undefined});
+				var highlightSpy = sinon.spy();
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				searchResults.selectExperiment(experiment);
+				searchResults.on("highlightChange", highlightSpy);
+				searchResults.deselectExperiment(experiment);
+				expect(highlightSpy.called).to.be.true;
 
 			});
 			it("Should return selected experiments", function () {
-				
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+
+				var searchResults = new SearchResults([],{query:undefined});
+				searchResults.selectExperiment(experiment);
+				expect(searchResults.getSelectedExperiments().length).to.be.equal(1);
 			});
 			
 		});

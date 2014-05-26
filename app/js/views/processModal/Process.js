@@ -214,7 +214,7 @@ define([
 			}
 			if(this.successes == this.experiments) {
 				this.hide();
-				app.messenger.success("WOOHOOO!! The processing of raw data from the experimets: "
+				app.messenger.success("The processing of raw data from the experimets: "
 					+ this.expID.join(', ') + " has begun!");
 			} else if(this.successes+this.failures == this.experiments) {
 				if(this.successIDs.length>0) {

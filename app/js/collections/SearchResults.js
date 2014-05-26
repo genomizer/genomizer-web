@@ -78,7 +78,7 @@ define([
 		isExperimentSelected: function(experimentID) {
 			return this.selectedExperiments.get(experimentID) != undefined;
 		},
-		experimentHasSelectedFiles: function(experimentCID) { // we have to use the CID as experiments dont have IDs on the server
+		experimentHasSelectedFiles: function(experimentCID) { // we have to use CID as experiments dont have IDs on the server
 			var experiment = this.get(experimentCID);
 			if(experiment != undefined) {
 				for (var i = 0; i < experiment.files.length; i++) {
@@ -90,6 +90,15 @@ define([
 			
 			return false;
 			
+		},
+		getSelectedandExperimentFiles: function() {
+			var files = new Files();
+			files.add(this.getSelectedFiles().toJSON());
+			this.selectedExperiments.each(function(experiment) {
+				files.add(experiment.files.toJSON());
+			})
+
+			return files;
 		},
 		getSpeciesForExperiment: function(expID) {
 
