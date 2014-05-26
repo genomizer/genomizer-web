@@ -25,7 +25,7 @@ define([
 				collection: this.collection,
 				annotations: app.annotationTypes.withoutExpID()
 			});
-			this.collection.on("highlightChange", this.showDownloadAndProcessButtons, this);
+			this.collection.on("highlightChange", this.showButtons, this);
 			this.render();
 		},
 		el: $("#search"),
@@ -48,7 +48,14 @@ define([
 			"click #process_button": "processSelected",
 			"click #builder_button": "openBuilder",
 			"click #delete_button": "openDeleteModal",
-			"click #do_delete": "deleteData" 
+			"click #do_delete": "deleteData",
+			"click #upload_button": "uploadToExperiment" 
+		},
+		uploadToExperiment: function() {
+			// TODO: GET EXPERIMENTS
+			var experiments = "riktigaRawFiles";
+			app.router.navigate("upload/"+experiments, {trigger:true});
+
 		},
 		openDeleteModal: function() {
 
@@ -79,11 +86,11 @@ define([
 		deleteData: function() {
 			var files = this.collection.getSelectedFiles();
 			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files[i].get("id"));
-				files[i].destroy();
+				console.log("file to delete: ", files.at(i).get("id"));
+				files.at(i).destroy();
 			}
 		},
-		showDownloadAndProcessButtons: function(fileArray) {
+		showButtons: function(fileArray) {
 			var selectedFiles = this.collection.getSelectedFiles();
 
 			//handles whether or not the download or process buttons should be clickable.
@@ -103,6 +110,8 @@ define([
 				$('#download_button').prop('disabled', true);
 				$('#process_button').prop('disabled', true);
 			}
+
+			/* TODO: GET SELECTED EXPERIMENTS!! */
 		},
 		searchQueryChanged: function() {
 			var isEmpty = $('#search_input').val().length != 0;
