@@ -16,17 +16,24 @@ define([
 
 		initialize: function(options) {
 			this.type = options.type;
+			this.searchResults = options.searchResults;
 
 			this.updateSubCollection();
-			this.collection.on("sync", this.updateSubCollection, this);
+			this.collection.on("sync remove", this.updateSubCollection, this);
+
+			this.expanded = false;
+
+			this.$el.addClass(this.type + "-group");
 
 			this.render();
 		},
 
 		render: function() {
 
+			this.$el.empty();
+
 			// render from template
-			this.$el.html(this.typeRowTemplate({
+			this.$el.append(this.typeRowTemplate({
 				type: this.type,
 				colspan: this.colspan
 			}));
@@ -36,12 +43,19 @@ define([
 			} else {
 				this.$el.addClass("empty-group")
 			}
+
+			if(this.expanded && this.subCollection.length > 0) {
+				this.$el.addClass("expanded");
+			} else {
+				this.$el.removeClass("expanded");
+			}
 			
 
 			// create and render individual file views
 			this.subCollection.each(function(file) {
 				var fileView = new FileView({
-					model : file
+					model: file,
+					searchResults: this.searchResults
 				});
 
 				fileView.render();
@@ -53,12 +67,19 @@ define([
 		},
 		toggleFileRows: function(event) {
 			if(this.subCollection.length > 0) {
-				$(event.delegateTarget).toggleClass("expanded");
+				if(this.expanded) {
+					this.$el.removeClass("expanded");
+				} else {
+					this.$el.addClass("expanded");
+				}
+
+				this.expanded = !this.expanded;
 			}
 			
 		},
 		updateSubCollection: function() {
 			this.subCollection = new Files(this.collection.where({type: this.type}));
+			this.render();
 		}
 		
 	});
