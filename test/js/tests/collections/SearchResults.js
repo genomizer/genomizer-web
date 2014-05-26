@@ -96,12 +96,12 @@ define([
 				var file = new File({"id": "file-id1"});
 
 				var searchResults = new SearchResults([experiment, experiment2],{query:undefined});
-				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
+				expect(searchResults.isSelectedFilesInExperiment(experiment.cid)).to.be.false;
 				searchResults.selectFile(file);
-				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.true;
-				expect(searchResults.experimentHasSelectedFiles(experiment2)).to.be.false;
+				expect(searchResults.isSelectedFilesInExperiment(experiment.cid)).to.be.true;
+				expect(searchResults.isSelectedFilesInExperiment(experiment2.cid)).to.be.false;
 				searchResults.deselectFile(file);
-				expect(searchResults.experimentHasSelectedFiles(experiment)).to.be.false;
+				expect(searchResults.isSelectedFilesInExperiment(experiment.cid)).to.be.false;
 			});
 			it("Should return the union of files in selected experiments and selected files", function () {
 				var experiment = new Experiment({
@@ -190,6 +190,25 @@ define([
 				searchResults.deselectExperiment(experiment);
 				expect(highlightSpy.called).to.be.true;
 
+			});
+			it("Should deselect all files contained in an experiment when deselecting the experiment", function () {
+				var experiment = new Experiment({
+					"name": "experimentName",
+					"created by": "user",
+					"files": [{"id": "file-id1"}], "annotations": []
+				});
+				var file1 = new File({"id": "file-id1"});
+				var file2 = new File({"id": "file-id2"});
+				var file3 = new File({"id": "file-id3"});
+				console.log("file3", file3.get("id"))
+
+				var searchResults = new SearchResults([experiment],{query:undefined});
+				searchResults.selectFile(file1);
+				searchResults.selectFile(file2);
+				searchResults.selectFile(file3);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(3);
+				searchResults.deselectExperiment(experiment);
+				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(2);
 			});
 			it("Should return selected experiments", function () {
 				var experiment = new Experiment({

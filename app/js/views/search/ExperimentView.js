@@ -18,6 +18,8 @@ define([
 
 			this.expanded = false;
 
+			this.subSelection = this.searchResults.isSelectedFilesInExperiment(this.model.cid);
+
 			this.rawGroupView = new FileGroupView({
 				collection: this.model.files,
 				type: "Raw",
@@ -33,6 +35,8 @@ define([
 				type: "Region",
 				searchResults: this.searchResults
 			});
+
+			this.searchResults.on("highlightChange", this.highlightChange, this);
 		},
 
 		render: function() {
@@ -56,6 +60,12 @@ define([
 
 			if(this.searchResults.isExperimentSelected(this.model.cid)) {
 				this.$el.find(".experiment-checked-input").prop("checked", true);
+			}
+
+			if(this.subSelection) {
+				this.$el.addClass("subselection");
+			} else {
+				this.$el.removeClass("subselection");
 			}
 
 			if(this.expanded) {
@@ -85,7 +95,28 @@ define([
 			
 		},
 		experimentSelect: function(event) {
-			this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
+			if(this.subSelection) {
+				this.model.trigger("experimentSelect", this.model,  false);
+				this.$el.removeClass("subselection");
+				this.subSelection = false;
+				this.rawGroupView.render();
+				this.profileGroupView.render();
+				this.regionGroupView.render();
+				event.preventDefault();
+			} else {
+				this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
+			}
+			
+			
+		},
+		highlightChange: function() {
+			
+			this.subSelection = this.searchResults.isSelectedFilesInExperiment(this.model.cid);
+			if(this.subSelection) {
+				this.$el.addClass("subselection");
+			} else {
+				this.$el.removeClass("subselection");
+			}
 		}
 	});
 	return ExperimentView;
