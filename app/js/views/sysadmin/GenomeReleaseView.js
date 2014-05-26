@@ -15,6 +15,8 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 					that.render(that.genomeReleaseFiles);
 				}
 			}); 
+			
+			this.genomeReleaseFileList.on("uploadProgress",this.renderUploadProgress,this);
 		},
 
 		render : function(genomeReleaseFiles) {
@@ -44,8 +46,10 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		
 		deleteGenomeRelease : function(e) {
 			var payload = e.currentTarget.id.split(",");
-			console.log(payload);
-			Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+            var x = window.confirm("Are you sure you want to delete version " + payload[1] + " of " + payload[0] + "?");
+            if (x) {
+				Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+            }
 		},
 		
 		addSelectedFile: function() {
@@ -66,25 +70,17 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
             });
 		},
 		
-		renderUploadProgress: function() {
-			// if(!this.genomeReleaseFiles.hasUnfinishedUploads() && genomeReleaseFiles.length) {
-// 				
-			// } else {
-				//var progress = this.genomeReleaseFiles.getTotalUploadProgress() * 100;
-				// var prog = 0;
-				// for(var i=0; i < 1000000000; i++){
-					// if(i%10000000==0){
-						// prog++;
-						// console.log(prog);
-						// $("#pbar").css('width',prog+'%');
-						// console.log($('#pbar').val());
-					// }
-				// }
-				//$('.progess-bar').width(progress);
-			// }
+		renderUploadProgress: function() {		
+			if(this.genomeReleaseFileList.hasUnfinishedUploads() && this.genomeReleaseFileList.length) {
+				$('.progress-bar').replaceWith("<div class=" + "progress-bar" + " id=" + "pbar" + " style=" + "width:"+ this.genomeReleaseFileList.getTotalUploadProgress() *100 + "%; ></div>");
+			} else {
+				if (this.genomeReleaseFileList.length == 0) {
+					$('.progress-bar').replaceWith("<div class=" + "progress-bar" + " id=" + "pbar" + " style=" + "width:"+ 0 + "%; ></div>");
+				} else {
+					$('.progress-bar').replaceWith("<div class=" + "progress-bar" + " id=" + "pbar" + " style=" + "width:"+ 100 + "%; ></div>");
+				}
+			}
 		},
-
-	
 	});
 	return GenomeReleaseView;
 });

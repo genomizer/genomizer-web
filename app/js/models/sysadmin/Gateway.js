@@ -10,7 +10,6 @@ define([], function() {
 		},
 
 		sendPacket : function(type, urlExtension, payload, shouldGoBack) {
-			//console.log(app.auth.get("token"));
 			$.ajax({
 				type : type,
 				ContentType : "application/json",
