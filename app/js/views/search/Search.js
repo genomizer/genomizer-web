@@ -56,10 +56,10 @@ define([
 			var fileNames = [];
 			var expIDs = [];
 			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files[i].get("id"));
-				console.log(files[i]);
-				fileNames.push(files[i].get("filename"));
-				expIDs.push(files[i].get("expId"));
+				console.log("file to delete: ", files.at(i).get("id"));
+				console.log(files.at(i));
+				fileNames.push(files.at(i).get("filename"));
+				expIDs.push(files.at(i).get("expId"));
 			}
 
 			//kolla experiment och lägg till de
