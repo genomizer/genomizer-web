@@ -122,7 +122,13 @@ define([],function() {
             	new SysadminMainView({el:that.getNewMainView()});
                 new GenomeReleaseView({el:that.getNewAdminView()});                
             });
-        }
+        },
+
+		logout: function() {
+			app.auth.logout().success(function() {
+				window.location.href = '';
+			});
+		}
 
     });
     return Router;

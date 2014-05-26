@@ -14,6 +14,7 @@ define([],function() {
 				this._afterLogin();
 			}
 		},
+		idAttribute:'token',
 		doLogin: function() {
 			var that = this;
 			this.save().success(function() {
@@ -32,6 +33,10 @@ define([],function() {
 		},
 		isLoggedIn: function() {
 			return this.get('token') !== undefined
+		},
+		logout: function() {
+			localStorage.clear()
+			return this.destroy();
 		}
 	});
 	return Auth;
