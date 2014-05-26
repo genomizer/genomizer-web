@@ -11,7 +11,7 @@ define([
 function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiments,Experiment,Files) {
 	var Upload = Backbone.View.extend({
 		TEMPLATE: _.template(UploadTemplate),
-		initialize: function() {
+		initialize: function(options) {
 			this.experiments = new Experiments();
 			this.experiments.on("changeUploadable",this.enableUploadAllButton,this);
 			this.experimentViews = [];
@@ -19,6 +19,16 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.render();
 			this.enableAddButton(); // not needed when automatic test value is removed
 			$('#uploadAllButton').toggle(false);
+
+			if (options != undefined) {
+				var that = this;
+				var expIdList = options.expIds.split('☯');
+				_.each(expIdList, function(expId) {
+					if (expId.length > 0) {
+						that.addToExistingExperiment(expId);
+					}
+				});
+			}
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -28,7 +38,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
-			"submit form#upload_form": "addToExistingExperiment",
+			"submit form#upload_form": "readExpID",
 			"submit #experiment-form": "saveExperiment",
 			"click #uploadAllButton": "uploadAll"
 		},
@@ -47,12 +57,15 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.experimentViews.splice(index,1);
 			this.enableUploadAllButton();
 		},
-		addToExistingExperiment: function() {
-			var denySameExperimentName = false;
+		readExpID: function() {
 			var experimentId = $('#existing_experiment_field').val();
+			this.addToExistingExperiment(experimentId);
+		},
+		addToExistingExperiment: function(expId) {
+			var denySameExperimentName = false;
 
 			this.experiments.each(function(exp) {
-				if (exp.id == experimentId) {
+				if (exp.id == expId) {
 					app.messenger.warning("The experiment \'" + exp.id + "\' is already open");
 					denySameExperimentName = true;
 				}
@@ -62,13 +75,12 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 				var that = this;
 				var experiment = new Experiment();
 				this.experiments.add(experiment);
-				experiment.set("id",experimentId);
+				experiment.set("id",expId);
 				experiment.existingExperiment = true;
 				experiment.fetch().success(function() {
 					that.appendNewExperimentView(experiment);
 				});
 			}
-		
 		},
 		appendNewExperimentView: function(experiment) {
 			var experimentView = new ExperimentView({model: experiment});
