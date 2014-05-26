@@ -60,10 +60,10 @@
 }
 
 .fileUploadList .type-select {
-	border: none;
+	/*border: none;
 	background: none;
 	outline: none;
-	box-shadow: none;
+	box-shadow: none;*/
 	padding-left: 0px;
 	margin-left: -4px;
 }
