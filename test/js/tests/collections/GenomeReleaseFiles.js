@@ -103,6 +103,55 @@ define(['collections/sysadmin/GenomeReleaseFiles', 'models/sysadmin/GenomeReleas
 				genomeReleaseFiles.models[0].get('genomeVersion').should.equal('hg1337');
 			});
 		});
+
+		describe("getForSpecies", function (){
+			var grf;
+			beforeEach(function() {
+				grf = new GenomeReleaseFiles(
+				[
+					{
+						"genomeVersion": "fb5",
+						"species": "Fly",
+						"folderPath": "/var/www/data/genome_releases/Fly/fb5/",
+						"files": {}
+					},
+					{
+						"genomeVersion": "pics!",
+						"species": "Fly",
+						"folderPath": "/var/www/data/genome_releases/Fly/pics!/",
+						"files": {
+							"SysadminEditView.jpg": "In Progress",
+							"SysadminCreateAnnotation.jpg": "In Progress",
+							"SysadminAnnotationView.jpg": "In Progress"
+						}
+					},
+					{
+						"genomeVersion": "gf",
+						"species": "Ape",
+						"folderPath": "/var/www/data/genome_releases/Fly/gf/",
+						"files": {
+							"company_generic.sql": "In Progress"
+						}
+					}
+				]
+				);
+			});
+			it("shoud filter out species", function() {
+				expect(grf.getForSpecies("Fly").length).equals(2);
+			});
+			it("shoud filter out species and be a backbone model/collection pair", function() {
+				grf.getForSpecies("Fly").each(function(g) {
+					expect(g.get("species")).equal("Fly");
+				});
+
+			});
+			it("shoud filter out species case insensetive", function() {
+				expect(grf.getForSpecies("ape").length).equals(1);
+			});
+			it("shoud filter out species", function() {
+				expect(grf.getForSpecies("--Ape").length).equals(0);
+			});
+		});
 	});
 });
 

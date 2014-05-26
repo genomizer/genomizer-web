@@ -21,7 +21,7 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 		
 		getForSpecies: function(specie) {
 			var gfs = this.filter(function(gr) {
-				return gr.get("specie").toLowerCase() == specie.toLowerCase();
+				return gr.get("species").toLowerCase() == specie.toLowerCase();
 			});
 			return new GenomeReleaseFiles(gfs);
 		}
