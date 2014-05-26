@@ -1,45 +1,31 @@
 <link rel="stylesheet" href="css/main-sysadmin.css">
 
 <div id="container">
-	<span class="btn btn-default btn-file">
-		Select file to upload
+	<span class="btn btn-default btn-file"> Select files to upload
 		<input id="choose_files" type="file" accept="" multiple class="fileInput" value="Browse"/>
 	</span>
 	<br>
-	
-	<div class="selectedFilesTable table-group">
-		<table class="table table-bordered table-hover span3">
-	        <thead>
-	            <tr>
-	                <th>Selected files</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	        <tr>
-	            <td>random.jpg<a class="btn btn-default">Edit</a></td>
-	            
-	        </tr>
-	        <tr>
-	            <td>h317.FASTA</td>
-	        </tr>
-	        </tbody>
-	    </table>
+	<br>
+
+	<div id="progress-bar-container">
+
 	</div>
 
 	<table class="table table-striped">
 		<thead id="genome_table">
 			<tr>
-				<th id="th_species"><a>Species</a></th><th id="th_version"><a>Version</a></th><th id="th_filename"><a>Filename</a></th>
+				<th id="th_species"><a>Species</a></th><th id="th_version"><a>Version</a></th><th id="th_filename"><a>Filenames</a></th>
 			</tr>
 		</thead>
 		<tbody id="genome_table_body">
 			<% _.each(genomeReleaseFiles, function(genomeReleaseFile) { %>
 			<tr>
-				<td><%= genomeReleaseFile.get('specie') %></td>
+				<td><%= genomeReleaseFile.get('species') %></td>
 				<td><%= genomeReleaseFile.get('genomeVersion') %></td>
-				<td><%= genomeReleaseFile.get('fileName') %></td>
 
-				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('specie')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
+				<td title="<% _.each(genomeReleaseFile.get('files'), function(fileName) { %><%= fileName %> <% }); %>"><%=genomeReleaseFile.get('files')[0] + ", ..." %></td>
+
+				<td><a class="delete_genome_btn btn btn-danger" id="<%= genomeReleaseFile.get('species')%>,<%= genomeReleaseFile.get('genomeVersion')%>">Delete</a></td>
 			</tr>
 			<% }); %>
 		</tbody>

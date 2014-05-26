@@ -48,3 +48,18 @@ color:#000;
 #container .selectedFilesTable {
 	width: 20%;
 }
+
+#container .progress {
+	width: 40%;
+}
+
+#container .nav {
+display:block;
+width:100%
+margin:1ex;
+padding:0.5ex;
+}
+
+.progress {
+	height: 25px;
+}
