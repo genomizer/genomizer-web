@@ -101,7 +101,7 @@ define([
 			})
 
 			return files;
-		}
+		},
 		getSpeciesForExperiment: function(expID) {
 
 			var attribs;
