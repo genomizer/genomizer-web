@@ -14,18 +14,22 @@ define([
 
 		initialize: function(options) {
 			this.annotations = options.annotations;
+			this.searchResults = options.searchResults;
 
 			this.rawGroupView = new FileGroupView({
 				collection: this.model.files,
-				type: "Raw"
+				type: "Raw",
+				searchResults: this.searchResults
 			});
 			this.profileGroupView = new FileGroupView({
 				collection: this.model.files,
-				type: "Profile"
+				type: "Profile",
+				searchResults: this.searchResults
 			});
 			this.regionGroupView = new FileGroupView({
 				collection: this.model.files,
-				type: "Region"
+				type: "Region",
+				searchResults: this.searchResults
 			});
 		},
 
@@ -45,20 +49,22 @@ define([
 			table.append(this.rawGroupView.$el);
 			table.append(this.profileGroupView.$el);
 			table.append(this.regionGroupView.$el);
+			if(this.searchResults.isExperimentSelected(this.model.cid)) {
+				this.$el.find(".experiment-checked-input").prop("checked", true);
+			}
+			
 		},
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
-			"click .checked-input": "fileSelect",
+			"click .experiment-checked-input": "experimentSelect",
 		},
 		toggleTypeRows: function(event) {
 			$(event.delegateTarget).toggleClass("expanded");
 		},
-		fileSelect: function(event) {
-			var fileID = $(event.currentTarget).closest("tr").data("id");
-			this.model.trigger("fileSelect", this.model, fileID,  $(event.currentTarget).prop("checked"));
-			//event.preventDefault();
-		}
-		
+		experimentSelect: function(event) {
+			this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
+			this.render();
+		}	
 	});
 	return ExperimentView;
 

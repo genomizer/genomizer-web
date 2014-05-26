@@ -11,18 +11,24 @@ define([
 
 
 		initialize: function(options) {
+			this.searchResults = options.searchResults;
+
 			this.render();
 		},
-
 		render: function() {
 			this.$el.html(this.template({
 				'file': this.model
 			}));
-
-			//this.$el.addClass(this.model.get("type") + "-file-row");
-			this.$el.data("id", this.model.get("id"));
-			this.$el.data("url", this.model.get("url"));
+			
+			this.$el.find(".file-checked-input").prop("checked", this.searchResults.isFileSelected(this.model.get("id")));
+		},
+		events: {
+			"click .file-checked-input": "fileSelect",
+		},
+		fileSelect: function(event) {
+			this.model.trigger("fileSelect", this.model,  $(event.currentTarget).prop("checked"));
 		}
+
 	});
 	return FileView;
 

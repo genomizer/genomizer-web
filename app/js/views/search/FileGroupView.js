@@ -16,9 +16,12 @@ define([
 
 		initialize: function(options) {
 			this.type = options.type;
+			this.searchResults = options.searchResults;
 
 			this.updateSubCollection();
 			this.collection.on("sync", this.updateSubCollection, this);
+
+			this.$el.addClass(this.type + "-group");
 
 			this.render();
 		},
@@ -41,7 +44,8 @@ define([
 			// create and render individual file views
 			this.subCollection.each(function(file) {
 				var fileView = new FileView({
-					model : file
+					model: file,
+					searchResults: this.searchResults
 				});
 
 				fileView.render();

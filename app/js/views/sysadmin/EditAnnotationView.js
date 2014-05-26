@@ -39,10 +39,7 @@ define(['text!templates/sysadmin/EditTemplate.html', 'models/sysadmin/Annotation
         deleteAnnotation : function() {
             var x = window.confirm("Are you sure you want to remove this annotation?");
             if (x) {
-                var y = window.confirm("Annotation will be completely removed!");
-                if (y) {
-                    Gateway.deleteAnnotation({}, this.annotation.get('name'), true);
-                }
+                Gateway.deleteAnnotation({}, this.annotation.get('name'), true);
             }
         },
 

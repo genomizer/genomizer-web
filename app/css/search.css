@@ -99,6 +99,18 @@
 	border-bottom: 1px solid #ddd;
 }
 
+.file-group.Raw-group .file-row {
+	border-left: 10px solid #FFBE00;
+}
+
+.file-group.Profile-group .file-row {
+	border-left: 10px solid #A600A6;
+}
+
+.file-group.Region-group .file-row {
+	border-left: 10px solid #00B25C;
+}
+
 .table-row .table {
 	background-color: #f6f6f6;
 }
