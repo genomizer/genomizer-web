@@ -11,7 +11,8 @@ define([],function() {
             "admin":"admin",
             "admin/createannotation": "createAnnotation",
             "admin/editannotation/:name": "editAnnotation",
-            "admin/genomereleases" : "genomeReleases"
+            "admin/genomereleases" : "genomeReleases",
+			"logout": "logout"
         },
 
         initialize: function(options) {
