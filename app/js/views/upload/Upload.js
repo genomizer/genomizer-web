@@ -20,7 +20,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.enableAddButton(); // not needed when automatic test value is removed
 			$('#uploadAllButton').toggle(false);
 
-			if (options != undefined) {
+			if ((options.expIds != undefined)) {
 				var that = this;
 				var expIdList = options.expIds.split('☯');
 				_.each(expIdList, function(expId) {
