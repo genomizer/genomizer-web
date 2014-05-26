@@ -5,7 +5,8 @@ define([
 	var AuthModal = ModalAC.extend({
 		TEMPLATE: _.template(template),
 		TEMPLATE_VARS: {
-			modalTitle: "Login"
+			modalTitle: "Login",
+			noClose: true
 		},
 		events: {
 			'submit form':'submitLogin',

@@ -4,14 +4,12 @@ define([
 	var ModalAC = Backbone.View.extend({
 		MODAL_TEMPLATE: _.template(template),
 		TEMPLATE_VARS: {
-			modalTitle: "Modal Title"
+			modalTitle: "Modal Title",
+			// noClose: true, supply to only allow modal to be closed programatically.
 		},
 		initialize: function(options) {
 			this.$modal = $(this.MODAL_TEMPLATE(this.TEMPLATE_VARS));
 			this.$el = this.$modal.find(".modal-inner-content");
-
-			
-
 		},
 		show: function () {
 
@@ -21,6 +19,12 @@ define([
 			// render
 			this.render();
 			this.$modal.appendTo($("body"));
+			if(this.TEMPLATE_VARS.noClose) {
+				this.$modal.modal({
+					backdrop: 'static',
+					keyboard: false
+				});
+			}
 			this.$modal.modal('show');
 			this.$modal.on('hidden.bs.modal',_.bind(this.removeModal,this));
 		},
