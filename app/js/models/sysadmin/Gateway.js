@@ -15,8 +15,7 @@ define([], function() {
 				ContentType : "application/json",
 				url : this.url + urlExtension,
 				dataType : 'json',
-				username : "",
-				password : "",
+				Authorization: app.auth.get("token"),
 				data : JSON.stringify(payload),
 				success: function(data){
 					if (shouldGoBack) {
@@ -31,7 +30,7 @@ define([], function() {
 
 		},
 		
-		postGenomeRelease : function(payload, genomeReleaseFile) {
+		postGenomeRelease : function(genomeReleaseFiles) {
 			that = this;
 
 			$.ajax({
@@ -39,46 +38,17 @@ define([], function() {
 				ContentType : "application/json",
 				url : this.url + "genomeRelease",
 				dataType : 'json',
-				username : "",
-				password : "",
-				data : JSON.stringify(payload),
+				Authorization: app.auth.get("token"),
+				data : JSON.stringify(genomeReleaseFiles.getPayload()),
 				success : function(data) {
-					that.uploadGenomeReleaseFile(data, genomeReleaseFile);
 				},
-				complete : function(xhr) {
-
+				complete : function(data) {
+					genomeReleaseFiles.uploadGenomeReleaseFiles(eval(data.responseText));
 				},
 			});
 
 		},
 	
-		uploadGenomeReleaseFile : function(url, genomeReleaseFile){
-			var payload = new FormData();
-			console.log(genomeReleaseFile.getFileObj());
-			payload.append('uploadfile',genomeReleaseFile.getFileObj());
-			$.ajax({
-				url: url.URLupload,
-				type: "POST",
-				data: payload,
-				username: "pvt",
-				password: "pvt",
-				processData: false,
-				contentType: false,
-		/*		beforeSend: function(jqXHR) {
-					debugger;
-					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-				}
-				xhr: function()
-				{
-					//Upload progress
-					var xhr = $.ajaxSettings.xhr();
-					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-					return xhr;
-				} 
-*/
-			});
-		},
- 
 		postAnnotation : function(payload) {
 			this.sendPacket("POST", "annotation/field", payload, false);
 		},

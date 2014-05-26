@@ -34,13 +34,13 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 			switch($('#annotation_forced').val()) {
 				case "one":
 					this.annotation.set({
-						"forced" : "true"
+						"forced" : true
 					});
 					output.push('Yes');
 					break;
 				case "two":
 					this.annotation.set({
-						"forced" : "false"
+						"forced" : false
 					});
 					output.push('No');
 					break;
@@ -67,7 +67,7 @@ define(['text!templates/sysadmin/NewAnnotationTemplate.html',
 				default:
 					this.annotation.set({
 						"type" : ["freetext"],
-						"default" : ""
+						"default" : "Unknown"
 					});
 					output.push('Freetext');
 					break;
