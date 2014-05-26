@@ -1,4 +1,8 @@
-define(['models/Experiment'],function(Experiment) {
+define([
+	'models/Experiment',
+	'collections/Experiments',
+	'collections/Files'
+],function(Experiment, Experiments, Files) {
 	var SearchResults = Backbone.Collection.extend({
 		url: function() {
 			return app.BASE_URL + 'search/?annotations=' + this.query;
@@ -11,9 +15,11 @@ define(['models/Experiment'],function(Experiment) {
 				this.fetchModels(options.query);
 
 			}
-			this.selectedFiles = [];
+			this.selectedFiles = new Files();
+			this.selectedExperiments = new Experiments();
 
 			this.on("fileSelect", this.fileSelectHandler, this);
+			this.on("experimentSelect", this.experimentSelectHandler, this);
 		},
 		fileSelectHandler: function(experiment, fileID, checked) {
 			var file = experiment.files.get(fileID);
@@ -23,19 +29,49 @@ define(['models/Experiment'],function(Experiment) {
 				this.deselectFile(file);
 			}
 		},
+		experimentSelectHandler: function(experiment, checked) {
+			if(checked) {
+				this.selectExperiment(experiment);
+			} else {
+				this.deselectExperiment(experiment);
+			}
+		},
 		selectFile: function(file) {
-			this.selectedFiles.push(file);
-			this.trigger('highlightChange', this.selectedFiles);
+			if(!this.selectedFiles.contains(file)) {
+				this.selectedFiles.add(file);
+				this.trigger('highlightChange');
+			}
 		},
 		deselectFile: function(file) {
-			var index = this.selectedFiles.indexOf(file);
-			if(index != -1) {
-				this.selectedFiles.splice(index, 1);
-				this.trigger('highlightChange', this.selectedFiles);
+			if(this.selectedFiles.contains(file)) {
+				this.selectedFiles.remove(file);
+				this.trigger('highlightChange');
 			}
 		},
 		getSelectedFiles: function() {
 			return this.selectedFiles;
+		},
+		getSelectedFileURLs: function() {
+			var res = [];
+			for(var i=0; i<this.selectedFiles.length; i++) {
+				res.push(this.selectedFiles.at(i).get("url"));
+			}
+			return res;
+		},
+		selectExperiment: function(experiment) {
+			if(!this.selectedExperiments.contains(experiment)) {
+				this.selectedExperiments.add(experiment);
+				this.trigger('highlightChange');
+			}
+		},
+		deselectExperiment: function(experiment) {
+			if(this.selectedExperiments.contains(experiment)) {
+				this.selectedExperiments.remove(experiment);
+				this.trigger('highlightChange');
+			}
+		},
+		getSelectedExperiments: function() {
+			return this.selectedExperiments;
 		},
 		getSpeciesForExperiment: function(expID) {
 
@@ -55,6 +91,14 @@ define(['models/Experiment'],function(Experiment) {
 			return retVal;
 		},
 		fetchModels: function(query) {
+
+			if(this.selectedExperiments != undefined) {
+				this.selectedExperiments.reset();	
+			}
+			if(this.selectedFiles != undefined) {
+				this.selectedFiles.reset();	
+			}
+
 			this.fetching = true;
 			this.trigger('change');
 
@@ -73,13 +117,6 @@ define(['models/Experiment'],function(Experiment) {
 		setSearchQuery: function(query) {
 			this.query = query;
 			this.fetchModels(query);
-		},
-		getSelectedFileURLs: function() {
-			var res = [];
-			for(var i=0; i<this.selectedFiles.length; i++) {
-				res.push(this.selectedFiles[i].get("url"));
-			}
-			return res;
 		}
 	});
 	return SearchResults;

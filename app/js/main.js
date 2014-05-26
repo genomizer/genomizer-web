@@ -39,10 +39,11 @@ require([
 	app.messenger = new Messenger();
 
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		if(app.messenger.handleErrors[jqxhr.status]) {
-			app.messenger.warning(app.messenger.handleErrors[jqxhr.status]());
-		} else if(!app.messenger.ignoreErrors[jqxhr.status]) {
-			app.messenger.warning("Error " + jqxhr.status + " when requesting " + settings.url + " please reload the page.");
+		
+		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
+			app.messenger.warning(jqxhr.responseJSON.message);
+		} else {
+			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page.");
 		}
 	});
 
@@ -56,7 +57,7 @@ require([
 		$.ajaxSetup({
 			beforeSend: function (xhr)
 			{
-				xhr.setRequestHeader("Authorization",app.auth.get("token"));        
+				xhr.setRequestHeader("Authorization",app.auth.get("token"));    
 			}
 		});
 		// TODO: fire simultaniously
