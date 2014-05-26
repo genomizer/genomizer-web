@@ -104,7 +104,7 @@ define(['models/sysadmin/GenomeReleaseFile', 'models/sysadmin/Gateway'], functio
 			if (this._order_by == 'genomeVersion')
 				return model.get('genomeVersion');
 			else
-				return model.get('specie');
+				return model.get('species');
 		}, 
 		
 		orderBy: function(sortString) {
