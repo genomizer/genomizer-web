@@ -71,9 +71,10 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		},
 		renderUploadProgress: function() {		
 			if (this.genomeReleaseFileList.hasUnfinishedUploads() && this.genomeReleaseFileList.length) {
-				$('#progress-bar-container').replaceWith("<div id="+"progress-bar-container"+"><div class="+"progress" +"><div class="+"progress-bar" +" id="+"pbar" +" style=width:"+ this.genomeReleaseFileList.getTotalUploadProgress()*100 + "%;></div></div></div>");
+				$('#progress-bar-container').replaceWith("<div id="+"progress-bar-container"+"><div class="+"progress" +"><div class="+"progress-bar" +" id="+"pbar" +" style=width:"+ 
+				this.genomeReleaseFileList.getTotalUploadProgress()*100 + "%;></div></div></div>");
 			} else if (this.genomeReleaseFileList.length != 0) {
-				$('#progress-bar-container').replaceWith("<div id="+"progress-bar-container>"+"<div class="+"progress" +"><div class="+"progress-bar" +" id="+"pbar" +" style=width:"+ 100 +"%;></div></div></div>");
+				$('#progress-bar-container').replaceWith("<div id="+"progress-bar-container>"+"<div class="+"progress" +"><div class="+"progress-bar" +" id="+"pbar" +" style=width:"+ 100 +"%;>Upload completed</div></div></div>");
 			} 
 		}
 	});
