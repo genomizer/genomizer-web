@@ -155,6 +155,7 @@ define([
 				}
 			} else {
 				$('#upload_button').prop('disabled', true);
+				$('#process_button').prop('disabled', true);
 			}
 
 			//handles whether or not the download or delete buttons should be clickable.
@@ -162,13 +163,15 @@ define([
 				$('#delete_button').prop('disabled', false);
 
 				$('#download_button').prop('disabled', false);
-				for(var i = 0; i < selectedExperiments.length; i++) {
+
+				// CHECK THAT EXPERIMENTS CONTAIN FILES
+/*				for(var i = 0; i < selectedExperiments.length; i++) {
 					if(selectedExperiments.at(i).get("files").length == 0) {
 						$('#download_button').prop('disabled', true);
 						break;
 					}
 				}
-			} else {
+*/			} else {
 				$('#delete_button').prop('disabled', true);
 				$('#download_button').prop('disabled', true);
 			}
