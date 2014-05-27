@@ -9,8 +9,6 @@ define([], function() {
 			"forced" : "false"
 
 		},
-		initialize : function() {
-		},
 	});
 	return Annotation;
 });
