@@ -119,19 +119,14 @@ define([
 				var file2 = new File({"id": 2});
 				var file3 = new File({"id": 3});
 				
-				console.log("== BEGIN ==")
 				var searchResults = new SearchResults([experiment],{query:undefined});
 				searchResults.selectExperiment(experiment);
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(1);
-				console.log("== STEP 1 ==")
 				searchResults.selectFile(file1);
 				searchResults.selectFile(file2);
-				console.log("== STEP 2 ==")
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(2);
 				searchResults.selectFile(file3);
-				console.log("== STEP 3 ==")
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(3);
-				console.log("== END ==")
 			});
 		});
 
