@@ -14,6 +14,7 @@ define([
 		TEMPLATE: _.template(inputGroupTemplate),
 		TEMPLATEDELETEFILE: _.template(filesToDeleteTemplate),
 		TEMPLATEDELETEEXP: _.template(experimentsToDeleteTemplate),
+		el: $("#search"),
 		initialize: function(options) {
 
 			this.builder = new QueryBuilder();
@@ -26,9 +27,19 @@ define([
 				annotations: app.annotationTypes.withoutExpID()
 			});
 			this.collection.on("highlightChange", this.showButtons, this);
+
 			this.render();
+
+			this.$el.tooltip({
+				selector: '.search-toolbar .button-container .btn',
+				container: '.search-toolbar .button-container .btn-group',
+				delay: {
+					show: 500,
+					hide: 100
+				},
+				html: true 
+			});
 		},
-		el: $("#search"),
 		render: function() {
 			this.$el.html(this.TEMPLATE());
 
@@ -126,19 +137,20 @@ define([
 			var selectedExperiments = this.collection.getSelectedExperiments();
 			//handles whether or not the upload or process buttons should be clickable.
 			if(selectedExperiments.length > 0) {
-				$('#upload_button').prop('disabled', false);
-				$('#process_button').prop('disabled', false);
+				$('#upload_button').removeClass('disabled');
+				$('#process_button').removeClass('disabled');
 
 				//Makes sure there is two raw files in selected experiments and all have same species.
-				var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name")).toLowerCase();
+				var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name"));
 				for(var i = 0; i < selectedExperiments.length; i++) {
-					if(startSpecie != this.collection.getSpeciesForExperiment(selectedExperiments.at(i).get("name")).toLowerCase()) {
-						$('#process_button').prop('disabled', true);
+					var specie = this.collection.getSpeciesForExperiment(selectedExperiments.at(i).get("name"));
+					if(startSpecie != specie) {
+						$('#process_button').addClass('disabled');
 						break;
 					}
 					var expFiles = selectedExperiments.at(i).get("files");
 					if(expFiles.length == 0) {
-						$('#process_button').prop('disabled', true);
+						$('#process_button').addClass('disabled');
 						break;
 					} else {
 						var nrOfRawFiles = 0;
@@ -148,32 +160,30 @@ define([
 							}
 						}
 						if(nrOfRawFiles!=2) {
-							$('#process_button').prop('disabled', true);
+							$('#process_button').addClass('disabled');
 							break;
 						}
 					}
 				}
 			} else {
-				$('#upload_button').prop('disabled', true);
-				$('#process_button').prop('disabled', true);
+				$('#upload_button').addClass('disabled');
+				$('#process_button').addClass('disabled');
 			}
 
 			//handles whether or not the download or delete buttons should be clickable.
 			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
-				$('#delete_button').prop('disabled', false);
+				$('#delete_button').removeClass('disabled');
 
-				$('#download_button').prop('disabled', false);
-
-				// CHECK THAT EXPERIMENTS CONTAIN FILES
-/*				for(var i = 0; i < selectedExperiments.length; i++) {
+				$('#download_button').removeClass('disabled');
+				for(var i = 0; i < selectedExperiments.length; i++) {
 					if(selectedExperiments.at(i).get("files").length == 0) {
-						$('#download_button').prop('disabled', true);
+						$('#download_button').addClass('disabled', true);
 						break;
 					}
 				}
-*/			} else {
-				$('#delete_button').prop('disabled', true);
-				$('#download_button').prop('disabled', true);
+			} else {
+				$('#delete_button').addClass('disabled');
+				$('#download_button').addClass('disabled');
 			}
 
 			/* TODO: GET SELECTED EXPERIMENTS!! */
@@ -203,6 +213,9 @@ define([
 			};
 		},
 		downloadURL: function(url) {
+
+			// append token to url
+			url += "&token=" + app.auth.get("token");
 			
 			var iframe = $(document.createElement('iframe'));
 			//iframe.id = hiddenIFrameID;
