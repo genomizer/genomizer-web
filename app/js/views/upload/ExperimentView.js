@@ -62,7 +62,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.trigger('removeEvent',this);
 		},
 		cloneExperiment: function() {
-			this.trigger('cloneEvent',this.model);
+			this.trigger('cloneEvent',this.model, this.$el);
 		},
 		saveExperiment: function(e) {
 			e.preventDefault();
