@@ -66,13 +66,11 @@ define([
 
 			var experiments = this.collection.getSelectedExperiments();
 
-			console.log(experiments);
 			var data = experiments.at(0).get("name");
 
 			for(var i = 1; i < experiments.length; i++) {
 				data = data + '☯' + experiments.at(i).get("name");
 			}
-			console.log("Experiments:", data);
 
 			app.router.navigate("upload/"+data, {trigger:true});
 
@@ -80,44 +78,35 @@ define([
 		openDeleteModal: function() {
 
 			//display experiments to be deleted
-			var exp = this.collection.getSelectedExperiments();
+			var experiments = this.collection.getSelectedExperiments();
 
-			if(exp.length != 0) {
-				$('#delete-experiments-body-text').html(this.TEMPLATEDELETEEXP({
-					'expID': exp.at(0).get('name'),
-					'nrOfFiles': exp.at(0).get('files').length
-				}));
-				for(var i = 1; i<exp.length;i++) {
-					this.$el.find('#delete-experiments-body-text').append(this.TEMPLATEDELETEEXP({
-						'expID': exp.at(i).get('name'),
-						'nrOfFiles': exp.at(i).get('files').length
+			$('#delete-experiments-list').empty();
+			if(experiments.length != 0) {
+				for(var i = 0; i<experiments.length;i++) {
+					this.$el.find('#delete-experiments-list').append(this.TEMPLATEDELETEEXP({
+						'expID': experiments.at(i).get('name'),
+						'nrOfFiles': experiments.at(i).get('files').length
 					}));
 				}
+				$('#delete-experiments-title').show();
+			} else {
+				$('#delete-experiments-title').hide();
 			}
 
-
-			//display files to be deleted.
+			//display files to be deleted
 			var files = this.collection.getSelectedAndExperimentFiles();
-			var fileNames = [];
-			var expIDs = [];
-
+			$('#delete-files-list').empty();
 			if(files.length != 0) {
-				
 				for(var i = 0; i<files.length;i++) {
-					fileNames.push(files.at(i).get("filename"));
-					expIDs.push(files.at(i).get("expId"));
+					var elem = this.TEMPLATEDELETEFILE({
+						'fileID': files.at(i).get("filename"),
+						'expID': files.at(i).get("expId")
+					});
+					this.$el.find('#delete-files-list').append(elem);
 				}
-
-				$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
-					'fileID': fileNames[0],
-					'expID': expIDs[0]
-				}));
-				for(var i = 1; i<fileNames.length;i++) {
-					this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
-						'fileID': fileNames[i],
-						'expID': expIDs[i]
-					}));
-				}
+				$('#delete-files-title').show();
+			} else {
+				$('#delete-files-title').hide();
 			}
 
 		},

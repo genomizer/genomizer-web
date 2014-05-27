@@ -1,3 +1,34 @@
+/* === DELETE MODAL BEGIN === */
+
+#confirm-delete {
+	text-align: left;
+}
+
+#confirm-delete h5 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+#confirm-delete h5:first-child {
+	margin-top: 0;
+}
+
+#confirm-delete .modal-footer span {
+	margin-right: 15px;
+}
+
+#confirm-delete .modal-footer {
+	margin-top: 0;
+}
+
+#confirm-delete ul {
+	margin-bottom: 0;
+	padding-left: 15px;
+}
+
+/* === DELETE MODAL END === */
+
 
 /* === BEGIN SEARCH FORM === */
 

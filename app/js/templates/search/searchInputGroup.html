@@ -10,14 +10,14 @@
             
                 
             	<div class="modal-body">
-					<p>You are about to remove:</p>
-					<div id="delete-experiments-body-text"></div>
-					<div id="delete-files-body-text"></div>
-					<p>this procedure is irreversible.</p>
-    				<p>Do you want to proceed?</p>
+					<h5 id="delete-experiments-title">The following experiments will be removed:</h5>
+					<ul id="delete-experiments-list"></ul>
+					<h5 id="delete-files-title">The following files will be removed:</h5>
+					<ul id="delete-files-list"></ul>
 				</div>
 
                 <div class="modal-footer">
+                	<span>Do you want to proceed? </span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <a href="#" class="btn btn-danger danger" id="do_delete" data-dismiss="modal">Remove</a>
                 </div>
