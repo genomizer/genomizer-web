@@ -4,9 +4,9 @@
     <div id="type"><label>Type</label><br><%= values[2] %></div>
     <hr>
     <div id="forced"><label>Forced</label><br><%= values[1] %></div>
-    <hr>
     
     <% if(values[2] == "Drop-down list") { %>  
+        <hr>
     <div id="values"><label>Values</label><br>
         <% _.each(values[3], function(value) { %>
             <%=value %><br>
@@ -15,7 +15,7 @@
     <% } %>
     <div class="modal-footer">
         <button class="btn btn-danger" id="cancelAnnotation-btn">Cancel</button>
-        <button class="btn btn-default" id="confirmAnnotation-btn">Confirm</button>
+        <button class="btn btn-primary" id="confirmAnnotation-btn">Confirm</button>
     </div>
 
 </div>
