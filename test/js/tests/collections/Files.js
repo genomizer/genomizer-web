@@ -65,7 +65,6 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					f2.uploadDone = true;
 
 					var files = new Files([f1,f2]);
-					console.log(f1.uploadDone);
 					expect(files.hasUnfinishedUploads()).to.be.false;
 				});
 
@@ -75,7 +74,6 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					f1.uploadDone = true;
 
 					var files = new Files([f1,f2]);
-					console.log(f1.uploadDone);
 					expect(files.hasUnfinishedUploads()).to.be.true;
 				})
 			});
