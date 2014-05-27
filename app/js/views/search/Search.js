@@ -129,13 +129,19 @@ define([
 				files.at(0).destroy();
 			}
 
-			console.log(experiments);
-			console.log(experiments.isEmpty());
-			console.log(experiments.at(0));
 			while(!experiments.isEmpty()) {
-				//TODO DOESN'T SEND DELETE REQUEST TO API
+				// Fix to force correct DELETE response
+				// setting idAttribute to name, (we dont do it in experiment,
+				// as this would casue the wrong response when adding
+				// experiment)
+				experiments.at(0).idAttribute = 'name';
+
+				experiments.at(0).id =  experiments.at(0).get('name');
+
+				// Using /api/experiments instead of /api/searchResults
+				experiments.at(0).urlRoot = experiments.url;
+
 				experiments.at(0).destroy();
-				console.log(experiments);
 			}
 
 		},
