@@ -1,4 +1,11 @@
-define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/AnnotationsViewTemplate.html', 'collections/sysadmin/Annotations'], function(AnnotationListView, annotationsViewTemplate, Annotations) {
+/**
+ * A view class for the Annotations page showing the Create New Annotation
+ * button and the search field which filters the collection
+ */
+define(['views/sysadmin/AnnotationListView', 
+		'text!templates/sysadmin/AnnotationsViewTemplate.html', 
+		'collections/sysadmin/Annotations'], 
+function(AnnotationListView, annotationsViewTemplate, Annotations) {
 	var AnnotationsView = Backbone.View.extend({
 
 		render : function() {
@@ -20,28 +27,28 @@ define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/Annotation
 		events : {
 			"click #search_button" : "search",
 			"keyup #search_field" : "search",
-			"focus #search_field" : "updateSearchList"
 		},
 
-		search : function(e) {
+
+		/**
+		 * Takes an event e, if backspace is pressed - fetch a new list and filter that, else - filter current list
+		 * @param {Object} e - the triggered event
+		 */ 
+		 search : function(e) {
 			var searchParam = $('#search_field').val();
-			if(e.keyCode == 8){
-				//backspace
+			if (e.keyCode == 8) {
+				//keyCode 8 = backspace
 				var that = this;
-				this.searchList.fetch().complete(function(){
+				this.searchList.fetch().complete(function() {
 					that.searchList.filterCollection(searchParam);
-					that.annotationsListView.render(that.searchList, false);					
+					that.annotationsListView.render(that.searchList, false);
 				});
-			} else{
-				
+			} else {
+
 				this.searchList.filterCollection(searchParam);
 				this.annotationsListView.render(this.searchList, false);
 			}
 		},
-		
-		updateSearchList : function(e){
-			this.searchList.fetch();
-		}
 	});
 	return AnnotationsView;
 });

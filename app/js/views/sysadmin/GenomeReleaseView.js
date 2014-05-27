@@ -1,3 +1,6 @@
+/**
+ * A view class displaying the Genome-Release page
+ */
 define(['text!templates/sysadmin/GenomeReleaseTemplate.html', 
 		'collections/sysadmin/GenomeReleaseFiles', 
 		'models/sysadmin/GenomeReleaseFile', 
@@ -14,13 +17,14 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 				complete : function() {
 					that.render(that.genomeReleaseFiles);
 				}
-			}); 
-			
-			this.genomeReleaseFileList.on("uploadProgress",this.renderUploadProgress,this);
+			});
+			this.genomeReleaseFileList.on("uploadProgress", 
+				this.renderUploadProgress, this);
 		},
 
 		render : function(genomeReleaseFiles) {
-			var template = _.template(GenomeReleaseTemplate, {genomeReleaseFiles : genomeReleaseFiles.models});
+			var template = _.template(GenomeReleaseTemplate, 
+				{genomeReleaseFiles : genomeReleaseFiles.models});
 			$('.activePage').html(template);
 			this.renderUploadProgress();
 		},
@@ -31,14 +35,19 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 			"click .delete_genome_btn" : "deleteGenomeRelease",
 			"change .fileInput": "addSelectedFile",
 			"click #choose_files" : "setSpecies"
-			
 		},
 		
+		/**
+		 * Calls the collection and asks it to re-order after "Species" 
+		 */
 		orderBySpecies : function() {
-			this.genomeReleaseFiles.orderBy("specie");
+			this.genomeReleaseFiles.orderBy("species");
 			this.render(this.genomeReleaseFiles);
 		},
 		
+		/**
+		 * Calls the collection and asks it to re-order after "genomeVersion" 
+		 */
 		orderByVersion : function() {
 			this.genomeReleaseFiles.orderBy("genomeVersion");
 			this.render(this.genomeReleaseFiles);
@@ -52,6 +61,9 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
             }
 		},
 		
+		/**
+		 * 
+		 */
 		addSelectedFile: function() {
 			var formFiles = this.$el.find(".fileInput")[0].files;
 			this.genomeReleaseFileList.addFilesByFileObject(formFiles);
@@ -69,6 +81,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
                 }
             });
 		},
+		
 		renderUploadProgress: function() {		
 			if (this.genomeReleaseFileList.hasUnfinishedUploads() && this.genomeReleaseFileList.length) {
 				$('#progress-bar-container').replaceWith("<div id="+"progress-bar-container"+"><div class="+"progress" +"><div class="+"progress-bar" +" id="+"pbar" +" style=width:"+ 
