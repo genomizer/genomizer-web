@@ -46,9 +46,9 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			var experiment = new Experiment();
 			this.appendNewExperimentView(experiment);
 		},
-		cloneExperiment: function(clonedAnnotations) {
+		cloneExperiment: function(clonedAnnotations, $toBeClonedEl) {
 			var experiment = new Experiment(_.omit(clonedAnnotations.toJSON(),'files','id'));
-			this.appendNewExperimentView(experiment);
+			this.appendNewExperimentView(experiment, $toBeClonedEl);
 		},
 		removeExperiment: function(experimentView) {
 			var index = this.experimentViews.indexOf(experimentView);
@@ -82,14 +82,18 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 				});
 			}
 		},
-		appendNewExperimentView: function(experiment) {
+		appendNewExperimentView: function(experiment, $toBeClonedEl) {
 			var experimentView = new ExperimentView({model: experiment});
 			$('#uploadAllButton').toggle(true);
 			
-			this.listenTo(experimentView,'cloneEvent',this.cloneExperiment);
-			this.listenTo(experimentView,'removeEvent',this.removeExperiment);
+			this.listenTo(experimentView, 'cloneEvent', this.cloneExperiment);
+			this.listenTo(experimentView, 'removeEvent', this.removeExperiment);
 			
-			this.$el.find(".experiment-container").append(experimentView.el);
+			if ($toBeClonedEl != undefined) {
+				$toBeClonedEl.after(experimentView.el);
+			} else {
+				this.$el.find(".experiment-container").append(experimentView.el);
+			}
 			this.experimentViews.push(experimentView);
 			this.experiments.add(experiment);
 			experimentView.render();
