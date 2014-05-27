@@ -72,6 +72,7 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 		},
 				
 		setSpecies : function(){
+			$('.fileInput').val('');
 			this.genomeReleaseFileList.reset();
 			var annotations = new Annotations();
 			that = this;
