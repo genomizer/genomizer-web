@@ -57,6 +57,15 @@ define([
 			}
 			return res;
 		},
+		getSelectedAndExperimentURLs: function() {
+			var res = [];
+			var files = this.getSelectedAndExperimentFiles();
+			for(var i=0; i<files.length; i++) {
+				res.push(files.at(i).get("url"));
+			}
+			return res;
+
+		},
 		isFileSelected: function(fileID) {
 			return this.selectedFiles.get(fileID) != undefined;
 		},
@@ -67,18 +76,20 @@ define([
 			}
 		},
 		deselectExperiment: function(experiment) {
-			if(this.selectedExperiments.contains(experiment)) {
-				this.selectedExperiments.remove(experiment);
-				this.trigger('highlightChange');
-			}
+			this.selectedExperiments.remove(experiment);
+			experiment.files.each(function(file) {
+				this.selectedFiles.remove(file);
+			}, this)
+			this.trigger('highlightChange');
+			
 		},
 		getSelectedExperiments: function() {
 			return this.selectedExperiments;
 		},
-		isExperimentSelected: function(experimentID) {
-			return this.selectedExperiments.get(experimentID) != undefined;
+		isExperimentSelected: function(experimentCID) { // we have to use CID as experiments dont have IDs on the server
+			return this.selectedExperiments.get(experimentCID) != undefined;
 		},
-		experimentHasSelectedFiles: function(experimentCID) { // we have to use CID as experiments dont have IDs on the server
+		isSelectedFilesInExperiment: function(experimentCID) { 
 			var experiment = this.get(experimentCID);
 			if(experiment != undefined) {
 				for (var i = 0; i < experiment.files.length; i++) {
@@ -91,7 +102,7 @@ define([
 			return false;
 			
 		},
-		getSelectedandExperimentFiles: function() {
+		getSelectedAndExperimentFiles: function() {
 			var files = new Files();
 			files.add(this.getSelectedFiles().toJSON());
 			this.selectedExperiments.each(function(experiment) {

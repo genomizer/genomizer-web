@@ -29,7 +29,6 @@ define([
 		},
 
 		render: function() {
-
 			this.$el.empty();
 
 			// render from template

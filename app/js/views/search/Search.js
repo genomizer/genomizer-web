@@ -13,7 +13,7 @@ define([
 
 		TEMPLATE: _.template(inputGroupTemplate),
 		TEMPLATEDELETEFILE: _.template(filesToDeleteTemplate),
-		TEMPLADEDELETEEXP: _.template(experimentsToDeleteTemplate),
+		TEMPLATEDELETEEXP: _.template(experimentsToDeleteTemplate),
 		initialize: function(options) {
 
 			this.builder = new QueryBuilder();
@@ -68,7 +68,22 @@ define([
 		},
 		openDeleteModal: function() {
 
-			var files = this.collection.getSelectedFiles();
+			//display experiments to be deleted
+			var exp = this.collection.getSelectedExperiments();
+
+			$('#delete-experiments-body-text').html(this.TEMPLATEDELETEEXP({
+				'expID': exp.at(0).get('name'),
+				'nrOfFiles': exp.at(0).get('files').length
+			}));
+			for(var i = 1; i<exp.length;i++) {
+				this.$el.find('#delete-experiments-body-text').append(this.TEMPLATEDELETEEXP({
+					'expID': exp.at(i).get('name'),
+					'nrOfFiles': exp.at(i).get('files').length
+				}));
+			}
+
+			//display files to be deleted.
+			var files = this.collection.getSelectedAndExperimentFiles();
 			var fileNames = [];
 			var expIDs = [];
 			for(var i = 0; i<files.length;i++) {
@@ -76,13 +91,10 @@ define([
 				expIDs.push(files.at(i).get("expId"));
 			}
 
-			//kolla experiment och lägg till de
-
 			$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
 				'fileID': fileNames[0],
 				'expID': expIDs[0]
 			}));
-
 			for(var i = 1; i<fileNames.length;i++) {
 				this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
 					'fileID': fileNames[i],
@@ -91,10 +103,22 @@ define([
 			}
 		},
 		deleteData: function() {
-			var files = this.collection.getSelectedFiles();
+			var files = this.collection.getSelectedAndExperimentFiles();
+			var experiments = this.collection.getSelectedExperiments();
+
 			while(!files.isEmpty()) {
 				files.at(0).destroy();
 			}
+
+			console.log(experiments);
+			console.log(experiments.isEmpty());
+			console.log(experiments.at(0));
+			while(!experiments.isEmpty()) {
+				//TODO DOESN'T SEND DELETE REQUEST TO API
+				experiments.at(0).destroy();
+				console.log(experiments);
+			}
+
 		},
 		showButtons: function(fileArray) {
 
@@ -167,9 +191,9 @@ define([
 			e.preventDefault();
 		},
 		downloadSelected: function() {
-			//Downloads all the selected files.
+			//Downloads all the selected files and experiments.
 			var that = this;
-			var URLsToDownload = this.collection.getSelectedFileURLs();
+			var URLsToDownload = this.collection.getSelectedAndExperimentURLs();
 			// this is horrible but as we see it the only way to download multiple files
 			for (var i = 0; i < URLsToDownload.length; i++) {
 					that.downloadURL(URLsToDownload[i]);
@@ -189,16 +213,16 @@ define([
 			})
 		},
 		processSelected: function() {
-			var files = this.collection.getSelectedFiles();
-			var specie = this.collection.getSpeciesForExperiment(files.at(0).get("expId"));
-			var processFiles = "";
-			for(var i = 0; i<files.length;i++) {
-				if(processFiles != "") {
-					processFiles += ",";
-				}
-				processFiles += files.at(i).get("expId");
+			//TODO(?) does only work with selecting an experiment for processing not 
+			//selecting raw files.
+			var exps = this.collection.getSelectedExperiments();
+			var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
+			var data = specie;
+			for(var i = 0; i<exps.length; i++) {
+				data += "," + exps.at(i).get("name");
 			}
-			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
+
+			app.router.navigate("process/"+data, {trigger:true});
 		},
 		openBuilder: function() {
 			this.builder.show();
