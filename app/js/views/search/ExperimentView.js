@@ -37,6 +37,8 @@ define([
 			});
 
 			this.searchResults.on("highlightChange", this.highlightChange, this);
+
+			this.model.once("destroy", this.removeRow, this);
 		},
 
 		render: function() {
@@ -95,14 +97,19 @@ define([
 			
 		},
 		experimentSelect: function(event) {
+
+			/* if files inside this experiment are selected we want to deselect them */
 			if(this.subSelection) {
+
+				/* we always want to deselect this experiment along with its files */
+				this.$el.find(".experiment-checked-input").prop("checked", false);
 				this.model.trigger("experimentSelect", this.model,  false);
+
 				this.$el.removeClass("subselection");
 				this.subSelection = false;
 				this.rawGroupView.render();
 				this.profileGroupView.render();
 				this.regionGroupView.render();
-				event.preventDefault();
 			} else {
 				this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
 			}
@@ -110,13 +117,16 @@ define([
 			
 		},
 		highlightChange: function() {
-			
 			this.subSelection = this.searchResults.isSelectedFilesInExperiment(this.model.cid);
 			if(this.subSelection) {
 				this.$el.addClass("subselection");
 			} else {
 				this.$el.removeClass("subselection");
 			}
+		},
+		removeRow: function() {
+			this.$el.remove();
+			this.stopListening();
 		}
 	});
 	return ExperimentView;
