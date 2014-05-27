@@ -16,10 +16,8 @@ define([
 		},
 		syncFiles: function() {
 
-			// TODO: check if this satement does things right, so it works for both a new experiment (file upload) and existing experiment (search restults).
 			if(this.files === undefined || this.get("files").length > 0) {
 				this.files = new Files(this.get("files"),{experiment:this});
-				//console.log("Syncing files");
 				this.files.on("add remove changeIsUploading",this.changeUploadable, this);
 				this.files.on("fileSelect", this.fileSelect, this);
 			}
@@ -51,6 +49,9 @@ define([
 		},
 		fileSelect: function(file, checked) {
 			this.trigger("fileSelect", file, checked);
+		},
+		destroy: function() {
+			console.log("destroy");
 		}
 	});
 	return Experiment;

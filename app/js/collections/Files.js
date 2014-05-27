@@ -38,6 +38,8 @@ define(['models/File'],function(File) {
 				var file = new File({
 					fileName:fileObj.name
 				});
+				window.file = file;
+				console.log(file);
 				file.fileObj = fileObj;
 
 				that.add(file);
@@ -54,6 +56,8 @@ define(['models/File'],function(File) {
 					size += f.getFileSize();
 				}
 			});
+			console.log("getTotalUploadFileSize",this,this.length);
+			window.that = this;
 			return size;
 			
 		},
@@ -70,6 +74,7 @@ define(['models/File'],function(File) {
 					uploadedSize += f.getFileSize() * f.progress;
 				}
 			});
+			console.log(uploadedSize, this.getTotalUploadFileSize());
 			return uploadedSize / this.getTotalUploadFileSize();
 		},
 		/*
