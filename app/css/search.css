@@ -21,6 +21,17 @@
 	vertical-align: top;
 }
 
+/* bootstrap disables tooltips for disabled buttons, we dont want that */
+.search-toolbar .btn {
+	cursor: auto !important;
+	pointer-events: auto !important;
+}
+
+.tooltip-inner {
+	color: #ddd;
+}
+
+
 /* some query-builder css depends on this */
 .search-toolbar .button-container > div {
 	width: 411px;
