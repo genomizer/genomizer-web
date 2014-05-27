@@ -57,6 +57,15 @@ define([
 			}
 			return res;
 		},
+		getSelectedAndExperimentURLs: function() {
+			var res = [];
+			var files = this.getSelectedAndExperimentFiles();
+			for(var i=0; i<files.length; i++) {
+				res.push(files.at(i).get("url"));
+			}
+			return res;
+
+		},
 		isFileSelected: function(fileID) {
 			return this.selectedFiles.get(fileID) != undefined;
 		},
@@ -93,7 +102,7 @@ define([
 			return false;
 			
 		},
-		getSelectedandExperimentFiles: function() {
+		getSelectedAndExperimentFiles: function() {
 			var files = new Files();
 			files.add(this.getSelectedFiles().toJSON());
 			this.selectedExperiments.each(function(experiment) {
