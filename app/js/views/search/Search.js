@@ -200,6 +200,9 @@ define([
 			};
 		},
 		downloadURL: function(url) {
+
+			// append token to url
+			url += "&token=" + app.auth.get("token");
 			
 			var iframe = $(document.createElement('iframe'));
 			//iframe.id = hiddenIFrameID;
