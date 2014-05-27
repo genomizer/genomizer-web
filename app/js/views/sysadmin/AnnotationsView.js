@@ -7,6 +7,7 @@ define(['views/sysadmin/AnnotationListView', 'text!templates/sysadmin/Annotation
 			$('.activePage').html(template);
 			var test = new Annotations();
 			this.annotationsListView.render(new Annotations(), true);
+			$('#search_field').focus();
 		},
 
 		initialize : function() {

@@ -2,25 +2,29 @@
     <div id="name">
         <label>File Name</label>
         <% _.each(fileNames, function(fileName){ %>
-             <br><%= fileName %>    
-        <% }); %> 
+        <br>
+        <%= fileName %>
+        <% }); %>
     </div>
     <hr>
     <label>Specie</label>
     <select class="form-control" id="species_drop-down">
-            <% _.each(speciesList, function(specie) { %>
-                <option value="<%=specie%>"><%=specie%></option>
-            <% }); %>
-        </select>
+        <% _.each(speciesList, function(specie) { %>
+        <option value="<%=specie%>"><%=specie%></option>
+        <% }); %>
+    </select>
     <hr>
     <label>Version</label>
     <input class="form-control" id="version_field"type="text" placeholder="Version e.g. hy17" value="">
-    <hr>
-    <button class="btn btn-primary" disabled="" id="upload_genome_release-btn">
-        Upload
-    </button>
-    <button class="btn btn-danger" id="cancel_genome_release-btn">
-        Cancel
-    </button>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="cancel_genome_release-btn">
+            Cancel
+        </button>
+        <button class="btn btn-primary" disabled="" id="upload_genome_release-btn">
+            Upload
+        </button>
+
+    </div>
+
 </div>
 
