@@ -125,25 +125,11 @@ define([
 			var files = this.collection.getSelectedAndExperimentFiles();
 			var experiments = this.collection.getSelectedExperiments();
 
+			var deleteExperiments = _.after(files.length + 1,function() { experiments.destroyAllExperiments(); });
 			while(!files.isEmpty()) {
-				files.at(0).destroy();
+				files.at(0).destroy().success(deleteExperiments);
 			}
-
-			while(!experiments.isEmpty()) {
-				// Fix to force correct DELETE response
-				// setting idAttribute to name, (we dont do it in experiment,
-				// as this would casue the wrong response when adding
-				// experiment)
-				experiments.at(0).idAttribute = 'name';
-
-				experiments.at(0).id =  experiments.at(0).get('name');
-
-				// Using /api/experiments instead of /api/searchResults
-				experiments.at(0).urlRoot = experiments.url;
-
-				experiments.at(0).destroy();
-			}
-
+			deleteExperiments();
 		},
 		showButtons: function(fileArray) {
 
