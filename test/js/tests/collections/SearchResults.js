@@ -116,12 +116,12 @@ define([
 
 				var searchResults = new SearchResults([experiment],{query:undefined});
 				searchResults.selectExperiment(experiment);
-				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(1);
+				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(1);
 				searchResults.selectFile(file1);
 				searchResults.selectFile(file2);
-				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(2);
+				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(2);
 				searchResults.selectFile(file3);
-				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(3);
+				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(3);
 			});
 		});
 
@@ -206,9 +206,9 @@ define([
 				searchResults.selectFile(file1);
 				searchResults.selectFile(file2);
 				searchResults.selectFile(file3);
-				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(3);
+				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(3);
 				searchResults.deselectExperiment(experiment);
-				expect(searchResults.getSelectedandExperimentFiles().length).to.equals(2);
+				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(2);
 			});
 			it("Should return selected experiments", function () {
 				var experiment = new Experiment({
