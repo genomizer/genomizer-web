@@ -63,8 +63,6 @@ define([
 			var fileNames = [];
 			var expIDs = [];
 			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files.at(i).get("id"));
-				console.log(files.at(i));
 				fileNames.push(files.at(i).get("filename"));
 				expIDs.push(files.at(i).get("expId"));
 			}
@@ -85,9 +83,8 @@ define([
 		},
 		deleteData: function() {
 			var files = this.collection.getSelectedFiles();
-			for(var i = 0; i<files.length;i++) {
-				console.log("file to delete: ", files.at(i).get("id"));
-				files.at(i).destroy();
+			while(!files.isEmpty()) {
+				files.at(0).destroy();
 			}
 		},
 		showButtons: function(fileArray) {
@@ -134,7 +131,6 @@ define([
 			var URLsToDownload = this.collection.getSelectedFileURLs();
 			// this is horrible but as we see it the only way to download multiple files
 			for (var i = 0; i < URLsToDownload.length; i++) {
-				console.log(URLsToDownload[i]);
 					that.downloadURL(URLsToDownload[i]);
 			};
 		},
@@ -144,7 +140,6 @@ define([
 			//iframe.id = hiddenIFrameID;
 			iframe.css('display', 'none');
 			$(document.body).append(iframe);
-			console.log('downloading url: ',url);
 			iframe.attr('src', url);
 			iframe.ready(function() {
 				setTimeout(function() {
@@ -165,7 +160,6 @@ define([
 			app.router.navigate("process/"+specie+","+processFiles, {trigger:true});
 		},
 		openBuilder: function() {
-			console.log("Search > openBuilder")
 			this.builder.show();
 		},
 		appendQueryInput: function(query) {

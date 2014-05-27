@@ -1,8 +1,8 @@
 #container {
 	padding-left: 40px;
 	padding-right: 40px;
-	float:left;
-    width: 90%;
+	float: left;
+	width: 90%;
 }
 
 .search-toolbar {
@@ -14,35 +14,34 @@
 }
 
 #confirmAnnotation-btn {
-    margin-right: 30px;
+	margin-right: 30px;
 }
 
 #sidebarID {
-    width: 10%;
-    float:left;
+	width: 10%;
+	float: left;
 }
 
 .active {
-    background-color: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 #genome_table a {
-display:block;
-width:100%
-margin:1ex;
-padding:0.5ex;
+	display: block;
+	width: 100% margin :1ex;
+	padding: 0.5ex;
 }
 
 #genome_table a {
-text-decoration:none;
-background-color:#;
-color:#000;
+	text-decoration: none;
+	background-color: #;
+	color: #000;
 }
 
 #genome_table a:hover, a:active {
-text-decoration:none;
-background-color:#d3d3d3;
-color:#000;
+	text-decoration: none;
+	background-color: #d3d3d3;
+	color: #000;
 }
 
 #container .selectedFilesTable {
@@ -54,12 +53,12 @@ color:#000;
 }
 
 #container .nav {
-display:block;
-width:100%
-margin:1ex;
-padding:0.5ex;
+	display: block;
+	width: 100% margin :1ex;
+	padding: 0.5ex;
 }
 
 .progress {
 	height: 25px;
 }
+
