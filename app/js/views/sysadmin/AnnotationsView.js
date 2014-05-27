@@ -15,23 +15,28 @@ function(AnnotationListView, annotationsViewTemplate, Annotations) {
 			var test = new Annotations();
 			this.annotationsListView.render(new Annotations(), true);
 			$('#search_field').focus();
+			this.updateSearchList();
 		},
 
 		initialize : function() {
 			var annotations = new Annotations();
 			this.annotationsListView = new AnnotationListView(annotations);
-			this.render();
 			this.searchList = new Annotations();
+			this.render();
 		},
 
 		events : {
 			"click #search_button" : "search",
 			"keyup #search_field" : "search",
 		},
-
+		
+		updateSearchList: function() {
+			this.searchList.fetch();
+		},
 
 		/**
-		 * Takes an event e, if backspace is pressed - fetch a new list and filter that, else - filter current list
+		 * Takes an event e, if backspace is pressed - fetch a new list and 
+		 * filter that, else - filter current list
 		 * @param {Object} e - the triggered event
 		 */ 
 		 search : function(e) {
