@@ -29,26 +29,32 @@ define([
 
 		describe("Testing file selection",function() {
 			it("Should save a file ID if that file is checked in view, and deselect if it is not", function () {
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
 
 				var searchResults = new SearchResults([],{query:undefined});
 				searchResults.fileSelectHandler(file, true);
 				expect(searchResults.selectedFiles.length).to.equal(1);
-				expect(searchResults.isFileSelected("file-id1")).to.be.true;
+				expect(searchResults.isFileSelected(1)).to.be.true;
 				searchResults.fileSelectHandler(file, false);
 				expect(searchResults.selectedFiles.length).to.equal(0);
 			});
 			it("Should select the file given in the parameter", function () {
 				var searchResults = new SearchResults([],{query:undefined});
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
 				expect(searchResults.selectedFiles.length).to.equal(0);
 				searchResults.selectFile(file);
 				expect(searchResults.selectedFiles.length).to.equal(1);
 				expect(searchResults.isFileSelected(file)).to.be.true;
 			});
-			it("Should deselect all files when deselectFile is called", function () {
+			it("Should return the same file as the selected one", function () {
 				var searchResults = new SearchResults([],{query:undefined});
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
+				searchResults.selectFile(file);
+				expect(searchResults.getSelectedFiles().contains(file)).to.be.true;
+			});
+			it("Should deselect files when deselectFile is called", function () {
+				var searchResults = new SearchResults([],{query:undefined});
+				var file = new File({"id": 1});
 				searchResults.selectFile(file);
 				expect(searchResults.selectedFiles.length).to.equal(1);
 				searchResults.deselectFile(file);
@@ -58,14 +64,14 @@ define([
 				var searchResults = new SearchResults([],{query:undefined});
 				var highlightSpy = sinon.spy();
 				searchResults.on("highlightChange", highlightSpy);
-				searchResults.selectFile(new File({"id": "file-id1"}));
+				searchResults.selectFile(new File({"id": 1}));
 				expect(highlightSpy.called).to.be.true;
 
 			});
 			it("Should trigger highlightChange when a file is deselected", function () {
 				var searchResults = new SearchResults([],{query:undefined});
 				var highlightSpy = sinon.spy();
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
 				searchResults.selectFile(file);
 				searchResults.on("highlightChange", highlightSpy);
 				searchResults.deselectFile(file);
@@ -75,25 +81,25 @@ define([
 			it("Should return selected files when getSelectedFiles is called", function () {
 				var searchResults = new SearchResults([],{query:undefined});
 				var files = searchResults.getSelectedFiles();
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
 				expect(files.length).to.equal(0);
 
 				searchResults.selectFile(file);
 				files = searchResults.getSelectedFiles();
-				expect(files.get("file-id1")).to.equal(file);
+				expect(files.get(1)).to.equal(file);
 			});
 			it("Should know if an experiment contains selected files", function () {
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 				var experiment2 = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id2"}], "annotations": []
+					"files": [{"id": 2}], "annotations": []
 				});
-				var file = new File({"id": "file-id1"});
+				var file = new File({"id": 1});
 
 				var searchResults = new SearchResults([experiment, experiment2],{query:undefined});
 				expect(searchResults.isSelectedFilesInExperiment(experiment.cid)).to.be.false;
@@ -107,21 +113,25 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
-				var file1 = new File({"id": "file-id1"});
-				var file2 = new File({"id": "file-id2"});
-				var file3 = new File({"id": "file-id3"});
-				console.log("file3", file3.get("id"))
-
+				var file1 = new File({"id": 1});
+				var file2 = new File({"id": 2});
+				var file3 = new File({"id": 3});
+				
+				console.log("== BEGIN ==")
 				var searchResults = new SearchResults([experiment],{query:undefined});
 				searchResults.selectExperiment(experiment);
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(1);
+				console.log("== STEP 1 ==")
 				searchResults.selectFile(file1);
 				searchResults.selectFile(file2);
+				console.log("== STEP 2 ==")
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(2);
 				searchResults.selectFile(file3);
+				console.log("== STEP 3 ==")
 				expect(searchResults.getSelectedAndExperimentFiles().length).to.equals(3);
+				console.log("== END ==")
 			});
 		});
 
@@ -130,7 +140,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 
 				var searchResults = new SearchResults([],{query:undefined});
@@ -143,7 +153,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 
 				var searchResults = new SearchResults([],{query:undefined});
@@ -157,7 +167,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 
 				var searchResults = new SearchResults([],{query:undefined});
@@ -170,7 +180,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 				searchResults.on("highlightChange", highlightSpy);
 				searchResults.selectExperiment(experiment);
@@ -183,7 +193,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 				searchResults.selectExperiment(experiment);
 				searchResults.on("highlightChange", highlightSpy);
@@ -192,15 +202,15 @@ define([
 
 			});
 			it("Should deselect all files contained in an experiment when deselecting the experiment", function () {
+				
+				var file1 = new File({"id": 1});
+				var file2 = new File({"id": 2});
+				var file3 = new File({"id": 3});
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [file1.toJSON()], "annotations": []
 				});
-				var file1 = new File({"id": "file-id1"});
-				var file2 = new File({"id": "file-id2"});
-				var file3 = new File({"id": "file-id3"});
-				console.log("file3", file3.get("id"))
 
 				var searchResults = new SearchResults([experiment],{query:undefined});
 				searchResults.selectFile(file1);
@@ -214,7 +224,7 @@ define([
 				var experiment = new Experiment({
 					"name": "experimentName",
 					"created by": "user",
-					"files": [{"id": "file-id1"}], "annotations": []
+					"files": [{"id": 1}], "annotations": []
 				});
 
 				var searchResults = new SearchResults([],{query:undefined});
