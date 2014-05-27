@@ -82,36 +82,44 @@ define([
 			//display experiments to be deleted
 			var exp = this.collection.getSelectedExperiments();
 
-			$('#delete-experiments-body-text').html(this.TEMPLATEDELETEEXP({
-				'expID': exp.at(0).get('name'),
-				'nrOfFiles': exp.at(0).get('files').length
-			}));
-			for(var i = 1; i<exp.length;i++) {
-				this.$el.find('#delete-experiments-body-text').append(this.TEMPLATEDELETEEXP({
-					'expID': exp.at(i).get('name'),
-					'nrOfFiles': exp.at(i).get('files').length
+			if(exp.length != 0) {
+				$('#delete-experiments-body-text').html(this.TEMPLATEDELETEEXP({
+					'expID': exp.at(0).get('name'),
+					'nrOfFiles': exp.at(0).get('files').length
 				}));
+				for(var i = 1; i<exp.length;i++) {
+					this.$el.find('#delete-experiments-body-text').append(this.TEMPLATEDELETEEXP({
+						'expID': exp.at(i).get('name'),
+						'nrOfFiles': exp.at(i).get('files').length
+					}));
+				}
 			}
+
 
 			//display files to be deleted.
 			var files = this.collection.getSelectedAndExperimentFiles();
 			var fileNames = [];
 			var expIDs = [];
-			for(var i = 0; i<files.length;i++) {
-				fileNames.push(files.at(i).get("filename"));
-				expIDs.push(files.at(i).get("expId"));
+
+			if(files.length != 0) {
+				
+				for(var i = 0; i<files.length;i++) {
+					fileNames.push(files.at(i).get("filename"));
+					expIDs.push(files.at(i).get("expId"));
+				}
+
+				$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
+					'fileID': fileNames[0],
+					'expID': expIDs[0]
+				}));
+				for(var i = 1; i<fileNames.length;i++) {
+					this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
+						'fileID': fileNames[i],
+						'expID': expIDs[i]
+					}));
+				}
 			}
 
-			$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
-				'fileID': fileNames[0],
-				'expID': expIDs[0]
-			}));
-			for(var i = 1; i<fileNames.length;i++) {
-				this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
-					'fileID': fileNames[i],
-					'expID': expIDs[i]
-				}));
-			}
 		},
 		deleteData: function() {
 			var files = this.collection.getSelectedAndExperimentFiles();
@@ -121,13 +129,19 @@ define([
 				files.at(0).destroy();
 			}
 
-			console.log(experiments);
-			console.log(experiments.isEmpty());
-			console.log(experiments.at(0));
 			while(!experiments.isEmpty()) {
-				//TODO DOESN'T SEND DELETE REQUEST TO API
+				// Fix to force correct DELETE response
+				// setting idAttribute to name, (we dont do it in experiment,
+				// as this would casue the wrong response when adding
+				// experiment)
+				experiments.at(0).idAttribute = 'name';
+
+				experiments.at(0).id =  experiments.at(0).get('name');
+
+				// Using /api/experiments instead of /api/searchResults
+				experiments.at(0).urlRoot = experiments.url;
+
 				experiments.at(0).destroy();
-				console.log(experiments);
 			}
 
 		},
@@ -175,13 +189,13 @@ define([
 				$('#delete_button').removeClass('disabled');
 
 				$('#download_button').removeClass('disabled');
-				for(var i = 0; i < selectedExperiments.length; i++) {
+/*				for(var i = 0; i < selectedExperiments.length; i++) {
 					if(selectedExperiments.at(i).get("files").length == 0) {
 						$('#download_button').addClass('disabled', true);
 						break;
 					}
 				}
-			} else {
+*/			} else {
 				$('#delete_button').addClass('disabled');
 				$('#download_button').addClass('disabled');
 			}
@@ -208,9 +222,15 @@ define([
 			var that = this;
 			var URLsToDownload = this.collection.getSelectedAndExperimentURLs();
 			// this is horrible but as we see it the only way to download multiple files
-			for (var i = 0; i < URLsToDownload.length; i++) {
+
+			if(URLsToDownload.length == 0) {
+				app.messenger.warning("The experiments you selected contain no files to download.");
+			} else {
+				for (var i = 0; i < URLsToDownload.length; i++) {
 					that.downloadURL(URLsToDownload[i]);
-			};
+				};
+			}
+
 		},
 		downloadURL: function(url) {
 
