@@ -7,12 +7,6 @@
 				<% if(experiment != undefined) { %> value="<%-experiment.name %>" <% } %>>
 			</input>
 		</li>
-		<li>
-			<label>created by</label>
-			<input name="Created by" id="created by" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
-				<% if(experiment != undefined) { %> value="<%-experiment["createdBy"] %>" <% } %>>
-			</input>
-		</li>
 		<% _.each(annotations, function(annotation) { %>
 		<li>
 			<label for="<%- annotation.name %>"><%- annotation.name %></label>

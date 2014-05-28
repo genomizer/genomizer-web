@@ -104,9 +104,9 @@ define([
 		},
 		getSelectedAndExperimentFiles: function() {
 			var files = new Files();
-			files.add(this.getSelectedFiles().toJSON());
+			files.add(this.getSelectedFiles().models);
 			this.selectedExperiments.each(function(experiment) {
-				files.add(experiment.files.toJSON());
+				files.add(experiment.files.models);
 			})
 
 			return files;

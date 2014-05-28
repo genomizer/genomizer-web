@@ -3,8 +3,8 @@
 	margin: 20px auto;
 }
 
-#upload_form #existing_experiment_field{
-	width: 400px;
+#upload_form .input-group {
+	width: 555px;
 }
 
 #experiment_form .annotation-list {
@@ -37,19 +37,23 @@
 	font-weight: normal;
 }
 
+.upload-toolbar {
+	position: relative;
+	width: 100%;
+}
+
 .experiment-container .drag-over .panel-body {
 	background-color: rgba(167, 207, 144, 0.3);
 }
 .experiment-container .panel-body {
 	transition: background-color 0.3s ease-out;
 }
+/* To avoid dragenter and dragleave triggering on child element */
 .experiment-container .drag-over * {
 	pointer-events: none;
 }
 
-/*
- * To avoid dragenter and dragleave triggering on child elements
- */
+
 
 #file_upload {
 	text-align: center;

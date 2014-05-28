@@ -2,33 +2,28 @@
 </div>
 
 <form class="form-inline container" role="form" id="upload_form">
-	<div class="search-toolbar">
-		<div>
-			<div class="input-group">
+	<div class="form-group">
+		<div class="input-group">
 			<input id="existing_experiment_field" type="text" class="form-control" placeholder="Experiment name">
 			<span class="input-group-btn">
-				<button id="add_button" class="btn btn-default" type="submit" disabled="disabled">
-					<span class="glyphicon glyphicon-edit"></span> 
-					Add to existing experiment
+				<button id="add_button" class="btn btn-default" type="submit" disabled>
+					<span class="glyphicon glyphicon-plus-sign"></span>
+					<span class="button-label">Add to existing experiment</span>
 				</button>
-			</div>
+			</span>
 		</div>
-		<div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default" id="CreateExperiment">
-					<span class="glyphicon glyphicon-plus-sign"></span> 
-					Create new experiment
-				</button>
-			</div>
-		</div>
-		<div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary" id="uploadAllButton">
-					<span class="glyphicon glyphicon-circle-arrow-up"></span>
-					Upload all experiments
-				</button>
-			</div>
-		</div>
+	</div>
+	<div class="form-group">
+		<button id="CreateExperiment" type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			<span class="button-label">Create new experiment</span>
+		</button>
+	</div>
+	<div class="form-group">
+		<button id="uploadAllButton" type="button" class="btn btn-primary">
+			<span class="glyphicon glyphicon-circle-arrow-up"></span>
+			<span class="button-label">Upload all experiments</span>
+		</button>
 	</div>
 </form>
 

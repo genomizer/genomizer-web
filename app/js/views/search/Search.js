@@ -66,13 +66,11 @@ define([
 
 			var experiments = this.collection.getSelectedExperiments();
 
-			console.log(experiments);
 			var data = experiments.at(0).get("name");
 
 			for(var i = 1; i < experiments.length; i++) {
 				data = data + '☯' + experiments.at(i).get("name");
 			}
-			console.log("Experiments:", data);
 
 			app.router.navigate("upload/"+data, {trigger:true});
 
@@ -80,56 +78,47 @@ define([
 		openDeleteModal: function() {
 
 			//display experiments to be deleted
-			var exp = this.collection.getSelectedExperiments();
+			var experiments = this.collection.getSelectedExperiments();
 
-			$('#delete-experiments-body-text').html(this.TEMPLATEDELETEEXP({
-				'expID': exp.at(0).get('name'),
-				'nrOfFiles': exp.at(0).get('files').length
-			}));
-			for(var i = 1; i<exp.length;i++) {
-				this.$el.find('#delete-experiments-body-text').append(this.TEMPLATEDELETEEXP({
-					'expID': exp.at(i).get('name'),
-					'nrOfFiles': exp.at(i).get('files').length
-				}));
+			$('#delete-experiments-list').empty();
+			if(experiments.length != 0) {
+				for(var i = 0; i<experiments.length;i++) {
+					this.$el.find('#delete-experiments-list').append(this.TEMPLATEDELETEEXP({
+						'expID': experiments.at(i).get('name'),
+						'nrOfFiles': experiments.at(i).get('files').length
+					}));
+				}
+				$('#delete-experiments-title').show();
+			} else {
+				$('#delete-experiments-title').hide();
 			}
 
-			//display files to be deleted.
+			//display files to be deleted
 			var files = this.collection.getSelectedAndExperimentFiles();
-			var fileNames = [];
-			var expIDs = [];
-			for(var i = 0; i<files.length;i++) {
-				fileNames.push(files.at(i).get("filename"));
-				expIDs.push(files.at(i).get("expId"));
+			$('#delete-files-list').empty();
+			if(files.length != 0) {
+				for(var i = 0; i<files.length;i++) {
+					var elem = this.TEMPLATEDELETEFILE({
+						'fileID': files.at(i).get("filename"),
+						'expID': files.at(i).get("expId")
+					});
+					this.$el.find('#delete-files-list').append(elem);
+				}
+				$('#delete-files-title').show();
+			} else {
+				$('#delete-files-title').hide();
 			}
 
-			$('#delete-files-body-text').html(this.TEMPLATEDELETEFILE({
-				'fileID': fileNames[0],
-				'expID': expIDs[0]
-			}));
-			for(var i = 1; i<fileNames.length;i++) {
-				this.$el.find('#delete-files-body-text').append(this.TEMPLATEDELETEFILE({
-					'fileID': fileNames[i],
-					'expID': expIDs[i]
-				}));
-			}
 		},
 		deleteData: function() {
 			var files = this.collection.getSelectedAndExperimentFiles();
 			var experiments = this.collection.getSelectedExperiments();
 
+			var deleteExperiments = _.after(files.length + 1,function() { experiments.destroyAllExperiments(); });
 			while(!files.isEmpty()) {
-				files.at(0).destroy();
+				files.at(0).destroy().success(deleteExperiments);
 			}
-
-			console.log(experiments);
-			console.log(experiments.isEmpty());
-			console.log(experiments.at(0));
-			while(!experiments.isEmpty()) {
-				//TODO DOESN'T SEND DELETE REQUEST TO API
-				experiments.at(0).destroy();
-				console.log(experiments);
-			}
-
+			deleteExperiments();
 		},
 		showButtons: function(fileArray) {
 
@@ -175,13 +164,13 @@ define([
 				$('#delete_button').removeClass('disabled');
 
 				$('#download_button').removeClass('disabled');
-				for(var i = 0; i < selectedExperiments.length; i++) {
+/*				for(var i = 0; i < selectedExperiments.length; i++) {
 					if(selectedExperiments.at(i).get("files").length == 0) {
 						$('#download_button').addClass('disabled', true);
 						break;
 					}
 				}
-			} else {
+*/			} else {
 				$('#delete_button').addClass('disabled');
 				$('#download_button').addClass('disabled');
 			}
@@ -208,9 +197,15 @@ define([
 			var that = this;
 			var URLsToDownload = this.collection.getSelectedAndExperimentURLs();
 			// this is horrible but as we see it the only way to download multiple files
-			for (var i = 0; i < URLsToDownload.length; i++) {
+
+			if(URLsToDownload.length == 0) {
+				app.messenger.warning("The experiments you selected contain no files to download.");
+			} else {
+				for (var i = 0; i < URLsToDownload.length; i++) {
 					that.downloadURL(URLsToDownload[i]);
-			};
+				};
+			}
+
 		},
 		downloadURL: function(url) {
 

@@ -38,7 +38,7 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			"click #CreateExperiment": "createExperiment",
 			"keyup #existing_experiment_field": "enableAddButton",
 			"change #existing_experiment_field": "enableAddButton",
-			"submit form#upload_form": "readExpID",
+			"submit #upload_form": "readExpID",
 			"submit #experiment-form": "saveExperiment",
 			"click #uploadAllButton": "uploadAll"
 		},
@@ -57,7 +57,8 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			this.experimentViews.splice(index,1);
 			this.enableUploadAllButton();
 		},
-		readExpID: function() {
+		readExpID: function(event) {
+			event.preventDefault();
 			var experimentId = $('#existing_experiment_field').val();
 			this.addToExistingExperiment(experimentId);
 		},
