@@ -67,6 +67,18 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
+
+			var nrOfRawFiles = 0;
+			this.model.files.each(function(f) {
+				if (f.get('type') == 'raw') {
+					nrOfRawFiles++;
+				}
+			});
+			if (nrOfRawFiles > 2) {
+				app.messenger.warning("An experiment can have at most two raw files");
+				return;
+			}
+
 			this.$("#experiment-form button[type=submit]").button('loading');
 			this.model.save(null,{success:function() {
 				that.collapseView();

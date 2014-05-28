@@ -6,12 +6,11 @@ define([],function() {
 		},
 		defaults: {
 			"type":"raw", // This one is used and should be kept
-			"genomeVersion": "hg18",
-			/*
-			 "metaData": "metameta",
-			 "author": "name",
-			 grVersion": "hg18",
-			*/
+			/*"genomeVersion": "hg18",
+			"metaData": "metameta",
+			"author": "name",
+			"grVersion": "hg18",*/
+			
 			 "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
 
 		},
