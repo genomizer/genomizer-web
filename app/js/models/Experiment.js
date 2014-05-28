@@ -49,9 +49,6 @@ define([
 		},
 		fileSelect: function(file, checked) {
 			this.trigger("fileSelect", file, checked);
-		},
-		destroy: function() {
-			console.log("destroy");
 		}
 	});
 	return Experiment;

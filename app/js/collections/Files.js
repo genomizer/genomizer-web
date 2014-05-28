@@ -6,7 +6,6 @@ define(['models/File'],function(File) {
 			if(options) {
 				this.experiment = options.experiment;
 			}
-
 		},
 		updateExperimentIds: function(id) {
 			this.each(function(file) {
@@ -24,7 +23,7 @@ define(['models/File'],function(File) {
 		},
 		hasUnfinishedUploads: function() {
 			var aNotDoneUpload = this.find(function(f) {
-				return !f.uploadDone;
+				return f.isFileUpload() && !f.uploadDone;
 			});
 			return aNotDoneUpload !== undefined
 		},
@@ -38,10 +37,7 @@ define(['models/File'],function(File) {
 				var file = new File({
 					fileName:fileObj.name
 				});
-				window.file = file;
-				console.log(file);
 				file.fileObj = fileObj;
-
 				that.add(file);
 			});
 
@@ -56,8 +52,6 @@ define(['models/File'],function(File) {
 					size += f.getFileSize();
 				}
 			});
-			console.log("getTotalUploadFileSize",this,this.length);
-			window.that = this;
 			return size;
 			
 		},
