@@ -20,6 +20,7 @@ define([], function() {
 		 * @param {Object} payload - the body of the HTTP request
 		 * @param {Object} shouldGoBack - boolean value, true if a back
 		 * 				   should be triggered after success
+		 * @return true if successful
 		 */
 		sendPacket : function(type, urlExtension, payload, shouldGoBack) {
 			$.ajax({
@@ -33,6 +34,7 @@ define([], function() {
 					if (shouldGoBack) {
 						history.back();
 					}
+					return true;
 				},
 				complete : function(xhr) {
 
@@ -140,9 +142,10 @@ define([], function() {
 		 * Performs a DELETE request to the server to delete a genome Release
 		 * @param {Object} specie - the specie of the genome release
 		 * @param {Object} genomeVersion - the version of the genomeRelease
+		 * @return true if successful
 		 */
 		deleteGenomeReleaseFile : function(specie, genomeVersion) {
-			this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {}, false);
+			return this.sendPacket("DELETE", "genomeRelease/" + encodeURIComponent(specie) + "/" + encodeURIComponent(genomeVersion), {}, false);
 		}
 	});
 	return Gateway;

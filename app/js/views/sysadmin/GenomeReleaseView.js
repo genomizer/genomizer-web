@@ -10,15 +10,22 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
-			var that = this;
 			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
+			fetchGenomeRelease();
+			this.genomeReleaseFileList.on("uploadProgress", this.renderUploadProgress, this);
+		},
+		
+		/**
+		 * Fetches genome releases from server and renders the view 
+		 */
+		fetchGenomeRelease : function() {
+			var that = this;
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
 					that.render(that.genomeReleaseFiles);
 				}
 			});
-			this.genomeReleaseFileList.on("uploadProgress", this.renderUploadProgress, this);
 		},
 
 		render : function(genomeReleaseFiles) {
@@ -60,8 +67,12 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 		deleteGenomeRelease : function(e) {
 			var payload = e.currentTarget.id.split(",");
 			var x = window.confirm("Are you sure you want to delete version " + payload[1] + " of " + payload[0] + "?");
+			var result = false;
 			if (x) {
-				Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+				result = Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+			}
+			if (result) {
+				fetchGenomeRelease();
 			}
 		},
 
@@ -96,6 +107,7 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 			if (this.genomeReleaseFileList.hasUnfinishedUploads() && this.genomeReleaseFileList.length) {
 				$('#progress-bar-container').replaceWith("<div id=" + "progress-bar-container" + "><div class=" + "progress" + "><div class=" + "progress-bar" + " id=" + "pbar" + " style=width:" + this.genomeReleaseFileList.getTotalUploadProgress() * 100 + "%;></div></div></div>");
 			} else if (this.genomeReleaseFileList.length != 0) {
+				fetchGenomeRelease();
 				$('#progress-bar-container').replaceWith("<div id=" + "progress-bar-container>" + "<div class=" + "progress" + "><div class=" + "progress-bar" + " id=" + "pbar" + " style=width:" + 100 + "%;>Upload completed</div></div></div>");
 			}
 		}
