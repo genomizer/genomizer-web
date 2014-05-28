@@ -82,7 +82,7 @@
 }
 
 .process-popover .started .status-cell .glyphicon:before {
-	content: "\e019";
+	content: "\e181";
 }
 
 .process-popover .crashed .status-cell .glyphicon:before {
