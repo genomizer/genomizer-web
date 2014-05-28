@@ -210,6 +210,29 @@
 	background: none;
 }
 
+/* disables highlighting when expanding and contracting a row group too fast */
+.experiment-group td,
+.experiment-group th  {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.experiment-group td span,
+.experiment-group th span {
+	-webkit-user-select: initial;
+	-moz-user-select: initial;
+	-khtml-user-select: initial;
+	-ms-user-select: initial;
+	user-select: initial;
+}
+
+#results_container .table-hover > tbody:not(.empty-group) > tr:hover > td {
+  background-color: #eee;
+}
+
 .experiment-group.expanded .header-row th {
 	padding-top: 0;
 	border: none;
@@ -241,6 +264,30 @@
 
 .file-group.Region-group .file-row {
 	border-left: 10px solid #00B25C;
+}
+
+.file-group.Raw-group .file-row.selected td {
+	background-color: #F5EFDD;
+}
+
+.file-group.Profile-group .file-row.selected td {
+	background-color: #F5DCF5;
+}
+
+.file-group.Region-group .file-row.selected td {
+	background-color: #DCF5E9;
+}
+
+.file-group.Raw-group .file-row.selected:hover td {
+	background-color: #F0EAD9 !important;
+}
+
+.file-group.Profile-group .file-row.selected:hover td {
+	background-color: #EED5EE !important;
+}
+
+.file-group.Region-group .file-row.selected:hover td {
+	background-color: #D5EDE2 !important;
 }
 
 .table-row .table {

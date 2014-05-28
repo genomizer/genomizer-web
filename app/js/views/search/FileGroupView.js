@@ -63,6 +63,7 @@ define([
 		},
 		events: {
 			"click .expand-type-button": "toggleFileRows",
+			"click .expand-type-row td": "extendClick"
 		},
 		toggleFileRows: function(event) {
 			if(this.subCollection.length > 0) {
@@ -79,6 +80,12 @@ define([
 		updateSubCollection: function() {
 			this.subCollection = new Files(this.collection.where({type: this.type}));
 			this.render();
+		},
+		extendClick: function(event) {
+			if($(event.target).is("td, span")) {
+				console.log("FileGroupView > extendClick > event", event);
+				this.$el.find(".expand-type-button").click();
+			}
 		}
 		
 	});

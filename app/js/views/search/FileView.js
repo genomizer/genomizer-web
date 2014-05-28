@@ -24,9 +24,22 @@ define([
 		},
 		events: {
 			"click .file-checked-input": "fileSelect",
+			"click td": "extendClick"
 		},
 		fileSelect: function(event) {
-			this.model.trigger("fileSelect", this.model,  $(event.currentTarget).prop("checked"));
+			var checked = $(event.currentTarget).prop("checked");
+			this.model.trigger("fileSelect", this.model,  checked);
+			if(checked) {
+				this.$el.addClass("selected");
+			} else {
+				this.$el.removeClass("selected");
+			}
+		},
+		extendClick: function(event) {
+			console.log("FileView > extendClick > event", event);
+			if($(event.target).is("td, span")) {
+				this.$el.find(".file-checked-input").click();
+			}
 		}
 
 	});
