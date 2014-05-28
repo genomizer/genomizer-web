@@ -70,7 +70,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 
 			var nrOfRawFiles = 0;
 			this.model.files.each(function(f) {
-				if (f.get('type') == 'raw') {
+				if (f.get('type') == 'Raw') {
 					nrOfRawFiles++;
 				}
 			});
@@ -90,7 +90,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				that.$("#experiment-form button[type=submit]").button('reset');
 			}
 			});
-			
 		},
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');

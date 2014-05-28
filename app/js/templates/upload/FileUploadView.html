@@ -11,13 +11,13 @@
 </div>
 <div class="col-xs-2 remove-col">
 	<select name="type" class="form-control type-select">
-		<option value=raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>
+		<option value=Raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>
 		Raw
 		</option>
-		<option value=profile <% var f = fileName.split('.').pop(); if ((f == 'sgr') || (f == 'wig')) { %> selected <% } %>>
+		<option value=Profile <% if (fileName.split('.').pop() != 'fastq') { %> selected <% } %>>
 		Profile
 		</option>
-		<option value=region <% if (fileName.split('.').pop() == 'gff') { %> selected <% } %>>
+		<option value=Region>
 		Region
 		</option>
 	</select>
