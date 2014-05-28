@@ -98,7 +98,6 @@ define([
 		show: function() {
 			if(!this.isShown) {
 				var that = this;
-				console.log("ProcessPopover > show")
 				this.$el.fadeIn(200);
 
 				// it seems as if we need to do this or events wont fire until re-render
@@ -108,27 +107,27 @@ define([
 					$(document).click(that.documentClickHandler);
 					that.isShown = true;
 				}, 200);
+				app.processStatuses.startFetching();
 			}
 		},
 		hide: function() {
 			var that = this;
 			if(this.isShown) {
-				console.log("ProcessPopover > hide")
 				this.$el.fadeOut(200);
 				this.trigger("hide");
 				setTimeout(function() {
 					$(document).unbind("click", that.documentClickHandler);
 					that.isShown = false;
 				}, 200);
+
+				app.processStatuses.stopFetching();
 			}
-			
 		},
 		events: {
 			"click tr" : "clickHandler"
 		},
 		clickHandler: function(event) {
 			app.router.navigate("search/" + $(event.currentTarget).data("expid") + "[ExpID]", {trigger: true});
-			console.log("ProcessPopover > clickHandler: ", this, event);
 			this.hide();
 		}
 	});

@@ -57,11 +57,6 @@ require([
 		});
 		app.genomeReleaseFiles.fetch().success(postFetch);
 		app.annotationTypes.fetch().success(postFetch);
-
-		app.processStatuses.fetch();
-		setInterval(function() {
-			app.processStatuses.fetch().success();
-		}, 10000);
 	};
 
 	if(app.auth.isLoggedIn()) {
