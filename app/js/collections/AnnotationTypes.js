@@ -21,7 +21,7 @@ define([
 		 */
 		withoutExpID: function() {
 			return new AnnotationTypes(this.reject(function(ann) {
-				return ann.get("name") == "ExpID"; 
+				return ann.get("name").toLowerCase() == "ExpID".toLowerCase(); 
 			}));
 		}
 
