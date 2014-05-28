@@ -41,6 +41,9 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					var f2 = new File();
 					var s1 = sinon.spy()
 					var s2 = sinon.spy()
+					f1.isFileUpload = f2.isFileUpload =  function() {
+						return true;
+					}
 					f1.fetchAndUpload = s1;
 					f2.fetchAndUpload = s2;
 					// TEST
@@ -49,6 +52,24 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					// ASSERT
 					expect(s1.calledOnce).to.be.true;
 					expect(s2.calledOnce).to.be.true;
+				});
+				it("should ignore files that are not file uploads", function() {
+					// SETUP
+					var f1 = new File();
+					var f2 = new File();
+					var s1 = sinon.spy()
+					var s2 = sinon.spy()
+					f1.isFileUpload = function() {
+						return true;
+					}
+					f1.fetchAndUpload = s1;
+					f2.fetchAndUpload = s2;
+					// TEST
+					var files = new Files([f1,f2]);
+					files.fetchAndSaveFiles();
+					// ASSERT
+					expect(s1.calledOnce).to.be.true;
+					expect(s2.calledOnce).to.be.false;
 				});
 			});
 			describe("hasUnfinishedUploads", function() {
@@ -61,6 +82,9 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 				it("should return false when all files have been uploaded", function() {
 					var f1 = new File();
 					var f2 = new File();
+					f1.isFileUpload = f2.isFileUpload =  function() {
+						return true;
+					}
 					f1.uploadDone = true;
 					f2.uploadDone = true;
 
@@ -72,10 +96,22 @@ define(['collections/Files','models/Experiment','models/File',],function(Files,E
 					var f1 = new File();
 					var f2 = new File();
 					f1.uploadDone = true;
+					f1.isFileUpload = f2.isFileUpload =  function() {
+						return true;
+					}
 
 					var files = new Files([f1,f2]);
 					expect(files.hasUnfinishedUploads()).to.be.true;
-				})
+				});
+				it("should ignore files that are not file uploads", function() {
+					var f1 = new File();
+					f1.isFileUpload = function() {
+						return false;
+					}
+					var files = new Files([f1]);
+					expect(files.hasUnfinishedUploads()).to.be.false;
+				});
+
 			});
 			describe("addFilesByFileObject", function() {
 				beforeEach(function() {

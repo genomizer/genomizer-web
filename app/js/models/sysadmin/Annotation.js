@@ -1,3 +1,6 @@
+/**
+ * A model used to represent an annotation.
+ */
 define([], function() {
 	var Annotation = Backbone.Model.extend({
 		defaults : {
@@ -5,8 +8,6 @@ define([], function() {
 			"values" : "Not defined",
 			"forced" : "false"
 
-		},
-		initialize : function() {
 		},
 	});
 	return Annotation;

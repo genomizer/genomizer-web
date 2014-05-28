@@ -67,18 +67,37 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		saveExperiment: function(e) {
 			e.preventDefault();
 			var that = this;
-			this.$("#experiment-form button[type=submit]").button('loading');
-			this.model.save(null,{success:function() {
-				that.collapseView();
-				that.model.updateExperimentIdsForFiles();
-				that.model.files.fetchAndSaveFiles();
-				$('#uploadAllButton').prop('disabled', true);
-				that.model.collection.remove(that.model);
-			},error: function() {
-				that.$("#experiment-form button[type=submit]").button('reset');
-			}
+
+			var nrOfRawFiles = 0;
+			this.model.files.each(function(f) {
+				if (f.get('type') == 'Raw') {
+					nrOfRawFiles++;
+				}
 			});
-			
+			if (nrOfRawFiles > 2) {
+				app.messenger.warning("An experiment can have at most two raw files");
+				return;
+			}
+
+			this.$("#experiment-form button[type=submit]").button('loading');
+			if(this.model.isNew()) {
+				this.model.save(null,{success:function() {
+					that.uploadFiles();
+				},error: function() {
+					that.$("#experiment-form button[type=submit]").button('reset');
+				}
+				});
+			} else {
+				this.uploadFiles();
+			}
+		},
+		uploadFiles: function() {
+			var that = this;
+			that.collapseView();
+			that.model.updateExperimentIdsForFiles();
+			that.model.files.fetchAndSaveFiles();
+			$('#uploadAllButton').prop('disabled', true);
+			that.model.collection.remove(that.model);
 		},
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');

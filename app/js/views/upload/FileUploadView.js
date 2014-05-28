@@ -67,7 +67,7 @@ function(File,FileUploadTemplate,FileUploadTemplateExisting) {
 			this.model.set(input);
 		},
 		toggleGenomeReleaseDropdown: function() {
-			this.$(".gr-version").toggle(this.model.get('type') != "raw");
+			this.$(".gr-version").toggle(this.model.get('type').toLowerCase() != "raw");
 		}
 	});
 	return FileUploadView;
