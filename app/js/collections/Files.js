@@ -68,7 +68,6 @@ define(['models/File'],function(File) {
 					uploadedSize += f.getFileSize() * f.progress;
 				}
 			});
-			console.log(uploadedSize, this.getTotalUploadFileSize());
 			return uploadedSize / this.getTotalUploadFileSize();
 		},
 		/*
