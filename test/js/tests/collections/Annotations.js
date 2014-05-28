@@ -2,7 +2,7 @@ define(['collections/sysadmin/Annotations', 'models/sysadmin/Annotation'], funct
 	describe("collections/sysadmin/Annotations", function() {
 		it("Should exist after created", function() {
 			var annotations = new Annotations();
-			annotations.should.exist
+			annotations.should.exist;
 		});
 		describe("Tests of getByName", function (){
 				it("Should retrieve correct annotation when using getByName", function() {

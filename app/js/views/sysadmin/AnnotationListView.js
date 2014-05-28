@@ -1,4 +1,10 @@
-define(['collections/sysadmin/Annotations', 'text!templates/sysadmin/AnnotationListTemplate.html', 'models/sysadmin/Annotation'], function(Annotations, annotationListTemplate, Annotation) {
+/**
+ * A view class for displaying the list of annotations in AnnotationsView
+ */
+define(['collections/sysadmin/Annotations', 
+		'text!templates/sysadmin/AnnotationListTemplate.html', 
+		'models/sysadmin/Annotation'], 
+function(Annotations, annotationListTemplate, Annotation) {
 	var AnnotationListView = Backbone.View.extend({
 		render : function(annotations, fetch) {
 			if (!fetch) {
@@ -24,6 +30,11 @@ define(['collections/sysadmin/Annotations', 'text!templates/sysadmin/AnnotationL
 			this.itemList = items;
 		},
 
+		/**
+		 * Filters the annotationlist by parameter searchParam
+		 * @param {Object} searchParam
+		 * @return {Object} the filtered list
+		 */
 		filter : function(searchParam) {
 			return this.itemList.filterCollection(searchParam);
 		}
