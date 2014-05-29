@@ -229,10 +229,6 @@
 	user-select: initial;
 }
 
-#results_container .table-hover > tbody:not(.empty-group) > tr:hover > td {
-  background-color: #eee;
-}
-
 .experiment-group.expanded .header-row th {
 	padding-top: 0;
 	border: none;
@@ -244,6 +240,55 @@
     top: -3px;
     left: 3px;
     font-weight: bold;
+}
+
+
+.title-row .label-raw {
+	background-color: #F0EAD9;
+}
+
+.title-row .label-profile {
+	background-color: #EED5EE;
+}
+
+.title-row .label-region {
+	background-color: #D5EDE2;
+}
+
+.title-row .count-span {
+	position: absolute;
+	bottom: -14px;
+	opacity: 0;
+	-webkit-transition: bottom 0.2s, opacity 0.2s;
+	transition: bottom 0.2s, opacity 0.2s;
+}
+
+.title-row .count-span span.label {
+	color: black;
+}
+
+.title-row .name-div {
+	position: relative;
+}
+
+.title-row .name-span {
+	position: relative;
+	bottom: 0;
+	-webkit-transition: bottom 0.3s;
+	transition: bottom 0.3s;
+}
+
+.experiment-group:not(.expanded) .title-row:hover .count-span {
+	bottom: -8px;
+	opacity: 1;
+}
+
+.experiment-group:not(.expanded) .title-row:hover .name-span {
+	bottom: 9px;
+}
+
+#results_container .table-hover > tbody:not(.empty-group) > tr:hover > td {
+	background-color: #eee;
 }
 
 .file-group.empty-group {

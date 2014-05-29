@@ -50,7 +50,10 @@ define([
 			// render from template
 			this.$el.append(this.template({
 				'annotations': this.annotations,
-				'experiment': this.model
+				'experiment': this.model,
+				'rawCount': this.model.files.where({"type":"Raw"}).length,
+				'regionCount': this.model.files.where({"type":"Region"}).length,
+				'profileCount': this.model.files.where({"type":"Profile"}).length,
 			}));
 
 			// render file headers from template

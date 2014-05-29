@@ -6,7 +6,14 @@
 		<input class="experiment-checked-input" type="checkbox">
 	</td>
 	<td>
-		<span><%- experiment.get("name") %></span>
+		<div class="name-div">
+		<span class="count-span">
+			<span class="label label-raw"><%- rawCount %> raw<%- rawCount != 1 ? "s" : "" %></span>
+			<span class="label label-profile"><%- profileCount %> profile<%- profileCount != 1 ? "s" : "" %></span>
+			<span class="label label-region"><%- regionCount %> region<%- regionCount != 1 ? "s" : "" %></span>
+		</span>
+		<span class="name-span"><%- experiment.get("name") %></span>
+		</div>
 	</td>
 	<% annotations.each(function(annotation) { %>  
 		<td>
