@@ -39,6 +39,8 @@ define([
 			this.searchResults.on("highlightChange", this.highlightChange, this);
 
 			this.model.once("destroy", this.removeRow, this);
+
+			//this.$el.click(this.extendClick);
 		},
 
 		render: function() {
@@ -85,6 +87,7 @@ define([
 		events: {
 			"click .expand-experiment-button": "toggleTypeRows",
 			"click .experiment-checked-input": "experimentSelect",
+			"click .title-row td": "extendClick"
 		},
 		toggleTypeRows: function(event) {
 			if(this.expanded) {
@@ -127,6 +130,12 @@ define([
 		removeRow: function() {
 			this.$el.remove();
 			this.stopListening();
+		},
+		extendClick: function(event) {
+			if($(event.target).is("td, span")) {
+				console.log("ExperimentView > extendClick > event", event);
+				this.$el.find(".expand-experiment-button").click();
+			}
 		}
 	});
 	return ExperimentView;

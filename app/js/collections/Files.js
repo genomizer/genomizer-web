@@ -6,7 +6,6 @@ define(['models/File'],function(File) {
 			if(options) {
 				this.experiment = options.experiment;
 			}
-
 		},
 		updateExperimentIds: function(id) {
 			this.each(function(file) {
@@ -24,7 +23,7 @@ define(['models/File'],function(File) {
 		},
 		hasUnfinishedUploads: function() {
 			var aNotDoneUpload = this.find(function(f) {
-				return !f.uploadDone;
+				return f.isFileUpload() && !f.uploadDone;
 			});
 			return aNotDoneUpload !== undefined
 		},
@@ -39,7 +38,6 @@ define(['models/File'],function(File) {
 					fileName:fileObj.name
 				});
 				file.fileObj = fileObj;
-
 				that.add(file);
 			});
 
