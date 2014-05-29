@@ -65,12 +65,17 @@
 
 /* some query-builder css depends on this */
 .search-toolbar .button-container > div {
-	width: 411px;
 	padding-left: 8px;
 }
 
-@media (max-width: 993px) {
-	.search-toolbar .button-container > div {
+.search-toolbar .button-container > div,
+.search-toolbar .button-container {
+	width: 411px;
+}
+
+@media (max-width: 991px) {
+	.search-toolbar .button-container > div,
+	.search-toolbar .button-container {
 		width: 165px;
 	}
 
@@ -98,7 +103,7 @@
 }
 
 /* this depends on .search-toolbar .button-container width */
-@media (max-width: 993px) {
+@media (max-width: 991px) {
 	.query-builder .arrow {
 		right: 212px;
 	}
@@ -147,11 +152,12 @@
 /* === BEGIN SEARCH RESULTS === */
 
 #results_container {
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 #results_container #table_container {
 	overflow-x: auto;
+	overflow-y: hidden;
 }
 
 #results_container .panel-heading {
