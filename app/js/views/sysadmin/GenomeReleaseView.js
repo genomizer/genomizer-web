@@ -12,7 +12,7 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 		initialize : function() {
 			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
-			fetchGenomeRelease();
+			this.fetchGenomeRelease();
 			this.genomeReleaseFileList.on("uploadProgress", this.renderUploadProgress, this);
 		},
 		
@@ -67,12 +67,9 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 		deleteGenomeRelease : function(e) {
 			var payload = e.currentTarget.id.split(",");
 			var x = window.confirm("Are you sure you want to delete version " + payload[1] + " of " + payload[0] + "?");
-			var result = false;
 			if (x) {
-				result = Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
-			}
-			if (result) {
-				fetchGenomeRelease();
+				Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+				this.fetchGenomeRelease();
 			}
 		},
 
@@ -107,7 +104,6 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 			if (this.genomeReleaseFileList.hasUnfinishedUploads() && this.genomeReleaseFileList.length) {
 				$('#progress-bar-container').replaceWith("<div id=" + "progress-bar-container" + "><div class=" + "progress" + "><div class=" + "progress-bar" + " id=" + "pbar" + " style=width:" + this.genomeReleaseFileList.getTotalUploadProgress() * 100 + "%;></div></div></div>");
 			} else if (this.genomeReleaseFileList.length != 0) {
-				fetchGenomeRelease();
 				$('#progress-bar-container').replaceWith("<div id=" + "progress-bar-container>" + "<div class=" + "progress" + "><div class=" + "progress-bar" + " id=" + "pbar" + " style=width:" + 100 + "%;>Upload completed</div></div></div>");
 			}
 		}
