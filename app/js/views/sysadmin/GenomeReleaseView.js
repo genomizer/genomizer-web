@@ -10,15 +10,22 @@ define(['text!templates/sysadmin/GenomeReleaseTemplate.html',
 function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGenomeReleaseModal, Gateway, Annotations) {
 	var GenomeReleaseView = Backbone.View.extend({
 		initialize : function() {
-			var that = this;
 			this.genomeReleaseFileList = new GenomeReleaseFiles();
 			this.genomeReleaseFiles = new GenomeReleaseFiles();
+			this.fetchGenomeRelease();
+			this.genomeReleaseFileList.on("uploadProgress", this.renderUploadProgress, this);
+		},
+		
+		/**
+		 * Fetches genome releases from server and renders the view 
+		 */
+		fetchGenomeRelease : function() {
+			var that = this;
 			this.genomeReleaseFiles.fetch({
 				complete : function() {
 					that.render(that.genomeReleaseFiles);
 				}
 			});
-			this.genomeReleaseFileList.on("uploadProgress", this.renderUploadProgress, this);
 		},
 
 		render : function(genomeReleaseFiles) {
@@ -62,6 +69,7 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 			var x = window.confirm("Are you sure you want to delete version " + payload[1] + " of " + payload[0] + "?");
 			if (x) {
 				Gateway.deleteGenomeReleaseFile(payload[0], payload[1]);
+				this.fetchGenomeRelease();
 			}
 		},
 
