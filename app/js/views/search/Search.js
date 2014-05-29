@@ -62,8 +62,11 @@ define([
 			"click #do_delete": "deleteData",
 			"click #upload_button": "uploadToExperiment" 
 		},
-		uploadToExperiment: function() {
+		uploadToExperiment: function(event) {
 
+			if($(event.currentTarget).hasClass("disabled")) {
+				return;
+			}
 			var experiments = this.collection.getSelectedExperiments();
 
 			var data = experiments.at(0).get("name");
@@ -75,7 +78,12 @@ define([
 			app.router.navigate("upload/"+data, {trigger:true});
 
 		},
-		openDeleteModal: function() {
+		openDeleteModal: function(event) {
+
+			if($('#delete_button').hasClass("disabled")) {
+				event.stopPropagation();
+			}
+			
 
 			//display experiments to be deleted
 			var experiments = this.collection.getSelectedExperiments();
@@ -162,6 +170,8 @@ define([
 			//handles whether or not the download or delete buttons should be clickable.
 			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
 				$('#delete_button').removeClass('disabled');
+				console.log($('#delete_button').data("toggle"))
+
 
 				$('#download_button').removeClass('disabled');
 /*				for(var i = 0; i < selectedExperiments.length; i++) {
@@ -192,7 +202,10 @@ define([
 			this.collection.setSearchQuery($('#search_input').val());
 			e.preventDefault();
 		},
-		downloadSelected: function() {
+		downloadSelected: function(event) {
+			if($(event.currentTarget).hasClass("disabled")) {
+				return;
+			}
 			//Downloads all the selected files and experiments.
 			var that = this;
 			var URLsToDownload = this.collection.getSelectedAndExperimentURLs();
@@ -223,7 +236,10 @@ define([
 				}, 10000); // arbitrary amount of milliseconds :DDDD
 			})
 		},
-		processSelected: function() {
+		processSelected: function(event) {
+			if($(event.currentTarget).hasClass("disabled")) {
+				return;
+			}
 			//TODO(?) does only work with selecting an experiment for processing not 
 			//selecting raw files.
 			var exps = this.collection.getSelectedExperiments();
