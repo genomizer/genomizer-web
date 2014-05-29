@@ -118,6 +118,9 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 				$('#uploadAllButton').prop('disabled', false);
 			} else {
 				$('#uploadAllButton').prop('disabled', true);
+				if(this.experiments.length == 0) {
+					$('#uploadAllButton').hide();
+				}
 			}
 		},
 		enableAddButton: function() {
