@@ -135,7 +135,7 @@ define([
 			this.stopListening();
 		},
 		extendClick: function(event) {
-			if($(event.target).is("td, span")) {
+			if($(event.target).is("td, span, div")) {
 				console.log("ExperimentView > extendClick > event", event);
 				this.$el.find(".expand-experiment-button").click();
 			}

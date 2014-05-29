@@ -274,8 +274,8 @@
 .title-row .name-span {
 	position: relative;
 	bottom: 0;
-	-webkit-transition: bottom 0.3s;
-	transition: bottom 0.3s;
+	-webkit-transition: bottom 0.2s;
+	transition: bottom 0.2s;
 }
 
 .experiment-group:not(.expanded) .title-row:hover .count-span {
