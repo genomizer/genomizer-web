@@ -123,13 +123,17 @@ define([
 				this.$el.find(".freetext-container").show();
 				this.$el.find(".choice-container").hide();
 			} else {
-				var annotation = app.annotationTypes.getAnnotation(text);
-				console.log("QueryBuilder > annotationClickHandler > annotation: ", annotation);
-				if(annotation.get("values")[0] == "freetext") {
+				if(target.data("values") == "freetext") {
+					if(target.data("placeholder")) {
+						this.$el.find(".freetext-container input").attr("placeholder", target.data("placeholder"));
+					} else {
+						this.$el.find(".freetext-container input").attr("placeholder", text);
+					}
 					this.$el.find(".freetext-container").show();
 					this.$el.find(".choice-container").hide();
 				} else {
-					this.$el.find(".choice-dropdown").html(this.annotationTemplate({values: annotation.get("values")}));
+					var values = target.data("values").split(",");
+					this.$el.find(".choice-dropdown").html(this.annotationTemplate({values: values}));
 					this.$el.find(".choice-container .dropdown-label").text("value");
 					this.$el.find(".freetext-container").hide();
 					this.$el.find(".choice-container").show();

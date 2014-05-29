@@ -25,8 +25,18 @@
 			</button>
 			<ul class="dropdown-menu annotation-dropdown">
 				<% annotations.each(function(annotation) { %>
-					<li><a href="#"><%- annotation.get("name") %></a></li>
+					<li><a data-values="<%-annotation.get("values")%>" href="#"><%- annotation.get("name") %></a></li>
 				<% }); %>
+				<li class="divider"></li>
+				<li><a data-values="freetext" data-placeholder="experiment name" href="#">expID</a></li>
+				<li><a data-values="freetext" data-placeholder="number" href="#">fileID</a></li>
+				<li><a data-values="freetext" data-placeholder="yyyy-mm-dd" href="#">date</a></li>
+				<li><a data-values="raw,profile,region" href="#">filetype</a></li>
+				<li><a data-values="freetext" href="#">filename</a></li>
+				<li><a data-values="freetext" href="#">metadata</a></li>
+				<li><a data-values="freetext" data-placeholder="author name" href="#">author</a></li>
+				<li><a data-values="freetext" data-placeholder="uploader name" href="#">uploader</a></li>
+				<li><a data-values="freetext" data-placeholder="genome release" href="#">GRversion</a></li>
 			</ul>
 		</div>
 		<div class="freetext-container col-xs-5">
