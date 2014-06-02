@@ -1,11 +1,9 @@
 require.config({
-	urlArgs: "bust=" + (new Date()).getTime(), // TODO: stop server from caching, remove this before going live
 	paths: {
 		text:'lib/require.text',
 		moment: 'lib/moment.min'
 	}
 });
-// this is a release
 var app = {};
 
 app.BASE_URL = "/api/";
