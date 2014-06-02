@@ -13,9 +13,6 @@ define([
 		},
 		show: function () {
 
-			// store previous url
-			console.log("router", Backbone.history.fragment)
-
 			// render
 			this.render();
 			this.$modal.appendTo($("body"));

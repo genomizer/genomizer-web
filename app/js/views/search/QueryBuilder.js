@@ -41,7 +41,6 @@ define([
 		show: function() {
 			if(!this.isShown) {
 				var that = this;
-				console.log("QueryBuilder > show")
 				this.$el.fadeIn(200);
 				this.trigger("show");
 				setTimeout(function() {
@@ -53,7 +52,6 @@ define([
 		hide: function() {
 			var that = this;
 			if(this.isShown) {
-				console.log("QueryBuilder > hide")
 				this.$el.fadeOut(200);
 				this.trigger("hide");
 				setTimeout(function() {

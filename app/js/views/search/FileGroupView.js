@@ -83,7 +83,6 @@ define([
 		},
 		extendClick: function(event) {
 			if($(event.target).is("td, span")) {
-				console.log("FileGroupView > extendClick > event", event);
 				this.$el.find(".expand-type-button").click();
 			}
 		}

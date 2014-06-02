@@ -174,18 +174,10 @@ define([
 
 
 				$('#download_button').removeClass('disabled');
-/*				for(var i = 0; i < selectedExperiments.length; i++) {
-					if(selectedExperiments.at(i).get("files").length == 0) {
-						$('#download_button').addClass('disabled', true);
-						break;
-					}
-				}
-*/			} else {
+			} else {
 				$('#delete_button').addClass('disabled');
 				$('#download_button').addClass('disabled');
 			}
-
-			/* TODO: GET SELECTED EXPERIMENTS!! */
 		},
 		searchQueryChanged: function() {
 			var isEmpty = $('#search_input').val().length != 0;

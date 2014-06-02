@@ -19,7 +19,6 @@ define([
 			"click #process_container > a" : "openProcessPopover"
 		},
 		openProcessPopover: function() {
-			console.log("MainMenu > openProcessPopover")
 			this.processPopover.show();
 		},
 		onProcessShow: function() {

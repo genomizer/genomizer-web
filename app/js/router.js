@@ -22,12 +22,10 @@ define([],function() {
         },
 
         storeRoute: function(event, p2) {
-            console.log("Router > storeRoute > event: ", event, p2);
             this.history.push(Backbone.history.fragment);
         },
 
         previous: function(options) {
-            console.log("router > previous > history: ", this.history);
             if (this.history.length > 2) {
 
                 // remove the current page from history
@@ -36,7 +34,6 @@ define([],function() {
                 // get the previous page
                 var previous = this.history[this.history.length-1];
 
-                console.log("router > previous > previouspath: ", previous);
                 this.navigate(previous, options);
             }
         },

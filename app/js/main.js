@@ -8,18 +8,7 @@ require.config({
 // this is a release
 var app = {};
 
-app.BASE_URL = "http://itchy.cs.umu.se:7000/";
-
-//app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
-
-//app.BASE_URL = "http://harry.cs.umu.se:7000/";
-if(window.location.pathname.indexOf("c11vbk") != -1) {
-	//	app.BASE_URL = "http://harry.cs.umu.se:7000/";
-	app.BASE_URL = "http://scratchy.cs.umu.se:7000/";
-} else if(window.location.host.indexOf("scratchy") != -1 || window.location.host.indexOf("itchy") != -1) {
-	app.BASE_URL = "/api/";
-}
-console.log("main:", app.BASE_URL);
+app.BASE_URL = "/api/";
 
 require([
 		'views/MainMenu',
@@ -31,7 +20,6 @@ require([
 		'router',
 		'views/Messenger'
 ],function(MainMenu, AuthModal, AnnotationTypes, ProcessStatuses, GenomeReleaseFiles, Auth, Router, Messenger) {
-	console.log("main > app:", app.BASE_URL);
 	app.router = new Router();
 	app.annotationTypes = new AnnotationTypes();
 	app.genomeReleaseFiles = new GenomeReleaseFiles();

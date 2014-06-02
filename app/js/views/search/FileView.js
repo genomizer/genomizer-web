@@ -36,7 +36,6 @@ define([
 			}
 		},
 		extendClick: function(event) {
-			console.log("FileView > extendClick > event", event);
 			if($(event.target).is("td, span")) {
 				this.$el.find(".file-checked-input").click();
 			}
