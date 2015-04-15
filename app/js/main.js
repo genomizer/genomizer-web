@@ -45,7 +45,9 @@ require([
 		app.annotationTypes.fetch().success(postFetch);
 	};
 
+    /* Logged in if received token from server */
 	if(app.auth.isLoggedIn()) {
+        /*  */
 		postLogin();
 	} else {
 		var authModal = new AuthModal({model:app.auth});
