@@ -1,8 +1,9 @@
-/**
+/*
     Handles routes in the application and history handling
     for navigating through a single page application.
 */
 define([],function() {
+    //Create a new Router object by extending Backbonejs Router.
     var Router = Backbone.Router.extend({
 
         //Routes used by the application.
@@ -21,18 +22,31 @@ define([],function() {
 			"logout": "logout"
         },
 
-        //init function.
+        /* init function, inits the history array */
         initialize: function(options) {
             this.history = [];
             this.on("route", this.storeRoute);
         },
 
-        //Stores a page into the history stack.
+        /*
+		StoreRoute function
+		Pushes a route (Page) into the history.
+	
+	*/
         storeRoute: function(event, p2) {
             this.history.push(Backbone.history.fragment);
         },
 
-        //Go back one page in the history using the stack.
+        /*
+		Previous Function
+		Pops the current page from the history stack
+		and gets the previous page from the history
+		and then navigate to that page.
+		
+		Represents functionality to be able to navigate
+		backwards in a single page application.
+
+	*/
         previous: function(options) {
             if (this.history.length > 2) {
 
@@ -47,12 +61,19 @@ define([],function() {
             }
         },
 
-        //returns true if there is a previous site false if not.
+        /*	
+		Function to get if it has been a previous page
+		Will return true if the length is more than 2
+		Will return false if the lenght is less than 2. 
+	*/
         hasPrevious: function() {
             return this.history.length > 2;
         },
 
-        //Route to the search function.
+        /* 	
+		Search function
+		Used for getting the search view 
+	*/
         search: function(query) {
             var that = this;
             require([
@@ -61,7 +82,11 @@ define([],function() {
                 new Search({el:that.getNewMainView(),query:query});
             });
         },
-
+	
+	/*		
+		Upload function
+		Used for getting the upload view 
+	*/
         upload: function(expIds) {
             var that = this;
             require([
@@ -70,7 +95,11 @@ define([],function() {
                 new Upload({el:that.getNewMainView(),expIds:expIds});
             });
         },
-
+	
+	/*
+		Process function
+		Used for getting the Processview.
+	*/
         process: function(query) {
             require([
                 'views/processModal/Process'
@@ -79,17 +108,27 @@ define([],function() {
                 modal.show();
             });
         },
+	
+	/*
+		Gets a new mainView to insert into mainview tag in Index.html
+	*/
         getNewMainView: function() {
             $("#mainView").replaceWith('<section id=mainView></section>');
             return $("#mainView");
         },
         
+	/*
+		Gets a new admin view.
+	*/
         getNewAdminView: function() {
         	$(".activePage").remove();
         	$("#mainView").append('<div class=activePage></div>');
         	return $("#mainView");
         },
         
+	/*
+		Admin function that uses the sysadmin view.
+	*/
         admin: function() {
             var that = this;
             require([
@@ -101,6 +140,10 @@ define([],function() {
             });
         },
         
+	/*
+		Gets the createAnnotation view using the sysadmin main view.
+	
+	*/
         createAnnotation: function() {
             var that = this;
             require([
@@ -112,6 +155,9 @@ define([],function() {
             });
         },
         
+	/*
+		Gets the editAnnotation view using with the sysadmin main view.
+	*/
         editAnnotation: function(name) {
             var that = this;
             require([
@@ -123,6 +169,9 @@ define([],function() {
             });
         },
         
+	/*
+		Gets the genomereleases page from with the sysadmin main view
+	*/
         genomeReleases: function() {
             var that = this;
         	require([
@@ -135,11 +184,12 @@ define([],function() {
         },
 
         //Logout function.
-		logout: function() {
-			app.auth.logout();
-		}
+	logout: function() {
+		app.auth.logout();
+	}
 
     });
+    //Finally return the Router object.
     return Router;
 });
 
