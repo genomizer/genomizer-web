@@ -1,6 +1,11 @@
+/**
+    Handles routes in the application and history handling
+    for navigating through a single page application.
+*/
 define([],function() {
     var Router = Backbone.Router.extend({
 
+        //Routes used by the application.
         routes: {
             "search/:query": "search",
             "search": "search",
@@ -16,15 +21,18 @@ define([],function() {
 			"logout": "logout"
         },
 
+        //init function.
         initialize: function(options) {
             this.history = [];
             this.on("route", this.storeRoute);
         },
 
+        //Stores a page into the history stack.
         storeRoute: function(event, p2) {
             this.history.push(Backbone.history.fragment);
         },
 
+        //Go back one page in the history using the stack.
         previous: function(options) {
             if (this.history.length > 2) {
 
@@ -34,13 +42,17 @@ define([],function() {
                 // get the previous page
                 var previous = this.history[this.history.length-1];
 
+                //navigate back to the previous page.
                 this.navigate(previous, options);
             }
         },
+
+        //returns true if there is a previous site false if not.
         hasPrevious: function() {
             return this.history.length > 2;
         },
 
+        //Route to the search function.
         search: function(query) {
             var that = this;
             require([
@@ -122,6 +134,7 @@ define([],function() {
             });
         },
 
+        //Logout function.
 		logout: function() {
 			app.auth.logout();
 		}
