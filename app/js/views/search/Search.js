@@ -201,7 +201,6 @@ define([
 			//Downloads all the selected files and experiments.
 			var that = this;
 			var URLsToDownload = this.collection.getSelectedAndExperimentURLs();
-            console.log(URLsToDownload);
 			// this is horrible but as we see it the only way to download multiple files
 
 			if(URLsToDownload.length == 0) {

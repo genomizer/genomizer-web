@@ -25,7 +25,7 @@ define([
 			this.updateModel();
 			this.$('button[type=submit]').button('loading');
 			
-            /* 
+            /* NEW:
              * Calls doLogin in Auth.js. model is initalized in
              * Gateway.js as Backbone.Model
              */
