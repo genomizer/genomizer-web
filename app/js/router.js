@@ -1,9 +1,10 @@
 /*
-    Handles routes in the application and history handling
-    for navigating through a single page application.
+	NEW:
+	Handles routes in the application and history handling
+	for navigating through a single page application.
 */
 define([],function() {
-    //Create a new Router object by extending Backbonejs Router.
+    /*NEW: Create a new Router object by extending Backbonejs Router.*/
     var Router = Backbone.Router.extend({
 
         //Routes used by the application.
@@ -28,7 +29,8 @@ define([],function() {
             this.on("route", this.storeRoute);
         },
 
-        /*
+        /*	
+		NEW:
 		StoreRoute function
 		Pushes a route (Page) into the history.
 	
@@ -38,6 +40,7 @@ define([],function() {
         },
 
         /*
+		NEW:
 		Previous Function
 		Pops the current page from the history stack
 		and gets the previous page from the history
@@ -62,6 +65,7 @@ define([],function() {
         },
 
         /*	
+		NEW:
 		Function to get if it has been a previous page
 		Will return true if the length is more than 2
 		Will return false if the lenght is less than 2. 
@@ -71,6 +75,7 @@ define([],function() {
         },
 
         /* 	
+		NEW:
 		Search function
 		Used for getting the search view 
 	*/
@@ -83,7 +88,8 @@ define([],function() {
             });
         },
 	
-	/*		
+	/*	
+		NEW:	
 		Upload function
 		Used for getting the upload view 
 	*/
@@ -97,6 +103,7 @@ define([],function() {
         },
 	
 	/*
+		NEW:
 		Process function
 		Used for getting the Processview.
 	*/
@@ -110,6 +117,7 @@ define([],function() {
         },
 	
 	/*
+		NEW:
 		Gets a new mainView to insert into mainview tag in Index.html
 	*/
         getNewMainView: function() {
@@ -117,7 +125,8 @@ define([],function() {
             return $("#mainView");
         },
         
-	/*
+	/*	
+		NEW:
 		Gets a new admin view.
 	*/
         getNewAdminView: function() {
@@ -127,6 +136,7 @@ define([],function() {
         },
         
 	/*
+		NEW:
 		Admin function that uses the sysadmin view.
 	*/
         admin: function() {
@@ -140,7 +150,8 @@ define([],function() {
             });
         },
         
-	/*
+	/*	
+		NEW:
 		Gets the createAnnotation view using the sysadmin main view.
 	
 	*/
@@ -155,7 +166,8 @@ define([],function() {
             });
         },
         
-	/*
+	/*	
+		NEW:
 		Gets the editAnnotation view using with the sysadmin main view.
 	*/
         editAnnotation: function(name) {
@@ -169,7 +181,8 @@ define([],function() {
             });
         },
         
-	/*
+	/*	
+		NEW:
 		Gets the genomereleases page from with the sysadmin main view
 	*/
         genomeReleases: function() {

@@ -1,5 +1,5 @@
 /*
-	New
+	NEW:
 	This class handles file uploads actions aswell as
 	converting filesizes between Bytes, Megabytes,
 	Gigabytes and Terabytes.
@@ -11,7 +11,7 @@
 */
 define([],function() {
 	/*	
-		New
+		NEW:
 		Create a new file model
 	*/
 	var File = Backbone.Model.extend({
@@ -22,7 +22,8 @@ define([],function() {
 			this.uploadDone = false;
 		},
 		
-		/*	New
+		/*	
+			NEW:
 			Set the default values.
 			TODO: Confirm these settings...
 		*/
@@ -63,7 +64,7 @@ define([],function() {
 				} 
 			}).done(_.bind(this.setUploadDone,this));
 		},
-		/* 	New
+		/* 	NEW:
 			Sets the upload progress from an event */
 		setUploadProgress:function(evt) {
 			if (evt.lengthComputable) {
@@ -72,14 +73,14 @@ define([],function() {
 			}
 		},
 		
-		/*	New
+		/*	NEW:
 			Triggers the upload done trigger */
 		setUploadDone: function() {
 			this.uploadDone = true;
 			this.progress = 1;
 			this.trigger("uploadProgress");
 		},
-		/* Gets a file and uploads it to the server */
+		/* NEW: Gets a file and uploads it to the server */
 		fetchAndUpload: function() {
 			var that = this;
 			this.save().success(function() {
@@ -89,7 +90,7 @@ define([],function() {
 		},
 
 		/*
-			New
+			NEW:
 			Converts file sizes to readable formats, formats supported is
 			Bytes, KiloBytes, Megabytes, Gigabytes and Terabytes.
 			
@@ -102,7 +103,7 @@ define([],function() {
 				return undefined;
 			}
 			
-			//New Conversion between the filesizes	
+			//NEW: Conversion between the filesizes	
 			if (size < 1024) {
 				return  (size.toFixed(2).toString() + " B");
 			} else if (size < 1048576) {
@@ -117,6 +118,7 @@ define([],function() {
 		},
 		
 		/*
+			NEW:
 			Returns the filesize of an file
 		*/
 		getFileSize: function() {
@@ -130,6 +132,6 @@ define([],function() {
 		}
 	});
 	
-	//New Finaly return the file object.
+	//NEW: Finaly return the file object.
 	return File;
 });

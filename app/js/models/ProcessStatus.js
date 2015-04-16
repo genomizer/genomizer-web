@@ -1,5 +1,5 @@
 /*
-	New
+	NEW:
 	TODO: Implement this.
 */
 define([],function() {
