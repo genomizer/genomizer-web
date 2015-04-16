@@ -1,9 +1,31 @@
+/*
+	New
+	This class handles file uploads actions aswell as
+	converting filesizes between Bytes, Megabytes,
+	Gigabytes and Terabytes.
+	
+	TODO: Remove hardcoded passwords and usernames.
+	TODO: Comment file
+	TODO: Remove hardcoded uploader.
+
+*/
 define([],function() {
+	/*	
+		New
+		Create a new file model
+	*/
 	var File = Backbone.Model.extend({
+		
+		//Initialize the File.
 		initialize: function() {
 			this.progress = 0;
 			this.uploadDone = false;
 		},
+		
+		/*	New
+			Set the default values.
+			TODO: Confirm these settings...
+		*/
 		defaults: {
 			"type":"raw", // This one is used and should be kept
 			/*"genomeVersion": "hg18",
@@ -41,17 +63,23 @@ define([],function() {
 				} 
 			}).done(_.bind(this.setUploadDone,this));
 		},
+		/* 	New
+			Sets the upload progress from an event */
 		setUploadProgress:function(evt) {
 			if (evt.lengthComputable) {
 				this.progress = evt.loaded / evt.total;
 				this.trigger("uploadProgress",this.progress);
 			}
 		},
+		
+		/*	New
+			Triggers the upload done trigger */
 		setUploadDone: function() {
 			this.uploadDone = true;
 			this.progress = 1;
 			this.trigger("uploadProgress");
 		},
+		/* Gets a file and uploads it to the server */
 		fetchAndUpload: function() {
 			var that = this;
 			this.save().success(function() {
@@ -59,12 +87,22 @@ define([],function() {
 				that.uploadFile();
 			});
 		},
+
+		/*
+			New
+			Converts file sizes to readable formats, formats supported is
+			Bytes, KiloBytes, Megabytes, Gigabytes and Terabytes.
+			
+			This is for making reading easier on how big the file is 
+
+		*/
 		getReadableFileSize: function() {
 			var size = this.getFileSize();
 			if(size === undefined) {
 				return undefined;
 			}
 			
+			//New Conversion between the filesizes	
 			if (size < 1024) {
 				return  (size.toFixed(2).toString() + " B");
 			} else if (size < 1048576) {
@@ -77,6 +115,10 @@ define([],function() {
 				return ((size / 1099511627776).toFixed(2).toString() + " TiB");
 			}
 		},
+		
+		/*
+			Returns the filesize of an file
+		*/
 		getFileSize: function() {
 			if(this.fileObj === undefined) {
 				return undefined;
@@ -87,5 +129,7 @@ define([],function() {
 			return !!this.fileObj 
 		}
 	});
+	
+	//New Finaly return the file object.
 	return File;
 });
