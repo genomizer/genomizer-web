@@ -6,8 +6,13 @@ define([
 	'text!templates/search/searchInputGroup.html',
 	'text!templates/search/filesToDeleteTemplate.html',
 	'text!templates/search/experimentsToDeleteTemplate.html'
-],function(SearchResults, SearchResultsView, AnnotationTypes, 
-	QueryBuilder, inputGroupTemplate, filesToDeleteTemplate, experimentsToDeleteTemplate) {
+],function(SearchResults, 
+           SearchResultsView, 
+           AnnotationTypes, 
+           QueryBuilder, 
+           inputGroupTemplate, 
+           filesToDeleteTemplate, 
+           experimentsToDeleteTemplate) {
 
 	var Search = Backbone.View.extend({
 
