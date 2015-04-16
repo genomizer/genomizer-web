@@ -1,5 +1,5 @@
 /*
-	New
+	NEW:
 	File for handling genomereferences.
 	
 	TODO: Implement.
