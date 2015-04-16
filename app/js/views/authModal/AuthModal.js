@@ -15,11 +15,20 @@ define([
 			this.$el.html(this.TEMPLATE());
 		},
 		submitLogin: function(e) {
+
+            console.log(e);
+            console.log(this);
+            console.log(thisthis.model);
+
 			var that = this;
 			e.preventDefault();
 			this.updateModel();
 			this.$('button[type=submit]').button('loading');
 			
+            /* 
+             * Calls doLogin in Auth.js. model is initalized in
+             * Gateway.js as Backbone.Model
+             */
 			this.model.doLogin();
 			
 			this.model.once('loggedIn',function() {
