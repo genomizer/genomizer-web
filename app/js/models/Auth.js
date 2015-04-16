@@ -6,11 +6,11 @@ define([],function() {
 
 		initialize: function() {
 
-            /* Check if we already have a token (HTML5 localStorage) */
+            /* NEW: Check if we already have a token (HTML5 localStorage) */
 			var token = localStorage.getItem('authToken');
 			if(token) {
 
-                /* Store token in Backbone */
+                /* NEW: Store token in Backbone */
 				this.set('token',token);
 				this._afterLogin();
 			}
@@ -31,14 +31,14 @@ define([],function() {
 		doLogin: function() {
 			var that = this;
 
-            /* 
+            /* NEW:
              * Sends (smth TODO) to DB and on success (200) 
              * stores token in localStorage
              * TODO how is pwd sent?
              */
 			return this.save().success(function() {
 				localStorage.setItem('authToken',that.get('token'));
-                /* TODO check from here */
+                /* NEW: TODO check from here /Nik */
 				that._afterLogin();
 			});
 		},
