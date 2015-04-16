@@ -1,3 +1,7 @@
+/*
+	New
+	TODO: Implement this.
+*/
 define([],function() {
 	var ProcessStatus = Backbone.Model.extend({
 

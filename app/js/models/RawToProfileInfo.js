@@ -1,3 +1,8 @@
+/* New
+   TODO: Fix todos in code
+	* Fix hardcoded Author
+	* Implement ID.
+*/
 define([],function() {
 	var RawToProfileInfo = Backbone.Model.extend({
 		url: function() {
