@@ -16,10 +16,6 @@ define([
 		},
 		submitLogin: function(e) {
 
-            console.log(e);
-            console.log(this);
-            console.log(thisthis.model);
-
 			var that = this;
 			e.preventDefault();
 			this.updateModel();
