@@ -1,10 +1,13 @@
 <?php
 
-$URI = $_GET['data'];
+// $URI = $_GET['data'];
 
-echo "filename = " . $URI . "<br />";
+// echo $_GET['path'] . "<br />";
+$URI = $_GET['path'];
 
-if (file_exists($URI)) {
+// echo "filename = " . $URI . "<br />";
+
+// if (file_exists($URI)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename='.basename($URI));
@@ -16,9 +19,9 @@ if (file_exists($URI)) {
     flush();
     readfile($URI);
     exit;
-} else {
-	echo "File not found.";
-	exit;
-}
+// } else {
+// 	echo "File not found.";
+// 	exit;
+// }
 
 ?>

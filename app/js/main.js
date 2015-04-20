@@ -38,7 +38,7 @@ require([
 		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
 			app.messenger.warning(jqxhr.responseJSON.message);
 		} else {
-			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page.");
+			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page." + exception);
 		}
 	});
 
