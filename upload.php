@@ -27,15 +27,15 @@ $URI = $_GET['path'];
 // $URI = "/Home/staff/niklasf/edu/pvt/genomizer-web/cgi-bin/upload_test/file.txt";
 echo "filename = " . $URI . "<br />";
 
-if (!isset($_SERVER['PHP_AUTH_USER'])) {
-    header('WWW-Authenticate: Basic realm="My Realm"');
-    header('HTTP/1.0 401 Unauthorized');
-    echo 'Text to send if user hits Cancel button';
-    exit;
-} else {
-    echo "<p>Hello {$_SERVER['PHP_AUTH_USER']}.</p>";
-    echo "<p>You entered {$_SERVER['PHP_AUTH_PW']} as your password.</p>";
-}
+// if (!isset($_SERVER['PHP_AUTH_USER'])) {
+//     header('WWW-Authenticate: Basic realm="My Realm"');
+//     header('HTTP/1.0 401 Unauthorized');
+//     echo 'Text to send if user hits Cancel button';
+//     exit;
+// } else {
+//     echo "<p>Hello {$_SERVER['PHP_AUTH_USER']}.</p>";
+//     echo "<p>You entered {$_SERVER['PHP_AUTH_PW']} as your password.</p>";
+// }
 
 
 // $target_file = basename($_POST['data']);
