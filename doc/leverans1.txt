@@ -1,0 +1,58 @@
+LOG IN:
+    1. http://130.239.192.110/genomizer-web/app/ (not https)
+    2. Enter any user name, THE password
+
+SEARCH:
+    1. Click paper clip
+    2. Build query (either annotation or experiment attribute, e.g., expID)
+    3. Click "Add"
+    4. Click "Search"
+
+DOWNLOAD:
+    1. Search (see above)
+    2. Expand desired experiment (plus sign)
+    3. Expand desired file type (plus sign)
+    4. Check desired files
+    5. Press "Download"
+
+DELETE:
+    1-4. See DOWNLOAD
+    5. Press "Delete"
+
+CREATE ANNOTATION:
+    1. Click "Admin" tab
+    2. Click "Create New Annotation"
+    3. Choose name
+    4. Select type ("Yes/No", multi-choice, free text)
+    5. Select if forced
+    6. If multi-choice: enter alternatives (comma separated)
+    7. Click "Create Annotation"
+    8. Confirm
+
+UPLOAD GENOME RELEASE:
+    1. Click "Admin" tab
+    2. Click "Genome-releases"
+    3. Click "Select files to upload"
+    4. Select species
+    5. Enter name for release
+    6. Click "Upload"
+
+CREATE EXPERIMENT:
+    1. Click "Upload" tab
+    2. Click "Create new experiment"
+    3. Enter experiment name
+    4. Select choices for all forced annotations and for desired non-forced annotations
+    5. Select one or more files to upload
+    6. Select type and any genome release for the selected file(s)
+    7. Click "Upload experiment"
+
+UPLOAD FILE:
+    1. Click "Upload" tab
+    2. Enter experiment name
+    3. Click "Add to experiment"
+    4. Click "Select files to upload"
+    5. Select files to upload
+    6. Enter name and select type and genome release for files
+    7. Click "Upload experiment"
+
+All functionalities tested on Google Chrome, Mozilla Firefox, Internet Explorer

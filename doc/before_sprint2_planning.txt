@@ -1,0 +1,29 @@
+USER STORIES WE THINK WE CAN WORK WITH:
+
+Processing
+    to fix: replaxe PHP scrips, change JS download mechanism thereafter
+
+Workspaces (probably not sprint 2)
+    to fix: add a tab with JS and HTML
+
+Security - SSL
+    to fix: disable port 80 or redirect to 443
+
+Users
+    to fix: probably nothing in the web client, only server side
+
+Chain files (upload?)
+    to fix: should only be to copy and change the upload dialogue from
+    genome release upload
+
+File traceability
+    to fix: copy delete button and change JSON
+
+File format conversion
+Plot things on server
+Similar dialogue windows
+    to fix: copy dialogue from processing, change fields and JSON
+
+Tests
+
+
