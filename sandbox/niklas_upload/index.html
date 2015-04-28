@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Niklas upload test</title>
+    <meta charset="UTF-8"> 
+    <script charset="utf-8" src="js/lib/jquery-2.1.0.min.js"></script>
+    <script charset="utf-8" src="js/lib/underscore-min-1.5.0.js"></script>
+    <script charset="utf-8" src="js/lib/backbone-min-1.1.2.js"></script>
+    <script charset="utf-8" src="js/lib/backbone-super-min.js"></script>
+    <script charset="utf-8" src="js/lib/bootstrap.min.js"></script> 
+    <script charset="utf-8" src="js/lib/dragster.js"></script>
+</head>
+<body>
+
+    <form enctype="multipart/form-data">
+        <label>
+            File
+            <input name='file' type='file' />
+        </label>
+        <br>
+            <label>
+            Name
+            <input name='name' type='text' />
+        </label>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <script type="text/javascript">
+        var FormView = Backbone.View.extend({
+
+            // some more code here
+
+            events: {
+                'submit form' : 'saveFile'
+                // 'submit form' : 'uploadFile'
+            },
+
+            // uploadFile: function(event) {
+            //     var values = {};
+
+            //     if(event){ event.preventDefault(); }
+
+            //     _.each(this.$('form').serializeArray(), function(input){
+            //     values[ input.name ] = input.value;
+            //     })
+
+            //     this.model.save(values, { 
+            //         iframe: true,
+            //         files: this.$('form :file'),
+            //         data: values 
+            //     });
+            // }
+            
+            saveFile: function() {
+                var picture = $('input[name="fileInput"]')[0].files[0]; 
+                var data = new FormData();
+                data.append('file', picture);
+                $.ajax({
+                    url: 'sandboxapi/files/' + this.model.get('picture'),    
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+
+                    success: function(data){
+                        $('#loadingModal').modal('hide');
+                    },
+                    error: function(data){
+                        alert('no upload');
+                        $('#loadingModal').modal('hide');
+                    }
+                });
+            },
+        });
+
+        var app = {};
+        app.formView = new FormView();
+    </script>
+</body>
+</html>
