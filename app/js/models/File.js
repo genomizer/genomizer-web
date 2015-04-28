@@ -30,11 +30,11 @@ define([],function() {
 		defaults: {
 			"type":"raw", // This one is used and should be kept
 			/*"genomeVersion": "hg18",
-			"metaData": "metameta",
-			"author": "name",
 			"grVersion": "hg18",*/
 			
-			 "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
+			"author": "name",
+			"metaData": "metameta",			
+			"uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
 
 		},
 		// Requires: URLupload in attributes
@@ -50,10 +50,10 @@ define([],function() {
 				password: "pvt",
 				processData: false,
 				contentType: false,
-				/*beforeSend: function(jqXHR) {
+				beforeSend: function(jqXHR) {
 					debugger;
 					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
-				}*/
+				},
 
 				xhr: function()
 				{
