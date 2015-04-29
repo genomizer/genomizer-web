@@ -50,19 +50,20 @@ define([],function() {
 				password: "pvt",
 				processData: false,
 				contentType: false,
+                author: $('#author').val(),
+                metaData: $('#metaData').val(),
 				/*beforeSend: function(jqXHR) {
 					debugger;
 					jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 				}*/
 
-				xhr: function()
-				{
+				xhr: function() {
 					//Upload progress
 					var xhr = $.ajaxSettings.xhr();
 					xhr.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
 					return xhr;
 				},
-                error: function(){
+                error: function() {
                     alert("Failed to upload file, remove file from experiment and try again.");
                 } 
 			}).done(_.bind(this.setUploadDone,this));

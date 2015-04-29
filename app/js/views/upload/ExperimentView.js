@@ -94,7 +94,13 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		uploadFiles: function() {
 			var that = this;
 			that.collapseView();
+            /**
+             * this.model is of type Experiment.
+             */
 			that.model.updateExperimentIdsForFiles();
+            /**
+             * this.model.files is of type Files.
+             */
 			that.model.files.fetchAndSaveFiles();
 			$('#uploadAllButton').prop('disabled', true);
 			that.model.collection.remove(that.model);
