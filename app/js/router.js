@@ -17,11 +17,11 @@ define([],function() {
             "process": "process",
             "process/:query": "process",
             "workspace": "workspace",
-            "administration":"admin",
+            "administration":"administration",
             "administration/createannotation": "createAnnotation",
             "administration/editannotation/:name": "editAnnotation",
             "administration/genomereleases" : "genomeReleases",
-            "convert": "conversion",
+            "convert": "convert",
 			"logout": "logout"
         },
 
@@ -145,7 +145,7 @@ define([],function() {
 		NEW:
 		Admin function that uses the sysadmin view.
 	*/
-        admin: function() {
+        administration: function() {
             var that = this;
             require([
                 'views/sysadmin/SysadminMainView',
@@ -202,7 +202,7 @@ define([],function() {
             });
         },
 
-        conversion: function() {
+        convert: function() {
 
 
         },
