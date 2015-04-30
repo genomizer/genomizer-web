@@ -20,6 +20,7 @@ define([],function() {
             "admin/createannotation": "createAnnotation",
             "admin/editannotation/:name": "editAnnotation",
             "admin/genomereleases" : "genomeReleases",
+            "conversion":"conversion",
 			"logout": "logout"
         },
 
@@ -100,6 +101,9 @@ define([],function() {
             ],function(Upload) {
                 new Upload({el:that.getNewMainView(),expIds:expIds});
             });
+        },
+
+        conversion: function(query) {            
         },
 	
 	/*
