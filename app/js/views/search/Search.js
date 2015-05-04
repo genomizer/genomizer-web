@@ -62,6 +62,7 @@ define([
 			"input #search_input": "searchQueryChanged",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected",
+			"click #convert_button" : "convertSelected",
 			"click #builder_button": "openBuilder",
 			"click #delete_button": "openDeleteModal",
 			"click #do_delete": "deleteData",
@@ -141,6 +142,7 @@ define([
 			if(selectedExperiments.length > 0) {
 				$('#upload_button').removeClass('disabled');
 				$('#process_button').removeClass('disabled');
+				$('#convert_button').removeClass('disabled'); // added
 
 				//Makes sure there is two raw files in selected experiments and all have same species.
 				var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name"));
@@ -170,6 +172,7 @@ define([
 			} else {
 				$('#upload_button').addClass('disabled');
 				$('#process_button').addClass('disabled');
+				$('#convert_button').addClass('disabled'); // added
 			}
 
 			//handles whether or not the download or delete buttons should be clickable.
@@ -247,6 +250,9 @@ define([
 			}
 
 			app.router.navigate("process/"+data, {trigger:true});
+		},
+		convertSelected: function() {
+			// TODO implement
 		},
 		openBuilder: function() {
 			this.builder.show();

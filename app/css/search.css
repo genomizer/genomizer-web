@@ -70,7 +70,7 @@
 
 .search-toolbar .button-container > div,
 .search-toolbar .button-container {
-	width: 411px;
+	width: 511px; /*default 411*/
 }
 
 @media (max-width: 991px) {
