@@ -178,7 +178,7 @@ define([
 			//handles whether or not the download or delete buttons should be clickable.
 			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
 				$('#delete_button').removeClass('disabled');
-				console.log($('#delete_button').data("toggle"))
+				console.log($('#delete_button').data("toggle"));
 
 
 				$('#download_button').removeClass('disabled');
@@ -251,8 +251,20 @@ define([
 
 			app.router.navigate("process/"+data, {trigger:true});
 		},
-		convertSelected: function() {
-			// TODO implement
+		convertSelected: function(event) {
+			if($(event.currentTarget).hasClass("disabled")) {
+				return;
+			}
+			//TODO(?) does only work with selecting an experiment for processing not 
+			//selecting raw files.
+			var exps = this.collection.getSelectedExperiments();
+			var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
+			var data = specie;
+			for(var i = 0; i<exps.length; i++) {
+				data += "," + exps.at(i).get("name");
+			}
+
+			app.router.navigate("convert/"+data, {trigger:true});
 		},
 		openBuilder: function() {
 			this.builder.show();

@@ -22,6 +22,7 @@ define([],function() {
             "administration/editannotation/:name": "editAnnotation",
             "administration/genomereleases" : "genomeReleases",
             "convert": "convert",
+            "convert/:query": "convert",
 			"logout": "logout"
         },
 
@@ -113,8 +114,8 @@ define([],function() {
             require([
                 'views/processModal/Process'
             ],function(Process) {
-                //var modal = new Process({query:query});
-                //modal.show();
+                var modal = new Process({query:query});
+                modal.show();
             });
         },
 
@@ -202,9 +203,13 @@ define([],function() {
             });
         },
 
-        convert: function() {
-
-
+        convert: function(query) {
+            require([
+                'views/convertModal/Convert'
+            ],function(Convert) {
+                var modal = new Convert({query:query});
+                modal.show();
+            });
         },
 
         //Logout function.
