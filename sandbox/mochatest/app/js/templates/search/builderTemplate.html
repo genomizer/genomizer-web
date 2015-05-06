@@ -1,0 +1,59 @@
+<div class="arrow"></div>
+<h3 class="popover-title">Query builder</h3>
+<div class="popover-content">
+	<div>
+		<div class="btn-group op-container col-xs-2">
+			<button type="button" class="btn btn-default dropdown-toggle left-align" data-toggle="dropdown">
+			<span class="dropdown-label">op</span>
+			<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu op-dropdown">
+				<li><a href="#">no operator</a></li>
+				<li class="append-only"><a href="#">AND</a></li>
+				<li class="append-only"><a href="#">OR</a></li>
+				<li class="append-only divider"></li>
+				<li><a href="#">NOT</a></li>
+				<li class="append-only"><a href="#">OR NOT</a></li>
+				<li class="append-only"><a href="#">AND NOT</a></li>
+			</ul>
+		</div>
+
+		<div class="btn-group annotation-container col-xs-4">
+			<button type="button" class="btn btn-default dropdown-toggle left-align" data-toggle="dropdown">
+				<span class="dropdown-label">annotation</span>
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu annotation-dropdown">
+				<% annotations.each(function(annotation) { %>
+					<li><a data-values="<%-annotation.get("values")%>" href="#"><%- annotation.get("name") %></a></li>
+				<% }); %>
+				<li class="divider"></li>
+				<li><a data-values="freetext" data-placeholder="experiment name" href="#">expID</a></li>
+				<li><a data-values="freetext" data-placeholder="number" href="#">fileID</a></li>
+				<li><a data-values="freetext" data-placeholder="yyyy-mm-dd" href="#">date</a></li>
+				<li><a data-values="raw,profile,region" href="#">filetype</a></li>
+				<li><a data-values="freetext" href="#">filename</a></li>
+				<li><a data-values="freetext" href="#">metadata</a></li>
+				<li><a data-values="freetext" data-placeholder="author name" href="#">author</a></li>
+				<li><a data-values="freetext" data-placeholder="uploader name" href="#">uploader</a></li>
+				<li><a data-values="freetext" data-placeholder="genome release" href="#">GRversion</a></li>
+			</ul>
+		</div>
+		<div class="freetext-container col-xs-5">
+			<input type="text" class="form-control" placeholder="annotation value">
+		</div>
+		<div class="btn-group choice-container col-xs-5" style="display: none;">
+			<button type="button" class="btn btn-default dropdown-toggle left-align" data-toggle="dropdown">
+				<span class="dropdown-label">value</span>
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu choice-dropdown">
+				
+			</ul>
+		</div>
+		<div class="col-xs-1">
+			<button type="button" class="btn btn-primary btn-add">add</button>
+		</div>
+	</div>
+</div>
+

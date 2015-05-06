@@ -1,0 +1,30 @@
+<tr class="title-row"> <!-- MAIN EXPERIMENT ROW -->
+	<td class="expand-cell">
+		<button class="expand-button expand-experiment-button glyphicon"></button>
+	</td>
+	<td class="check-cell">
+		<input class="experiment-checked-input" type="checkbox">
+	</td>
+	<td>
+		<div class="name-div">
+		<span class="count-span">
+			<span class="label label-raw"><%- rawCount %> raw<%- rawCount != 1 ? "s" : "" %></span>
+			<span class="label label-profile"><%- profileCount %> profile<%- profileCount != 1 ? "s" : "" %></span>
+			<span class="label label-region"><%- regionCount %> region<%- regionCount != 1 ? "s" : "" %></span>
+		</span>
+		<span class="name-span"><%- experiment.get("name") %></span>
+		</div>
+	</td>
+	<% annotations.each(function(annotation) { %>  
+		<td>
+			<span><%- experiment.getAnnotation(annotation.attributes.name).value %></span>
+		</td>
+	<% }); %>
+</tr>
+<tr class="table-row">
+	<td colspan="<%- annotations.length + 3 %>">
+		<table class="table table-hover">
+			
+		</table>
+	</td>
+</tr>

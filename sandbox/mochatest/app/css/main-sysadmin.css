@@ -1,0 +1,56 @@
+#container {
+	padding-left: 40px;
+	padding-right: 40px;
+	float: left;
+	width: 90%;
+}
+
+.search-toolbar {
+	width: 100%;
+}
+
+#sidebarID {
+	width: 10%;
+	float: left;
+}
+
+.active {
+	background-color: #FFFFFF;
+}
+
+#genome_table a {
+	display: block;
+	width: 100% margin :1ex;
+	padding: 0.5ex;
+}
+
+#genome_table a {
+	text-decoration: none;
+	background-color: #;
+	color: #000;
+}
+
+#genome_table a:hover, a:active {
+	text-decoration: none;
+	background-color: #d3d3d3;
+	color: #000;
+}
+
+#container .selectedFilesTable {
+	width: 20%;
+}
+
+#container .progress {
+	width: 40%;
+}
+
+#container .nav {
+	display: block;
+	width: 100% margin :1ex;
+	padding: 0.5ex;
+}
+
+.progress {
+	height: 25px;
+}
+

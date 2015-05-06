@@ -1,0 +1,25 @@
+<div id="container">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th><th>Values</th><th>Forced</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% _.each(annotations, function(annotation) { %>
+			<tr>
+				<td><%= annotation.get('name') %></td>
+				<td><%= annotation.get('values') %></td>
+				<td><%= annotation.get('forced') %></td>
+
+				<% if(annotation.get('name') == 'ExpID') { %>
+					<td><a href="" disabled="" class="btn btn-default">Edit</a></td>
+				<% } else { %>
+					<td><a href="#admin/editannotation/<%= encodeURIComponent(annotation.get('name')) %>" class="btn btn-default">Edit</a></td>
+				<%} %>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+</div>
+

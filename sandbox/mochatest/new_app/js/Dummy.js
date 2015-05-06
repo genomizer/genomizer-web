@@ -1,0 +1,1 @@
+var Dummy = Backbone.View.extend();

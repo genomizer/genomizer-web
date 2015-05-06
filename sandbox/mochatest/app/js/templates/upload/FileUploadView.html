@@ -1,0 +1,28 @@
+<div class="row">
+<div class="col-xs-6">
+	<input type="text" name="fileName" class="form-control" value="<%- fileName %>" placeholder="File Name" required>
+</div>
+<div class="col-xs-2 only-text">
+	<%- fileSize %>
+</div>
+<div class="col-xs-2">
+	<select name="grVersion" class="gr-version form-control type-select">
+	</select>
+</div>
+<div class="col-xs-2 remove-col">
+	<select name="type" class="form-control type-select">
+		<option value=Raw <% if (fileName.split('.').pop() == 'fastq') { %> selected <% } %>>
+		Raw
+		</option>
+		<option value=Profile <% if (fileName.split('.').pop() != 'fastq') { %> selected <% } %>>
+		Profile
+		</option>
+		<option value=Region>
+		Region
+		</option>
+	</select>
+	<button type="button" class="btn btn-remove">
+		<span class="glyphicon glyphicon-remove"></span>
+	</button>
+</div>
+</div>

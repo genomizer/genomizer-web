@@ -1,0 +1,42 @@
+
+<div class="form-inline" id="experiment_form" role="form" >
+	<ul class="annotation-list" id="annotation_fields">
+		<li>
+			<label>experiment name</label>
+			<input required name="Experiment name" id="experiment name" class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
+				<% if(experiment != undefined) { %> value="<%-experiment.name %>" <% } %>>
+			</input>
+		</li>
+		<% _.each(annotations, function(annotation) { %>
+		<li>
+			<label for="<%- annotation.name %>"><%- annotation.name %></label>
+			<% if(annotation.values == "freetext") { %> 
+			<input name="<%- annotation.name %>" id="<%- annotation.name %>" <%- annotation.forced ? "required" : "" %> class="form-control" <%- existingExperiment ? "disabled" : "" %> type="text" 
+					<% if(experiment != undefined) { 
+							_.each(experiment.annotations,function(expAnnot){
+								if(annotation.name == expAnnot.name){ %>
+									value="<%-expAnnot.value %>" 
+								<% }
+							});
+						}%>>
+			</input>
+
+			<% } else { %>
+					
+				<select name="<%- annotation.name %>" id="<%- annotation.name %>" <%- annotation.forced ? "required" : "" %> <%- existingExperiment ? "disabled" : "" %> class="form-control">
+					<% _.each(annotation.values, function(value) { %> 
+						<option <% if(experiment != undefined) { 
+							_.each(experiment.annotations,function(expAnnot){
+								if(annotation.name == expAnnot.name && value == expAnnot.value){ %> 
+									selected 
+								<% }});} %>>
+							<%- value %>
+							</option>
+						<% }); %>
+					</select>
+				<% } %>
+			</li>
+		<% }); %>
+	</ul> 
+</div>
+

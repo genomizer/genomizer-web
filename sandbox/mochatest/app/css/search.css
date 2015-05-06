@@ -1,0 +1,421 @@
+/* === DELETE MODAL BEGIN === */
+
+#confirm-delete {
+	text-align: left;
+}
+
+#confirm-delete h5 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+#confirm-delete h5:first-child {
+	margin-top: 0;
+}
+
+#confirm-delete .modal-footer span {
+	margin-right: 15px;
+}
+
+#confirm-delete .modal-footer {
+	margin-top: 0;
+}
+
+#confirm-delete ul {
+	margin-bottom: 0;
+	padding-left: 15px;
+}
+
+/* === DELETE MODAL END === */
+
+
+/* === BEGIN SEARCH FORM === */
+
+#search_form {
+	text-align: center;
+	margin: 40px auto;
+}
+
+.search-toolbar {
+	position: relative;
+	display: table;
+	width: 100%;
+}
+
+.search-toolbar > div {
+	display: table-row;
+}
+
+.search-toolbar > div > div {
+	display: table-cell;
+	vertical-align: top;
+}
+
+/* bootstrap disables tooltips for disabled buttons, we dont want that */
+.search-toolbar .btn {
+	cursor: auto !important;
+	pointer-events: auto !important;
+}
+
+.tooltip-inner {
+	color: #ddd;
+}
+
+
+/* some query-builder css depends on this */
+.search-toolbar .button-container > div {
+	padding-left: 8px;
+}
+
+.search-toolbar .button-container > div,
+.search-toolbar .button-container {
+	width: 411px;
+}
+
+@media (max-width: 991px) {
+	.search-toolbar .button-container > div,
+	.search-toolbar .button-container {
+		width: 165px;
+	}
+
+	.search-toolbar .button-label {
+		display: none;
+	}
+}
+
+/* === END SEARCH FORM === */
+
+
+/* === BEGIN QUERY BUILDER === */
+
+.query-builder {
+	max-width: none;
+	left: 0;
+	top: 25px;
+	width: 100%;
+}
+
+/* this depends on .search-toolbar .button-container width */
+.query-builder .arrow {
+	left: initial !important;
+	right: 508px;
+}
+
+/* this depends on .search-toolbar .button-container width */
+@media (max-width: 991px) {
+	.query-builder .arrow {
+		right: 212px;
+	}
+}
+
+.query-builder .popover-content {
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+
+.query-builder .dropdown-menu {
+	text-align: left;
+}
+
+.query-builder .popover-content > div > * {
+	padding: 5px;
+}
+
+.query-builder .popover-content > div > :not(:last-child) {
+	padding-right: 0;
+}
+
+.query-builder .popover-content > div > * > * {
+	width: 100%;
+}
+
+.query-builder.appending .append-only {
+	display: none;
+}
+
+.dropdown-toggle.left-align {
+	padding-right: 25px;
+	text-align: left;
+}
+
+.dropdown-toggle.left-align :last-child {
+	position: absolute;
+	right: 12px;
+	top: 14px;
+}
+
+/* === END QUERY BUILDER === */
+
+
+/* === BEGIN SEARCH RESULTS === */
+
+#results_container {
+	overflow: hidden;
+}
+
+#results_container #table_container {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+#results_container .panel-heading {
+	border-bottom: 0;
+	width:100%;
+}
+
+.search-table td {
+	white-space: nowrap;
+}
+
+.search-table {
+	margin: 0;
+}
+
+.search-table-head thead {
+	background: #f5f5f5;
+}
+
+.experiment-group .expand-cell {
+	width: 50px;
+}
+
+.experiment-group .check-cell {
+	width: 50px;
+}
+
+.experiment-group > tr.table-row,
+.file-group > tr.file-row,
+.file-group > tr.header-row {
+	display: none;
+}
+
+.experiment-group.expanded .table-row,
+.file-group.expanded .file-row,
+.file-group.expanded .header-row {
+	display: table-row;
+}
+
+.experiment-group .table-row > td {
+	padding: 0;
+}
+
+.experiment-group .table-row .expand-row > td,
+.experiment-group .table-row .header-row > td,
+.experiment-group .table-row .file-group {
+	border: none;
+}
+
+.experiment-group .table {
+	margin: 0;
+}
+
+.experiment-group .table thead {
+	margin: 0;
+	background: none;
+}
+
+/* disables highlighting when expanding and contracting a row group too fast */
+.experiment-group td,
+.experiment-group th  {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.experiment-group td span,
+.experiment-group th span {
+	-webkit-user-select: initial;
+	-moz-user-select: initial;
+	-khtml-user-select: initial;
+	-ms-user-select: initial;
+	user-select: initial;
+}
+
+.experiment-group.expanded .header-row th {
+	padding-top: 0;
+	border: none;
+}
+
+.experiment-group.subselection .experiment-checked-input:not(:checked):before {
+    content: '-';
+    position: relative;
+    top: -3px;
+    left: 3px;
+    font-weight: bold;
+}
+
+
+.title-row .label-raw {
+	background-color: #F0EAD9;
+}
+
+.title-row .label-profile {
+	background-color: #EED5EE;
+}
+
+.title-row .label-region {
+	background-color: #D5EDE2;
+}
+
+.title-row .count-span {
+	position: absolute;
+	bottom: -14px;
+	opacity: 0;
+	-webkit-transition: bottom 0.2s, opacity 0.2s;
+	transition: bottom 0.2s, opacity 0.2s;
+}
+
+.title-row .count-span span.label {
+	color: black;
+}
+
+.title-row .name-div {
+	position: relative;
+}
+
+.title-row .name-span {
+	position: relative;
+	bottom: 0;
+	-webkit-transition: bottom 0.2s;
+	transition: bottom 0.2s;
+}
+
+.experiment-group:not(.expanded) .title-row:hover .count-span {
+	bottom: -8px;
+	opacity: 1;
+}
+
+.experiment-group:not(.expanded) .title-row:hover .name-span {
+	bottom: 9px;
+}
+
+#results_container .table-hover > tbody:not(.empty-group) > tr:hover > td {
+	background-color: #eee;
+}
+
+.file-group.empty-group {
+	opacity: 0.2;
+}
+
+.file-group .file-row:last-child td {
+	border-bottom: 1px solid #ddd;
+}
+
+.file-group.Raw-group .file-row {
+	border-left: 10px solid #FFBE00;
+}
+
+.file-group.Profile-group .file-row {
+	border-left: 10px solid #A600A6;
+}
+
+.file-group.Region-group .file-row {
+	border-left: 10px solid #00B25C;
+}
+
+.file-group.Raw-group .file-row.selected td {
+	background-color: #F5EFDD;
+}
+
+.file-group.Profile-group .file-row.selected td {
+	background-color: #F5DCF5;
+}
+
+.file-group.Region-group .file-row.selected td {
+	background-color: #DCF5E9;
+}
+
+.file-group.Raw-group .file-row.selected:hover td {
+	background-color: #F0EAD9 !important;
+}
+
+.file-group.Profile-group .file-row.selected:hover td {
+	background-color: #EED5EE !important;
+}
+
+.file-group.Region-group .file-row.selected:hover td {
+	background-color: #D5EDE2 !important;
+}
+
+.table-row .table {
+	background-color: #f6f6f6;
+}
+
+.expand-button {
+	background: none;
+	border: none;
+}
+
+.expand-button:focus {
+	outline: none;
+}
+
+.expand-button:before {
+	content: "\2b";
+}
+
+.expanded .expand-experiment-button:before,
+.file-group.expanded .expand-type-button:before {
+	content: "\2212";
+}
+
+.expand-row .expand-button {
+	position: relative;
+	left: 10px;
+}
+
+.search-table h2 {
+    color: #646464;
+    border-radius: 6px;
+    margin: 0;
+    font: .8em verdana;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.loading {
+	text-align: center;
+}
+
+.loading span {
+    display: inline-block;
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    margin: .2em;
+    background: #39b3d7;
+    border-radius: .6em;
+    -webkit-animation: loading 1s infinite alternate;
+}
+.loading span:nth-of-type(2) {
+    -webkit-animation-delay: 0.2s;
+}
+.loading span:nth-of-type(3) {
+    -webkit-animation-delay: 0.4s;
+}
+.loading span:nth-of-type(4) {
+    -webkit-animation-delay: 0.6s;
+}
+.loading span:nth-of-type(5) {
+    -webkit-animation-delay: 0.8s;
+}
+.loading span:nth-of-type(6) {
+    -webkit-animation-delay: 1.0s;
+}
+.loading span:nth-of-type(7) {
+    -webkit-animation-delay: 1.2s;
+}
+@-webkit-keyframes loading {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* === END SEARCH RESULTS === */
