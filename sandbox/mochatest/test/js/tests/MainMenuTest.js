@@ -1,6 +1,6 @@
-define(['MainMenu'],function(MainMenu) {
+define(['Dummy'],function(MainMenu) {
 	describe("views/MainMenuTest", function () {
-		it("should register render on route change", function () {
+		it("some test", function () {
 		});
 	});
 });
