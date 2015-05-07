@@ -8,4 +8,5 @@ var testModulePaths = [
     'tests/PositionTest',
     'tests/HashSetTest',
     'tests/MazeTest',
+    'tests/RobotTest'
 ];

@@ -40,7 +40,7 @@ define(['HashSet', 'Position'], function (HashSet, Position) {
             it("shouldNotBeValidWhenUndefined", function () {
                 expect(theSet.add.bind(theSet, undefined)).to.throw("Invalid element");
             });
-            it("shouldNotBeValidWhenEqualsUndefined", function () {
+            it("shouldNotBeValidWhenEqualsIsUndefined", function () {
                 var noEquals = Backbone.Model.extend({
                     hashCode: function () {
                         return 1;
@@ -48,7 +48,7 @@ define(['HashSet', 'Position'], function (HashSet, Position) {
                 });
                 expect(theSet.add.bind(theSet, noEquals)).to.throw("Invalid element");
             });
-            it("shouldNotBeValidWhenHashCodeUndefined", function () {
+            it("shouldNotBeValidWhenHashCodeIsUndefined", function () {
                 var noEquals = Backbone.Model.extend({
                     equals: function () {
                         return false;
