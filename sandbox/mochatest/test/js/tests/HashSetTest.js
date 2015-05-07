@@ -1,5 +1,5 @@
 define(['HashSet', 'Position'], function (HashSet, Position) {
-    describe("models/HashSet", function () {
+    describe("models/HashSetTest", function () {
         var theSet;
         beforeEach(function () {
             theSet = new HashSet();
@@ -94,6 +94,30 @@ define(['HashSet', 'Position'], function (HashSet, Position) {
                 theSet.remove(pos2);
                 expect(theSet.contains(pos1)).to.be.true;
                 expect(theSet.contains(pos2)).to.be.false;
+            });
+        });
+        describe("models/HashSet/rehashTest", function () {
+            it("shouldNotFailEmptyRehash", function () {
+                theSet.rehash();
+            });
+            it("shouldNotFailSingleElementRehash", function () {
+                theSet.add(new Position({'x': 1, 'y': 2}));
+                theSet.rehash();
+            });
+            it("shouldContainSingleElementAfterRehash", function () {
+                var pos = new Position({'x': 1, 'y': 2});
+                theSet.add(pos);
+                theSet.rehash();
+                expect(theSet.contains(pos)).to.be.true;
+            });
+            it("shouldContainTwoElementsAfterRehash", function () {
+                var pos1 = new Position({'x': 1, 'y': 2});
+                var pos2 = new Position({'x': 1, 'y': 2});
+                theSet.add(pos1);
+                theSet.add(pos2);
+                theSet.rehash();
+                expect(theSet.contains(pos1)).to.be.true;
+                expect(theSet.contains(pos2)).to.be.true;
             });
         });
     });
