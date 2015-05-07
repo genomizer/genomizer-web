@@ -14,6 +14,9 @@ define(['Position'], function (Position) {
             expect(position.getY()).to.equal(2);
         });
         describe("models/PositionTest/equalsTests", function () {
+            it("shouldBeEqualToSelf", function () {
+                expect(position.equals(position)).to.be.true;
+            });
             it("shouldBeEqualToPositionWithSameXY", function () {
                 var otherPosition = new Position({'x': 1, 'y': 2});
                 expect(position.equals(otherPosition)).to.be.true;

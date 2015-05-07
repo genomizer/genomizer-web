@@ -11,7 +11,7 @@ define([], function () {
             if (other === undefined) {
                 return false;
             } else if (other == this) {
-                return false;
+                return true;
             } else if (typeof this != typeof other) {
                 return false;
             } else if (this.get('x') != other.get('x') || this.get('y') != other.get('y')) {

@@ -5,6 +5,7 @@
 	To add new tests just add the test file and its path to this script.
 */
 var testModulePaths = [
-	'tests/PositionTest'
-	//'tests/DummyTest'
+	'tests/PositionTest',
+	'tests/HashSetTest',
+	//'tests/DummyTest',
 ];
