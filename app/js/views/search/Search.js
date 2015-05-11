@@ -187,16 +187,13 @@ define([
 		searchQueryChanged: function() {
 			var isEmpty = $('#search_input').val().length != 0;
 
-			// enable the search button if there is a query
-			$('#search_button').prop('disabled', !isEmpty);
-
 			// the querybuilder displays differently if the input is empty
 			this.builder.setAppending(!isEmpty);
 		},
 		doSearch: function(e) {
 			//navigates to the given searchquery and searches for the given query.
 			app.router.navigate('search/' + $('#search_input').val(), {trigger:true});
-			this.collection.setSearchQuery($('#search_input').val());
+			this.collection.setSearchQuery("" + $('#search_input').val());
 			e.preventDefault();
 		},
 		downloadSelected: function(event) {
