@@ -33,6 +33,8 @@ require([
 	app.auth = new Auth();
 	app.messenger = new Messenger();
 
+	$.ajaxSetup({ cache: false });
+
 	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
 		
 		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
