@@ -42,6 +42,18 @@ define([],function() {
             var formData = new FormData();
             var that = this;
             formData.append('uploadfile',this.fileObj);
+
+            this.author = $('#author').val();
+            if (this.author.length < 1) {
+                this.author = "author";
+            }
+
+            this.metaData = $('#metaData').val();
+            if (this.metaData.length < 1) {
+                this.metaData = 'default';
+            }
+
+
             $.ajax({
                 url: this.get("URLupload"),
                 type: "POST",
@@ -50,8 +62,8 @@ define([],function() {
                 password: "pvt",
                 processData: false,
                 contentType: false,
-                author: $('#author').val(),
-                metaData: $('#metaData').val(),
+                author: this.author,
+                metaData: this.metaData,
                 /*beforeSend: function(jqXHR) {
                     debugger;
                     jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
