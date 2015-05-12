@@ -22,21 +22,12 @@ define([],function() {
             this.uploadDone = false;
         },
         
-        /*  
-            NEW:
-            Set the default values.
-            TODO: Confirm these settings...
-        */
         defaults: {
-            "type":"raw", // This one is used and should be kept
-            // "genomeVersion": "hg18",
-            // "metaData": "metameta",
+            "type":"raw",
             "author": localStorage.getItem("username"),
-            // "grVersion": "hg18",
-            
-             "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
-
+            "uploader": localStorage.getItem("username")
         },
+        
         // Requires: URLupload in attributes
         uploadFile: function() {
             var formData = new FormData();
