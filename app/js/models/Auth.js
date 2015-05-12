@@ -32,13 +32,11 @@ define([],function() {
 			var that = this;
 
             /* NEW:
-             * Sends (smth TODO) to DB and on success (200) 
+             * Sends form data to DB and on success (200) 
              * stores token in localStorage
-             * TODO how is pwd sent?
              */
 			return this.save().success(function() {
 				localStorage.setItem('authToken',that.get('token'));
-                /* NEW: TODO check from here /Nik */
 				that._afterLogin();
 			});
 		},

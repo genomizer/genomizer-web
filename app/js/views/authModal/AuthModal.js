@@ -15,6 +15,8 @@ define([
 			this.$el.html(this.TEMPLATE());
 		},
 		submitLogin: function(e) {
+          
+            localStorage.setItem("username", $('input[name=username]').val());
 
 			var that = this;
 			e.preventDefault();
