@@ -29,10 +29,10 @@ define([],function() {
         */
         defaults: {
             "type":"raw", // This one is used and should be kept
-            /*"genomeVersion": "hg18",
-            "metaData": "metameta",
-            "author": "name",
-            "grVersion": "hg18",*/
+            // "genomeVersion": "hg18",
+            // "metaData": "metameta",
+            "author": localStorage.getItem("username"),
+            // "grVersion": "hg18",
             
              "uploader": "defaultWebUser" // TODO: remove hardcoded default value uploader
 
@@ -43,17 +43,6 @@ define([],function() {
             var that = this;
             formData.append('uploadfile',this.fileObj);
 
-            this.author = $('#author').val();
-            if (this.author.length < 1) {
-                this.author = "author";
-            }
-
-            this.metaData = $('#metaData').val();
-            if (this.metaData.length < 1) {
-                this.metaData = 'default';
-            }
-
-
             $.ajax({
                 url: this.get("URLupload"),
                 type: "POST",
@@ -62,8 +51,6 @@ define([],function() {
                 password: "pvt",
                 processData: false,
                 contentType: false,
-                author: this.author,
-                metaData: this.metaData,
                 /*beforeSend: function(jqXHR) {
                     debugger;
                     jqXHR.upload.addEventListener("progress",_.bind(that.setUploadProgress,that), false);
