@@ -33,7 +33,7 @@ raw -> profile: don't send metadata, do send GR (will likely change)
 
 bowtie should be done, only one file required
 
-processing has "halt" (name will change) to cancel processing
+processing has "halt" (name in apiary will change, URI will stay the same) to cancel processing
 
 support for adding, editing, removing annotations exists, semantics for allowing 
     change of values not clear but they will validate so we don't care
