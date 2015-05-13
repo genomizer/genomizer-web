@@ -24,7 +24,8 @@ define([
 		},
 		events: {
 			"click .file-checked-input": "fileSelect",
-			"click td": "extendClick"
+			"click td": "extendClick",
+            "click #edit_file": "editFile"
 		},
 		fileSelect: function(event) {
 			var checked = $(event.currentTarget).prop("checked");
@@ -39,7 +40,11 @@ define([
 			if($(event.target).is("td, span")) {
 				this.$el.find(".file-checked-input").click();
 			}
-		}
+		},
+
+        editFile: function() {
+            alert("edit file");
+        }
 
 	});
 	return FileView;
