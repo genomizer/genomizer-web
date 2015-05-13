@@ -12,6 +12,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
 			this.model.files.on("uploadProgress",this.renderUploadProgress,this);
 			this.dragster = new Dragster( this.el );
+			_.bindAll(this, "changed");
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
@@ -23,7 +24,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
-			'keyup input[name="Experiment name"]':"changeLabelName"
+			'keyup input[name="Experiment name"]':"changeLabelName",
+    			"change input" :"changed",
 		},
 		render: function() {
 			window.this = this;
@@ -47,6 +49,15 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				this.$('.panel-heading').css('background','linear-gradient(to right, #428bca 0%, #428bca '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
 			}
 		},
+
+		/**
+		* Action handler for handling events when the annotations 
+		* textfields are changed or they value has been updated.
+		*/
+		changed:function(evt) {
+			//enable update button.
+   		},
+
 		changeLabelName: function() {
  			if(this.model.get('name').length >0) {
  				if($.trim(this.model.get('name')) == '') {
