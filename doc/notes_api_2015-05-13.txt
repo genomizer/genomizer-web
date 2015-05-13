@@ -1,0 +1,42 @@
+login response contains role, should be used to restrict visible tabs
+
+no file should be required when uploading experiment
+
+file size exists, dummy value 1000 for now
+
+should not validate annotations, this is done server side. only forced should be visible by default
+    - a drop down with add and remove for non-forced
+    - remove default values for annotations
+
+don't validate names
+
+support for changing experiments and files with PUT in progress (501) until done
+
+error codes: 
+    - 400: wrong JSON
+    - 403: wrong role
+    - 404: wrong URI
+    - 501: should be implemented
+
+file conversion is in progress and API is done
+
+partial search in progress "*...*" instead of "...*" matching of names etc.
+
+/user: edit your own profile, e.g. mail, pwd
+
+/admin/user: edit others (roles not done, set to "dummy" until 400 response)
+
+processing: GET in progress, API will likely change
+
+raw -> profile: don't send metadata, do send GR (will likely change)
+
+bowtie should be done, only one file required
+
+processing has "halt" (name will change) to cancel processing
+
+support for adding, editing, removing annotations exists, semantics for allowing 
+    change of values not clear but they will validate so we don't care
+
+we should test so that we can upload several GR files (investigate validation in relation to processing)
+
+
