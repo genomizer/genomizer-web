@@ -79,7 +79,6 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				return;
 			}
 
-			this.$("#experiment-form button[type=submit]").button('loading');
 			if(this.model.isNew()) {
 				this.model.save(null,{success:function() {
 					that.uploadFiles();
@@ -93,16 +92,13 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		uploadFiles: function() {
 			var that = this;
-			that.collapseView();
-            /**
-             * this.model is of type Experiment.
-             */
+
+		             //this.model is of type Experiment.
 			that.model.updateExperimentIdsForFiles();
-            /**
-             * this.model.files is of type Files.
-             */
+
+		          	 // this.model.files is of type Files.
 			that.model.files.fetchAndSaveFiles();
-			$('#uploadAllButton').prop('disabled', true);
+			
 			that.model.collection.remove(that.model);
 		},
 		collapseView: function(){
