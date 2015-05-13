@@ -38,6 +38,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+			this.$("#experiment-form button[type=submit]").attr("disabled",false);
 		},
 		renderUploadProgress: function() {
 			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
@@ -106,7 +107,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
-			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
+			this.$("#experiment-form button[type=submit]").attr("disabled",false);
 		},
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
