@@ -43,7 +43,12 @@ define([
 		},
 
         editFile: function() {
-            alert("edit file");
+            var fileView = this;
+            require(["views/editModals/EditFile"],
+                function(EditModal) {
+                    new EditModal({model: fileView.model}).show();
+                }
+            );
         }
 
 	});
