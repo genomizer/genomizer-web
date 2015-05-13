@@ -13,6 +13,7 @@ don't validate names
 support for changing experiments and files with PUT in progress (501) until done
 
 error codes: 
+    - 200: all ok codes, (no 201, 204 etc.)
     - 400: wrong JSON
     - 403: wrong role
     - 404: wrong URI
