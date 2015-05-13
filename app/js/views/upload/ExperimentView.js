@@ -55,7 +55,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		* textfields are changed or they value has been updated.
 		*/
 		changed:function(evt) {
-			//enable update button.
+			this.$("#updateAnnotations").attr("disabled",false);
    		},
 
 		changeLabelName: function() {
