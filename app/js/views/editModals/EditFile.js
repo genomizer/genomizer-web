@@ -36,6 +36,7 @@ define([
 
             this.model.save({}, {
                 "type": "put",
+                "async": "false",
                 success: function() {
                     console.log("success");
                 },
