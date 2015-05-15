@@ -1,22 +1,22 @@
 require.config({
-	paths: {
-		text:'lib/require.text',
-		moment: 'lib/moment.min'
-	}
+    paths: {
+        text:'lib/require.text',
+        moment: 'lib/moment.min'
+    }
 });
 var app = {};
 
 app.BASE_URL = "/api/";
 
 require([
-		'views/MainMenu',
-		'views/authModal/AuthModal',
-		'collections/AnnotationTypes',
-		'collections/ProcessStatuses',
-		'collections/sysadmin/GenomeReleaseFiles',
-		'models/Auth',
-		'router',
-		'views/Messenger'
+        'views/MainMenu',
+        'views/authModal/AuthModal',
+        'collections/AnnotationTypes',
+        'collections/ProcessStatuses',
+        'collections/sysadmin/GenomeReleaseFiles',
+        'models/Auth',
+        'router',
+        'views/Messenger'
 ],function(MainMenu, 
            AuthModal, 
            AnnotationTypes, 
@@ -26,45 +26,60 @@ require([
            Router, 
            Messenger) {
 
-	app.router = new Router();
-	app.annotationTypes = new AnnotationTypes();
-	app.genomeReleaseFiles = new GenomeReleaseFiles();
-	app.processStatuses = new ProcessStatuses();
-	app.auth = new Auth();
-	app.messenger = new Messenger();
+    app.router = new Router();
+    app.annotationTypes = new AnnotationTypes();
+    app.genomeReleaseFiles = new GenomeReleaseFiles();
+    app.processStatuses = new ProcessStatuses();
+    app.auth = new Auth();
+    app.messenger = new Messenger();
 
-//	$.ajaxSetup({ cache: false });
+    app.ajaxlog = {};
 
-	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		
-		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
-			app.messenger.warning(jqxhr.responseJSON.message);
-		} else {
-			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page." + exception);
-		}
-	});
+    $.ajaxSetup({ cache: false });
 
-	var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
-	mainMenu.render();
-	
+    $(document).ajaxError(function( event, jqxhr, settings, exception ) {
+    
+    // some goodies for console debugging ajax requests
+    app.ajaxlog.event = event;
+    app.ajaxlog.jqxhr = jqxhr;
+    app.ajaxlog.exception = exception;
 
-	var postLogin = function() {
-		var postFetch = _.after(2, function() {
-			Backbone.history.start();
-		});
-		app.genomeReleaseFiles.fetch().success(postFetch);
-		app.annotationTypes.fetch().success(postFetch);
-	};
+    // TODO replace with 401 unauthorized when API has integrated this change
+    // 500 = internal sever error
+    if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
+        localStorage.clear();
+        app.auth.set('token', undefined);
+
+    }
+        
+        if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
+            app.messenger.warning(jqxhr.responseJSON.message);
+        } else {
+            app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page." + exception);
+        }
+    });
+
+    var mainMenu = new MainMenu({router:app.router,el: $("#main-menu")});
+    mainMenu.render();
+    
+
+    var postLogin = function() {
+        var postFetch = _.after(2, function() {
+            Backbone.history.start();
+        });
+        app.genomeReleaseFiles.fetch().success(postFetch);
+        app.annotationTypes.fetch().success(postFetch);
+    };
 
     /* NEW: Logged in if received token from server */
-	if(app.auth.isLoggedIn()) {
-		postLogin();
-	} else {
-		var authModal = new AuthModal({model:app.auth});
-		authModal.show();
-		app.auth.once('loggedIn',postLogin);
-	}
-	
+    if(app.auth.isLoggedIn()) {
+        postLogin();
+    } else {
+        var authModal = new AuthModal({model:app.auth});
+        authModal.show();
+        app.auth.once('loggedIn',postLogin);
+    }
+    
     if (window.location.href.indexOf("amanpwnz") != -1) { 
         $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); 
     } 
