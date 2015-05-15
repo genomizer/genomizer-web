@@ -1,3 +1,5 @@
 .nfs*
 app/data/
 .idea/
+*~
+*.swp

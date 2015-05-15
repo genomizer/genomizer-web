@@ -38,6 +38,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
+			this.$("#experiment-form button[type=submit]").attr("disabled",false);
 		},
 		renderUploadProgress: function() {
 			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
@@ -69,6 +70,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			var that = this;
 
 			this.$("#experiment-form button[type=submit]").button('loading');
+
 			if(this.model.isNew()) {
 				this.model.save(null,{success:function() {
 					that.uploadFiles();
@@ -82,16 +84,13 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		uploadFiles: function() {
 			var that = this;
-			that.collapseView();
-            /**
-             * this.model is of type Experiment.
-             */
+
+		             //this.model is of type Experiment.
 			that.model.updateExperimentIdsForFiles();
-            /**
-             * this.model.files is of type Files.
-             */
+
+		          	 // this.model.files is of type Files.
 			that.model.files.fetchAndSaveFiles();
-			$('#uploadAllButton').prop('disabled', true);
+			
 			that.model.collection.remove(that.model);
 		},
 		collapseView: function(){
@@ -99,7 +98,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
-			this.$("#experiment-form button[type=submit]").attr("disabled",!this.model.isUploadable());
+			this.$("#experiment-form button[type=submit]").attr("disabled",false);
 		},
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
