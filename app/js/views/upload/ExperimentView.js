@@ -16,6 +16,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
+			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
@@ -25,7 +26,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
 			'keyup input[name="Experiment name"]':"changeLabelName",
-    			"change input" :"changed",
+    			"change input" :"changed"
 		},
 		render: function() {
 			window.this = this;
@@ -55,7 +56,24 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 		* textfields are changed or they value has been updated.
 		*/
 		changed:function(evt) {
+			//Enable button update button.
 			this.$("#updateAnnotations").attr("disabled",false);
+   		},
+
+   		// Method to change annotations for an experiment.
+   		changeAnnotations:function(){
+   			//this.model.set({name: })
+
+   			var that = this;
+
+   			//after we are done rerender the view to view the updated changes.
+   			//this.render();
+   			this.model.save(null,{success:function() {
+					alert("save");
+				},error: function() {
+					that.$("#experiment-form button[type=submit]").button('reset');
+				}
+				});
    		},
 
 		changeLabelName: function() {
