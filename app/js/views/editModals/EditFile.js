@@ -22,15 +22,15 @@ define([
             var formData = $("#edit_file_form").val();
 
             var filename = $("#new_filename").val();
-            if (filename.length > 0) {
+            if (filename.trim().length > 0) {
                 this.model.set("filename", filename);
             }
             var author = $("#new_author").val();
-            if (author.length > 0) {
+            if (author.trim().length > 0) {
                 this.model.set("author", author);
             }
             var metaData = $("#new_metaData").val();
-            if (metaData.length > 0) {
+            if (metaData.trim().length > 0) {
                 this.model.set("metaData", metaData);
             }
 
