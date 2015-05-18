@@ -26,7 +26,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
 			'keyup input[name="Experiment name"]':"changeLabelName",
-    			"change input" :"changed"
+    		"change input" :"changed",
+    		"change #annotation_fields":"changed"
 		},
 		render: function() {
 			window.this = this;
@@ -67,14 +68,19 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 
    			var that = this;
 
-   			//after we are done rerender the view to view the updated changes.
-   			//this.render();
+
+
+   			//send JSON request.
    			this.model.save(null,{success:function() {
 					alert("save");
 				},error: function() {
 					that.$("#experiment-form button[type=submit]").button('reset');
+					alert("save failed");
 				}
 				});
+
+   			//after we are done rerender the view to view the updated changes.
+   			//this.render();
    		},
 
 		changeLabelName: function() {
