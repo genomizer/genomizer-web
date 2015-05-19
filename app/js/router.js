@@ -12,14 +12,16 @@ define([],function() {
             "search/:query": "search",
             "search": "search",
             "": "search",
-            "upload":"upload",
+            "upload": "upload",
             "upload/:expIds": "upload",
-            "process":"process",
-            "process/:query":"process",
-            "admin":"admin",
-            "admin/createannotation": "createAnnotation",
-            "admin/editannotation/:name": "editAnnotation",
-            "admin/genomereleases" : "genomeReleases",
+            "process": "process",
+            "process/:query": "process",
+            "workspace": "workspace",
+            "administration":"administration",
+            "administration/createannotation": "createAnnotation",
+            "administration/editannotation/:name": "editAnnotation",
+            "administration/genomereleases" : "genomeReleases",
+            "convert": "convert",
 			"logout": "logout"
         },
 
@@ -111,9 +113,13 @@ define([],function() {
             require([
                 'views/processModal/Process'
             ],function(Process) {
-                var modal = new Process({query:query});
-                modal.show();
+                //var modal = new Process({query:query});
+                //modal.show();
             });
+        },
+
+        workspace: function() {
+
         },
 	
 	/*
@@ -139,7 +145,7 @@ define([],function() {
 		NEW:
 		Admin function that uses the sysadmin view.
 	*/
-        admin: function() {
+        administration: function() {
             var that = this;
             require([
                 'views/sysadmin/SysadminMainView',
@@ -196,10 +202,15 @@ define([],function() {
             });
         },
 
+        convert: function() {
+
+
+        },
+
         //Logout function.
-	logout: function() {
-		app.auth.logout();
-	}
+    	logout: function() {
+    		app.auth.logout();
+    	}
 
     });
     //Finally return the Router object.
