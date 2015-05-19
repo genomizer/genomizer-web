@@ -1,5 +1,5 @@
 define([
-    'text!templates/processModal/BowtieEntry.html',
+    'text!templates/process/BowtieEntry.html',
     'models/File'
 ], function(bowtieEntryTemplate, File) {
     return Backbone.View.extend({

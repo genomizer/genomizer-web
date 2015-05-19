@@ -1,9 +1,9 @@
 define([
     // 'views/ModalAC',
     'text!templates/processModal/Process.html',
-    'text!templates/processModal/BowtieBlock.html',
-    'views/processModal/BowtieBlock',
-    'collections/ProcessCommands',
+    'text!templates/process/BowtieBlock.html',
+    'views/process/BowtieBlock',
+    'collections/ProcessCommands'
 ], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommands) {
 
     return Backbone.View.extend({

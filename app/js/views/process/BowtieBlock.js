@@ -1,6 +1,6 @@
 define([
-    'text!templates/processModal/BowtieBlock.html',
-    'views/processModal/BowtieEntry'
+    'text!templates/process/BowtieBlock.html',
+    'views/process/BowtieEntry'
 ], function(bowtieBlockTemplate, BowtieEntry) {
     return Backbone.View.extend({
 
