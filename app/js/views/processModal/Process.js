@@ -18,21 +18,25 @@ define([
         events: {
             // 'submit form':'submitProcess',
             // 'click #step-box' : 'toggleStepsInput',
-            'click #append_process_btn' : 'appendProcess'
+            'click #append_process_btn' : 'appendProcess',
+            // "click #close": "render",
         },
 
         render: function() {
             this.$el.html(this.TEMPLATE());
+            console.log("render tab");
 
             var processView = this;
-            this.collection.getProcessCommands().forEach(function (cmd) {
+            var collection = this.collection;
+            this.collection.each(function (cmd) {
                 var bowtieBlock = new BowtieBlock({
-                    model: cmd, collection: 
-                    processView.collection
+                    model: cmd, 
+                    collection: collection,
                 });
                 bowtieBlock.render();
                 processView.$("#processes").append(bowtieBlock.el);
             });
+            console.log(this.collection.toJSON());
         },
 
         appendProcess: function () {
@@ -40,7 +44,7 @@ define([
             console.log();
             switch (blockType) {
                 case "bowtie":
-                    this.collection.addProcessCommand(new ProcessCommand({type: blockType}));
+                    this.collection.add(new ProcessCommand({type: blockType}));
                     break;
                 case "ratio":
                     console.log("append ratio block");

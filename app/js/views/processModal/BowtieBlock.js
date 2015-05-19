@@ -14,6 +14,7 @@ define([
             "click #close": "removeCommand",
         },
         render: function() {
+            console.log("render block");
             this.$el.html(this.TEMPLATE());
 
             var block = this;
