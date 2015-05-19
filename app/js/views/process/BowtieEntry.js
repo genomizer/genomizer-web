@@ -12,12 +12,15 @@ define([
             "change input": "updateModel",
             "click #close_entry": "removeEntry",
         },
-        render: function() {
-            this.$el.html(this.TEMPLATE());
+        render: function(files, genomeVersions) {
+            this.$el.html(this.TEMPLATE({
+                files: files,
+                genomeVersions: genomeVersions,
+            }));
         },
         updateModel: function() {
             var input = {};
-            this.$("input").each(function() {
+            this.$("input, select").each(function() {
                 var $this = $(this);
                 var val = $this.val();
                 var placeHolder = $this.attr("placeholder");

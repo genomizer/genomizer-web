@@ -1,15 +1,14 @@
 define([
     'text!templates/process/BowtieBlock.html',
     'views/process/BowtieEntry',
-    'collections/ProcessFileList',
     'models/File',
-], function(bowtieBlockTemplate, BowtieEntry, ProcessFileList, File) {
+], function(bowtieBlockTemplate, BowtieEntry, File) {
     return Backbone.View.extend({
 
         TEMPLATE: _.template(bowtieBlockTemplate),
 
         initialize: function(options) {
-            this.collection = new ProcessFileList();
+            this.collection = new Backbone.Collection();
         },
         events: {
             "click #add_entry": "addEntry",
@@ -25,8 +24,9 @@ define([
         },
         addEntry: function (e) {
             e.preventDefault();
-            var file = new File({collection: this.collection});
+            var file = new File();
             file.clear();
+            // file.set("collection", this.collection);
             this.model.collection.add(file);
             this.renderModel(this, file);
         },
@@ -40,7 +40,10 @@ define([
                 model: model,
                 collection: this.collection,
             });
-            entryView.render();
+            entryView.render(
+                 this.model.get("files"), 
+                 this.model.get("genomeVersions")
+            );
             view.$("#bowtie_entries").append(entryView.el);
             entryView.updateModel();
         }

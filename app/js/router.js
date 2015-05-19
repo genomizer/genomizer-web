@@ -7,6 +7,8 @@ define([],function() {
     /*NEW: Create a new Router object by extending Backbonejs Router.*/
     var Router = Backbone.Router.extend({
 
+        routeParams: {},
+
         //Routes used by the application.
         routes: {
             "search/:query": "search",
@@ -112,11 +114,13 @@ define([],function() {
         process: function(query) {
             var router = this;
             require([
-                'views/processModal/Process'
-            ],function(Process) {
+                'views/processModal/Process',
+                'models/Experiment',
+            ],function(Process, Experiment) {
                 new Process({
                     el:router.getNewMainView(),
-                    collection: app.processCommands
+                    collection: app.processCommands,
+                    model: new Experiment({expId: query})
                 });
             });
         },

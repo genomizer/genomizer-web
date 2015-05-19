@@ -234,16 +234,13 @@ define([
 			if($(event.currentTarget).hasClass("disabled")) {
 				return;
 			}
-			//TODO(?) does only work with selecting an experiment for processing not 
-			//selecting raw files.
 			var exps = this.collection.getSelectedExperiments();
-			var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
-			var data = specie;
-			for(var i = 0; i<exps.length; i++) {
-				data += "," + exps.at(i).get("name");
-			}
+            if (exps.length == 0) {
+                return;
+            }
+            var exp = exps.at(0);
 
-			app.router.navigate("process/"+data, {trigger:true});
+			app.router.navigate("process/" + exp.get("name"), { trigger:true });
 		},
 		openBuilder: function() {
 			this.builder.show();

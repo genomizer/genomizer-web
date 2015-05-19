@@ -10,8 +10,9 @@ define([
 
         TEMPLATE: _.template(processTemplate),
 
-        initialize: function(options) {
-            this.render();
+        initialize: function() {
+            this.files = [];
+            this.fetchFileNames();
         },
 
         events: {
@@ -25,7 +26,7 @@ define([
             var processView = this;
             var collection = this.collection;
             this.collection.each(function (cmd) {
-                renderBlock(processView, cmd);
+                processView.renderBlock(processView, cmd);
             });
         },
 
@@ -34,7 +35,11 @@ define([
             var blockType = $("#append_process").val().toLowerCase();
             switch (blockType) {
                 case "bowtie":
-                    var cmd = new ProcessCommand({type: blockType});
+                    var cmd = new ProcessCommand({
+                        type: blockType,
+                        files: this.files,
+                        genomeVersions: app.genomeReleaseFiles
+                    });
                     this.collection.add(cmd);
                     this.renderBlock(this, cmd);
                     break;
@@ -56,7 +61,6 @@ define([
             };
 
             this.collection.each(function (cmd) {
-                console.log(cmd);
                 cmd.files = [];
 
                 var toSubmitCmd = {
@@ -65,6 +69,7 @@ define([
                 };
 
                 cmd.collection.each(function (file) {
+                    // file.set("collection", undefined);
                     toSubmitCmd.files.push(file);
                 });
 
@@ -92,8 +97,24 @@ define([
                 collection: view.collection,
             });
             bowtieBlock.render();
-            view.$("#processes").append(bowtieBlock.el);            
+            view.$("#processes").append(bowtieBlock.el);
         },
+
+        fetchFileNames: function () {
+            var processView = this;
+            this.model.fetch({
+                "url": "/api/experiment/" + this.model.get("expId"),
+                error: function () {
+                    console.log("error while getting files for experiment");
+                },
+                success: function (model, response) {
+                    response.files.forEach(function (file) {
+                        processView.files.push(file["filename"]);
+                    })
+                    processView.render();
+                }
+            });
+        }
     });
 });
 
