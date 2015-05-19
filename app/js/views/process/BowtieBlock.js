@@ -21,26 +21,29 @@ define([
 
             var block = this;
             this.collection.each(function (entry) {
-                var entryView = new BowtieEntry({
-                    model: entry,
-                    collection: block.collection,
-                });
-                entryView.render();
-                block.$("#bowtie_entries").append(entryView.el);
+                block.renderModel(block, file);
             });
+            console.log(JSON.stringify(this.collection));
         },
-        addEntry: function () {
+        addEntry: function (e) {
+            e.preventDefault();
             var file = new File({collection: this.collection});
             file.clear();
-            this.collection.add(file);
-            this.render();
+            this.model.collection.add(file);
+            this.renderModel(this, file);
         },
-        removeCommand: function () {
-
-            console.log("remove cmd");
-            console.log(this.collection);
+        removeCommand: function (e) {
+            e.preventDefault();
             this.model.collection.remove(this.model);
             this.el.remove();
+        },
+        renderModel: function (view, model) {
+            var entryView = new BowtieEntry({
+                model: model,
+                collection: this.collection,
+            });
+            entryView.render();
+            view.$("#bowtie_entries").append(entryView.el);
         }
     });
 });

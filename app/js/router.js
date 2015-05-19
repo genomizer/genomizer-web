@@ -118,9 +118,6 @@ define([],function() {
                     el:router.getNewMainView(),
                     collection: app.processCommands
                 });
-                // new Process({el:router.getNewMainView(), expId: expId});
-                //var modal = new Process({query:query});
-                //modal.show();
             });
         },
 

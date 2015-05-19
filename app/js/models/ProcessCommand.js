@@ -1,10 +1,14 @@
-define(["models/File"],
-    function (File) {
-        return Backbone.Model.extend({
+define([
+    "models/File",
+    "collections/ProcessFileList",
+],
+function (File, ProcessFileList) {
+    return Backbone.Model.extend({
 
-            initialize: function () {
-                this.files = [];
-            },
+        initialize: function () {
+            this.files = [];
+            this.collection = new ProcessFileList();
+        },
 
-        });
     });
+});

@@ -27,11 +27,14 @@ define([
                 }
                 input[$this.attr("name")] = val;
             });
-            this.model.set(input);
             console.log(this.model);
+            console.log(this.collection);
+            this.model.set(input);
+            // this.collection.set(this.model);
         },
 
-        removeEntry: function () {
+        removeEntry: function (e) {
+            e.preventDefault();
             this.collection.remove(this.model);
             this.el.remove();
         },
