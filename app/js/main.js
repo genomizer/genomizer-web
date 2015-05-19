@@ -44,6 +44,16 @@ require([
     app.ajaxlog.jqxhr = jqxhr;
     app.ajaxlog.exception = exception;
 
+	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
+		
+		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
+			app.messenger.warning(jqxhr.responseJSON.message);
+		} else {
+			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page." + exception);
+			
+		}
+	});
+=======
     // TODO replace with 401 unauthorized when API has integrated this change
     // 500 = internal sever error
     if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
@@ -72,6 +82,13 @@ require([
     };
 
     /* NEW: Logged in if received token from server */
+	if(app.auth.isLoggedIn()) {
+		postLogin();
+	} else {
+		var authModal = new AuthModal({model:app.auth});
+		authModal.show();
+		app.auth.once('loggedIn',postLogin);
+	}
     if(app.auth.isLoggedIn()) {
         postLogin();
     } else {

@@ -11,40 +11,44 @@ define([
 			this.setElement($(".alert-container"));
 		},
 		success: function(message) {
-			this.alert("success",message);
+            this.alert("success",message);
 		},
 		info: function(message) {
-			this.alert("info",message);
+            this.alert("info",message);
 		},
 		warning: function(message) {
-			this.alert("warning",message);
+            this.alert("warning",message);
 		},
 		danger: function(message) {
-			this.alert("danger",message);
+            this.alert("danger",message);
+			
 		},
 
 		alert: function(type,message) {
-
 			var that = this;
 			var element = this.$el.find(".alert");
 			var newElement = $(this.TEMPLATE({type:type,message:message}));
-			if(element.length != 0) {
-				element.fadeOut(500, function() {
-					$(this).remove();
+
+				if(element.length != 0) {
+					element.fadeOut(500, function() {
+						$(that).remove();
+						that.$el.append(newElement);
+						newElement.fadeIn(that.fadeTime);
+					})
+				} else {
 					that.$el.append(newElement);
 					newElement.fadeIn(that.fadeTime);
-				})
-			} else {
-				this.$el.append(newElement);
-				newElement.fadeIn(this.fadeTime);
-			}
+				}
+
+			setTimeout(function() { 
+				$(".alert").remove();
+			},5000);
 		},
 		closeAlert: function(ev) {
 			$(ev.target).closest(".alert").fadeOut(this.fadeTime, function() {
 				$(this).remove();
 			});
-		}
-		
+		}	
 	});
 	return Messenger;
 });
