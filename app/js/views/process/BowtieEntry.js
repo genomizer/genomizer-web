@@ -12,7 +12,6 @@ define([
         },
         events: {
             "change input": "updateModel",
-            //"click #close": "updateModel"
         },
         render: function() {
             this.$el.html(this.TEMPLATE());
