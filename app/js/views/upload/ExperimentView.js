@@ -63,26 +63,19 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			this.$("#updateAnnotations").attr("disabled",false);
    		},
 
-   		// Method to change annotations for an experiment.
+   		/*
+   		* Change annotation function for updating annotations for an experiment.
+   		* Uses a PUT request for the experiment and sends the new information in a
+   		* JSON object to the Java server.
+   		*/
    		changeAnnotations:function(){
-   			//this.model.set({name: })
-
    			var that = this;
-
-   			alert(JSON.stringify(this.model.get('annotations'), null, 4));
-   			alert(JSON.stringify(this.model.get('name'),null,4));
-
    			//send JSON request.
    			this.model.save(null,{success:function() {
-					alert("saved");
 				},error: function() {
 					that.$("#experiment-form button[type=submit]").button('reset');
-					alert("error, not saved!");
 				}
 			});
-
-   			//after we are done rerender the view to view the updated changes.
-   			//this.render();
    		},
 
 		changeLabelName: function() {
