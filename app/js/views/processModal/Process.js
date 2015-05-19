@@ -6,18 +6,6 @@ define([
     'models/ProcessCommand',
     'collections/ProcessCommands'
 ], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommand, ProcessCommands) {
-//<<<<<<< HEAD
-//    'text!templates/process/BowtieBlock.html',
-//    'views/process/BowtieBlock',
-//    'collections/ProcessCommands'
-//], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommands) {
-//=======
-//    'text!templates/processModal/BowtieBlock.html',
-//    'views/processModal/BowtieBlock',
-//    'models/ProcessCommand',
-//    'collections/ProcessCommands',
-//], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommand, ProcessCommands) {
-//>>>>>>> f7e205fe15107f4339032ad5444d0d64a6aed4c2
 
     return Backbone.View.extend({
 
