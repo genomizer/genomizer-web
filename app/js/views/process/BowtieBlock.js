@@ -25,8 +25,9 @@ define([
         },
         addEntry: function (e) {
             e.preventDefault();
-            var file = new File({collection: this.collection});
+            var file = new File();
             file.clear();
+            file.set("collection", this.collection);
             this.model.collection.add(file);
             this.renderModel(this, file);
         },
@@ -40,7 +41,7 @@ define([
                 model: model,
                 collection: this.collection,
             });
-            entryView.render();
+            entryView.render(this.model.get("files"));
             view.$("#bowtie_entries").append(entryView.el);
             entryView.updateModel();
         }

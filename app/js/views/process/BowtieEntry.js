@@ -12,8 +12,8 @@ define([
             "change input": "updateModel",
             "click #close_entry": "removeEntry",
         },
-        render: function() {
-            this.$el.html(this.TEMPLATE());
+        render: function(files) {
+            this.$el.html(this.TEMPLATE({files: files}));
         },
         updateModel: function() {
             var input = {};
