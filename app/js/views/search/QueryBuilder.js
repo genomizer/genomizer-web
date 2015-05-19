@@ -79,12 +79,7 @@ define([
 			if(annotation == "annotation") {
 				app.messenger.warning("Please select an annotation.");
 				return;
-			} else if (value == "value") {
-				app.messenger.warning("Please input an annotation value.");
-				return;
 			}
-
-			string +=value;
 
 			string += "[" + annotation + "]";
 
@@ -93,7 +88,7 @@ define([
 			}
 
 			this.$el.find(".op-container .dropdown-label").text("op");
-			this.$el.find(".annotation-container .dropdown-label").text("annotation");
+			this.$el.find(".annotation-container .dropdown-label").text("Annotation");
 			this.$el.find(".freetext-container input").val("");
 			this.$el.find(".choice-container annotation").text("value");
 
@@ -117,7 +112,7 @@ define([
 			var target = $(event.target);
 			var text = target.text();
 			if(text == "") {
-				text = "annotation";
+				text = "Annotation";
 				this.$el.find(".freetext-container").show();
 				this.$el.find(".choice-container").hide();
 			} else {
