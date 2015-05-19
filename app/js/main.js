@@ -53,7 +53,7 @@ require([
 			
 		}
 	});
-=======
+    
     // TODO replace with 401 unauthorized when API has integrated this change
     // 500 = internal sever error
     if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
