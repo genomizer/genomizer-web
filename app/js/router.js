@@ -114,7 +114,10 @@ define([],function() {
             require([
                 'views/processModal/Process'
             ],function(Process) {
-                new Process({el:router.getNewMainView()});
+                new Process({
+                    el:router.getNewMainView(),
+                    collection: app.processCommands
+                });
                 // new Process({el:router.getNewMainView(), expId: expId});
                 //var modal = new Process({query:query});
                 //modal.show();

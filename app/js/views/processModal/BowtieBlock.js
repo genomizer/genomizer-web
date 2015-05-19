@@ -11,6 +11,7 @@ define([
         },
         events: {
             "click #add_entry": "addEntry",
+            "click #close": "removeCommand",
         },
         render: function() {
             this.$el.html(this.TEMPLATE());
@@ -25,6 +26,9 @@ define([
             this.entries.push(new BowtieEntry());
             this.render();
         },
+        removeCommand: function () {
+            this.collection.remove(this.model);
+        }
     });
 });
 
