@@ -2,10 +2,11 @@ define([
 	'text!templates/upload/ExperimentContainer.html',
 	'views/upload/AnnotationsForm',
 	'views/upload/FileUploadList',
-	'models/Experiment'
+	'models/Experiment',
+	'models/sysadmin/Gateway', 
 ],
 
-function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
+function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
@@ -68,16 +69,17 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 
    			var that = this;
 
-
+   			alert(JSON.stringify(this.model.get('annotations'), null, 4));
+   			alert(JSON.stringify(this.model.get('name'),null,4));
 
    			//send JSON request.
    			this.model.save(null,{success:function() {
-					alert("save");
+					alert("saved");
 				},error: function() {
 					that.$("#experiment-form button[type=submit]").button('reset');
-					alert("save failed");
+					alert("error, not saved!");
 				}
-				});
+			});
 
    			//after we are done rerender the view to view the updated changes.
    			//this.render();
