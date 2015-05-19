@@ -13,6 +13,7 @@ require([
         'views/authModal/AuthModal',
         'collections/AnnotationTypes',
         'collections/ProcessStatuses',
+        'collections/ProcessCommands',
         'collections/sysadmin/GenomeReleaseFiles',
         'models/Auth',
         'router',
@@ -21,6 +22,7 @@ require([
            AuthModal, 
            AnnotationTypes, 
            ProcessStatuses, 
+           ProcessCommands,
            GenomeReleaseFiles, 
            Auth, 
            Router, 
@@ -32,6 +34,7 @@ require([
     app.processStatuses = new ProcessStatuses();
     app.auth = new Auth();
     app.messenger = new Messenger();
+    app.processCommands = new ProcessCommands();
 
     app.ajaxlog = {};
 

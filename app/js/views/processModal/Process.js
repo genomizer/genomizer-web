@@ -3,15 +3,28 @@ define([
     'text!templates/processModal/Process.html',
     'text!templates/process/BowtieBlock.html',
     'views/process/BowtieBlock',
+    'models/ProcessCommand',
     'collections/ProcessCommands'
-], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommands) {
+], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommand, ProcessCommands) {
+//<<<<<<< HEAD
+//    'text!templates/process/BowtieBlock.html',
+//    'views/process/BowtieBlock',
+//    'collections/ProcessCommands'
+//], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommands) {
+//=======
+//    'text!templates/processModal/BowtieBlock.html',
+//    'views/processModal/BowtieBlock',
+//    'models/ProcessCommand',
+//    'collections/ProcessCommands',
+//], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommand, ProcessCommands) {
+//>>>>>>> f7e205fe15107f4339032ad5444d0d64a6aed4c2
 
     return Backbone.View.extend({
 
         TEMPLATE: _.template(processTemplate),
 
         initialize: function(options) {
-            this.collection = new ProcessCommands();
+            this.collection.set({expId: "not_and_expId"});
             this.render();
         },
         events: {
@@ -25,8 +38,12 @@ define([
 
             var processView = this;
             this.collection.getProcessCommands().forEach(function (cmd) {
-                cmd.render();
-                processView.$("#processes").append(cmd.el);
+                var bowtieBlock = new BowtieBlock({
+                    model: cmd, collection: 
+                    processView.collection
+                });
+                bowtieBlock.render();
+                processView.$("#processes").append(bowtieBlock.el);
             });
         },
 
@@ -34,8 +51,8 @@ define([
             var blockType = $("#append_process").val().toLowerCase();
             console.log();
             switch (blockType) {
-                case "bowtie": 
-                    this.collection.addProcessCommand(new BowtieBlock());
+                case "bowtie":
+                    this.collection.addProcessCommand(new ProcessCommand({type: blockType}));
                     break;
                 case "ratio":
                     console.log("append ratio block");
