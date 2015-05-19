@@ -1,6 +1,6 @@
 define([
-    'text!templates/process/BowtieBlock.html',
-    'views/process/BowtieEntry'
+    'text!templates/processModal/BowtieBlock.html',
+    'views/processModal/BowtieEntry'
 ], function(bowtieBlockTemplate, BowtieEntry) {
     return Backbone.View.extend({
 
@@ -28,8 +28,9 @@ define([
             this.render();
         },
         removeCommand: function () {
+            console.log("remove cmd");
             this.collection.remove(this.model);
-            this.el.remove();
+            this.view.render();
         }
     });
 });
