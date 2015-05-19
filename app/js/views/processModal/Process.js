@@ -1,22 +1,22 @@
 define([
-    'views/ModalAC',
+    // 'views/ModalAC',
     'text!templates/processModal/Process.html',
     'text!templates/processModal/BowtieBlock.html',
     'views/processModal/BowtieBlock',
     // 'views/processModal/RatioBlock',
 //  'models/RawToProfileInfo',
 //  'collections/GenomeReferences'
-], function(ModalAC, processTemplate, bowtieBlockTemplate, BowtieBlock) {
+], function(processTemplate, bowtieBlockTemplate, BowtieBlock) {
 // ], function(ModalAC, processTemplate, BowtieBlock, RatioBlock) {
-    var Modal = ModalAC.extend({
+    return Backbone.View.extend({
         TEMPLATE: _.template(processTemplate),
 //      TEMPLATEALERT: _.template(processAlertTemplate),
 //      TEMPLATEGENOMEOPS: _.template(genomeTemplate),
         TEMPLATE_VARS: {
-            modalTitle: "Process - Experiment_name"
+            // modalTitle: "Process - Experiment_name"
         },
         initialize: function(options) {
-            this._super();
+            // this._super();
             this.blocks = [];
 //          var queryArray = options.query.split(',');
 //          this.expID = [];
@@ -60,6 +60,7 @@ define([
 //
 //              }
 //          });
+            this.render();
         },
         events: {
             // 'submit form':'submitProcess',
@@ -68,12 +69,14 @@ define([
         },
         render: function() {
 
+            console.log("render process");
+
             this.$el.html(this.TEMPLATE());
 
-            var modal = this;
+            var processView = this;
             this.blocks.forEach(function (block) {
                 block.render();
-                modal.$("#processes").append(block.el);
+                processView.$("#processes").append(block.el);
             });
         },
         appendProcess: function () {
@@ -255,6 +258,5 @@ define([
 //          }
 //      }
     });
-    return Modal;
 });
 
