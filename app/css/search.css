@@ -62,9 +62,6 @@
 	color: #ddd;
 }
 
-#search_input {
-	width: 100px;
-}
 
 /* some query-builder css depends on this */
 .search-toolbar .button-container > div {
