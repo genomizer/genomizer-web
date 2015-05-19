@@ -1,34 +1,45 @@
 define([
     'text!templates/process/BowtieBlock.html',
-    'views/process/BowtieEntry'
-], function(bowtieBlockTemplate, BowtieEntry) {
+    'views/process/BowtieEntry',
+    'collections/ProcessFileList',
+    'models/File',
+], function(bowtieBlockTemplate, BowtieEntry, ProcessFileList, File) {
     return Backbone.View.extend({
 
         TEMPLATE: _.template(bowtieBlockTemplate),
 
         initialize: function(options) {
-            this.entries = [];
+            this.collection = new ProcessFileList();
         },
         events: {
             "click #add_entry": "addEntry",
-            "click #close": "removeCommand",
+            "click #close_block": "removeCommand",
         },
         render: function() {
             console.log("render block");
             this.$el.html(this.TEMPLATE());
 
             var block = this;
-            this.entries.forEach(function (entry) {
-                entry.render();
-                block.$("#bowtie_entries").append(entry.el);
+            this.collection.each(function (entry) {
+                var entryView = new BowtieEntry({
+                    model: entry,
+                    collection: block.collection,
+                });
+                entryView.render();
+                block.$("#bowtie_entries").append(entryView.el);
             });
         },
         addEntry: function () {
-            this.entries.push(new BowtieEntry());
+            var file = new File({collection: this.collection});
+            file.clear();
+            this.collection.add(file);
             this.render();
         },
         removeCommand: function () {
-            this.collection.remove(this.model);
+
+            console.log("remove cmd");
+            console.log(this.collection);
+            this.model.collection.remove(this.model);
             this.el.remove();
         }
     });

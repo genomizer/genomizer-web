@@ -21,7 +21,6 @@ define([
 
         render: function() {
             this.$el.html(this.TEMPLATE());
-            console.log("render tab");
 
             var processView = this;
             var collection = this.collection;
@@ -38,7 +37,8 @@ define([
 
         appendProcess: function () {
             var blockType = $("#append_process").val().toLowerCase();
-            console.log();
+            console.log("add cmd");
+            console.log(this.collection);
             switch (blockType) {
                 case "bowtie":
                     this.collection.add(new ProcessCommand({type: blockType}));
@@ -47,6 +47,7 @@ define([
                     console.log("append ratio block");
                     break;
             }
+            console.log(this.collection);
             this.render();
         },
     });

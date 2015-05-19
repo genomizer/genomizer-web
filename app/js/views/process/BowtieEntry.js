@@ -6,12 +6,11 @@ define([
         TEMPLATE: _.template(bowtieEntryTemplate),
 
         initialize: function(options) {
-            this.model = new File();
-            this.model.clear();
             this.updateModel();
         },
         events: {
             "change input": "updateModel",
+            "click #close_entry": "removeEntry",
         },
         render: function() {
             this.$el.html(this.TEMPLATE());
@@ -30,7 +29,12 @@ define([
             });
             this.model.set(input);
             console.log(this.model);
-        }
+        },
+
+        removeEntry: function () {
+            this.collection.remove(this.model);
+            this.el.remove();
+        },
     });
 });
 
