@@ -16,3 +16,15 @@ Genomizer Web project uses Backbone as main framework with the following depende
 2. Setup a proxy path in your apache for /api/ to a genomizer server.
 `ProxyPass /api/ "url of java server`
 
+3. Edit index.php to redirect correctly to prevent root access to the project.
+
+##How to contribute
+Fork this project!
+3. Edit index.php to redirect correctly to prevent root access to the project.
+
+##How to contribute
+Fork this project!
+3. Edit index.php to redirect correctly to prevent root access to the project.
+
+##How to contribute
+Fork this project!
