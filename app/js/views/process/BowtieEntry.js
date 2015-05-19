@@ -17,7 +17,6 @@ define([
         },
         updateModel: function() {
             var input = {};
-            console.log(this.$("input"));
             this.$("input").each(function() {
                 var $this = $(this);
                 var val = $this.val();
@@ -27,10 +26,7 @@ define([
                 }
                 input[$this.attr("name")] = val;
             });
-            console.log(this.model);
-            console.log(this.collection);
             this.model.set(input);
-            // this.collection.set(this.model);
         },
 
         removeEntry: function (e) {

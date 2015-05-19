@@ -32,8 +32,6 @@ define([
         appendProcess: function (e) {
             e.preventDefault();
             var blockType = $("#append_process").val().toLowerCase();
-            console.log("add cmd");
-            console.log(this.collection);
             switch (blockType) {
                 case "bowtie":
                     var cmd = new ProcessCommand({type: blockType});
@@ -47,6 +45,9 @@ define([
         },
 
         submitProcess: function (e) {
+
+            var view = this;
+
             e.preventDefault();
             
             var toSubmit = {
@@ -57,12 +58,32 @@ define([
             this.collection.each(function (cmd) {
                 console.log(cmd);
                 cmd.files = [];
+
+                var toSubmitCmd = {
+                    type: cmd.get("type"),
+                    files: [],
+                };
+
                 cmd.collection.each(function (file) {
-                    cmd.files.push(file);
+                    toSubmitCmd.files.push(file);
                 });
-                toSubmit.processCommands.push(cmd);
+
+                toSubmit.processCommands.push(toSubmitCmd);
             });
             console.log(JSON.stringify(toSubmit));
+
+            new Backbone.Model(toSubmit).save(null, {
+                url: "/api/process/",
+                type: "PUT",
+                error: function (event, jqxhr) {
+                    console.log("ERROR: " + jqxhr.status + " " + jqxhr.responseText);
+                },
+                success: function (event, jqxhr) {
+                    console.log("SUCCESSSSSS: " + jqxhr.status + " " + jqxhr.responseText);
+                    view.collection.reset();
+                    view.render();
+                },
+            });
         },
 
         renderBlock: function (view, block) {

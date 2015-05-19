@@ -16,14 +16,12 @@ define([
             "click #close_block": "removeCommand",
         },
         render: function() {
-            console.log("render block");
             this.$el.html(this.TEMPLATE());
 
             var block = this;
             this.collection.each(function (entry) {
                 block.renderModel(block, file);
             });
-            console.log(JSON.stringify(this.collection));
         },
         addEntry: function (e) {
             e.preventDefault();
@@ -44,6 +42,7 @@ define([
             });
             entryView.render();
             view.$("#bowtie_entries").append(entryView.el);
+            entryView.updateModel();
         }
     });
 });
