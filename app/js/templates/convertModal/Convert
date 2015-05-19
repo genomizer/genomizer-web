@@ -1,0 +1,136 @@
+<form role="form">
+	<div class="modal-body" id="raw-process-container">
+		<div id="alert-container"></div>
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-11">
+				<div class="form-group">
+					<h5>Bowtie flags</h5>
+					<input type="text" class="form-control" id="bowtie-params" value="-a -m 1 --best -p 10 -v 2 -q -S" required>
+				</div>
+				<div class="form-group">
+					<h5>Genome reference</h5>
+					<select class="form-control" id="genome-reference" required>
+					</select>
+				</div>
+				<h5>Output format</h5>
+			</div>
+		</div>
+		<div class="form-group">
+	  		<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="sam" value="1" checked>
+	  			</div>
+	  			<div class="col-xs-11">
+					<label for="sam">SAM</label>
+	  			</div>
+  			</div>
+  			<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="gff" value="2">
+	  			</div>
+	  			<div class="col-xs-11">
+	  				<label for="gff">ReadsGFF</label>
+	  			</div>
+  			</div>
+  			<div class="row">
+	  			<div class="col-xs-1">
+	  				<input type="radio" name="process-radios" id="sgr" value="3">
+	  			</div>
+	  			<div class="col-xs-11">
+	  				<label for="sgr">AllnucSGR</label>
+	  			</div>
+  			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1">
+  				<input type="radio" name="process-radios" id="smooth-radio" value="4">
+  			</div>
+  			<div class="col-xs-11 disabled" id="smooth-col">
+				<label for="smooth-radio"><h5>Smoothing</h5></label>
+				<div class="row column-container" id="smoothing">
+					<div class="form-group col-sm-4">
+						<label for="window-size">Window size</label>
+						<input disabled type="number" name="quantity" min="1"  class="form-control" placeholder="Window size" id="window-size" required value="10">
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="smooth-type">Smooth type</label>
+						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="smooth-type" required value="1">
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="step-pos">Step position</label>
+						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="step-pos" required value="5">
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="checkbox" class="checkbox-inline" name="checkboxes" id="print-mean" disabled>
+					<label for="print-mean">Print mean</label>
+
+					<input type="checkbox" class="checkbox-inline" name="checkboxes" id="print-zeros" checked disabled>
+					<label for="print-zeros">Print zeros</label>
+				</div>
+  			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1">
+  				<input type="radio" name="process-radios" id="steps-radio" value="5">
+  			</div>
+  			<div class="col-xs-11 disabled" id="steps-col">
+				<label for="steps-radio"><h5>Steps</h5></label>
+				<div class="form-group">
+					<input type="number" name="quantity" min="1" class="form-control" placeholder="Number of steps" id="nr-of-steps" disabled required value="10"/>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1">
+  				<input type="radio" name="process-radios" id="ratio-radio" value="6">
+  			</div>
+  			<div class="col-xs-11 disabled" id="ratio-col">
+				<label for="ratio-radio"><h5>Ratio calculation</h5></label>
+				<div class="row column-container">
+					<div class="form-group col-sm-4">
+						<label for="ratio-select">Type</label>
+						<select disabled class="form-control" id="ratio-select">
+							<option>single</option>
+							<option>double</option>
+						</select>
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="ratio-cut-off">Input reads cut-off</label>
+						<input disabled type="number" name="quantity" min="0" class="form-control" placeholder="Input reads cut-off" id="ratio-cut-off" required value="4">
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="ratio-chromosomes">Chromosomes</label>
+						<input disabled type="number" name="quantity" min="0" max="1"  class="form-control" placeholder="Chromosomes" id="ratio-chromosomes" required value="0">
+					</div>
+				</div>
+				<h5>Ratio smoothing</h5>
+				<div class="row column-container" id="ratio-smoothing">
+					<div class="form-group col-sm-4">
+						<label for="ratio-window-size">Window size</label>
+						<input disabled type="number" name="quantity" min="1"  class="form-control" placeholder="Window size" id="ratio-window-size" required value="150">
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="ratio-smooth-type">Smooth type</label>
+						<input disabled type="number" name="quantity" min="0" max="1" class="form-control" placeholder="Smooth type" id="ratio-smooth-type" required value="1">
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="ratio-step-pos">Step position</label>
+						<input disabled type="number" name="quantity" min="0"  class="form-control" placeholder="Step position" id="ratio-step-pos" required value="7">
+					</div>
+				</div>
+				<div class="form-group">
+					<input disabled type="checkbox" class="checkbox-inline" name="checkboxes" id="ratio-print-mean">
+					<label for="ratio-print-mean">Print mean</label>
+
+					<input disabled type="checkbox" class="checkbox-inline" name="checkboxes" id="ratio-print-zeros">
+					<label for="ratio-print-zeros">Print zeros</label>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary">Proccess file</button>
+	</div>
+</form>
