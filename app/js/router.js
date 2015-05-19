@@ -110,11 +110,12 @@ define([],function() {
 		Used for getting the Processview.
 	*/
         process: function(query) {
-            var that = this;
+            var router = this;
             require([
                 'views/processModal/Process'
             ],function(Process) {
-                new Process({el:that.getNewMainView()});
+                new Process({el:router.getNewMainView()});
+                // new Process({el:router.getNewMainView(), expId: expId});
                 //var modal = new Process({query:query});
                 //modal.show();
             });

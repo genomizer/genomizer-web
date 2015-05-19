@@ -3,63 +3,15 @@ define([
     'text!templates/processModal/Process.html',
     'text!templates/processModal/BowtieBlock.html',
     'views/processModal/BowtieBlock',
-    // 'views/processModal/RatioBlock',
-//  'models/RawToProfileInfo',
-//  'collections/GenomeReferences'
-], function(processTemplate, bowtieBlockTemplate, BowtieBlock) {
-// ], function(ModalAC, processTemplate, BowtieBlock, RatioBlock) {
+    'collections/ProcessCommands',
+], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommands) {
+
     return Backbone.View.extend({
+
         TEMPLATE: _.template(processTemplate),
-//      TEMPLATEALERT: _.template(processAlertTemplate),
-//      TEMPLATEGENOMEOPS: _.template(genomeTemplate),
-        TEMPLATE_VARS: {
-            // modalTitle: "Process - Experiment_name"
-        },
+
         initialize: function(options) {
-            // this._super();
-            this.blocks = [];
-//          var queryArray = options.query.split(',');
-//          this.expID = [];
-//          // MIGHT NOT WORK WITH EMPTY EXPID!!!!
-//          this.genomeVersion = queryArray[0];
-//
-//          this.successes = 0;
-//          this.failures = 0;
-//          this.experiments = 0;
-//
-//          //Don't process multiple experiments with same ID.
-//          for(var i = 1; i<queryArray.length; i++) {
-//              var addExp = true;
-//              for(var j = 1; j<i;j++) {
-//                  if(queryArray[i] == queryArray[j]) {
-//                      addExp = false;
-//                  }
-//              }
-//              if(addExp) {
-//                  this.experiments++;
-//                  this.expID.push(queryArray[i]);
-//              }               
-//          }
-//
-//          this.collection = new GenomeReferences({"species":this.genomeVersion});
-//          this.genomeReferences = this.collection.models;
-//
-//          var that = this;
-//
-//          this.genomeRefs = [];
-//
-//          this.collection.fetch({
-//              success: function() {
-//
-//                  that.collection.each(function(genomeRef){
-//                      that.genomeRefs.push(genomeRef.get("genomeVersion"));
-//                  });
-//                  that.$el.find('#genome-reference').html(that.TEMPLATEGENOMEOPS({genomes:that.genomeRefs}));
-//              },
-//              error: function() {
-//
-//              }
-//          });
+            this.collection = new ProcessCommands();
             this.render();
         },
         events: {
@@ -67,24 +19,23 @@ define([
             // 'click #step-box' : 'toggleStepsInput',
             'click #append_process_btn' : 'appendProcess'
         },
+
         render: function() {
-
-            console.log("render process");
-
             this.$el.html(this.TEMPLATE());
 
             var processView = this;
-            this.blocks.forEach(function (block) {
-                block.render();
-                processView.$("#processes").append(block.el);
+            this.collection.getProcessCommands().forEach(function (cmd) {
+                cmd.render();
+                processView.$("#processes").append(cmd.el);
             });
         },
+
         appendProcess: function () {
             var blockType = $("#append_process").val().toLowerCase();
             console.log();
             switch (blockType) {
                 case "bowtie": 
-                    this.blocks.push(new BowtieBlock());
+                    this.collection.addProcessCommand(new BowtieBlock());
                     break;
                 case "ratio":
                     console.log("append ratio block");
