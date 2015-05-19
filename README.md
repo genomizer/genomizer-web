@@ -20,11 +20,4 @@ Genomizer Web project uses Backbone as main framework with the following depende
 
 ##How to contribute
 Fork this project!
-3. Edit index.php to redirect correctly to prevent root access to the project.
 
-##How to contribute
-Fork this project!
-3. Edit index.php to redirect correctly to prevent root access to the project.
-
-##How to contribute
-Fork this project!
