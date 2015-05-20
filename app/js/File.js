@@ -58,6 +58,7 @@ define([],function() {
                 } 
             }).done(_.bind(this.setUploadDone,this));
         },
+        
         /*  NEW:
             Sets the upload progress from an event */
         setUploadProgress:function(evt) {
