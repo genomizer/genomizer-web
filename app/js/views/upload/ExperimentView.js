@@ -16,7 +16,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			_.bindAll(this, "changed");
 		},
 		events: {
-			"submit #experiment-form": "saveExperiment",
+			"click #uploadFilesButton": "saveExperiment",
 			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
 			"click #cloneButton": "cloneExperiment",
@@ -43,7 +43,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
-			this.$("#experiment-form button[type=submit]").attr("disabled",false);
+			this.$("#uploadFilesButton").attr("disabled",false);
 		},
 		renderUploadProgress: function() {
 			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
@@ -73,7 +73,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
    			//send JSON request.
    			this.model.save(null,{success:function() {
 				},error: function() {
-					that.$("#experiment-form button[type=submit]").button('reset');
+					that.$("#uploadFilesButton").button('reset');
 				}
 			});
    		},
@@ -99,13 +99,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			e.preventDefault();
 			var that = this;
 
-			this.$("#experiment-form button[type=submit]").button('loading');
-
 			if(this.model.isNew()) {
 				this.model.save(null,{success:function() {
 					that.uploadFiles();
 				},error: function() {
-					that.$("#experiment-form button[type=submit]").button('reset');
 				}
 				});
 			} else {
@@ -128,7 +125,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
-			this.$("#experiment-form button[type=submit]").attr("disabled",false);
+			this.$("#uploadFilesButton").attr("disabled",false);
 		},
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
