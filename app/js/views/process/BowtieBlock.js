@@ -26,7 +26,6 @@ define([
             e.preventDefault();
             var file = new File();
             file.clear();
-            // file.set("collection", this.collection);
             this.model.collection.add(file);
             this.renderModel(this, file);
         },
