@@ -96,9 +96,9 @@
 	margin-left: 10px;
 }
 
-#removeExperiment {
-	margin-top: -37px;
-	margin-right: 10px;
+#removeExperiment,#minimizeExperiment {
+	margin-top: -62px;
+	margin-right: 3px;
 }
 .collapsed-experiment #removeExperiment{
 	display: none;
