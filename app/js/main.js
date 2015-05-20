@@ -75,13 +75,13 @@ require([
     };
 
     /* NEW: Logged in if received token from server */
-    if(app.auth.isLoggedIn()) {
-        postLogin();
-    } else {
-        var authModal = new AuthModal({model:app.auth});
-        authModal.show();
-        app.auth.once('loggedIn',postLogin);
-    }
+	if(app.auth.isLoggedIn()) {
+		postLogin();
+	} else {
+		var authModal = new AuthModal({model:app.auth});
+		authModal.show();
+		app.auth.once('loggedIn',postLogin);
+	}
     
     if (window.location.href.indexOf("amanpwnz") != -1) { 
         $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); 
