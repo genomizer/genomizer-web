@@ -6,6 +6,16 @@ define([
 	'models/sysadmin/Gateway', 
 ],
 
+/*
+*	Class: 		ExperimentView.js
+*	Author: 		Web development group.
+*	Template: 	ExperimentContainer.html
+*
+*	Description:  	Handles actions done in the ExperimentView such as
+*			uploading files, creating Experiments and creating 
+*			experiments.
+*
+*/
 function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
@@ -24,6 +34,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
 			"click #minimizeExperiment":"minimizeExperiment",
+			"click #restoreExperiment":"openExperiement",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
 			"dragleave":"dragLeaveHandler",
@@ -88,6 +99,22 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
    		*/
    		minimizeExperiment:function(){
    			this.collapseView();
+
+   			//Change the icon of the minimize button a "fullscreen" icon.
+   			this.$el.find("#minimizeExperiment").children().addClass("glyphicon-resize-full").removeClass("glyphicon-minus");
+   			this.$el.find("#minimizeExperiment").attr("id","restoreExperiment");
+   		},
+
+   		/*
+   		*
+   		* Opens a minimized experiment.
+   		*/
+   		openExperiement:function(){
+   			this.$el.find('.panel-collapse').collapse('show');
+			this.$el.removeClass('collapsed-experiment');
+
+			this.$el.find("#restoreExperiment").attr("id","minimizeExperiment");
+			this.$el.find("#minimizeExperiment").children().addClass("glyphicon-minus").removeClass("glyphicon-resize-full");
    		},
 
 		changeLabelName: function() {
@@ -132,6 +159,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			
 			that.model.collection.remove(that.model);
 		},
+
+		/**
+		* Private function, should not be called globally.
+		*/
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');
 			this.$el.addClass('collapsed-experiment');

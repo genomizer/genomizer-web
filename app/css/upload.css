@@ -96,7 +96,7 @@
 	margin-left: 10px;
 }
 
-#removeExperiment,#minimizeExperiment {
+#removeExperiment,#minimizeExperiment,#restoreExperiment {
 	margin-top: -62px;
 	margin-right: 3px;
 }
