@@ -35,7 +35,7 @@ require([
 
     app.ajaxlog = {};
 
-    $.ajaxSetup({ cache: false });
+    //$.ajaxSetup({ cache: false });
 
     $(document).ajaxError(function( event, jqxhr, settings, exception ) {
     
