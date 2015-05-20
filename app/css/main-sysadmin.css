@@ -15,7 +15,7 @@
 }
 
 .active {
-	background-color: #FFFFFF;
+	font-weight: bold;
 }
 
 #genome_table a {
