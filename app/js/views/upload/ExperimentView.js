@@ -15,10 +15,15 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			this.dragster = new Dragster( this.el );
 			_.bindAll(this, "changed");
 		},
+
+		/**
+		* Lists of all the events that can happen in the current view.
+		*/
 		events: {
 			"click #uploadFilesButton": "saveExperiment",
 			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
+			"click #minimizeExperiment":"minimizeExperiment",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
 			"dragleave":"dragLeaveHandler",
@@ -27,8 +32,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
 			'keyup input[name="Experiment name"]':"changeLabelName",
-    		"change input" :"changed",
-    		"change #annotation_fields":"changed"
+	    		"change input" :"changed",
+	    		"change #annotation_fields":"changed"
 		},
 		render: function() {
 			window.this = this;
@@ -76,6 +81,13 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 					that.$("#uploadFilesButton").button('reset');
 				}
 			});
+   		},
+
+   		/**
+   		* Minimize the current experiement.
+   		*/
+   		minimizeExperiment:function(){
+   			this.collapseView();
    		},
 
 		changeLabelName: function() {
