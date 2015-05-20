@@ -134,17 +134,20 @@ define([],function() {
             var router = this;
             require([
                 'views/process/Process',
+                'views/process/NoExpProcess',
                 'models/Experiment',
-            ],function(Process, Experiment) {
+            ],function(Process, NoExpProcess, Experiment) {
                 if (query == undefined) {
-                    console.log(query);
+                    new NoExpProcess({
+                        el:router.getNewMainView(),
+                    });
+                } else {
+                    new Process({
+                        el:router.getNewMainView(),
+                        collection: app.processCommands,
+                        model: new Experiment({expId: query})
+                    });
                 }
-
-                new Process({
-                    el:router.getNewMainView(),
-                    collection: app.processCommands,
-                    model: new Experiment({expId: query})
-                });
             });
         },
 

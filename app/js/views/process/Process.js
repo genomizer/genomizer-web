@@ -37,6 +37,7 @@ define([
 
         appendProcess: function (e) {
             e.preventDefault();
+            console.log("append block");
             var blockType = $("#append_process").val().toLowerCase();
             switch (blockType) {
                 case "bowtie":
@@ -58,7 +59,7 @@ define([
             e.preventDefault();
             var view = this;
             
-            var toSubmit = { expId: "not_an_expid", processCommands: [] };
+            var toSubmit = { expId: this.model.get("expId"), processCommand: [] };
 
             this.collection.each(function (cmd) {
 
@@ -68,13 +69,13 @@ define([
                     toSubmitCmd.files.push(file);
                 });
 
-                toSubmit.processCommands.push(toSubmitCmd);
+                toSubmit.processCommand.push(toSubmitCmd);
             });
 
             console.log(JSON.stringify(toSubmit));
 
             new Backbone.Model(toSubmit).save(null, {
-                url: "/api/process/",
+                url: "/api/processCommand",
                 type: "PUT",
                 error: function (event, jqxhr) {
                     // app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
