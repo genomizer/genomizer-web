@@ -20,4 +20,3 @@ Genomizer Web project uses Backbone as main framework with the following depende
 
 ##How to contribute
 Fork this project!
-
