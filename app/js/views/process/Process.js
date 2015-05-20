@@ -3,8 +3,14 @@ define([
     'text!templates/process/BowtieBlock.html',
     'views/process/BowtieBlock',
     'models/ProcessCommand',
-    'collections/ProcessCommands'
-], function(processTemplate, bowtieBlockTemplate, BowtieBlock, ProcessCommand, ProcessCommands) {
+    'collections/ProcessCommands',
+    'collections/sysadmin/GenomeReleaseFiles',
+], function(processTemplate,
+            bowtieBlockTemplate,
+            BowtieBlock,
+            ProcessCommand,
+            ProcessCommands,
+            GenomeReleaseFiles) {
 
     return Backbone.View.extend({
 
@@ -12,7 +18,7 @@ define([
 
         initialize: function() {
             this.files = [];
-            this.fetchFileNames();
+            this.fetchFileNamesAndGRs();
         },
 
         events: {
@@ -22,9 +28,8 @@ define([
 
         render: function() {
             this.$el.html(this.TEMPLATE());
-
+            
             var processView = this;
-            var collection = this.collection;
             this.collection.each(function (cmd) {
                 processView.renderBlock(processView, cmd);
             });
@@ -38,7 +43,7 @@ define([
                     var cmd = new ProcessCommand({
                         type: blockType,
                         files: this.files,
-                        genomeVersions: app.genomeReleaseFiles
+                        grs: this.model.get("grs"),
                     });
                     this.collection.add(cmd);
                     this.renderBlock(this, cmd);
@@ -50,41 +55,32 @@ define([
         },
 
         submitProcess: function (e) {
-
-            var view = this;
-
             e.preventDefault();
+            var view = this;
             
-            var toSubmit = {
-                expId: "not_an_expid", 
-                processCommands: []
-            };
+            var toSubmit = { expId: "not_an_expid", processCommands: [] };
 
             this.collection.each(function (cmd) {
-                cmd.files = [];
 
-                var toSubmitCmd = {
-                    type: cmd.get("type"),
-                    files: [],
-                };
+                var toSubmitCmd = { type: cmd.get("type"), files: [] };
 
                 cmd.collection.each(function (file) {
-                    // file.set("collection", undefined);
                     toSubmitCmd.files.push(file);
                 });
 
                 toSubmit.processCommands.push(toSubmitCmd);
             });
+
             console.log(JSON.stringify(toSubmit));
 
             new Backbone.Model(toSubmit).save(null, {
                 url: "/api/process/",
                 type: "PUT",
                 error: function (event, jqxhr) {
-                    console.log("ERROR: " + jqxhr.status + " " + jqxhr.responseText);
+                    // app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
                 },
                 success: function (event, jqxhr) {
-                    console.log("SUCCESSSSSS: " + jqxhr.status + " " + jqxhr.responseText);
+                    app.messenger.success("Successfully started processing.");
                     view.collection.reset();
                     view.render();
                 },
@@ -100,7 +96,7 @@ define([
             view.$("#processes").append(bowtieBlock.el);
         },
 
-        fetchFileNames: function () {
+        fetchFileNamesAndGRs: function () {
             var processView = this;
             this.model.fetch({
                 "url": "/api/experiment/" + this.model.get("expId"),
@@ -111,10 +107,26 @@ define([
                     response.files.forEach(function (file) {
                         processView.files.push(file["filename"]);
                     })
+                    processView.fetchGRs();
+                }
+            });
+        },
+
+        fetchGRs: function () {
+            var processView = this;
+            var genomeReleaseFiles = new GenomeReleaseFiles();
+            this.model.set("grs", genomeReleaseFiles);
+            genomeReleaseFiles.fetch({
+                "url": "/api/genomeRelease",
+                error: function () {
+                    console.log("error while getting genome releases");
+                },
+                success: function (model, response) {
+                    app.debug = model;
                     processView.render();
                 }
             });
-        }
+        },
     });
 });
 

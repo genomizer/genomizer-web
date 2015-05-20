@@ -67,6 +67,25 @@ define([],function() {
                 this.navigate(previous, options);
             }
         },
+    
+    /*
+        NEW:
+        Gets a new mainView to insert into mainview tag in Index.html
+    */
+        getNewMainView: function() {
+            $("#mainView").replaceWith('<section id=mainView></section>');
+            return $("#mainView");
+        },
+        
+    /*  
+        NEW:
+        Gets a new admin view.
+    */
+        getNewAdminView: function() {
+            $(".activePage").remove();
+            $("#mainView").append('<div class=activePage></div>');
+            return $("#mainView");
+        },
 
         /*	
 		NEW:
@@ -117,6 +136,10 @@ define([],function() {
                 'views/process/Process',
                 'models/Experiment',
             ],function(Process, Experiment) {
+                if (query == undefined) {
+                    console.log(query);
+                }
+
                 new Process({
                     el:router.getNewMainView(),
                     collection: app.processCommands,
@@ -127,25 +150,6 @@ define([],function() {
 
         workspace: function() {
 
-        },
-	
-	/*
-		NEW:
-		Gets a new mainView to insert into mainview tag in Index.html
-	*/
-        getNewMainView: function() {
-            $("#mainView").replaceWith('<section id=mainView></section>');
-            return $("#mainView");
-        },
-        
-	/*	
-		NEW:
-		Gets a new admin view.
-	*/
-        getNewAdminView: function() {
-        	$(".activePage").remove();
-        	$("#mainView").append('<div class=activePage></div>');
-        	return $("#mainView");
         },
         
 	/*

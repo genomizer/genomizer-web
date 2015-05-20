@@ -41,7 +41,9 @@ define([
             });
             entryView.render(
                  this.model.get("files"), 
-                 this.model.get("genomeVersions")
+                 this.model.get("grs").models.map(function (gr) {
+                     return gr.get("genomeVersion");
+                 })
             );
             view.$("#bowtie_entries").append(entryView.el);
             entryView.updateModel();
