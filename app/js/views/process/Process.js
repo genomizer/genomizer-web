@@ -1,5 +1,5 @@
 define([
-    'text!templates/processModal/Process.html',
+    'text!templates/process/Process.html',
     'text!templates/process/BowtieBlock.html',
     'views/process/BowtieBlock',
     'models/ProcessCommand',

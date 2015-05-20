@@ -114,7 +114,7 @@ define([],function() {
         process: function(query) {
             var router = this;
             require([
-                'views/processModal/Process',
+                'views/process/Process',
                 'models/Experiment',
             ],function(Process, Experiment) {
                 new Process({
