@@ -109,6 +109,7 @@ define([
 
 			//display files to be deleted
 			var files = this.collection.getSelectedAndExperimentFiles();
+
 			$('#delete-files-list').empty();
 			if(files.length != 0) {
 				for(var i = 0; i<files.length;i++) {
@@ -273,7 +274,7 @@ define([
 			var input = $('#search_input');
 			var string = input.val();
 			if(string.length != 0) {
-				string += " ";
+x				string += " ";
 			}
 
 			string += query;
