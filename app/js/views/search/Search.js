@@ -31,7 +31,7 @@ define([
 				collection: this.collection,
 				annotations: app.annotationTypes.withoutExpID()
 			});
-			this.collection.on("highlightChange", this.showButtons, this);
+			this.collection.on("highlightChange", this.enableDisableButtons, this);
 
 			this.render();
 
@@ -133,55 +133,45 @@ define([
 			}
 			deleteExperiments();
 		},
-		showButtons: function(fileArray) {
+		enableDisableButtons: function(fileArray) {
 
 			var selectedFiles = this.collection.getSelectedFiles();
 			var selectedExperiments = this.collection.getSelectedExperiments();
-			//handles whether or not the upload or process buttons should be clickable.
-			if(selectedExperiments.length > 0) {
-				$('#upload_button').removeClass('disabled');
-				$('#process_button').removeClass('disabled');
 
-				//Makes sure there is two raw files in selected experiments and all have same species.
-				var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name"));
-				for(var i = 0; i < selectedExperiments.length; i++) {
-					var specie = this.collection.getSpeciesForExperiment(selectedExperiments.at(i).get("name"));
-					if(startSpecie != specie) {
-						$('#process_button').addClass('disabled');
-						break;
-					}
-					var expFiles = selectedExperiments.at(i).get("files");
-					if(expFiles.length == 0) {
-						$('#process_button').addClass('disabled');
-						break;
-					} else {
-						var nrOfRawFiles = 0;
-						for(var j = 0; j < expFiles.length;j++) {
-							if(expFiles[j].type.toLowerCase() == "raw") {
-								nrOfRawFiles++;
-							}
-						}
-						if(nrOfRawFiles!=2) {
-							$('#process_button').addClass('disabled');
-							break;
-						}
-					}
-				}
+			//handles whether or not the upload and process buttons should be clickable.
+			if(selectedExperiments.length == 1) {
+				$('#upload_button').removeClass('disabled');
+
+                var selectedExperiment = selectedExperiments.at(0);
+                var nrOfRawFiles = 0;
+                var expFiles = selectedExperiment.get("files");
+                for(var j = 0; j < expFiles.length;j++) {
+                    if(expFiles[j].type.toLowerCase() == "raw") {
+                        nrOfRawFiles++;
+                    }
+                }                                   
+                if(nrOfRawFiles == 0) {
+                    $('#process_button').addClass('disabled');
+                } else {
+                    $('#process_button').removeClass('disabled');
+                }
 			} else {
 				$('#upload_button').addClass('disabled');
 				$('#process_button').addClass('disabled');
 			}
 
-			//handles whether or not the download or delete buttons should be clickable.
+			//handles whether or not the download button should be clickable.
+            if (selectedFiles.length > 0) {
+                $('#download_button').removeClass('disabled');
+            } else {
+                $('#download_button').addClass('disabled');
+            }
+
+            //handles whether or not the delete button should be clickable.
 			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
 				$('#delete_button').removeClass('disabled');
-				console.log($('#delete_button').data("toggle"))
-
-
-				$('#download_button').removeClass('disabled');
 			} else {
 				$('#delete_button').addClass('disabled');
-				$('#download_button').addClass('disabled');
 			}
 		},
 		searchQueryChanged: function() {
