@@ -274,7 +274,7 @@ define([
 			var input = $('#search_input');
 			var string = input.val();
 			if(string.length != 0) {
-x				string += " ";
+				string += " ";
 			}
 
 			string += query;
