@@ -42,18 +42,18 @@ require([
 
     $(document).ajaxError(function( event, jqxhr, settings, exception ) {
     
-    // some goodies for console debugging ajax requests
-    app.ajaxlog.event = event;
-    app.ajaxlog.jqxhr = jqxhr;
-    app.ajaxlog.exception = exception;
+        // some goodies for console debugging ajax requests
+        app.ajaxlog.event = event;
+        app.ajaxlog.jqxhr = jqxhr;
+        app.ajaxlog.exception = exception;
 
-    // TODO replace with 401 unauthorized when API has integrated this change
-    // 500 = internal sever error
-    if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
-        localStorage.clear();
-        app.auth.set('token', undefined);
+        // TODO replace with 401 unauthorized when API has integrated this change
+        // 500 = internal sever error
+        if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
+            localStorage.clear();
+            app.auth.set('token', undefined);
 
-    }
+        }
         
         if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
             app.messenger.warning(jqxhr.responseJSON.message);
@@ -75,13 +75,13 @@ require([
     };
 
     /* NEW: Logged in if received token from server */
-    if(app.auth.isLoggedIn()) {
-        postLogin();
-    } else {
-        var authModal = new AuthModal({model:app.auth});
-        authModal.show();
-        app.auth.once('loggedIn',postLogin);
-    }
+	if(app.auth.isLoggedIn()) {
+		postLogin();
+	} else {
+		var authModal = new AuthModal({model:app.auth});
+		authModal.show();
+		app.auth.once('loggedIn',postLogin);
+	}
     
     if (window.location.href.indexOf("amanpwnz") != -1) { 
         $(document.body).css("background-image", "url('http://www.cyborgmatt.com/wp-content/uploads/2012/03/Dota2_LoadingBG_Old.jpg')"); 

@@ -1,35 +1,52 @@
 define([
     'text!templates/process/BowtieBlock.html',
-    'views/process/BowtieEntry'
-], function(bowtieBlockTemplate, BowtieEntry) {
+    'views/process/BowtieEntry',
+    'models/File',
+], function(bowtieBlockTemplate, BowtieEntry, File) {
     return Backbone.View.extend({
 
         TEMPLATE: _.template(bowtieBlockTemplate),
 
         initialize: function(options) {
-            this.entries = [];
+            this.collection = new Backbone.Collection();
         },
         events: {
             "click #add_entry": "addEntry",
-            "click #close": "removeCommand",
+            "click #close_block": "removeCommand",
         },
         render: function() {
-            console.log("render block");
             this.$el.html(this.TEMPLATE());
 
             var block = this;
-            this.entries.forEach(function (entry) {
-                entry.render();
-                block.$("#bowtie_entries").append(entry.el);
+            this.collection.each(function (entry) {
+                block.renderModel(block, file);
             });
         },
-        addEntry: function () {
-            this.entries.push(new BowtieEntry());
-            this.render();
+        addEntry: function (e) {
+            e.preventDefault();
+            var file = new File();
+            file.clear();
+            this.model.collection.add(file);
+            this.renderModel(this, file);
         },
-        removeCommand: function () {
-            this.collection.remove(this.model);
+        removeCommand: function (e) {
+            e.preventDefault();
+            this.model.collection.remove(this.model);
             this.el.remove();
+        },
+        renderModel: function (view, model) {
+            var entryView = new BowtieEntry({
+                model: model,
+                collection: this.collection,
+            });
+            entryView.render(
+                 this.model.get("files"), 
+                 this.model.get("grs").models.map(function (gr) {
+                     return gr.get("genomeVersion");
+                 })
+            );
+            view.$("#bowtie_entries").append(entryView.el);
+            entryView.updateModel();
         }
     });
 });

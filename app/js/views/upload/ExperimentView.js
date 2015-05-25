@@ -2,19 +2,22 @@ define([
 	'text!templates/upload/ExperimentContainer.html',
 	'views/upload/AnnotationsForm',
 	'views/upload/FileUploadList',
-	'models/Experiment'
+	'models/Experiment',
+	'models/sysadmin/Gateway', 
 ],
 
-function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
+function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
 		initialize: function() {
 			this.model.files.on("add remove",this.onChangeUploadable,this);
 			this.model.files.on("uploadProgress",this.renderUploadProgress,this);
 			this.dragster = new Dragster( this.el );
+			_.bindAll(this, "changed");
 		},
 		events: {
 			"submit #experiment-form": "saveExperiment",
+			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
@@ -23,7 +26,9 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 			"dragster:enter":"dragsterEnter",
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
-			'keyup input[name="Experiment name"]':"changeLabelName"
+			'keyup input[name="Experiment name"]':"changeLabelName",
+    		"change input" :"changed",
+    		"change #annotation_fields":"changed"
 		},
 		render: function() {
 			window.this = this;
@@ -48,6 +53,31 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment) {
 				this.$('.panel-heading').css('background','linear-gradient(to right, #428bca 0%, #428bca '+ progress +'%,#f5f5f5 ' + (Math.min(100,progress + 0.0001)) + '%, #f5f5f5)');
 			}
 		},
+
+		/**
+		* Action handler for handling events when the annotations 
+		* textfields are changed or they value has been updated.
+		*/
+		changed:function(evt) {
+			//Enable button update button.
+			this.$("#updateAnnotations").attr("disabled",false);
+   		},
+
+   		/*
+   		* Change annotation function for updating annotations for an experiment.
+   		* Uses a PUT request for the experiment and sends the new information in a
+   		* JSON object to the Java server.
+   		*/
+   		changeAnnotations:function(){
+   			var that = this;
+   			//send JSON request.
+   			this.model.save(null,{success:function() {
+				},error: function() {
+					that.$("#experiment-form button[type=submit]").button('reset');
+				}
+			});
+   		},
+
 		changeLabelName: function() {
  			if(this.model.get('name').length >0) {
  				if($.trim(this.model.get('name')) == '') {

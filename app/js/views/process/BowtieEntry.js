@@ -6,20 +6,21 @@ define([
         TEMPLATE: _.template(bowtieEntryTemplate),
 
         initialize: function(options) {
-            this.model = new File();
-            this.model.clear();
             this.updateModel();
         },
         events: {
             "change input": "updateModel",
+            "click #close_entry": "removeEntry",
         },
-        render: function() {
-            this.$el.html(this.TEMPLATE());
+        render: function(files, genomeVersions) {
+            this.$el.html(this.TEMPLATE({
+                files: files,
+                genomeVersions: genomeVersions,
+            }));
         },
         updateModel: function() {
             var input = {};
-            console.log(this.$("input"));
-            this.$("input").each(function() {
+            this.$("input, select").each(function() {
                 var $this = $(this);
                 var val = $this.val();
                 var placeHolder = $this.attr("placeholder");
@@ -29,8 +30,13 @@ define([
                 input[$this.attr("name")] = val;
             });
             this.model.set(input);
-            console.log(this.model);
-        }
+        },
+
+        removeEntry: function (e) {
+            e.preventDefault();
+            this.collection.remove(this.model);
+            this.el.remove();
+        },
     });
 });
 
