@@ -1,0 +1,22 @@
+/* Font sizes for navbar elements */
+.nav li {
+    font-size: 1.3em;
+}
+
+/* Changes the font size */
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Sets a new background color */
+body {
+    background-color:#eee;
+}
+
+/* Changes the panel heading */
+.panel-heading {
+    background-color: #e7e7e7 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}

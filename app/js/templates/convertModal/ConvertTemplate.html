@@ -1,0 +1,81 @@
+<form class="form-horizontal container inline">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Convert</legend>
+
+<!-- Multiple Radios (inline) -->
+<div class="control-group">
+  <label class="inline control-label" for="fileType">File type</label>
+  <div class="inline controls">
+    <label class="radio inline" for="fileType-0">
+      <input type="radio" name="fileType" id="fileType-0" value="FASTQ" checked="checked">
+      FASTQ
+    </label>
+    <label class="radio inline" for="fileType-1">
+      <input type="radio" name="fileType" id="fileType-1" value="SGR">
+      SGR
+    </label>
+    <label class="radio inline" for="fileType-2">
+      <input type="radio" name="fileType" id="fileType-2" value="CHP">
+      CHP
+    </label>
+    <label class="radio inline" for="fileType-3">
+      <input type="radio" name="fileType" id="fileType-3" value="WIG">
+      WIG
+    </label>
+  </div>
+</div>
+
+<!-- Multiple Checkboxes -->
+<div class="control-group">
+  <label class="control-label" for="fileSelect">Select files</label>
+  <div class="controls">
+    <label class="checkbox" for="fileSelect-0">
+      <input type="checkbox" name="fileSelect" id="fileSelect-0" value="File 1">
+      File 1
+    </label>
+    <label class="checkbox" for="fileSelect-1">
+      <input type="checkbox" name="fileSelect" id="fileSelect-1" value="File 2">
+      File 2
+    </label>
+    <label class="checkbox" for="fileSelect-2">
+      <input type="checkbox" name="fileSelect" id="fileSelect-2" value="File 3">
+      File 3
+    </label>
+    <label class="checkbox" for="fileSelect-3">
+      <input type="checkbox" name="fileSelect" id="fileSelect-3" value="File 4">
+      File 4
+    </label>
+  </div>
+</div>
+
+<!-- Multiple Radios (inline) -->
+<div class="control-group">
+  <label class="control-label" for="convertTarget">Convert To</label>
+  <div class="controls">
+    <label class="radio inline" for="convertTarget-0">
+      <input type="radio" name="convertTarget" id="convertTarget-0" value="WIG" checked="checked">
+      WIG
+    </label>
+    <label class="radio inline" for="convertTarget-1">
+      <input type="radio" name="convertTarget" id="convertTarget-1" value="SGR">
+      SGR
+    </label>
+    <label class="radio inline" for="convertTarget-2">
+      <input type="radio" name="convertTarget" id="convertTarget-2" value="GFF">
+      GFF
+    </label>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for="submit"></label>
+  <div class="controls">
+    <button id="submit" name="submit" class="btn btn-primary">Convert</button>
+  </div>
+</div>
+
+</fieldset>
+</form>

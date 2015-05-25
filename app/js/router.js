@@ -202,13 +202,13 @@ define([],function() {
                 new GenomeReleaseView({el:that.getNewAdminView()});                
             });
         },
-
+        
         convert: function(query) {
+            var that = this;
             require([
-                'views/convertModal/Convert'
+                'views/convertModal/ConvertView'
             ],function(Convert) {
-                var modal = new Convert({query:query});
-                modal.show();
+                new Convert({el:that.getNewMainView()});
             });
         },
 
