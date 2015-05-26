@@ -6,6 +6,16 @@ define([
 	'models/sysadmin/Gateway', 
 ],
 
+/*
+*	Class: 		ExperimentView.js
+*	Author: 		Web development group.
+*	Template: 	ExperimentContainer.html
+*
+*	Description:  	Handles actions done in the ExperimentView such as
+*			uploading files, creating Experiments and creating 
+*			experiments.
+*
+*/
 function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 	var ExperimentView = Backbone.View.extend({
 		TEMPLATE: _.template(ExperimentTemplate),
@@ -15,10 +25,16 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			this.dragster = new Dragster( this.el );
 			_.bindAll(this, "changed");
 		},
+
+		/**
+		* Lists of all the events that can happen in the current view.
+		*/
 		events: {
-			"submit #experiment-form": "saveExperiment",
+			"click #uploadFilesButton": "saveExperiment",
 			"click #updateAnnotations":"changeAnnotations",
 			"click #removeExperiment": "removeExperiment",
+			"click #minimizeExperiment":"minimizeExperiment",
+			"click #restoreExperiment":"openExperiement",
 			"click #cloneButton": "cloneExperiment",
 			"dragenter":"dragEnterHandler",
 			"dragleave":"dragLeaveHandler",
@@ -27,8 +43,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			"dragster:leave":"dragsterLeave",
 			"drop":"dropHandler",
 			'keyup input[name="Experiment name"]':"changeLabelName",
-    		"change input" :"changed",
-    		"change #annotation_fields":"changed"
+	    		"change input" :"changed",
+	    		"change #annotation_fields":"changed"
 		},
 		render: function() {
 			window.this = this;
@@ -43,7 +59,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			
 			this.annotationsForm.render();
 			this.fileUploadList.render();
-			this.$("#experiment-form button[type=submit]").attr("disabled",false);
+			this.$("#uploadFilesButton").attr("disabled",false);
 		},
 		renderUploadProgress: function() {
 			if(!this.model.files.hasUnfinishedUploads() && this.model.files.length) {
@@ -73,9 +89,32 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
    			//send JSON request.
    			this.model.save(null,{success:function() {
 				},error: function() {
-					that.$("#experiment-form button[type=submit]").button('reset');
+					that.$("#uploadFilesButton").button('reset');
 				}
 			});
+   		},
+
+   		/**
+   		* Minimize the current experiement.
+   		*/
+   		minimizeExperiment:function(){
+   			this.collapseView();
+
+   			//Change the icon of the minimize button a "fullscreen" icon.
+   			this.$el.find("#minimizeExperiment").children().addClass("glyphicon-resize-full").removeClass("glyphicon-minus");
+   			this.$el.find("#minimizeExperiment").attr("id","restoreExperiment");
+   		},
+
+   		/*
+   		*
+   		* Opens a minimized experiment.
+   		*/
+   		openExperiement:function(){
+   			this.$el.find('.panel-collapse').collapse('show');
+			this.$el.removeClass('collapsed-experiment');
+
+			this.$el.find("#restoreExperiment").attr("id","minimizeExperiment");
+			this.$el.find("#minimizeExperiment").children().addClass("glyphicon-minus").removeClass("glyphicon-resize-full");
    		},
 
 		changeLabelName: function() {
@@ -99,13 +138,10 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			e.preventDefault();
 			var that = this;
 
-			this.$("#experiment-form button[type=submit]").button('loading');
-
 			if(this.model.isNew()) {
 				this.model.save(null,{success:function() {
 					that.uploadFiles();
 				},error: function() {
-					that.$("#experiment-form button[type=submit]").button('reset');
 				}
 				});
 			} else {
@@ -123,12 +159,16 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			
 			that.model.collection.remove(that.model);
 		},
+
+		/**
+		* Private function, should not be called globally.
+		*/
 		collapseView: function(){
 			this.$el.find('.panel-collapse').collapse('hide');
 			this.$el.addClass('collapsed-experiment');
 		},
 		onChangeUploadable: function() {
-			this.$("#experiment-form button[type=submit]").attr("disabled",false);
+			this.$("#uploadFilesButton").attr("disabled",false);
 		},
 		dragEnterHandler: function(e) {
 			e.stopPropagation();
