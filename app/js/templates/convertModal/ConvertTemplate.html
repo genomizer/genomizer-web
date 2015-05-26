@@ -32,22 +32,8 @@
 <div class="control-group">
   <label class="control-label" for="fileSelect">Select files</label>
   <div class="controls">
-    <!-- <label class="checkbox" for="fileSelect-0">
-      <input type="checkbox" name="fileSelect" id="fileSelect-0" value="File 1">
-        <span><%- files %></span>
-    </label>
-    <label class="checkbox" for="fileSelect-1">
-      <input type="checkbox" name="fileSelect" id="fileSelect-1" value="File 2">
-      File 2
-    </label>
-    <label class="checkbox" for="fileSelect-2">
-      <input type="checkbox" name="fileSelect" id="fileSelect-2" value="File 3">
-      File 3
-    </label>
-    <label class="checkbox" for="fileSelect-3">
-      <input type="checkbox" name="fileSelect" id="fileSelect-3" value="File 4">
-      File 4
-    </label> -->
+  
+  <!--- Fill checkboxes with files -->
     <% _.each(files, function(file) { %>
             <input type="checkbox" /> <%= file %> <br />
 <% });  %>
