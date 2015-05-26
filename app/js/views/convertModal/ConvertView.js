@@ -6,12 +6,15 @@ define(['text!templates/convertModal/ConvertTemplate.html'],
     function(ConvertTemplate) {
     var SysadminMainView = Backbone.View.extend({
         TEMPLATE: _.template(ConvertTemplate),
-        initialize: function() {
+        initialize: function(options) {
+            this.queryArray = options.query.split('?');
+            //Console.log(queryArray.at(0));
             this.render();
         },
         
         render: function() {
-            this.$el.html(this.TEMPLATE());
+            alert(this.queryArray);
+            this.$el.html(this.TEMPLATE({'files':this.queryArray}));
         }
     });
     return SysadminMainView;

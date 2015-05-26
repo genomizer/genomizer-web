@@ -208,7 +208,7 @@ define([],function() {
             require([
                 'views/convertModal/ConvertView'
             ],function(Convert) {
-                new Convert({el:that.getNewMainView()});
+                new Convert({el:that.getNewMainView(), query:query});
             });
         },
 
