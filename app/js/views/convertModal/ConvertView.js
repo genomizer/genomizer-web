@@ -41,14 +41,13 @@ function(ConvertTemplate) {
 
         //Select allt the GFF files.
         selectGFF: function() {
-            this.selectAll("gff");
-
-                
+            this.selectAll("gff"); 
         },
 
         //Select all the WIG files
         selectWIG: function() {
             this.selectAll("wig");
+            $("#convertTarget-SGR").prop("checked", true);
         },
 
         //Select all the BED files
@@ -59,6 +58,7 @@ function(ConvertTemplate) {
         //Select all the SGR files
         selectSGR: function(){
             this.selectAll("sgr");
+            $("#convertTarget-WIG").prop("checked", true);
         },
 
         selectAll: function(val) {
