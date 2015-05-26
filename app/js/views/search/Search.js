@@ -178,16 +178,18 @@ define([
 				$('#process_button').removeClass('disabled');
 			}
 
-			//handles whether or not the download or delete buttons should be clickable.
+			//handles whether or not the download button should be clickable.
+            if (selectedFiles.length > 0) {
+                $('#download_button').removeClass('disabled');
+            } else {
+                $('#download_button').addClass('disabled');
+            }
+
+            //handles whether or not the delete button should be clickable.
 			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
 				$('#delete_button').removeClass('disabled');
-				console.log($('#delete_button').data("toggle"))
-
-
-				$('#download_button').removeClass('disabled');
 			} else {
 				$('#delete_button').addClass('disabled');
-				$('#download_button').addClass('disabled');
 			}
 		},
 		searchQueryChanged: function() {
