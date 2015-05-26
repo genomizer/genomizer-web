@@ -7,19 +7,23 @@ define([],function() {
     /*NEW: Create a new Router object by extending Backbonejs Router.*/
     var Router = Backbone.Router.extend({
 
+        routeParams: {},
+
         //Routes used by the application.
         routes: {
             "search/:query": "search",
             "search": "search",
             "": "search",
-            "upload":"upload",
+            "upload": "upload",
             "upload/:expIds": "upload",
-            "process":"process",
-            "process/:query":"process",
-            "admin":"admin",
-            "admin/createannotation": "createAnnotation",
-            "admin/editannotation/:name": "editAnnotation",
-            "admin/genomereleases" : "genomeReleases",
+            "process": "process",
+            "process/:query": "process",
+            "workspace": "workspace",
+            "administration":"administration",
+            "administration/createannotation": "createAnnotation",
+            "administration/editannotation/:name": "editAnnotation",
+            "administration/genomereleases" : "genomeReleases",
+            "convert": "convert",
 			"logout": "logout"
         },
 
@@ -62,6 +66,25 @@ define([],function() {
                 //navigate back to the previous page.
                 this.navigate(previous, options);
             }
+        },
+    
+    /*
+        NEW:
+        Gets a new mainView to insert into mainview tag in Index.html
+    */
+        getNewMainView: function() {
+            $("#mainView").replaceWith('<section id=mainView></section>');
+            return $("#mainView");
+        },
+        
+    /*  
+        NEW:
+        Gets a new admin view.
+    */
+        getNewAdminView: function() {
+            $(".activePage").remove();
+            $("#mainView").append('<div class=activePage></div>');
+            return $("#mainView");
         },
 
         /*	
@@ -108,38 +131,35 @@ define([],function() {
 		Used for getting the Processview.
 	*/
         process: function(query) {
+            var router = this;
             require([
-                'views/processModal/Process'
-            ],function(Process) {
-                var modal = new Process({query:query});
-                modal.show();
+                'views/process/Process',
+                'views/process/NoExpProcess',
+                'models/Experiment',
+            ],function(Process, NoExpProcess, Experiment) {
+                if (query == undefined) {
+                    new NoExpProcess({
+                        el:router.getNewMainView(),
+                    });
+                } else {
+                    new Process({
+                        el:router.getNewMainView(),
+                        collection: app.processCommands,
+                        model: new Experiment({expId: query})
+                    });
+                }
             });
         },
-	
-	/*
-		NEW:
-		Gets a new mainView to insert into mainview tag in Index.html
-	*/
-        getNewMainView: function() {
-            $("#mainView").replaceWith('<section id=mainView></section>');
-            return $("#mainView");
-        },
-        
-	/*	
-		NEW:
-		Gets a new admin view.
-	*/
-        getNewAdminView: function() {
-        	$(".activePage").remove();
-        	$("#mainView").append('<div class=activePage></div>');
-        	return $("#mainView");
+
+        workspace: function() {
+
         },
         
 	/*
 		NEW:
 		Admin function that uses the sysadmin view.
 	*/
-        admin: function() {
+        administration: function() {
             var that = this;
             require([
                 'views/sysadmin/SysadminMainView',
@@ -196,10 +216,15 @@ define([],function() {
             });
         },
 
+        convert: function() {
+
+
+        },
+
         //Logout function.
-	logout: function() {
-		app.auth.logout();
-	}
+    	logout: function() {
+    		app.auth.logout();
+    	}
 
     });
     //Finally return the Router object.

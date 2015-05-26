@@ -1,0 +1,23 @@
+<form role="form">
+    <div id="processes">
+    </div>
+    <div>
+        <br/>
+        <div class="row">
+            <div class="col-xs-3"/>
+            <div class="col-xs-4">
+                <select class="form-control" id="append_process">
+                    <% _.each(["rawToProfile"], function(process) { %>
+                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
+                        <% }); %>
+                </select>
+            </div>
+            <div class="col-xs-2">
+                <button class="btn" id="append_process_btn">Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="submit" class="btn btn-primary">Process</button>
+    </div>
+</form>
