@@ -39,10 +39,11 @@ define([
             e.preventDefault();
             console.log("append block");
             var blockType = $("#append_process").val().toLowerCase();
+            console.log(blockType);
             switch (blockType) {
-                case "rawToProfile":
+                case "rawtoprofile":
                     var cmd = new ProcessCommand({
-                        type: blockType,
+                        type: "rawToProfile",
                         files: this.files,
                         grs: this.model.get("grs"),
                     });
@@ -59,7 +60,7 @@ define([
             e.preventDefault();
             var view = this;
             
-            var toSubmit = { expId: this.model.get("expId"), processCommand: [] };
+            var toSubmit = { expId: this.model.get("expId"), processCommands: [] };
 
             this.collection.each(function (cmd) {
 
@@ -69,13 +70,13 @@ define([
                     toSubmitCmd.files.push(file);
                 });
 
-                toSubmit.processCommand.push(toSubmitCmd);
+                toSubmit.processCommands.push(toSubmitCmd);
             });
 
             console.log(JSON.stringify(toSubmit));
 
             new Backbone.Model(toSubmit).save(null, {
-                url: "/api/processCommand",
+                url: "/api/process/processCommands",
                 type: "PUT",
                 error: function (event, jqxhr) {
                     // app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
