@@ -19,8 +19,4 @@ var testModulePaths = [
 	'tests/models/Annotation',
 	'tests/models/Gateway',
 	'tests/models/GenomeReleaseFile',
-
-	// Views
-	'tests/views/ModalAC',
-	'tests/views/MainMenu',
 ];
