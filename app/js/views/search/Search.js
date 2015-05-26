@@ -265,10 +265,13 @@ define([
 			for(var i = 0; i<exps.length; i++) {
 				data += "," + exps.at(i).get("name");
 			}
-
+			data += "~";
 			for(var i = 0; i<filenames.length; i++) {
 				data += "," + filenames.at(i).get("id");
-				data += "~" + filenames.at(i).get("filename");
+			}
+			data += "~";
+			for(var i = 0; i<filenames.length; i++) {
+				data += "," + filenames.at(i).get("filename");
 			}
 
 			app.router.navigate("convert/"+data, {trigger:true});

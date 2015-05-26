@@ -6,7 +6,7 @@
 
 <!-- Multiple Radios (inline) -->
 <div class="control-group">
-  <label class="control-label" for="fileType">File type</label>
+  <label class="control-label" for="fileType">Select all</label>
   <div class="controls">
     <label class="radio inline" for="fileType-0">
       <input type="radio" name="fileType" id="fileType-0" value="FASTQ" checked="checked">
@@ -32,7 +32,7 @@
 <div class="control-group">
   <label class="control-label" for="fileSelect">Select files</label>
   <div class="controls">
-    <label class="checkbox" for="fileSelect-0">
+    <!-- <label class="checkbox" for="fileSelect-0">
       <input type="checkbox" name="fileSelect" id="fileSelect-0" value="File 1">
         <span><%- files %></span>
     </label>
@@ -47,7 +47,10 @@
     <label class="checkbox" for="fileSelect-3">
       <input type="checkbox" name="fileSelect" id="fileSelect-3" value="File 4">
       File 4
-    </label>
+    </label> -->
+    <% _.each(files, function(file) { %>
+            <input type="checkbox" /> <%= file %> <br />
+<% });  %>
   </div>
 </div>
 <br>
