@@ -1,13 +1,13 @@
 define([
     'text!templates/process/Process.html',
-    'text!templates/process/BowtieBlock.html',
-    'views/process/BowtieBlock',
+    'text!templates/process/RawToProfileBlock.html',
+    'views/process/RawToProfileBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
     'collections/sysadmin/GenomeReleaseFiles',
 ], function(processTemplate,
-            bowtieBlockTemplate,
-            BowtieBlock,
+            rawToProfileBlockTemplate,
+            RawToProfileBlock,
             ProcessCommand,
             ProcessCommands,
             GenomeReleaseFiles) {
@@ -40,7 +40,7 @@ define([
             console.log("append block");
             var blockType = $("#append_process").val().toLowerCase();
             switch (blockType) {
-                case "bowtie":
+                case "rawToProfile":
                     var cmd = new ProcessCommand({
                         type: blockType,
                         files: this.files,
@@ -89,12 +89,12 @@ define([
         },
 
         renderBlock: function (view, block) {
-            var bowtieBlock = new BowtieBlock({
+            var rawToProfileBlock = new RawToProfileBlock({
                 model: block, 
                 collection: view.collection,
             });
-            bowtieBlock.render();
-            view.$("#processes").append(bowtieBlock.el);
+            rawToProfileBlock.render();
+            view.$("#processes").append(rawToProfileBlock.el);
         },
 
         fetchFileNamesAndGRs: function () {

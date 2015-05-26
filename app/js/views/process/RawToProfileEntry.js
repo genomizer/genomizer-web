@@ -1,9 +1,9 @@
 define([
-    'text!templates/process/BowtieEntry.html',
+    'text!templates/process/RawToProfileEntry.html',
     'models/File'
-], function(bowtieEntryTemplate, File) {
+], function(rawToProfileEntryTemplate, File) {
     return Backbone.View.extend({
-        TEMPLATE: _.template(bowtieEntryTemplate),
+        TEMPLATE: _.template(rawToProfileEntryTemplate),
 
         initialize: function(options) {
             this.updateModel();

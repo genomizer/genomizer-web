@@ -1,11 +1,11 @@
 define([
-    'text!templates/process/BowtieBlock.html',
-    'views/process/BowtieEntry',
+    'text!templates/process/RawToProfileBlock.html',
+    'views/process/RawToProfileEntry',
     'models/File',
-], function(bowtieBlockTemplate, BowtieEntry, File) {
+], function(rawToProfileBlockTemplate, RawToProfileEntry, File) {
     return Backbone.View.extend({
 
-        TEMPLATE: _.template(bowtieBlockTemplate),
+        TEMPLATE: _.template(rawToProfileBlockTemplate),
 
         initialize: function(options) {
             this.collection = new Backbone.Collection();
@@ -35,7 +35,7 @@ define([
             this.el.remove();
         },
         renderModel: function (view, model) {
-            var entryView = new BowtieEntry({
+            var entryView = new RawToProfileEntry({
                 model: model,
                 collection: this.collection,
             });
@@ -45,7 +45,7 @@ define([
                      return gr.get("genomeVersion");
                  })
             );
-            view.$("#bowtie_entries").append(entryView.el);
+            view.$("#raw_to_profile_entries").append(entryView.el);
             entryView.updateModel();
         }
     });
