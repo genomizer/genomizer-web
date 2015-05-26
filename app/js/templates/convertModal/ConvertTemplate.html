@@ -8,17 +8,9 @@
 <div class="control-group">
   <label class="control-label" for="fileType">Select all</label>
   <div class="controls">
-    <label class="radio inline" for="fileType-0">
-      <input type="radio" name="fileType" id="fileType-0" value="FASTQ" checked="checked">
-      FASTQ
-    </label>
     <label class="radio inline" for="fileType-1">
       <input type="radio" name="fileType" id="fileType-1" value="SGR">
       SGR
-    </label>
-    <label class="radio inline" for="fileType-2">
-      <input type="radio" name="fileType" id="fileType-2" value="CHP">
-      CHP
     </label>
     <label class="radio inline" for="fileType-3">
       <input type="radio" name="fileType" id="fileType-3" value="WIG">
@@ -32,7 +24,7 @@
 <div class="control-group">
   <label class="control-label" for="fileSelect">Select files</label>
   <div class="controls">
-  
+
   <!--- Fill checkboxes with files -->
     <% _.each(files, function(file) { %>
             <input type="checkbox" /> <%= file %> <br />
