@@ -138,6 +138,7 @@ define([
 			var selectedFiles = this.collection.getSelectedFiles();
 			var selectedExperiments = this.collection.getSelectedExperiments();
 
+
 			//handles whether or not the upload or process buttons should be clickable.
 			$('#process_button').addClass('disabled');
 			$('#upload_button').addClass('disabled');
