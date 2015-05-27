@@ -72,14 +72,16 @@ define([
 			var op = this.$el.find(".op-container .dropdown-label").text();
 			var annotation = this.$el.find(".annotation-container .dropdown-label").text();
 			var value = this.$el.find(".freetext-container input").val();
-			if(value == "") {
-				value = this.$el.find(".choice-container .dropdown-label").text();
-			}
+			// if(value == "") {
+			// 	value = this.$el.find(".choice-container .dropdown-label").text();
+			// }
 
 			if(annotation == "annotation") {
 				app.messenger.warning("Please select an annotation.");
 				return;
 			}
+
+			string += value;
 
 			string += "[" + annotation + "]";
 
@@ -88,7 +90,7 @@ define([
 			}
 
 			this.$el.find(".op-container .dropdown-label").text("op");
-			this.$el.find(".annotation-container .dropdown-label").text("Annotation");
+			this.$el.find(".annotation-container .dropdown-label").text("annotation");
 			this.$el.find(".freetext-container input").val("");
 			this.$el.find(".choice-container annotation").text("value");
 
@@ -112,7 +114,7 @@ define([
 			var target = $(event.target);
 			var text = target.text();
 			if(text == "") {
-				text = "Annotation";
+				text = "annotation";
 				this.$el.find(".freetext-container").show();
 				this.$el.find(".choice-container").hide();
 			} else {
