@@ -104,22 +104,39 @@ define([
 		},
 		experimentSelect: function(event) {
 
-			/* if files inside this experiment are selected we want to deselect them */
-			if(this.subSelection) {
+			// /* if files inside this experiment are selected we want to deselect them */
+			// if(this.subSelection) {
 
-				/* we always want to deselect this experiment along with its files */
-				this.$el.find(".experiment-checked-input").prop("checked", false);
-				this.model.trigger("experimentSelect", this.model,  false);
+			// 	/* we always want to deselect this experiment along with its files */
+			// 	this.$el.find(".experiment-checked-input").prop("checked", false);
+			// 	this.model.trigger("experimentSelect", this.model,  false);
 
-				this.$el.removeClass("subselection");
-				this.subSelection = false;
-				this.rawGroupView.render();
-				this.profileGroupView.render();
-				this.regionGroupView.render();
-			} else {
-				this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
-			}
-			
+			// 	this.$el.removeClass("subselection");
+			// 	this.subSelection = false;
+			// 	this.rawGroupView.render();
+			// 	this.profileGroupView.render();
+			// 	this.regionGroupView.render();
+			// } else {
+			// 	this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
+			// }
+
+			// if ($(event.currentTarget).prop("checked")) {
+			// 	this.$el.find(".experiment-checked-input").prop("checked", true);
+			// 	this.model.trigger("experimentSelect", this.model,  true);
+				
+			// 	this.rawGroupView.render();
+			// 	this.profileGroupView.render();
+			// 	this.regionGroupView.render();
+			// } else {
+			// 	this.$el.find(".experiment-checked-input").prop("checked", false);
+			// 	this.model.trigger("experimentSelect", this.model,  false);
+
+			// 	// this.rawGroupView.render();
+			// 	// this.profileGroupView.render();
+			// 	// this.regionGroupView.render();
+			// }
+
+			//this.model.trigger("experimentSelect", this.model,  $(event.currentTarget).prop("checked"));
 			
 		},
 		highlightChange: function() {
