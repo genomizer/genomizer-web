@@ -19,6 +19,9 @@ function(ConvertTemplate) {
             //Filter out the filenames.
             this.fileArray = this.queryArray[2].split(',');
 
+            //Filter out the fileids.
+            this.idArray = this.queryArray[1].split(',');
+
             //Remove the first ,
             this.fileArray.shift();
 
@@ -31,7 +34,8 @@ function(ConvertTemplate) {
             "click #SGR": "selectSGR",
             "click #WIG": "selectWIG",
             "click #BED": "selectBED",
-            "click #GFF": "selectGFF"
+            "click #GFF": "selectGFF",
+            "click #submit" : "startConversion"
         },
         
         render: function() {
@@ -69,6 +73,51 @@ function(ConvertTemplate) {
                 return this.value.split('.').pop() == val;
             }).prop("checked", "true");
         },
+
+        getSelectedFiles: function() {
+            var fileArray = [];
+            var i = 1;
+
+            var fileids = this.idArray;
+
+            alert("File id array:" + fileids);
+            $("input:checkbox").each(function (){
+                if(this.checked) {
+                    fileArray += fileids[i];
+                    fileArray += ',';
+                }
+                i++;
+            });
+
+            return fileArray.split(',');
+        },
+
+        startConversion: function(event) {
+            event.preventDefault();
+            alert("start conversionsZZzzZ");
+            var totype;
+            var sgrCheckbox = document.getElementById('convertTarget-SGR');
+
+            if(sgrCheckbox.checked){
+                totype = "sgr";
+            } else {
+                totype = "wig";
+            }
+            var toSubmit = {fileid: this.getSelectedFiles()[0],toformat: totype};
+            alert(JSON.stringify(toSubmit));
+            alert(this.getSelectedFiles());
+
+            new Backbone.Model(toSubmit).save(null, {
+                url: "/api/convertfile",
+                type: "PUT",
+                error: function (event, jqxhr) {
+                    app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
+                },
+                success: function (event, jqxhr) {
+                    app.messenger.success("Successfully converted file/files");
+                },
+            });
+        }
 
 
     });
