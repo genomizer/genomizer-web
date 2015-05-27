@@ -123,8 +123,27 @@ define([
 				app.processStatuses.stopFetching();
 			}
 		},
+
+		deleteProcess: function (e) {
+			e.preventDefault();
+			
+            var toSubmit = { PID: 10 };
+
+        	new Backbone.Model(toSubmit).save(null, {
+                url: "/api/process",
+                type: "DELETE",
+                error: function (event, jqxhr) {
+                    app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
+                },
+                success: function (event, jqxhr) {
+                    app.messenger.success("Deleted");
+                },
+            });
+        },
+
 		events: {
 			"click tr" : "clickHandler"
+			"click #processClose" : "deleteProcess",
 		},
 		clickHandler: function(event) {
 			app.router.navigate("search/" + $(event.currentTarget).data("expid") + "[ExpID]", {trigger: true});
