@@ -80,7 +80,6 @@ function(ConvertTemplate) {
 
             var fileids = this.idArray;
 
-            alert("File id array:" + fileids);
             $("input:checkbox").each(function (){
                 if(this.checked) {
                     fileArray += fileids[i];
@@ -92,29 +91,37 @@ function(ConvertTemplate) {
             return fileArray.split(',');
         },
 
+        //Sends the convert command to the server using JSON.
         startConversion: function(event) {
             event.preventDefault();
-            alert("start conversionsZZzzZ");
             var totype;
             var sgrCheckbox = document.getElementById('convertTarget-SGR');
+            var that = this;
 
+            //TODO Update to better solution.
             if(sgrCheckbox.checked){
                 totype = "sgr";
             } else {
                 totype = "wig";
             }
             var toSubmit = {fileid: this.getSelectedFiles()[0],toformat: totype};
-            alert(JSON.stringify(toSubmit));
-            alert(this.getSelectedFiles());
+            // alert(JSON.stringify(toSubmit));
+            // alert(this.getSelectedFiles());
 
             new Backbone.Model(toSubmit).save(null, {
                 url: "/api/convertfile",
                 type: "PUT",
                 error: function (event, jqxhr) {
                     app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
+                    $( "input:checkbox:checked" ).each(function(){
+                       $( this ).closest('label').addClass( 'errorLabel');
+                    });
                 },
                 success: function (event, jqxhr) {
                     app.messenger.success("Successfully converted file/files");
+                    $( "input:checkbox:checked" ).each(function(){
+                        $( this ).closest('label').addClass( 'successLabel');
+                    });
                 },
             });
         }

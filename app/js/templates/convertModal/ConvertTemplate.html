@@ -40,7 +40,7 @@
 
   <!--- Fill checkboxes with files -->
     <% _.each(files, function(file) { %>
-            <input type="checkbox" value=<%= file %> /> <%= file %><br>
+            <label for=<%= file %> ><input type="checkbox" value=<%= file %> /><%= file %></label><br>
 <% });  %>
   </div>
 </div>
