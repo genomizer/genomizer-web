@@ -105,17 +105,20 @@ function(ConvertTemplate) {
             return fileArray.split(',');
         },
 
+        //Sends the convert command to the server using JSON.
         startConversion: function(event) {
             event.preventDefault();
-            alert("start conversionsZZzzZ");
             var totype;
             var sgrCheckbox = document.getElementById('convertTarget-SGR');
+            var that = this;
 
+            //TODO Update to better solution.
             if(sgrCheckbox.checked){
                 totype = "sgr";
             } else {
                 totype = "wig";
             }
+
             var fileids = this.getSelectedFiles();
             for(i = 0 ; i < fileids.length - 1 ; i++) {
                 var toSubmit = {fileid: fileids[i],toformat: totype};
@@ -124,10 +127,16 @@ function(ConvertTemplate) {
                 type: "PUT",
                 error: function (event, jqxhr) {
                     app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
+                    $( "input:checkbox:checked" ).each(function(){
+                       $( this ).closest('label').addClass( 'errorLabel');
+                    });
                 },
                 success: function (event, jqxhr) {
                     alert("Successfully converted "+filids[i])
                     app.messenger.success("Successfully converted file/files");
+                    $( "input:checkbox:checked" ).each(function(){
+                        $( this ).closest('label').addClass( 'successLabel');
+                    });
                 },
             });
             }
