@@ -65,7 +65,8 @@ define([
 				result[i]["experimentName"] = object[i].get("experimentName");
 				result[i]["timeAdded"] = this.formatDate(object[i].get("timeAdded"));
 				result[i]["timeStarted"] = this.formatDate(object[i].get("timeStarted"));
-				result[i]["timeFinished"] = this.formatDate(object[i].get("timeFinished"));	
+				result[i]["PID"] = object[i].get("PID");
+				result[i]["timeFinished"] = this.formatDate(object[i].get("timeFinished"));
 			};
 
 			return result;
@@ -123,8 +124,26 @@ define([
 				app.processStatuses.stopFetching();
 			}
 		},
+
+		deleteProcess: function (e) {
+			e.preventDefault();
+            var toSubmit = { PID: $(e.currentTarget).data("expid") };
+
+        	new Backbone.Model(toSubmit).save(null, {
+                url: "/api/process",
+                type: "DELETE",
+                error: function (event, jqxhr) {
+                    app.messenger.warning("Unable to delete");
+                },
+                success: function (event, jqxhr) {
+                    app.messenger.success("Deleted");
+                },
+            });
+        },
+
 		events: {
-			"click tr" : "clickHandler"
+			"click tr" : "clickHandler",
+			"click #processClose" : "deleteProcess"
 		},
 		clickHandler: function(event) {
 			app.router.navigate("search/" + $(event.currentTarget).data("expid") + "[ExpID]", {trigger: true});
