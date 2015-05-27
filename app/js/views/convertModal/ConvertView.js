@@ -35,9 +35,24 @@ function(ConvertTemplate) {
             "click #WIG": "selectWIG",
             "click #BED": "selectBED",
             "click #GFF": "selectGFF",
+            "click input:checkbox": "disableBoxes",
             "click #submit" : "startConversion"
         },
-        
+        disableBoxes: function(e){
+            var filestring = []
+            var filenames = this.fileArray;
+            var j = 0;
+            var i = 0;
+            $("input:checkbox").each(function (){
+                if(this.checked) {
+                    filestring[j] = filenames[i];
+                    j++;
+                }
+                i++;
+            });
+            alert(filestring[0]);
+        }
+        ,
         render: function() {
             //alert(this.queryArray[0]);
             this.$el.html(this.TEMPLATE({'files':this.fileArray}));
@@ -80,7 +95,6 @@ function(ConvertTemplate) {
 
             var fileids = this.idArray;
 
-            alert("File id array:" + fileids);
             $("input:checkbox").each(function (){
                 if(this.checked) {
                     fileArray += fileids[i];
@@ -88,7 +102,6 @@ function(ConvertTemplate) {
                 }
                 i++;
             });
-
             return fileArray.split(',');
         },
 
@@ -103,20 +116,23 @@ function(ConvertTemplate) {
             } else {
                 totype = "wig";
             }
-            var toSubmit = {fileid: this.getSelectedFiles()[0],toformat: totype};
-            alert(JSON.stringify(toSubmit));
-            alert(this.getSelectedFiles());
-
-            new Backbone.Model(toSubmit).save(null, {
+            var fileids = this.getSelectedFiles();
+            for(i = 0 ; i < fileids.length - 1 ; i++) {
+                var toSubmit = {fileid: fileids[i],toformat: totype};
+                new Backbone.Model(toSubmit).save(null, {
                 url: "/api/convertfile",
                 type: "PUT",
                 error: function (event, jqxhr) {
                     app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
                 },
                 success: function (event, jqxhr) {
+                    alert("Successfully converted "+filids[i])
                     app.messenger.success("Successfully converted file/files");
                 },
             });
+            }
+           
+
         }
 
 
