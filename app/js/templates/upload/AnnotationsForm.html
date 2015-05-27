@@ -2,7 +2,7 @@
 <div class="form-inline" id="experiment_form" role="form" >
 	<ul class="annotation-list" id="annotation_fields">
 		<li>
-			<label>experiment name</label>
+			<label>Experiment name</label>
 			<input required name="Experiment name" id="experiment name" class="form-control" <%- existingExperiment ? "enabled" : "" %> type="text" 
 				<% if(experiment != undefined) { %> value="<%-experiment.name %>" <% } %>>
 			</input>
