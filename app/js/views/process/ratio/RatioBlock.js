@@ -1,6 +1,6 @@
 define([
-	'text!templates/process/RatioBlock.html',
-    'views/process/RatioEntry',
+	'text!templates/process/ratio/RatioBlock.html',
+    'views/process/ratio/RatioEntry',
     'models/File'
 ], function(ratioBlockTemplate, RatioEntry, File) {
 	return Backbone.View.extend({

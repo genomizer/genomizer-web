@@ -1,9 +1,9 @@
 define([
     'text!templates/process/Process.html',
-    'text!templates/process/RawToProfileBlock.html',
-    'text!templates/process/RatioBlock.html',
-    'views/process/RawToProfileBlock',
-    'views/process/RatioBlock',
+    'text!templates/process/rawToProfile/RawToProfileBlock.html',
+    'text!templates/process/ratio/RatioBlock.html',
+    'views/process/rawToProfile/RawToProfileBlock',
+    'views/process/ratio/RatioBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
     'collections/sysadmin/GenomeReleaseFiles',

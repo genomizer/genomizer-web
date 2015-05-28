@@ -1,5 +1,5 @@
 define([
-    'text!templates/process/RawToProfileEntry.html',
+    'text!templates/process/rawToProfile/RawToProfileEntry.html',
     'models/File'
 ], function(rawToProfileEntryTemplate, File) {
     return Backbone.View.extend({
