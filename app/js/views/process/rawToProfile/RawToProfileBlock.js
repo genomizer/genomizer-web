@@ -11,8 +11,8 @@ define([
             this.collection = new Backbone.Collection();
         },
         events: {
-            "click #add_entry": "addEntry",
-            "click #close_block": "removeCommand",
+            "click #add_raw_to_profile_entry": "addEntry",
+            "click #close_raw_to_profile_block": "removeCommand",
         },
         render: function() {
             this.$el.html(this.TEMPLATE());

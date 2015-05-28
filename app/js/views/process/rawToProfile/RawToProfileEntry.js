@@ -10,7 +10,7 @@ define([
         },
         events: {
             "change input": "updateModel",
-            "click #close_entry": "removeEntry",
+            "click #close_raw_to_profile_entry": "removeEntry",
         },
         render: function(files, genomeVersions) {
             this.$el.html(this.TEMPLATE({
