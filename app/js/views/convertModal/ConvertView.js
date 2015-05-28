@@ -39,18 +39,28 @@ function(ConvertTemplate) {
             "click #submit" : "startConversion"
         },
         disableBoxes: function(e){
-            var filestring = []
+            var filearr = []
             var filenames = this.fileArray;
             var j = 0;
             var i = 0;
             $("input:checkbox").each(function (){
                 if(this.checked) {
-                    filestring[j] = filenames[i];
+                    filearr[j] = filenames[i];
                     j++;
                 }
                 i++;
             });
-            alert(filestring[0]);
+            for(i = 0; i < filearr.length; i++) {
+                if((filearr[i]).split('.').pop() == "sgr") {
+                    this.disableAll("wig");
+                    return;
+                }
+                else if((filearr[i]).split('.').pop() == "wig") {
+                    this.disableAll("sgr");
+                    return;
+                }
+            }
+            $('input:checkbox').prop('disabled', false);
         }
         ,
         render: function() {
@@ -78,15 +88,28 @@ function(ConvertTemplate) {
         selectSGR: function(){
             this.selectAll("sgr");
             $("#convertTarget-WIG").prop("checked", true);
+            /*
+            
+                THIS IS A FILE! //Albin
+             */
         },
 
         selectAll: function(val) {
             // Reset all the check-boxes ckecked
             $('input:checkbox').prop('checked', false);
-
+            this.disableBoxes();
             $("input:checkbox").filter(function() {
                 return this.value.split('.').pop() == val;
             }).prop("checked", "true");
+            this.disableBoxes();
+        },
+
+        disableAll: function(val) {
+            // Reset all the check-boxes ckecked
+
+            $("input:checkbox").filter(function() {
+                return this.value.split('.').pop() == val;
+            }).prop("disabled", "true");
         },
 
         getSelectedFiles: function() {
