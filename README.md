@@ -1,22 +1,22 @@
-web
-===
+#Genomizer Web Project
+This project is the web client for the Genomizer project.
 
-Because of Cross-origin-policy when testing the app locally, Chrome must be started with the `--disable-web-security` flag:
+##Backbone
+Genomizer Web project uses Backbone as main framework with the following dependencies:
+* Backbone - main application framework.
+* Bootstrap - CSS and frontend design.
+* JQuery
+* Underscore - Templating
+* Dragster - Javascript library for drag and drop into the browser.
 
-**\*nix with chromium:**
+##How to install to Apache
+1. Clone the project into your apache2 www directory:
+`git clone git@github.com:genomizer/genomizer-web.git'`
 
-    chromium-browser --disable-web-security
+2. Setup a proxy path in your apache for /api/ to a genomizer server.
+`ProxyPass /api/ "url of java server`
 
-**mac:**
+3. Edit index.php to redirect correctly to prevent root access to the project.
 
-    open "Google chrome" --disable-web-security
-
-**Windows with chrome:**
-
-    open the command prompt:
-        Run -> type cmd and press enter
-    navigate to the folder where chrome.exe is stored
-        Default command: cd "C:\Program Files <x86>\Google\Chrome\Application"
-    open chrome with a new user data directory with disabled web security:
-        chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security
-	
+##How to contribute
+Fork this project!

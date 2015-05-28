@@ -14,8 +14,8 @@
 	float: left;
 }
 
-.active {
-	background-color: #FFFFFF;
+.activeLink {
+	font-weight: bold;
 }
 
 #genome_table a {
