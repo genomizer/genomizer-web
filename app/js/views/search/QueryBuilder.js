@@ -72,19 +72,16 @@ define([
 			var op = this.$el.find(".op-container .dropdown-label").text();
 			var annotation = this.$el.find(".annotation-container .dropdown-label").text();
 			var value = this.$el.find(".freetext-container input").val();
-			if(value == "") {
-				value = this.$el.find(".choice-container .dropdown-label").text();
-			}
+			// if(value == "") {
+			// 	value = this.$el.find(".choice-container .dropdown-label").text();
+			// }
 
 			if(annotation == "annotation") {
 				app.messenger.warning("Please select an annotation.");
 				return;
-			} else if (value == "value") {
-				app.messenger.warning("Please input an annotation value.");
-				return;
 			}
 
-			string +=value;
+			string += value;
 
 			string += "[" + annotation + "]";
 

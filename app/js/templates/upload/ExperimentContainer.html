@@ -1,11 +1,21 @@
 <div class="panel-group" id="experimentGroup">
 	<div id="input-container" class="panel panel-default">
+
 		<div class="panel-heading">
-				 Unnamed experiment	
-		</div>	
-		<button type="button" id="removeExperiment" class="btn btn-default pull-right">
-				<span class="glyphicon glyphicon-remove"></span>
-		</button>
+				 Unnamed experiment
+		</div>
+
+		<div class="pull-right">
+			<!-- Minimize experiment button -->
+			<button type="button" id="minimizeExperiment" class="btn btn-default">
+				<span class="glyphicon glyphicon-minus"></span>
+			</button>
+
+			<!-- Close experiment button -->
+			<button type="button" id="removeExperiment" class="btn btn-default">
+					<span class="glyphicon glyphicon-remove"></span>
+			</button>
+		</div>
 
 		<div id="collapseOne" class="panel-collapse collapse in">
 			<div class="panel-body">
@@ -18,7 +28,7 @@
 						Clone Experiment
 					</button>
 					<div class="btn-group pull-right">
-						<button type="submit" disabled class="btn btn-primary upload-experiment" id="uploadFilesButton">
+						<button type="button" disabled class="btn btn-primary upload-experiment" id="uploadFilesButton">
 							<span class="glyphicon glyphicon-upload"></span>
 							Upload experiment
 						</button>

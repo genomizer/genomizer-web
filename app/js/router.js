@@ -7,6 +7,8 @@ define([],function() {
     /*NEW: Create a new Router object by extending Backbonejs Router.*/
     var Router = Backbone.Router.extend({
 
+        routeParams: {},
+
         //Routes used by the application.
         routes: {
             "search/:query": "search",
@@ -66,6 +68,25 @@ define([],function() {
                 this.navigate(previous, options);
             }
         },
+    
+    /*
+        NEW:
+        Gets a new mainView to insert into mainview tag in Index.html
+    */
+        getNewMainView: function() {
+            $("#mainView").replaceWith('<section id=mainView></section>');
+            return $("#mainView");
+        },
+        
+    /*  
+        NEW:
+        Gets a new admin view.
+    */
+        getNewAdminView: function() {
+            $(".activePage").remove();
+            $("#mainView").append('<div class=activePage></div>');
+            return $("#mainView");
+        },
 
         /*	
 		NEW:
@@ -111,35 +132,35 @@ define([],function() {
 		Used for getting the Processview.
 	*/
         process: function(query) {
+            var router = this;
             require([
-                'views/processModal/Process'
-            ],function(Process) {
-                var modal = new Process({query:query});
-                modal.show();
+// <<<<<<< HEAD
+//                 'views/processModal/Process'
+//             ],function(Process) {
+//                 var modal = new Process({query:query});
+//                 modal.show();
+// =======
+                'views/process/Process',
+                'views/process/NoExpProcess',
+                'models/Experiment',
+            ],function(Process, NoExpProcess, Experiment) {
+                if (query == undefined) {
+                    new NoExpProcess({
+                        el:router.getNewMainView(),
+                    });
+                } else {
+                    new Process({
+                        el:router.getNewMainView(),
+                        collection: app.processCommands,
+                        model: new Experiment({expId: query})
+                    });
+                }
+//>>>>>>> feat-tabs
             });
         },
 
         workspace: function() {
 
-        },
-	
-	/*
-		NEW:
-		Gets a new mainView to insert into mainview tag in Index.html
-	*/
-        getNewMainView: function() {
-            $("#mainView").replaceWith('<section id=mainView></section>');
-            return $("#mainView");
-        },
-        
-	/*	
-		NEW:
-		Gets a new admin view.
-	*/
-        getNewAdminView: function() {
-        	$(".activePage").remove();
-        	$("#mainView").append('<div class=activePage></div>');
-        	return $("#mainView");
         },
         
 	/*
