@@ -11,7 +11,8 @@ define([
 			this.collection = new Backbone.Collection();
 		},
 		events: {
-
+			"click #add_ratio_entry": "addEntry",
+            "click #close_ratio_block": "removeCommand"
 		},
 		render: function() {
 			this.$el.html(this.TEMPLATE());
@@ -21,6 +22,18 @@ define([
 				that.renderModel(that, file);
 			});
 		},
+		addEntry: function (e) {
+            e.preventDefault();
+            var file = new File();
+            file.clear();
+            this.model.collection.add(file);
+            this.renderModel(this, file);
+        },
+        removeCommand: function (e) {
+            e.preventDefault();
+            this.model.collection.remove(this.model);
+            this.el.remove();
+        },
 		renderModel: function(view, model) {
 			var entryView = new RatioEntry({
 				model: model
