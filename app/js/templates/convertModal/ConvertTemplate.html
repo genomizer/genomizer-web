@@ -1,0 +1,73 @@
+<form class="form-inline container inline">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Convert</legend>
+
+<!-- Multiple Radios (inline) -->
+<div class="control-group">
+  <label class="control-label" for="fileType">Select all</label>
+  <div class="controls">
+
+    <label class="radio inline" for="fileType-1">
+      <input type="radio" name="fileType" id="SGR" value="SGR">
+      SGR
+    </label>
+
+    <label class="radio inline" for="fileType-3">
+      <input type="radio" name="fileType" id="WIG" value="WIG">
+      WIG
+    </label>
+
+    <label class="radio inline" for="fileType-3">
+      <input type="radio" name="fileType" id="BED" value="BED">
+      BED
+    </label>
+
+    <label class="radio inline" for="fileType-3">
+      <input type="radio" name="fileType" id="GFF" value="GFF">
+      GFF
+    </label>
+
+  </div>
+</div>
+<br>
+
+<!-- Multiple Checkboxes -->
+<div class="control-group">
+  <label class="control-label" for="fileSelect">Select files</label>
+  <div class="controls">
+
+  <!--- Fill checkboxes with files -->
+    <% _.each(files, function(file) { %>
+            <label for=<%= file %> ><input type="checkbox" value=<%= file %> /><%= file %></label><br>
+<% });  %>
+  </div>
+</div>
+<br>
+
+<!-- Multiple Radios (inline) -->
+<div class="control-group">
+  <label class="control-label" for="convertTarget">Convert To</label>
+  <div class="controls">
+    <label class="radio inline" for="convertTarget-0">
+      <input type="radio" name="convertTarget" id="convertTarget-WIG" value="WIG" checked="checked">
+      WIG
+    </label>
+    <label class="radio inline" for="convertTarget-1">
+      <input type="radio" name="convertTarget" id="convertTarget-SGR" value="SGR">
+      SGR
+    </label>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for="submit"></label>
+  <div class="controls">
+    <button id="submit" name="submit" class="btn btn-primary">Convert</button>
+  </div>
+</div>
+
+</fieldset>
+</form>

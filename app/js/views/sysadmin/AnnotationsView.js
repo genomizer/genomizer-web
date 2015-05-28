@@ -23,8 +23,8 @@ function(AnnotationListView, annotationsViewTemplate, Annotations) {
 			this.annotationsListView = new AnnotationListView(annotations);
 			this.searchList = new Annotations();
 
-			this.$el.find("#genomeReleases").removeClass("active");
-			this.$el.find("#annotation").addClass("active");
+			this.$el.find("#genomeReleases").removeClass("activeLink");
+			this.$el.find("#annotation").addClass("activeLink");
 			this.render();
 		},
 
