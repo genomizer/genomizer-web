@@ -1,13 +1,17 @@
 define([
     'text!templates/process/Process.html',
     'text!templates/process/RawToProfileBlock.html',
+    'text!templates/process/RatioBlock.html',
     'views/process/RawToProfileBlock',
+    'views/process/RatioBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
     'collections/sysadmin/GenomeReleaseFiles',
 ], function(processTemplate,
             rawToProfileBlockTemplate,
+            ratioBlockTemplate,
             RawToProfileBlock,
+            RatioBlock,
             ProcessCommand,
             ProcessCommands,
             GenomeReleaseFiles) {
@@ -108,7 +112,13 @@ define([
                     console.log("Raw to profile");
                     break;
                 case "ratio":
-                    console.log("ratio");
+                    console.log("herroooo ratio");
+                    var ratioBlock = new RatioBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    ratioBlock.render();
+                    view.$("#processes").append(ratioBlock.el);
                     break;
             }
         },
