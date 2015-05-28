@@ -112,7 +112,7 @@ function(ConvertTemplate) {
             }).prop("disabled", "true");
         },
 
-        getSelectedFiles: function() {
+        getSelectedFileIDs: function() {
             var fileArray = [];
             var i = 1;
 
@@ -128,6 +128,23 @@ function(ConvertTemplate) {
             return fileArray.split(',');
         },
 
+        getSelectedFiles: function() {
+            var fileArray = [];
+            var i = 1;
+
+            var filearr = this.fileArray;
+
+            $("input:checkbox").each(function (){
+                if(this.checked) {
+                    fileArray += filearr[i];
+                    fileArray += ',';
+                }
+                i++;
+            });
+            return fileArray.split(',');
+        },
+
+
         //Sends the convert command to the server using JSON.
         startConversion: function(event) {
             event.preventDefault();
@@ -142,7 +159,8 @@ function(ConvertTemplate) {
                 totype = "wig";
             }
 
-            var fileids = this.getSelectedFiles();
+            var fileids = this.getSelectedFileIDs();
+            var filearr = this.getSelectedFiles();
             for(i = 0 ; i < fileids.length - 1 ; i++) {
                 var toSubmit = {fileid: fileids[i],toformat: totype};
                 new Backbone.Model(toSubmit).save(null, {
@@ -155,7 +173,7 @@ function(ConvertTemplate) {
                     });
                 },
                 success: function (event, jqxhr) {
-                    app.messenger.success("Successfully converted file/files");
+                    app.messenger.success("Successfully converted " +filearr[i]+ " to "+totype);
                     $( "input:checkbox:checked" ).each(function(){
                         $( this ).closest('label').addClass( 'successLabel');
                     });
