@@ -7,16 +7,7 @@
             <div class="col-xs-3"/>
             <div class="col-xs-4">
                 <select class="form-control" id="append_process">
-                    <% _.each(["rawToProfile"], function(process) { %>
-                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
-                    <% }); %>
-                    <% _.each(["smooth"], function(process) { %>
-                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
-                    <% }); %>
-                    <% _.each(["step"], function(process) { %>
-                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
-                    <% }); %>
-                    <% _.each(["ratio"], function(process) { %>
+                    <% _.each(["rawToProfile", "smooth", "step", "ratio"], function(process) { %>
                         <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
                     <% }); %>
                 </select>
