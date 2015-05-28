@@ -10,6 +10,12 @@
                     <% _.each(["rawToProfile"], function(process) { %>
                         <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
                     <% }); %>
+                    <% _.each(["smooth"], function(process) { %>
+                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
+                    <% }); %>
+                    <% _.each(["step"], function(process) { %>
+                        <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
+                    <% }); %>
                     <% _.each(["ratio"], function(process) { %>
                         <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
                     <% }); %>

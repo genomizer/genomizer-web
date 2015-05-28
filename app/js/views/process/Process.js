@@ -1,16 +1,24 @@
 define([
     'text!templates/process/Process.html',
     'text!templates/process/rawToProfile/RawToProfileBlock.html',
+    'text!templates/process/smooth/SmoothBlock.html',
+    'text!templates/process/step/StepBlock.html',
     'text!templates/process/ratio/RatioBlock.html',
     'views/process/rawToProfile/RawToProfileBlock',
+    'views/process/smooth/SmoothBlock',
+    'views/process/step/StepBlock',
     'views/process/ratio/RatioBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
     'collections/sysadmin/GenomeReleaseFiles',
 ], function(processTemplate,
             rawToProfileBlockTemplate,
+            smoothBlockTemplate,
+            stepBlockTemplate,
             ratioBlockTemplate,
             RawToProfileBlock,
+            SmoothBlock,
+            StepBlock,
             RatioBlock,
             ProcessCommand,
             ProcessCommands,
@@ -53,6 +61,10 @@ define([
                     });
                     this.collection.add(cmd);
                     this.renderBlock(this, cmd);
+                    break;
+                case "smooth":
+                    break;
+                case "step":
                     break;
                 case "ratio":
                     console.log("append ratio block");
@@ -110,6 +122,10 @@ define([
                     rawToProfileBlock.render();
                     view.$("#processes").append(rawToProfileBlock.el);
                     console.log("Raw to profile");
+                    break;
+                case "smooth":
+                    break;
+                case "step":
                     break;
                 case "ratio":
                     console.log("herroooo ratio");
