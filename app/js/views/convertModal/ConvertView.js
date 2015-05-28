@@ -132,7 +132,6 @@ function(ConvertTemplate) {
                     });
                 },
                 success: function (event, jqxhr) {
-                    alert("Successfully converted "+filids[i])
                     app.messenger.success("Successfully converted file/files");
                     $( "input:checkbox:checked" ).each(function(){
                         $( this ).closest('label').addClass( 'successLabel');
