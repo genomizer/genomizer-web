@@ -10,7 +10,7 @@ define([
     'views/process/ratio/RatioBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
-    'collections/sysadmin/GenomeReleaseFiles',
+    'collections/sysadmin/GenomeReleaseFiles'
 ], function(processTemplate,
             rawToProfileBlockTemplate,
             smoothBlockTemplate,
@@ -63,15 +63,25 @@ define([
                     this.renderBlock(this, cmd);
                     break;
                 case "smooth":
+                    var cmd = new ProcessCommand({
+                        type: "smooth",
+                        files: this.files
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
                     break;
                 case "step":
+                    var cmd = new ProcessCommand({
+                        type: "step",
+                        files: this.files
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
                     break;
                 case "ratio":
-                    console.log("append ratio block");
                     var cmd = new ProcessCommand({
                         type: "ratio",
-                        files: this.files,
-                        //grs: this.model.get("grs")
+                        files: this.files
                     });
                     this.collection.add(cmd);
                     this.renderBlock(this, cmd);
@@ -124,8 +134,20 @@ define([
                     console.log("Raw to profile");
                     break;
                 case "smooth":
+                    var smoothBlock = new SmoothBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    smoothBlock.render();
+                    view.$("#processes").append(smoothBlock.el);
                     break;
                 case "step":
+                    var stepBlock = new StepBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    stepBlock.render();
+                    view.$("#processes").append(stepBlock.el);
                     break;
                 case "ratio":
                     console.log("herroooo ratio");

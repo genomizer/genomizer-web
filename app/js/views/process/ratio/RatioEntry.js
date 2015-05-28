@@ -10,7 +10,7 @@ define([
         },
         events: {
             "change input": "updateModel",
-            //"click #close_entry": "removeEntry",
+            "click #close_ratio_entry": "removeEntry",
         },
         render: function(files) {
             this.$el.html(this.TEMPLATE({
@@ -31,11 +31,10 @@ define([
             });
             this.model.set(input);
         },
-
-//        removeEntry: function (e) {
-//            e.preventDefault();
-//            this.collection.remove(this.model);
-//            this.el.remove();
-//        },
+        removeEntry: function (e) {
+            e.preventDefault();
+            this.collection.remove(this.model);
+            this.el.remove();
+        }
     });
 });
