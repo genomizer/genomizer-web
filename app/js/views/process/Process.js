@@ -52,6 +52,13 @@ define([
                     break;
                 case "ratio":
                     console.log("append ratio block");
+                    var cmd = new ProcessCommand({
+                        type: "ratio",
+                        files: this.files,
+                        //grs: this.model.get("grs")
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
                     break;
             }
         },
@@ -90,12 +97,20 @@ define([
         },
 
         renderBlock: function (view, block) {
-            var rawToProfileBlock = new RawToProfileBlock({
-                model: block, 
-                collection: view.collection,
-            });
-            rawToProfileBlock.render();
-            view.$("#processes").append(rawToProfileBlock.el);
+            switch (block.get("type")) {
+                case "rawToProfile":
+                    var rawToProfileBlock = new RawToProfileBlock({
+                        model: block, 
+                        collection: view.collection,
+                    });
+                    rawToProfileBlock.render();
+                    view.$("#processes").append(rawToProfileBlock.el);
+                    console.log("Raw to profile");
+                    break;
+                case "ratio":
+                    console.log("ratio");
+                    break;
+            }
         },
 
         fetchFileNamesAndGRs: function () {
