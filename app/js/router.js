@@ -18,7 +18,6 @@ define([],function() {
             "upload/:expIds": "upload",
             "process": "process",
             "process/:query": "process",
-            "workspace": "workspace",
             "administration":"administration",
             "administration/createannotation": "createAnnotation",
             "administration/editannotation/:name": "editAnnotation",
@@ -158,11 +157,6 @@ define([],function() {
 //>>>>>>> feat-tabs
             });
         },
-
-        workspace: function() {
-
-        },
-        
 	/*
 		NEW:
 		Admin function that uses the sysadmin view.
