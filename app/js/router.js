@@ -154,7 +154,6 @@ define([],function() {
                         model: new Experiment({expId: query})
                     });
                 }
-//>>>>>>> feat-tabs
             });
         },
 	/*

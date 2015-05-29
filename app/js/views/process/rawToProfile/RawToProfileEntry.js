@@ -1,5 +1,5 @@
 define([
-    'text!templates/process/RawToProfileEntry.html',
+    'text!templates/process/rawToProfile/RawToProfileEntry.html',
     'models/File'
 ], function(rawToProfileEntryTemplate, File) {
     return Backbone.View.extend({
@@ -10,12 +10,12 @@ define([
         },
         events: {
             "change input": "updateModel",
-            "click #close_entry": "removeEntry",
+            "click #close_raw_to_profile_entry": "removeEntry"
         },
         render: function(files, genomeVersions) {
             this.$el.html(this.TEMPLATE({
                 files: files,
-                genomeVersions: genomeVersions,
+                genomeVersions: genomeVersions
             }));
         },
         updateModel: function() {
@@ -31,12 +31,11 @@ define([
             });
             this.model.set(input);
         },
-
         removeEntry: function (e) {
             e.preventDefault();
             this.collection.remove(this.model);
             this.el.remove();
-        },
+        }
     });
 });
 
