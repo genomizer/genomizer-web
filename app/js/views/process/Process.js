@@ -1,13 +1,25 @@
 define([
     'text!templates/process/Process.html',
-    'text!templates/process/RawToProfileBlock.html',
-    'views/process/RawToProfileBlock',
+    'text!templates/process/rawToProfile/RawToProfileBlock.html',
+    'text!templates/process/smooth/SmoothBlock.html',
+    'text!templates/process/step/StepBlock.html',
+    'text!templates/process/ratio/RatioBlock.html',
+    'views/process/rawToProfile/RawToProfileBlock',
+    'views/process/smooth/SmoothBlock',
+    'views/process/step/StepBlock',
+    'views/process/ratio/RatioBlock',
     'models/ProcessCommand',
     'collections/ProcessCommands',
-    'collections/sysadmin/GenomeReleaseFiles',
+    'collections/sysadmin/GenomeReleaseFiles'
 ], function(processTemplate,
             rawToProfileBlockTemplate,
+            smoothBlockTemplate,
+            stepBlockTemplate,
+            ratioBlockTemplate,
             RawToProfileBlock,
+            SmoothBlock,
+            StepBlock,
+            RatioBlock,
             ProcessCommand,
             ProcessCommands,
             GenomeReleaseFiles) {
@@ -50,8 +62,29 @@ define([
                     this.collection.add(cmd);
                     this.renderBlock(this, cmd);
                     break;
+                case "smooth":
+                    var cmd = new ProcessCommand({
+                        type: "smoothing",
+                        files: this.files
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
+                    break;
+                case "step":
+                    var cmd = new ProcessCommand({
+                        type: "step",
+                        files: this.files
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
+                    break;
                 case "ratio":
-                    console.log("append ratio block");
+                    var cmd = new ProcessCommand({
+                        type: "ratio",
+                        files: this.files
+                    });
+                    this.collection.add(cmd);
+                    this.renderBlock(this, cmd);
                     break;
             }
         },
@@ -79,23 +112,53 @@ define([
                 url: "/api/process/processCommands",
                 type: "PUT",
                 error: function (event, jqxhr) {
-                    // app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
+                    app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
                 },
                 success: function (event, jqxhr) {
                     app.messenger.success("Successfully started processing.");
                     view.collection.reset();
                     view.render();
-                },
+                }
             });
         },
 
         renderBlock: function (view, block) {
-            var rawToProfileBlock = new RawToProfileBlock({
-                model: block, 
-                collection: view.collection,
-            });
-            rawToProfileBlock.render();
-            view.$("#processes").append(rawToProfileBlock.el);
+            switch (block.get("type")) {
+                case "rawToProfile":
+                    var rawToProfileBlock = new RawToProfileBlock({
+                        model: block, 
+                        collection: view.collection,
+                    });
+                    rawToProfileBlock.render();
+                    view.$("#processes").append(rawToProfileBlock.el);
+                    console.log("Raw to profile");
+                    break;
+                case "smoothing":
+                    var smoothBlock = new SmoothBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    smoothBlock.render();
+                    view.$("#processes").append(smoothBlock.el);
+                    break;
+                case "step":
+                    var stepBlock = new StepBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    stepBlock.render();
+                    view.$("#processes").append(stepBlock.el);
+                    break;
+                case "ratio":
+                    console.log("herroooo ratio");
+                    var ratioBlock = new RatioBlock({
+                        model: block,
+                        collection: view.collection
+                    });
+                    ratioBlock.render();
+                    view.$("#processes").append(ratioBlock.el);
+                    break;
+            }
         },
 
         fetchFileNamesAndGRs: function () {
@@ -128,7 +191,7 @@ define([
                     processView.render();
                 }
             });
-        },
+        }
     });
 });
 
