@@ -13,7 +13,7 @@ define([
 		},
 		render: function(route) {
 			this.$el.html(this.TEMPLATE({route:route}));
-			 this.$el.find("#process_container").append(this.processPopover.$el);
+			this.$el.find("#process_container").append(this.processPopover.$el);
 		},
 		events: {
 			"click #process_container > a" : "openProcessPopover"
