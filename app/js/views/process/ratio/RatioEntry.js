@@ -33,7 +33,7 @@ define([
         },
         removeEntry: function (e) {
             e.preventDefault();
-            this.collection.remove(this.model);
+            //this.collection.remove(this.model);
             this.el.remove();
         }
     });

@@ -64,7 +64,7 @@ define([
                     break;
                 case "smooth":
                     var cmd = new ProcessCommand({
-                        type: "smooth",
+                        type: "smoothing",
                         files: this.files
                     });
                     this.collection.add(cmd);
@@ -112,13 +112,13 @@ define([
                 url: "/api/process/processCommands",
                 type: "PUT",
                 error: function (event, jqxhr) {
-                    // app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
+                    app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
                 },
                 success: function (event, jqxhr) {
                     app.messenger.success("Successfully started processing.");
                     view.collection.reset();
                     view.render();
-                },
+                }
             });
         },
 
@@ -133,7 +133,7 @@ define([
                     view.$("#processes").append(rawToProfileBlock.el);
                     console.log("Raw to profile");
                     break;
-                case "smooth":
+                case "smoothing":
                     var smoothBlock = new SmoothBlock({
                         model: block,
                         collection: view.collection
@@ -191,7 +191,7 @@ define([
                     processView.render();
                 }
             });
-        },
+        }
     });
 });
 
