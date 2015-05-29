@@ -141,6 +141,7 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
 			if(this.model.isNew()) {
 				this.model.save(null,{success:function() {
 					that.uploadFiles();
+					app.messenger.success("Successfully created new experiment.");
 				},error: function() {
 				}
 				});
