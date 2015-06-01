@@ -99,36 +99,34 @@ function(ConvertTemplate) {
         selectSGR: function(){
             this.selectAll("sgr");
             $("#convertTarget-WIG").prop("checked", true);
-            /*
-            
-                THIS IS A FILE! //Albin
-             */
         },
 
         selectAll: function(val) {
             // Reset all the check-boxes ckecked
             $('input:checkbox').prop('checked', false);
             this.disableBoxes();
+
             $("input:checkbox").filter(function() {
                 return this.value.split('.').pop() == val;
             }).prop("checked", "true");
+
             this.disableBoxes();
         },
 
         disableAll: function(val) {
-            // Reset all the check-boxes ckecked
+            // Reset all the check-boxes checked
             $("input:checkbox").filter(function() {
-                return this.value.split('.').pop() == val;
+                return this.value.split('.').pop() == val
             }).prop("disabled", "true");
         },
 
-        //
+        //Toggles the convert radio button for SGR.
         setSGRTarget: function(val) {
             $("#convertTarget-SGR").attr('disabled',val);
             $("#convertTarget-WIG").prop("checked", true);
         },
 
-        //
+         //Toggles the convert radio button for WIG.
         setWIGTarget: function(val) {
              $("#convertTarget-WIG").attr('disabled',val);
              $("#convertTarget-SGR").prop("checked", true);
@@ -141,7 +139,7 @@ function(ConvertTemplate) {
             var fileids = this.idArray;
 
             $("input:checkbox").each(function (){
-                if(this.checked) {
+                if(this.checked ) {
                     fileArray += fileids[i];
                     fileArray += ',';
                 }
@@ -196,6 +194,7 @@ function(ConvertTemplate) {
                     app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
                     $( "input:checkbox:checked" ).each(function(){
                        $( this ).closest('label').addClass( 'errorLabel');
+                       $( this ).prop("disabled", "false");
                     });
                 },
 
@@ -204,6 +203,7 @@ function(ConvertTemplate) {
                     app.messenger.success("Successfully converted " +filearr[i]+ " to "+totype);
                     $( "input:checkbox:checked" ).each(function(){
                         $( this ).closest('label').addClass( 'successLabel');
+                        $( this ).prop("disabled", "true");
                     });
                 },
             });
