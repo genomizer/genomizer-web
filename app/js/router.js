@@ -18,12 +18,12 @@ define([],function() {
             "upload/:expIds": "upload",
             "process": "process",
             "process/:query": "process",
-            "workspace": "workspace",
             "administration":"administration",
             "administration/createannotation": "createAnnotation",
             "administration/editannotation/:name": "editAnnotation",
             "administration/genomereleases" : "genomeReleases",
             "convert": "convert",
+            "convert/:query": "convert",
 			"logout": "logout"
         },
 
@@ -133,6 +133,12 @@ define([],function() {
         process: function(query) {
             var router = this;
             require([
+// <<<<<<< HEAD
+//                 'views/processModal/Process'
+//             ],function(Process) {
+//                 var modal = new Process({query:query});
+//                 modal.show();
+// =======
                 'views/process/Process',
                 'views/process/NoExpProcess',
                 'models/Experiment',
@@ -150,11 +156,6 @@ define([],function() {
                 }
             });
         },
-
-        workspace: function() {
-
-        },
-        
 	/*
 		NEW:
 		Admin function that uses the sysadmin view.
@@ -215,10 +216,14 @@ define([],function() {
                 new GenomeReleaseView({el:that.getNewAdminView()});                
             });
         },
-
-        convert: function() {
-
-
+        
+        convert: function(query) {
+            var that = this;
+            require([
+                'views/convertModal/ConvertView'
+            ],function(Convert) {
+                new Convert({el:that.getNewMainView(), query:query});
+            });
         },
 
         //Logout function.

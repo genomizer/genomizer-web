@@ -7,9 +7,9 @@
             <div class="col-xs-3"/>
             <div class="col-xs-4">
                 <select class="form-control" id="append_process">
-                    <% _.each(["rawToProfile"], function(process) { %>
+                    <% _.each(["rawToProfile", "smooth", "step", "ratio"], function(process) { %>
                         <option id="<%- process %>"><%- process.charAt(0).toUpperCase() + process.slice(1) %></option>
-                        <% }); %>
+                    <% }); %>
                 </select>
             </div>
             <div class="col-xs-2">
