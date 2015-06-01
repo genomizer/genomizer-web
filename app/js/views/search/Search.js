@@ -254,12 +254,12 @@ define([
 			//TODO(?) does only work with selecting an experiment for processing not 
 			//selecting raw files.
 			var exps = this.collection.getSelectedExperiments();
-			var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
+			//var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
 			var filenames = this.collection.getSelectedFiles();
-			var data = specie;
-			for(var i = 0; i<exps.length; i++) {
+			var data = [];
+/*			for(var i = 0; i<exps.length; i++) {
 				data += "," + exps.at(i).get("name");
-			}
+			}*/
 			data += "~";
 			for(var i = 0; i<filenames.length; i++) {
 				data += "," + filenames.at(i).get("id");

@@ -35,12 +35,48 @@ function(ConvertTemplate) {
             "click #WIG": "selectWIG",
             "click #BED": "selectBED",
             "click #GFF": "selectGFF",
+            "click input:checkbox": "disableBoxes",
             "click #submit" : "startConversion"
         },
-        
+
         render: function() {
             //alert(this.queryArray[0]);
             this.$el.html(this.TEMPLATE({'files':this.fileArray}));
+        },
+
+        disableBoxes: function(e){
+            var filearr = []
+            var filenames = this.fileArray;
+            var j = 0;
+            var i = 0;
+
+            $("input:checkbox").each(function (){
+                if(this.checked) {
+                    filearr[j] = filenames[i];
+                    j++;
+                }
+                i++;
+            });
+
+            for(i = 0; i < filearr.length; i++) {
+                if((filearr[i]).split('.').pop() == "sgr") {
+                    this.disableAll("wig");
+                    this.setSGRTarget(true);
+                    this.setWIGTarget(false);
+                    return;
+                }
+                else if((filearr[i]).split('.').pop() == "wig") {
+                    this.disableAll("sgr");
+                    this.setSGRTarget(false);
+                    this.setWIGTarget(true);
+                    return;
+                } else {
+                    this.setSGRTarget(false);
+                    this.setWIGTarget(false);
+                    $('input:checkbox').prop('disabled', false);
+                }
+            }
+            $('input:checkbox').prop('disabled', false);
         },
 
         //Select allt the GFF files.
@@ -68,28 +104,66 @@ function(ConvertTemplate) {
         selectAll: function(val) {
             // Reset all the check-boxes ckecked
             $('input:checkbox').prop('checked', false);
+            this.disableBoxes();
 
             $("input:checkbox").filter(function() {
                 return this.value.split('.').pop() == val;
             }).prop("checked", "true");
+
+            this.disableBoxes();
         },
 
-        getSelectedFiles: function() {
+        disableAll: function(val) {
+            // Reset all the check-boxes checked
+            $("input:checkbox").filter(function() {
+                return this.value.split('.').pop() == val
+            }).prop("disabled", "true");
+        },
+
+        //Toggles the convert radio button for SGR.
+        setSGRTarget: function(val) {
+            $("#convertTarget-SGR").attr('disabled',val);
+            $("#convertTarget-WIG").prop("checked", true);
+        },
+
+         //Toggles the convert radio button for WIG.
+        setWIGTarget: function(val) {
+             $("#convertTarget-WIG").attr('disabled',val);
+             $("#convertTarget-SGR").prop("checked", true);
+        },
+
+        getSelectedFileIDs: function() {
             var fileArray = [];
             var i = 1;
 
             var fileids = this.idArray;
 
             $("input:checkbox").each(function (){
-                if(this.checked) {
+                if(this.checked ) {
                     fileArray += fileids[i];
                     fileArray += ',';
                 }
                 i++;
             });
-
             return fileArray.split(',');
         },
+
+        getSelectedFiles: function() {
+            var fileArray = [];
+            var i = 1;
+
+            var filearr = this.fileArray;
+
+            $("input:checkbox").each(function (){
+                if(this.checked) {
+                    fileArray += filearr[i];
+                    fileArray += ',';
+                }
+                i++;
+            });
+            return fileArray.split(',');
+        },
+
 
         //Sends the convert command to the server using JSON.
         startConversion: function(event) {
@@ -104,29 +178,37 @@ function(ConvertTemplate) {
             } else {
                 totype = "wig";
             }
-            var toSubmit = {fileid: this.getSelectedFiles()[0],toformat: totype};
-            // alert(JSON.stringify(toSubmit));
-            // alert(this.getSelectedFiles());
 
-            new Backbone.Model(toSubmit).save(null, {
+            var fileids = this.getSelectedFileIDs();
+            var filearr = this.getSelectedFiles();
+            for(i = 0 ; i < fileids.length - 1 ; i++) {
+                var toSubmit = {fileid: fileids[i],toformat: totype};
+                new Backbone.Model(toSubmit).save(null, {
+               
+                //REST request configuration.
                 url: "/api/convertfile",
                 type: "PUT",
+
+                //Errors when converting.
                 error: function (event, jqxhr) {
                     app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
                     $( "input:checkbox:checked" ).each(function(){
                        $( this ).closest('label').addClass( 'errorLabel');
+                       $( this ).prop("disabled", "false");
                     });
                 },
+
+                //Converted successfully.
                 success: function (event, jqxhr) {
-                    app.messenger.success("Successfully converted file/files");
+                    app.messenger.success("Successfully converted " +filearr[i]+ " to "+totype);
                     $( "input:checkbox:checked" ).each(function(){
                         $( this ).closest('label').addClass( 'successLabel');
+                        $( this ).prop("disabled", "true");
                     });
                 },
             });
+            }
         }
-
-
     });
     return ConvertView;
 });
