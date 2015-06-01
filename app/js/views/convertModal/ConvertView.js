@@ -125,11 +125,13 @@ function(ConvertTemplate) {
         //
         setSGRTarget: function(val) {
             $("#convertTarget-SGR").attr('disabled',val);
+            $("#convertTarget-WIG").prop("checked", true);
         },
 
         //
         setWIGTarget: function(val) {
              $("#convertTarget-WIG").attr('disabled',val);
+             $("#convertTarget-SGR").prop("checked", true);
         },
 
         getSelectedFileIDs: function() {
