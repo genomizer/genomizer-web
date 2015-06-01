@@ -111,6 +111,13 @@ function(ConvertTemplate) {
                 return this.value.split('.').pop() == val;
             }).prop("disabled", "true");
         },
+        disableSingle: function(val) {
+            // Reset all the check-boxes ckecked
+
+            $("input:checkbox").filter(function() {
+                return this.value == val;
+            }).prop("disabled", "true");
+        },
 
         getSelectedFileIDs: function() {
             var fileArray = [];
@@ -130,7 +137,7 @@ function(ConvertTemplate) {
 
         getSelectedFiles: function() {
             var fileArray = [];
-            var i = 1;
+            var i = 0;
 
             var filearr = this.fileArray;
 
@@ -161,24 +168,26 @@ function(ConvertTemplate) {
 
             var fileids = this.getSelectedFileIDs();
             var filearr = this.getSelectedFiles();
+            alert(filearr);
             for(i = 0 ; i < fileids.length - 1 ; i++) {
                 var toSubmit = {fileid: fileids[i],toformat: totype};
                 new Backbone.Model(toSubmit).save(null, {
-                url: "/api/convertfile",
-                type: "PUT",
-                error: function (event, jqxhr) {
-                    app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
-                    $( "input:checkbox:checked" ).each(function(){
-                       $( this ).closest('label').addClass( 'errorLabel');
-                    });
-                },
-                success: function (event, jqxhr) {
-                    app.messenger.success("Successfully converted " +filearr[i]+ " to "+totype);
-                    $( "input:checkbox:checked" ).each(function(){
-                        $( this ).closest('label').addClass( 'successLabel');
-                    });
-                },
-            });
+                    url: "/api/convertfile",
+                    type: "PUT",
+                    error: function (event, jqxhr) {
+                        app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
+                        $( "input:checkbox:checked" ).each(function(){
+                           $( this ).closest('label').addClass( 'errorLabel');
+                        });
+                    },
+                    success: function (event, jqxhr) {
+                        app.messenger.success("Successfully converted " +filearr[i]+ " to "+totype);
+                        $( "input:checkbox:checked" ).each(function(){
+                            $( this ).closest('label').addClass( 'successLabel');
+                        });
+                    },
+                });
+                this.disableSingle(filearr[i]);
             }
            
 
