@@ -8,8 +8,6 @@ define([
     'views/process/smooth/SmoothBlock',
     'views/process/step/StepBlock',
     'views/process/ratio/RatioBlock',
-    'models/ProcessCommand',
-    'collections/ProcessCommands',
     'collections/sysadmin/GenomeReleaseFiles'
 ], function(processTemplate,
             rawToProfileBlockTemplate,
@@ -20,8 +18,6 @@ define([
             SmoothBlock,
             StepBlock,
             RatioBlock,
-            ProcessCommand,
-            ProcessCommands,
             GenomeReleaseFiles) {
 
     return Backbone.View.extend({
@@ -40,11 +36,6 @@ define([
 
         render: function() {
             this.$el.html(this.TEMPLATE());
-            
-            var processView = this;
-            this.collection.each(function (cmd) {
-                processView.renderBlock(processView, cmd);
-            });
         },
 
         appendProcess: function (e) {
@@ -52,113 +43,142 @@ define([
             console.log("append block");
             var blockType = $("#append_process").val().toLowerCase();
             console.log(blockType);
+            var block = undefined;
             switch (blockType) {
                 case "rawtoprofile":
-                    var cmd = new ProcessCommand({
-                        type: "rawToProfile",
-                        files: this.files,
-                        grs: this.model.get("grs"),
-                    });
-                    this.collection.add(cmd);
-                    this.renderBlock(this, cmd);
+                    block = new RawToProfileBlock();
                     break;
                 case "smooth":
-                    var cmd = new ProcessCommand({
-                        type: "smoothing",
-                        files: this.files
-                    });
-                    this.collection.add(cmd);
-                    this.renderBlock(this, cmd);
+                    block = new SmoothBlock();
                     break;
                 case "step":
-                    var cmd = new ProcessCommand({
-                        type: "step",
-                        files: this.files
-                    });
-                    this.collection.add(cmd);
-                    this.renderBlock(this, cmd);
+                    block = new StepBlock();
                     break;
                 case "ratio":
-                    var cmd = new ProcessCommand({
-                        type: "ratio",
-                        files: this.files
-                    });
-                    this.collection.add(cmd);
-                    this.renderBlock(this, cmd);
+                    block = new RatioBlock();
                     break;
             }
+            if (block !== undefined) {
+                this.renderBlock(this, block);
+            }
+        },
+
+        buildJson: function () {
+            var json = { expId: this.model.get("expId"), processCommands: [] };
+            $('#processes').each(function () {
+                var $this = $(this);
+                
+                $this.find('[id=raw_to_profile_entries]').each(function () {
+                    var cmd = { type: 'rawToProfile', files: [] };
+                    json.processCommands.push(cmd);
+                    var $this = $(this);
+                    $this.find('[class=row]').each(function () {
+                        var file = {};
+                        cmd.files.push(file);
+                        var $this = $(this);
+                        $this.find('input, select').each(function () {
+                            file[this.name] = this.value;
+                        });
+                        $this.find('[type=checkbox]').each(function () {
+                            file[this.name] = this.checked;
+                        });
+                    });
+                });
+                
+                $this.find('[id=raw_to_profile_entries]').each(function () {
+                    var cmd = { type: 'rawToProfile', files: [] };
+                    json.processCommands.push(cmd);
+                    var $this = $(this);
+                    $this.find('[class=row]').each(function () {
+                        var file = {};
+                        cmd.files.push(file);
+                        var $this = $(this);
+                        $this.find('input, select').each(function () {
+                            file[this.name] = this.value;
+                        });
+                        $this.find('[type=checkbox]').each(function () {
+                            file[this.name] = this.checked;
+                        });
+                    });
+                });
+                
+                $this.find('[id=raw_to_profile_entries]').each(function () {
+                    var cmd = { type: 'rawToProfile', files: [] };
+                    json.processCommands.push(cmd);
+                    var $this = $(this);
+                    $this.find('[class=row]').each(function () {
+                        var file = {};
+                        cmd.files.push(file);
+                        var $this = $(this);
+                        $this.find('input, select').each(function () {
+                            file[this.name] = this.value;
+                        });
+                        $this.find('[type=checkbox]').each(function () {
+                            file[this.name] = this.checked;
+                        });
+                    });
+                });
+                
+                $this.find('[id=raw_to_profile_entries]').each(function () {
+                    var cmd = { type: 'rawToProfile', files: [] };
+                    json.processCommands.push(cmd);
+                    var $this = $(this);
+                    $this.find('[class=row]').each(function () {
+                        var file = {};
+                        cmd.files.push(file);
+                        var $this = $(this);
+                        $this.find('input, select').each(function () {
+                            file[this.name] = this.value;
+                        });
+                        $this.find('[type=checkbox]').each(function () {
+                            file[this.name] = this.checked;
+                        });
+                    });
+                });
+            });
+            console.log(JSON.stringify(json));
         },
 
         submitProcess: function (e) {
             e.preventDefault();
-            var view = this;
+
+            this.buildJson();
+            // console.log(this.buildJson());
+
+            // var view = this;
             
-            var toSubmit = { expId: this.model.get("expId"), processCommands: [] };
+            // var toSubmit = { expId: this.model.get("expId"), processCommands: [] };
 
-            this.collection.each(function (cmd) {
+            // this.collection.each(function (cmd) {
 
-                var toSubmitCmd = { type: cmd.get("type"), files: [] };
+            //     var toSubmitCmd = { type: cmd.get("type"), files: [] };
 
-                cmd.collection.each(function (file) {
-                    toSubmitCmd.files.push(file);
-                });
+            //     cmd.collection.each(function (file) {
+            //         toSubmitCmd.files.push(file);
+            //     });
 
-                toSubmit.processCommands.push(toSubmitCmd);
-            });
+            //     toSubmit.processCommands.push(toSubmitCmd);
+            // });
 
-            console.log(JSON.stringify(toSubmit));
+            // console.log(JSON.stringify(toSubmit));
 
-            new Backbone.Model(toSubmit).save(null, {
-                url: "/api/process/processCommands",
-                type: "PUT",
-                error: function (event, jqxhr) {
-                    app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
-                },
-                success: function (event, jqxhr) {
-                    app.messenger.success("Successfully started processing.");
-                    view.collection.reset();
-                    view.render();
-                }
-            });
+            // new Backbone.Model(toSubmit).save(null, {
+            //     url: "/api/process/processCommands",
+            //     type: "PUT",
+            //     error: function (event, jqxhr) {
+            //         app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
+            //     },
+            //     success: function (event, jqxhr) {
+            //         app.messenger.success("Successfully started processing.");
+            //         view.collection.reset();
+            //         view.render();
+            //     }
+            // });
         },
 
         renderBlock: function (view, block) {
-            switch (block.get("type")) {
-                case "rawToProfile":
-                    var rawToProfileBlock = new RawToProfileBlock({
-                        model: block, 
-                        collection: view.collection,
-                    });
-                    rawToProfileBlock.render();
-                    view.$("#processes").append(rawToProfileBlock.el);
-                    console.log("Raw to profile");
-                    break;
-                case "smoothing":
-                    var smoothBlock = new SmoothBlock({
-                        model: block,
-                        collection: view.collection
-                    });
-                    smoothBlock.render();
-                    view.$("#processes").append(smoothBlock.el);
-                    break;
-                case "step":
-                    var stepBlock = new StepBlock({
-                        model: block,
-                        collection: view.collection
-                    });
-                    stepBlock.render();
-                    view.$("#processes").append(stepBlock.el);
-                    break;
-                case "ratio":
-                    console.log("herroooo ratio");
-                    var ratioBlock = new RatioBlock({
-                        model: block,
-                        collection: view.collection
-                    });
-                    ratioBlock.render();
-                    view.$("#processes").append(ratioBlock.el);
-                    break;
-            }
+            block.render();
+            view.$('#processes').append(block.el);
         },
 
         fetchFileNamesAndGRs: function () {
@@ -187,7 +207,6 @@ define([
                     console.log("error while getting genome releases");
                 },
                 success: function (model, response) {
-                    app.debug = model;
                     processView.render();
                 }
             });

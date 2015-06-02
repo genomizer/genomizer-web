@@ -133,12 +133,6 @@ define([],function() {
         process: function(query) {
             var router = this;
             require([
-// <<<<<<< HEAD
-//                 'views/processModal/Process'
-//             ],function(Process) {
-//                 var modal = new Process({query:query});
-//                 modal.show();
-// =======
                 'views/process/Process',
                 'views/process/NoExpProcess',
                 'models/Experiment',
