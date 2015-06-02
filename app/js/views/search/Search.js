@@ -62,6 +62,7 @@ define([
 			"input #search_input": "searchQueryChanged",
 			"click #download_button": "downloadSelected",
 			"click #process_button": "processSelected",
+			"click #convert_button" : "convertSelected",
 			"click #builder_button": "openBuilder",
 			"click #delete_button": "openDeleteModal",
 			"click #do_delete": "deleteData",
@@ -108,6 +109,7 @@ define([
 
 			//display files to be deleted
 			var files = this.collection.getSelectedAndExperimentFiles();
+
 			$('#delete-files-list').empty();
 			if(files.length != 0) {
 				for(var i = 0; i<files.length;i++) {
@@ -138,13 +140,15 @@ define([
 			var selectedFiles = this.collection.getSelectedFiles();
 			var selectedExperiments = this.collection.getSelectedExperiments();
 
-
-			//handles whether or not the upload or process buttons should be clickable.
 			$('#process_button').addClass('disabled');
+			$('#convert_button').addClass('disabled');
 			$('#upload_button').addClass('disabled');
+			$('#download_button').addClass('disabled');
+			$('#delete_button').addClass('disabled');
 
 			if(selectedExperiments.length > 0) {
 				$('#upload_button').removeClass('disabled');
+				$('#delete_button').removeClass('disabled');
 
 				//Makes sure there is two raw files in selected experiments and all have same species.
 				// var startSpecie = this.collection.getSpeciesForExperiment(selectedExperiments.at(0).get("name"));
@@ -172,26 +176,18 @@ define([
 				// 		}
 				// 	}
 				// }
-
 			}
 
 			if (selectedExperiments.length == 1) {
 				$('#process_button').removeClass('disabled');
 			}
 
-			//handles whether or not the download button should be clickable.
             if (selectedFiles.length > 0) {
+            	$('#convert_button').removeClass('disabled');
                 $('#download_button').removeClass('disabled');
-            } else {
-                $('#download_button').addClass('disabled');
+                $('#delete_button').removeClass('disabled');
             }
 
-            //handles whether or not the delete button should be clickable.
-			if(selectedFiles.length > 0 || selectedExperiments.length > 0) {
-				$('#delete_button').removeClass('disabled');
-			} else {
-				$('#delete_button').addClass('disabled');
-			}
 		},
 		searchQueryChanged: function() {
 			var isEmpty = $('#search_input').val().length != 0;
@@ -243,16 +239,37 @@ define([
 			if($(event.currentTarget).hasClass("disabled")) {
 				return;
 			}
+			var exps = this.collection.getSelectedExperiments();
+            if (exps.length == 0) {
+                return;
+            }
+            var exp = exps.at(0);
+
+			app.router.navigate("process/" + exp.get("name"), { trigger:true });
+		},
+		convertSelected: function(event) {
+			if($(event.currentTarget).hasClass("disabled")) {
+				return;
+			}
 			//TODO(?) does only work with selecting an experiment for processing not 
 			//selecting raw files.
 			var exps = this.collection.getSelectedExperiments();
-			var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
-			var data = specie;
-			for(var i = 0; i<exps.length; i++) {
+			//var specie = this.collection.getSpeciesForExperiment(exps.at(0).get("name"));
+			var filenames = this.collection.getSelectedFiles();
+			var data = [];
+/*			for(var i = 0; i<exps.length; i++) {
 				data += "," + exps.at(i).get("name");
+			}*/
+			data += "~";
+			for(var i = 0; i<filenames.length; i++) {
+				data += "," + filenames.at(i).get("id");
+			}
+			data += "~";
+			for(var i = 0; i<filenames.length; i++) {
+				data += "," + filenames.at(i).get("filename");
 			}
 
-			app.router.navigate("process/"+data, {trigger:true});
+			app.router.navigate("convert/"+data, {trigger:true});
 		},
 		openBuilder: function() {
 			this.builder.show();

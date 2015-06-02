@@ -17,10 +17,10 @@ define([],function() {
 
 			$(document).ajaxError(function( event, jqxhr, settings, exception ) {
 				// Show login window if token expires
-				// TODO: shoud we really reload asap?
 				if(jqxhr.status == 401) {
 					localStorage.clear()
-					window.location.href = '';
+					// This reloads the windows so error messages doesn't show
+					//window.location.href = '';
 				}
 			});
 

@@ -1,6 +1,7 @@
 define([
+	'models/File',
 	'text!templates/search/fileViewTemplate.html'
-],function(templateHtml) {
+],function(File,templateHtml) {
 	
 	var FileView = Backbone.View.extend({
 
@@ -12,14 +13,12 @@ define([
 
 		initialize: function(options) {
 			this.searchResults = options.searchResults;
-
 			this.render();
 		},
 		render: function() {
 			this.$el.html(this.template({
 				'file': this.model
 			}));
-			
 			this.$el.find(".file-checked-input").prop("checked", this.searchResults.isFileSelected(this.model.get("id")));
 		},
 		events: {

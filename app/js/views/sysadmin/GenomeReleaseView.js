@@ -35,8 +35,8 @@ function(GenomeReleaseTemplate, GenomeReleaseFiles, GenomeReleaseFile, UploadGen
 			$('.activePage').html(template);
 			this.renderUploadProgress();
 
-			this.$el.find("#annotation").removeClass("active");
-			this.$el.find("#genomeReleases").addClass("active");
+			this.$el.find("#annotation").removeClass("activeLink");
+			this.$el.find("#genomeReleases").addClass("activeLink");
 		},
 
 		events : {

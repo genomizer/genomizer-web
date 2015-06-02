@@ -15,3 +15,11 @@ document {
 .popover-title {
 	font-weight: bold;
 }
+
+.errorLabel {
+	color: red;
+}
+
+.successLabel {
+	color: green;
+}

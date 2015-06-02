@@ -39,28 +39,18 @@ require([
 
     $(document).ajaxError(function( event, jqxhr, settings, exception ) {
     
-    // some goodies for console debugging ajax requests
-    app.ajaxlog.event = event;
-    app.ajaxlog.jqxhr = jqxhr;
-    app.ajaxlog.exception = exception;
+        // some goodies for console debugging ajax requests
+        app.ajaxlog.event = event;
+        app.ajaxlog.jqxhr = jqxhr;
+        app.ajaxlog.exception = exception;
 
-	$(document).ajaxError(function( event, jqxhr, settings, exception ) {
-		
-		if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
-			app.messenger.warning(jqxhr.responseJSON.message);
-		} else {
-			app.messenger.warning("Unexpected error: \"" + jqxhr.status + "\" when requesting " + settings.url + " please reload the page." + exception);
-			
-		}
-	});
-    
-    // TODO replace with 401 unauthorized when API has integrated this change
-    // 500 = internal sever error
-    if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
-        localStorage.clear();
-        app.auth.set('token', undefined);
+        // TODO replace with 401 unauthorized when API has integrated this change
+        // 500 = internal sever error
+        if (jqxhr.status == 500 && jqxhr.responseText != undefined && jqxhr.responseText.search("Could not create command") != -1) {
+            localStorage.clear();
+            app.auth.set('token', undefined);
 
-    }
+        }
         
         if(jqxhr.responseJSON && jqxhr.responseJSON.message) {
             app.messenger.warning(jqxhr.responseJSON.message);
