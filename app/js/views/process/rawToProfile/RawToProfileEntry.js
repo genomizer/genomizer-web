@@ -8,10 +8,11 @@ define([
         events: {
             "click #close_raw_to_profile_entry": "removeEntry"
         },
-        render: function(files, genomeVersions) {
+        render: function(genomeVersions) {
+            console.log(genomeVersions);
             this.$el.html(this.TEMPLATE({
-                files: files,
-                genomeVersions: genomeVersions
+                files: genomeVersions,
+                genomeVersions: genomeVersions,
             }));
         },
         // updateModel: function() {

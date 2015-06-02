@@ -23,7 +23,12 @@ define([
             this.el.remove();
         },
         renderEntry: function (view, entryView) {
-            entryView.render();
+            var grNames = [];
+            this.collection.forEach(function (gr) {
+                grNames.push(gr.get('genomeVersion'));
+            });
+            console.log(grNames);
+            entryView.render(grNames);
             view.$("#raw_to_profile_entries").append(entryView.el);
         }
     });

@@ -46,7 +46,9 @@ define([
             var block = undefined;
             switch (blockType) {
                 case "rawtoprofile":
-                    block = new RawToProfileBlock();
+                    block = new RawToProfileBlock({
+                        collection: this.model.get('grs')
+                    });
                     break;
                 case "smooth":
                     block = new SmoothBlock();
