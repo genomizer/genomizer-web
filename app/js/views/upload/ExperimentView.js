@@ -84,13 +84,22 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
    		* Uses a PUT request for the experiment and sends the new information in a
    		* JSON object to the Java server.
    		*/
-   		changeAnnotations:function(){
+   		changeAnnotations:function(e){
+   			e.preventDefault();
    			var that = this;
+
    			//send JSON request.
    			this.model.save(null,{success:function() {
-				},error: function() {
+				
+				error: function() {
+					app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
 					that.$("#uploadFilesButton").button('reset');
-				}
+				},
+
+				success: function() {
+					   app.messenger.success("Successfully updated experiement annotations.");
+				},
+
 			});
    		},
 
