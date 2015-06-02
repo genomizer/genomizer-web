@@ -160,8 +160,8 @@ define([],function() {
         convert: function(query) {
             var router = this;
             require([
-                'views/convertModal/ConvertView',
-                'views/convertModal/NoExpConvert',
+                'views/convert/ConvertView',
+                'views/convert/NoExpConvert',
                 'models/Experiment',
             ],function(Convert, NoExpConvert, Experiment) {
                 if (query == undefined) {
