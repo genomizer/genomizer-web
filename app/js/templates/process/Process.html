@@ -1,4 +1,12 @@
 <form role="form">
+    <div>
+        <h3>Files in experiment:</h3>
+        <ul>
+            <% _.each(files, function(file) { %>
+                <li><%- file %></li>
+            <% }); %>
+        </ul>
+    </div>
     <div id="processes">
     </div>
     <div>

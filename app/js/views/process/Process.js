@@ -35,7 +35,7 @@ define([
         },
 
         render: function() {
-            this.$el.html(this.TEMPLATE());
+            this.$el.html(this.TEMPLATE({files: this.files }));
         },
 
         appendProcess: function (e) {
