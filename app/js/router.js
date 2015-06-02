@@ -156,6 +156,23 @@ define([],function() {
                 }
             });
         },
+
+        convert: function(query) {
+            var router = this;
+            require([
+                'views/convertModal/ConvertView',
+                'views/convertModal/NoExpConvert',
+                'models/Experiment',
+            ],function(Convert, NoExpConvert, Experiment) {
+                if (query == undefined) {
+                    new NoExpConvert({
+                        el:router.getNewMainView(),
+                    });
+                } else {
+                    new Convert({el:router.getNewMainView(), query:query});
+                }
+            });
+        },
 	/*
 		NEW:
 		Admin function that uses the sysadmin view.
@@ -214,15 +231,6 @@ define([],function() {
             ],function(SysadminMainView, GenomeReleaseView) {
             	new SysadminMainView({el:that.getNewMainView()});
                 new GenomeReleaseView({el:that.getNewAdminView()});                
-            });
-        },
-        
-        convert: function(query) {
-            var that = this;
-            require([
-                'views/convertModal/ConvertView'
-            ],function(Convert) {
-                new Convert({el:that.getNewMainView(), query:query});
             });
         },
 
