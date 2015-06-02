@@ -73,3 +73,7 @@
     font-size: 0;
     line-height: 0
 }
+
+.list-row {
+    padding-left: 15px
+}

@@ -1,13 +1,22 @@
 <form role="form">
-    <div>
-        <h3>Files in experiment:</h3>
-        <ul>
-            <% _.each(files, function(file) { %>
-                <li><%- file %></li>
-            <% }); %>
-        </ul>
+    <div class="row">
+        <div class="col-xs-1"/>
+        <div class="col-xs-5">
+            <h3>Files found in experiment "<%- this.model.get("expId") %>": </h3>
+            <ul>
+                <% _.each(files, function(file) { %>
+                    <li><%- file %></li>
+                <% }); %>
+            </ul>
+        </div>
     </div>
     <div id="processes">
+    <div class="row">
+        <div class="col-xs-1"/>
+        <div class="col-xs-5">
+            <h2>Process builder</h2>
+        </div>
+    </div>
     </div>
     <div>
         <br/>
