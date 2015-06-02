@@ -8,7 +8,7 @@ define([
 
 /*
 *	Class: 		ExperimentView.js
-*	Author: 		Web development group.
+*	Author: 	Web development group.
 *	Template: 	ExperimentContainer.html
 *
 *	Description:  	Handles actions done in the ExperimentView such as
@@ -89,8 +89,8 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
    			var that = this;
 
    			//send JSON request.
-   			this.model.save(null,{success:function() {
-				
+   			this.model.save(null,{
+
 				error: function() {
 					app.messenger.warning("Unable to convert: " + jqxhr.status + " " + jqxhr.responseText);
 					that.$("#uploadFilesButton").button('reset');
@@ -137,6 +137,15 @@ function(ExperimentTemplate,AnnotationsForm,FileUploadList,Experiment,Gateway) {
  				this.$el.find('.panel-heading').text("Unnamed Experiment");
  			}
 		},
+
+		disabledUpdateAnnotations: function () {
+			$( "#updateAnnotations" ).hide();
+		},
+
+		enableUpdateAnnotations: function() {
+			$( "#updateAnnotations" ).show();
+		},
+
 		removeExperiment: function() {
 			this.trigger('removeEvent',this);
 		},
