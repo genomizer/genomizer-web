@@ -20,7 +20,6 @@ define([
         },
         removeCommand: function (e) {
             e.preventDefault();
-            this.model.collection.remove(this.model);
             this.el.remove();
         },
 		renderEntry: function(view, entryView) {

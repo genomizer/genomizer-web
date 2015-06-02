@@ -85,8 +85,8 @@ define([
                     });
                 });
                 
-                $this.find('[id=raw_to_profile_entries]').each(function () {
-                    var cmd = { type: 'rawToProfile', files: [] };
+                $this.find('[id=smooth_entries]').each(function () {
+                    var cmd = { type: 'smoothing', files: [] };
                     json.processCommands.push(cmd);
                     var $this = $(this);
                     $this.find('[class=row]').each(function () {
@@ -102,8 +102,8 @@ define([
                     });
                 });
                 
-                $this.find('[id=raw_to_profile_entries]').each(function () {
-                    var cmd = { type: 'rawToProfile', files: [] };
+                $this.find('[id=step_entries]').each(function () {
+                    var cmd = { type: 'step', files: [] };
                     json.processCommands.push(cmd);
                     var $this = $(this);
                     $this.find('[class=row]').each(function () {
@@ -119,8 +119,8 @@ define([
                     });
                 });
                 
-                $this.find('[id=raw_to_profile_entries]').each(function () {
-                    var cmd = { type: 'rawToProfile', files: [] };
+                $this.find('[id=ratio_entries]').each(function () {
+                    var cmd = { type: 'ratio', files: [] };
                     json.processCommands.push(cmd);
                     var $this = $(this);
                     $this.find('[class=row]').each(function () {
@@ -137,43 +137,34 @@ define([
                 });
             });
             console.log(JSON.stringify(json));
+            return json;
         },
 
         submitProcess: function (e) {
             e.preventDefault();
 
-            this.buildJson();
-            // console.log(this.buildJson());
+            var json = this.buildJson();
 
-            // var view = this;
-            
-            // var toSubmit = { expId: this.model.get("expId"), processCommands: [] };
+            console.log(JSON.stringify(json));
+            var view = this;
 
-            // this.collection.each(function (cmd) {
+            new Backbone.Model(json).save(null, {
+                url: "/api/process/processCommands",
+                type: "PUT",
+                error: function (event, jqxhr) {
+                    app.messenger.warning("Unable to start processing: " + 
+                                          jqxhr.status + " " + 
+                                          jqxhr.responseText);
+                },
+                success: function (event, jqxhr) {
+                    app.messenger.success("Successfully started processing.");
 
-            //     var toSubmitCmd = { type: cmd.get("type"), files: [] };
-
-            //     cmd.collection.each(function (file) {
-            //         toSubmitCmd.files.push(file);
-            //     });
-
-            //     toSubmit.processCommands.push(toSubmitCmd);
-            // });
-
-            // console.log(JSON.stringify(toSubmit));
-
-            // new Backbone.Model(toSubmit).save(null, {
-            //     url: "/api/process/processCommands",
-            //     type: "PUT",
-            //     error: function (event, jqxhr) {
-            //         app.messenger.warning("Unable to start processing: " + jqxhr.status + " " + jqxhr.responseText);
-            //     },
-            //     success: function (event, jqxhr) {
-            //         app.messenger.success("Successfully started processing.");
-            //         view.collection.reset();
-            //         view.render();
-            //     }
-            // });
+                    view.$('#processes').each(function () {
+                        this.remove();
+                    });
+                    view.render();
+                }
+            });
         },
 
         renderBlock: function (view, block) {
