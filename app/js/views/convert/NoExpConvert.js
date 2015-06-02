@@ -1,5 +1,5 @@
 define([
-    'text!templates/convertModal/NoExpConvert.html'
+    'text!templates/convert/NoExpConvert.html'
 ], function(noExpConvertTemplate) {
 
     return Backbone.View.extend({

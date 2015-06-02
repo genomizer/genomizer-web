@@ -44,11 +44,11 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 		},
 		createExperiment: function() {
 			var experiment = new Experiment();
-			this.appendNewExperimentView(experiment);
+			this.appendNewExperimentView(experiment,false);
 		},
 		cloneExperiment: function(clonedAnnotations, $toBeClonedEl) {
 			var experiment = new Experiment(_.omit(clonedAnnotations.toJSON(),'files','id'));
-			this.appendNewExperimentView(experiment, $toBeClonedEl);
+			this.appendNewExperimentView(experiment,false,$toBeClonedEl);
 		},
 		removeExperiment: function(experimentView) {
 			var index = this.experimentViews.indexOf(experimentView);
@@ -79,11 +79,11 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 				experiment.set("id",expId);
 				experiment.existingExperiment = true;
 				experiment.fetch().success(function() {
-					that.appendNewExperimentView(experiment);
+					that.appendNewExperimentView(experiment,true);
 				});
 			}
 		},
-		appendNewExperimentView: function(experiment, $toBeClonedEl) {
+		appendNewExperimentView: function(experiment, annotationVal, $toBeClonedEl) {
 			var experimentView = new ExperimentView({model: experiment});
 			$('#uploadAllButton').toggle(true);
 			
@@ -100,6 +100,10 @@ function(UploadTemplate,AnnotationsForm,FileUploadList,ExperimentView,Experiment
 			experimentView.render();
 			this.enableUploadAllButton();
 			experimentView.changeLabelName();
+
+			if(annotationVal == false){
+				experimentView.disabledUpdateAnnotations();
+			}
 		},
 		uploadAll: function() {
 			this.$(".experiment-container>div:not(.collapsed-experiment) .upload-experiment").click();

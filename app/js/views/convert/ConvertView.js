@@ -3,7 +3,7 @@
  * other admin view.
  */
 define([
-    'text!templates/convertModal/ConvertTemplate.html'
+    'text!templates/convert/ConvertTemplate.html'
 ], 
 
 function(ConvertTemplate) {
