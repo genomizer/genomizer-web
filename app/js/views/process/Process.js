@@ -70,62 +70,11 @@ define([
             $('#processes').each(function () {
                 var $this = $(this);
                 
-                $this.find('[id=raw_to_profile_entries]').each(function () {
-                    var cmd = { type: 'rawToProfile', files: [] };
-                    json.processCommands.push(cmd);
+                $this.find('[class=entries]').each(function () {
                     var $this = $(this);
-                    $this.find('[class=row]').each(function () {
-                        var file = {};
-                        cmd.files.push(file);
-                        var $this = $(this);
-                        $this.find('input, select').each(function () {
-                            file[this.name] = this.value;
-                        });
-                        $this.find('[type=checkbox]').each(function () {
-                            file[this.name] = this.checked;
-                        });
-                    });
-                });
-                
-                $this.find('[id=smooth_entries]').each(function () {
-                    var cmd = { type: 'smoothing', files: [] };
+                    var cmd = { type: $this.attr('name'), files: [] };
                     json.processCommands.push(cmd);
-                    var $this = $(this);
-                    $this.find('[class=row]').each(function () {
-                        var file = {};
-                        cmd.files.push(file);
-                        var $this = $(this);
-                        $this.find('input, select').each(function () {
-                            file[this.name] = this.value;
-                        });
-                        $this.find('[type=checkbox]').each(function () {
-                            file[this.name] = this.checked;
-                        });
-                    });
-                });
-                
-                $this.find('[id=step_entries]').each(function () {
-                    var cmd = { type: 'step', files: [] };
-                    json.processCommands.push(cmd);
-                    var $this = $(this);
-                    $this.find('[class=row]').each(function () {
-                        var file = {};
-                        cmd.files.push(file);
-                        var $this = $(this);
-                        $this.find('input, select').each(function () {
-                            file[this.name] = this.value;
-                        });
-                        $this.find('[type=checkbox]').each(function () {
-                            file[this.name] = this.checked;
-                        });
-                    });
-                });
-                
-                $this.find('[id=ratio_entries]').each(function () {
-                    var cmd = { type: 'ratio', files: [] };
-                    json.processCommands.push(cmd);
-                    var $this = $(this);
-                    $this.find('[class=row]').each(function () {
+                    $this.find('[class=entry]').each(function () {
                         var file = {};
                         cmd.files.push(file);
                         var $this = $(this);
@@ -138,7 +87,6 @@ define([
                     });
                 });
             });
-            console.log(JSON.stringify(json));
             return json;
         },
 
