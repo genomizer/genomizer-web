@@ -61,8 +61,8 @@ define([
                     break;
             }
             if (block !== undefined) {
-                block.addEntry(e);
                 this.renderBlock(this, block);
+                block.addEntry(e);
             }
         },
 
