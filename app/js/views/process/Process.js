@@ -63,6 +63,7 @@ define([
             if (block !== undefined) {
                 this.renderBlock(this, block);
             }
+            block.addEntry();
         },
 
         buildJson: function () {
