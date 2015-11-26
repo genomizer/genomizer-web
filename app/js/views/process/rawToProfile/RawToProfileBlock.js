@@ -16,9 +16,6 @@ define([
         addEntry: function (e) {
             e.preventDefault();
             var entryView = new RawToProfileEntry();
-            entryView.keepSam.checked = false;
-            entryView.extendReads.checked = false;
-            entryView.removeDups.checked = false;
             this.renderEntry(this, entryView);
         },
         removeCommand: function (e) {
